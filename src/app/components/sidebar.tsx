@@ -8,7 +8,7 @@ import {
   ClipboardList, ScrollText, Settings,
   ShieldCheck, Archive, Megaphone, Gavel,
   Crown, User,
-  ChevronRight, Map, BookOpen,
+  ChevronRight, Map,
   FileText, Calendar, GitCompare,
   Kanban, HelpCircle,
   ChevronDown, GitMerge,
@@ -78,7 +78,6 @@ const NAV_CONFIG: NavGroup[] = [
       { icon: GitMerge,   label: "Luồng nghiệp vụ",    badge: null,   roles: "all" },
       { icon: HelpCircle, label: "Trung tâm hỗ trợ",   badge: null,   roles: "all" },
       { icon: Map,        label: "Lộ trình triển khai", badge: null,   roles: "all" },
-      { icon: BookOpen,   label: "Kế hoạch Thiết kế",   badge: null,   roles: "all" },
     ],
   },
 ];
