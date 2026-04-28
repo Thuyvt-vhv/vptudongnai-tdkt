@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Layers, Settings, BarChart3, X, Activity, BookOpen, Clock, Server } from "lucide-react";
+import { ShieldCheck, Layers, Settings, BarChart3, X, Activity, Clock, Server } from "lucide-react";
 
 interface AppItem {
   id: string;
@@ -54,14 +54,6 @@ const APP_ITEMS: AppItem[] = [
     color: "#b45309",
     bg: "#fef3c7",
     badge: "2",
-  },
-  {
-    id: "Mẫu biểu TT 15/2025",
-    label: "Mẫu biểu",
-    desc: "11 mẫu biểu chuẩn TT 15/2025",
-    icon: BookOpen,
-    color: "#92400e",
-    bg: "#fef3c7",
   },
   {
     id: "Audit Log",
