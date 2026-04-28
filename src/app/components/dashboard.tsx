@@ -300,8 +300,8 @@ function TrendChart() {
 /* ═══ Funnel Pipeline ═════════════════════════════════════════ */
 function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
   return (
-    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
+      <div className="flex items-center justify-between mb-4 shrink-0">
         <div>
           <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
             Quy trình hồ sơ
@@ -316,6 +316,7 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
       </div>
 
       {/* Funnel */}
+      <div className="flex-1">
       <div className="space-y-1.5">
         {pipeline.map((p, i) => {
           const trapW = 100 - i * 14; // shrinks each step
@@ -347,6 +348,7 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
           );
         })}
       </div>
+      </div>{/* end flex-1 */}
 
       {/* Conversion rate */}
       <div className="mt-3 pt-3 flex items-center justify-between" style={{ borderTop: "1px solid #eef2f8" }}>
@@ -376,14 +378,14 @@ const DEADLINES = [
 ];
 function DeadlineCard({ onNavigate }: { onNavigate: (m: string) => void }) {
   return (
-    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
+      <div className="flex items-center justify-between mb-3 shrink-0">
         <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>Hạn chót sắp đến</h3>
         <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: "rgba(200,16,46,0.09)", color: "#c8102e", fontFamily: "JetBrains Mono", fontWeight: 700 }}>
           2 khẩn
         </span>
       </div>
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 flex-1">
         {DEADLINES.map(d => {
           const DIcon = d.icon;
           return (
@@ -500,7 +502,7 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
 function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
   const icons = { approve: CheckCircle2, submit: FileSignature, alert: AlertTriangle, ai: Sparkles };
   return (
-    <div className="bg-white rounded-[14px] p-5 flex flex-col" style={{ border: "1px solid #dde3ec" }}>
+    <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -648,53 +650,29 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
   const roleKey = user?.role ?? "council";
   const cfg = ROLE_CONFIG[roleKey] ?? ROLE_CONFIG["council"];
   const displayName = user?.name?.split(" ").slice(-1)[0] ?? "Bạn";
-  const todayStr = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
 
   return (
     <div className="p-6 space-y-5 max-w-[1600px]">
 
-      {/* ══ HEADER: Tiêu đề (7/12) + Việc cần làm (5/12) ════════ */}
-      <div className="grid grid-cols-12 gap-6 items-start">
+      {/* ══ TIÊU ĐỀ ══════════════════════════════════════════════ */}
+      <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 28, color: "#0b1426", lineHeight: 1.2 }}>
+        Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
+      </h1>
 
-        {/* Tiêu đề chính */}
-        <div className="col-span-7">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
-            style={{ background: "#fef3c7", border: "1px solid #fcd34d" }}>
-            <Flame className="size-3" style={{ color: "#b45309" }} />
-            <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
-              Đợt thi đua Quý II / 2026
-            </span>
-          </div>
-          <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 30, color: "#0b1426", lineHeight: 1.2, marginBottom: 4 }}>
-            Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
-          </h1>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#94a3b8", marginBottom: 8 }}>{todayStr}</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#5a6474", lineHeight: 1.6, marginBottom: 20 }}>
-            {cfg.subtitle}
-          </p>
-          <div className="flex items-center gap-3">
-            <button onClick={() => nav("Đề nghị khen thưởng")}
-              className="btn btn-primary btn-md inline-flex items-center gap-2"
-              style={{ fontFamily: "var(--font-sans)" }}>
-              <Award className="size-3.5" /> Đề nghị khen thưởng
-            </button>
-            <button onClick={() => nav("Phong trào thi đua")}
-              className="btn btn-secondary btn-md inline-flex items-center gap-1.5"
-              style={{ fontFamily: "var(--font-sans)" }}>
-              Phong trào <ArrowUpRight className="size-3.5" />
-            </button>
-          </div>
+      {/* ══ ROW 1: Số liệu thống kê (7/12) + Việc cần làm (5/12) ══ */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
+        <div className="col-span-7 grid grid-cols-2 gap-4">
+          {cfg.kpis.map(k => (
+            <KpiCard key={k.label} {...k} onClick={() => nav(k.module)} />
+          ))}
         </div>
-
-        {/* Việc cần làm hôm nay — góc phải trên cùng */}
         <div className="col-span-5">
           <TaskPanel cfg={cfg} onNavigate={nav} />
         </div>
       </div>
 
-      {/* ══ ROW 1: Xu hướng (7/12) + Bảng xếp hạng (5/12) ══════ */}
+      {/* ══ ROW 2: Xu hướng (7/12) + Bảng xếp hạng (5/12) ══════ */}
       <div className="grid grid-cols-12 gap-4">
-
         <div className="col-span-7 bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
           <div className="flex items-start justify-between mb-4">
             <div>
@@ -729,21 +707,20 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
             ))}
           </div>
         </div>
-
         <div className="col-span-5">
           <MedalPodium onNavigate={nav} />
         </div>
       </div>
 
-      {/* ══ ROW 2: Hoạt động (5/12) + Quy trình (4/12) + Hạn chót (3/12) ══ */}
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-5">
+      {/* ══ ROW 3: Hoạt động (5/12) + Quy trình (4/12) + Hạn chót (3/12) — chiều cao bằng nhau ══ */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
+        <div className="col-span-5 flex flex-col">
           <ActivityFeed onNavigate={nav} />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-4 flex flex-col">
           <FunnelPipeline onNavigate={nav} />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-3 flex flex-col">
           <DeadlineCard onNavigate={nav} />
         </div>
       </div>
