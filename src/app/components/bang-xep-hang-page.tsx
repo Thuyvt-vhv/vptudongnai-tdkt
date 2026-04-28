@@ -313,9 +313,6 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
 
       {/* ══ HEADER ══════════════════════════════════════════════ */}
       <div className="shrink-0" style={{ background: "#ffffff", borderBottom: "1px solid #e2e8f0" }}>
-        {/* Top accent bar */}
-        <div className="h-[3px]" style={{ background: "linear-gradient(90deg,#c8102e 0%,#1C5FBE 35%,#6366f1 65%,#f59e0b 100%)" }} />
-
         <div className="px-6 pt-4 pb-4">
           <div className="flex items-center gap-3 mb-4">
             {/* Icon */}
