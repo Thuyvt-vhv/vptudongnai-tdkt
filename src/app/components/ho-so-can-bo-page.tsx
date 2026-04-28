@@ -5,7 +5,7 @@ import {
   Sparkles, CheckCircle2, XCircle, AlertCircle, Clock,
   FileText, Download, X, Plus, ChevronDown, Loader2,
   Shield, Brain, BarChart2, Edit3, Phone, Mail,
-  BookOpen, Briefcase, Zap,
+  BookOpen, Briefcase, Zap, LayoutGrid, LayoutList,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { useTheme } from "./theme-context";
@@ -407,6 +407,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
   const [selected, setSelected] = useState<CanBo | null>(null);
   const [aiTarget, setAiTarget] = useState<CanBo | null>(null);
   const [filterEligible, setFilterEligible] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
 
   const visible = CAN_BO_LIST.filter(cb => {
     const ms = !search || cb.name.toLowerCase().includes(search.toLowerCase()) || cb.unit.toLowerCase().includes(search.toLowerCase()) || cb.position.toLowerCase().includes(search.toLowerCase());
@@ -429,13 +430,23 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
             <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ Cán bộ</h1>
             <p className="text-[13px] text-[#635647]">Hồ sơ thi đua · AI kiểm tra điều kiện · Lịch sử khen thưởng</p>
           </div>
-          <div className="ml-auto flex gap-2">
+          <div className="ml-auto flex items-center gap-2">
             <button onClick={() => setFilterEligible(f => !f)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border text-[13px] transition-all"
               style={{ background: filterEligible ? "#dcfce7" : "white", borderColor: filterEligible ? "#166534" : "#e2e8f0", color: filterEligible ? "#166534" : "#5a5040", fontFamily: "var(--font-sans)", fontWeight: filterEligible ? 700 : 400 }}>
               <Sparkles className="size-3.5" />
               {filterEligible ? "Đủ điều kiện KT" : "Lọc: Đủ ĐK KT"}
             </button>
+            {/* View toggle */}
+            <div className="flex rounded-[7px] overflow-hidden p-0.5 gap-0.5" style={{ background: "#f1f5f9", border: "1px solid #e2e8f0" }}>
+              {([["grid", LayoutGrid], ["table", LayoutList]] as const).map(([k, Icon]) => (
+                <button key={k} onClick={() => setViewMode(k)}
+                  className="flex items-center justify-center size-8 rounded-[5px] transition-all"
+                  style={{ background: viewMode === k ? "white" : "transparent", color: viewMode === k ? "#0b1426" : "#94a3b8", boxShadow: viewMode === k ? "0 1px 3px rgba(0,0,0,0.1)" : "none" }}>
+                  <Icon className="size-4" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         {/* Stats row */}
@@ -463,70 +474,199 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
 
       {/* List */}
       <div className="flex-1 overflow-y-auto p-6">
-        <div className="grid grid-cols-3 gap-4">
-          {visible.map(cb => {
-            const hasEligible = cb.eligibleFor.length > 0;
-            return (
-              <div key={cb.id} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden hover:shadow-md transition-all hover:border-[#1C5FBE]/40 cursor-pointer" style={{ background: "white" }}
-                onClick={() => setSelected(cb)}>
-                {/* Top bar */}
-                <div className="h-1.5" style={{ background: hasEligible ? "linear-gradient(to right,#166534,#4ade80)" : "linear-gradient(to right,#d1d5db,#e5e7eb)" }} />
-                <div className="p-4">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="size-12 rounded-full flex items-center justify-center text-[14px] text-white shrink-0"
-                      style={{ background: "linear-gradient(135deg,#1C5FBE,#0b1426)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-                      {cb.name.charAt(0)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-[14px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.name}</h3>
-                      <p className="text-[13px] text-[#5a5040] truncate">{cb.position}</p>
-                      <p className="text-[13px] text-[#635647] truncate">{cb.unit}</p>
-                    </div>
-                    {hasEligible && <Sparkles className="size-4 text-[#166534] shrink-0" />}
-                  </div>
-                  {/* Score + completeness */}
-                  <div className="flex gap-2 mb-3">
-                    <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
-                      <div className="text-[18px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.score}</div>
-                      <div className="text-[13px] text-[#635647] uppercase tracking-wider">Điểm TĐ</div>
-                    </div>
-                    <div className="flex-1 rounded-[6px] p-2" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[13px] text-[#635647] uppercase tracking-wider">Hồ sơ</span>
-                        <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }}>{cb.completeness}%</span>
+
+        {/* ── GRID VIEW ─────────────────────────────────────────── */}
+        {viewMode === "grid" && (
+          <>
+            <div className="grid grid-cols-3 gap-4">
+              {visible.map(cb => {
+                const hasEligible = cb.eligibleFor.length > 0;
+                return (
+                  <div key={cb.id} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden hover:shadow-md transition-all hover:border-[#1C5FBE]/40 cursor-pointer" style={{ background: "white" }}
+                    onClick={() => setSelected(cb)}>
+                    <div className="h-1.5" style={{ background: hasEligible ? "linear-gradient(to right,#166534,#4ade80)" : "linear-gradient(to right,#d1d5db,#e5e7eb)" }} />
+                    <div className="p-4">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="size-12 rounded-full flex items-center justify-center text-[14px] text-white shrink-0"
+                          style={{ background: "linear-gradient(135deg,#1C5FBE,#0b1426)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                          {cb.name.charAt(0)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-[14px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.name}</h3>
+                          <p className="text-[13px] text-[#5a5040] truncate">{cb.position}</p>
+                          <p className="text-[13px] text-[#635647] truncate">{cb.unit}</p>
+                        </div>
+                        {hasEligible && <Sparkles className="size-4 text-[#166534] shrink-0" />}
                       </div>
-                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
-                        <div className="h-full rounded-full transition-all" style={{ width: `${cb.completeness}%`, background: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }} />
+                      <div className="flex gap-2 mb-3">
+                        <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+                          <div className="text-[18px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.score}</div>
+                          <div className="text-[13px] text-[#635647] uppercase tracking-wider">Điểm TĐ</div>
+                        </div>
+                        <div className="flex-1 rounded-[6px] p-2" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[13px] text-[#635647] uppercase tracking-wider">Hồ sơ</span>
+                            <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }}>{cb.completeness}%</span>
+                          </div>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
+                            <div className="h-full rounded-full transition-all" style={{ width: `${cb.completeness}%`, background: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }} />
+                          </div>
+                        </div>
                       </div>
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {cb.awards.slice(0, 2).map((a, i) => {
+                          const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#eef2f8" };
+                          return (
+                            <span key={i} className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: lc.bg, color: lc.color, fontFamily: "var(--font-sans)" }}>
+                              {a.type.split(" ").slice(0, 3).join(" ")} {a.year}
+                            </span>
+                          );
+                        })}
+                        {cb.awards.length === 0 && <span className="text-[13px] text-[#d1ccc0]">Chưa có thành tích</span>}
+                      </div>
+                      <button onClick={e => { e.stopPropagation(); setAiTarget(cb); }}
+                        className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-[6px] border text-[13px] hover:border-[#7c3aed] hover:text-[#7c3aed] transition-colors"
+                        style={{ borderColor: "#e2e8f0", color: "#635647", fontFamily: "var(--font-sans)" }}>
+                        <Brain className="size-3.5" />Kiểm tra điều kiện AI
+                      </button>
                     </div>
                   </div>
-                  {/* Awards */}
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {cb.awards.slice(0, 2).map((a, i) => {
-                      const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#eef2f8" };
-                      return (
-                        <span key={i} className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: lc.bg, color: lc.color, fontFamily: "var(--font-sans)" }}>
-                          {a.type.split(" ").slice(0, 3).join(" ")} {a.year}
-                        </span>
-                      );
-                    })}
-                    {cb.awards.length === 0 && <span className="text-[13px] text-[#d1ccc0]">Chưa có thành tích</span>}
-                  </div>
-                  {/* AI check button */}
-                  <button onClick={e => { e.stopPropagation(); setAiTarget(cb); }}
-                    className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-[6px] border text-[13px] hover:border-[#7c3aed] hover:text-[#7c3aed] transition-colors"
-                    style={{ borderColor: "#e2e8f0", color: "#635647", fontFamily: "var(--font-sans)" }}>
-                    <Brain className="size-3.5" />Kiểm tra điều kiện AI
-                  </button>
-                </div>
+                );
+              })}
+            </div>
+            {visible.length === 0 && (
+              <div className="flex flex-col items-center py-16 gap-3">
+                <User className="size-12 text-[#d1ccc0]" />
+                <p className="text-[13px] text-[#635647]">Không tìm thấy cán bộ phù hợp</p>
               </div>
-            );
-          })}
-        </div>
-        {visible.length === 0 && (
-          <div className="flex flex-col items-center py-16 gap-3">
-            <User className="size-12 text-[#d1ccc0]" />
-            <p className="text-[13px] text-[#635647]">Không tìm thấy cán bộ phù hợp</p>
+            )}
+          </>
+        )}
+
+        {/* ── TABLE VIEW ────────────────────────────────────────── */}
+        {viewMode === "table" && (
+          <div className="rounded-[12px] overflow-hidden" style={{ border: "1px solid #e2e8f0", background: "white" }}>
+            <table className="w-full">
+              <thead>
+                <tr style={{ background: "#f8faff", borderBottom: "2px solid #e2e8f0" }}>
+                  {["#", "Cán bộ", "Đơn vị", "Điểm TĐ", "Hồ sơ", "Thành tích", "Trạng thái", "Hành động"].map(h => (
+                    <th key={h} className="px-4 py-3 text-left"
+                      style={{ fontSize: 11, fontFamily: "var(--font-sans)", fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.07em" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {visible.map((cb, idx) => {
+                  const hasEligible = cb.eligibleFor.length > 0;
+                  const complColor = cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e";
+                  return (
+                    <tr key={cb.id} className="border-b border-[#f0f4f8] transition-colors cursor-pointer"
+                      style={{ background: "white" }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f8faff"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "white"; }}
+                      onClick={() => setSelected(cb)}>
+
+                      {/* # */}
+                      <td className="px-4 py-3 w-10">
+                        <span style={{ fontSize: 13, fontFamily: "JetBrains Mono, monospace", color: "#94a3b8" }}>{idx + 1}</span>
+                      </td>
+
+                      {/* Cán bộ */}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2.5">
+                          <div className="size-9 rounded-full flex items-center justify-center text-[13px] text-white shrink-0"
+                            style={{ background: "linear-gradient(135deg,#1C5FBE,#0b1426)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                            {cb.name.charAt(0)}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: 13, fontFamily: "var(--font-sans)", fontWeight: 600, color: "#0b1426" }}>{cb.name}</div>
+                            <div style={{ fontSize: 12, color: "#94a3b8" }}>{cb.position}</div>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Đơn vị */}
+                      <td className="px-4 py-3 max-w-[180px]">
+                        <div className="flex items-center gap-1.5" style={{ fontSize: 13, color: "#5a6474" }}>
+                          <Building2 className="size-3.5 text-[#94a3b8] shrink-0" />
+                          <span className="truncate">{cb.unit}</span>
+                        </div>
+                      </td>
+
+                      {/* Điểm TĐ */}
+                      <td className="px-4 py-3">
+                        <span style={{ fontSize: 18, fontFamily: "var(--font-sans)", fontWeight: 700, color: "#8a6400" }}>{cb.score}</span>
+                      </td>
+
+                      {/* Hồ sơ */}
+                      <td className="px-4 py-3 min-w-[130px]">
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
+                            <div className="h-full rounded-full" style={{ width: `${cb.completeness}%`, background: complColor }} />
+                          </div>
+                          <span style={{ fontSize: 12, fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: complColor }}>{cb.completeness}%</span>
+                        </div>
+                      </td>
+
+                      {/* Thành tích */}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1.5" style={{ fontSize: 13, color: "#0b1426" }}>
+                          <Award className="size-3.5 text-[#8a6400]" />
+                          {cb.awards.length > 0 ? (
+                            <span style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{cb.awards.length}</span>
+                          ) : (
+                            <span style={{ color: "#d1ccc0" }}>—</span>
+                          )}
+                        </div>
+                      </td>
+
+                      {/* Trạng thái */}
+                      <td className="px-4 py-3">
+                        {hasEligible ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full"
+                            style={{ fontSize: 11, fontFamily: "var(--font-sans)", fontWeight: 600, background: "#dcfce7", color: "#166534" }}>
+                            <Sparkles className="size-3" />Đủ ĐK
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full"
+                            style={{ fontSize: 11, fontFamily: "var(--font-sans)", background: "#f1f5f9", color: "#94a3b8" }}>
+                            Chưa đủ
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Hành động */}
+                      <td className="px-4 py-3 pr-5">
+                        <div className="flex items-center gap-1.5">
+                          <button onClick={e => { e.stopPropagation(); setSelected(cb); }}
+                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border text-[12px] transition-colors"
+                            style={{ borderColor: "#e2e8f0", color: "#5a6474", fontFamily: "var(--font-sans)" }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#1C5FBE"; (e.currentTarget as HTMLElement).style.color = "#1C5FBE"; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#5a6474"; }}>
+                            <Eye className="size-3.5" />Xem
+                          </button>
+                          <button onClick={e => { e.stopPropagation(); setAiTarget(cb); }}
+                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border text-[12px] transition-colors"
+                            style={{ borderColor: "#e2e8f0", color: "#5a6474", fontFamily: "var(--font-sans)" }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#7c3aed"; (e.currentTarget as HTMLElement).style.color = "#7c3aed"; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#5a6474"; }}>
+                            <Brain className="size-3.5" />AI
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {visible.length === 0 && (
+              <div className="flex flex-col items-center py-16 gap-3">
+                <User className="size-12 text-[#d1ccc0]" />
+                <p className="text-[13px] text-[#635647]">Không tìm thấy cán bộ phù hợp</p>
+              </div>
+            )}
           </div>
         )}
       </div>
