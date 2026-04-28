@@ -14,14 +14,14 @@ import type { LoginUser } from "./login-page";
 
 /* ─── Shared data ─────────────────────────────────────────── */
 const trendData = [
-  { m: "T1", proposals: 42, approved: 30 },
-  { m: "T2", proposals: 58, approved: 41 },
-  { m: "T3", proposals: 71, approved: 55 },
-  { m: "T4", proposals: 63, approved: 52 },
-  { m: "T5", proposals: 89, approved: 72 },
-  { m: "T6", proposals: 104, approved: 88 },
-  { m: "T7", proposals: 97, approved: 81 },
-  { m: "T8", proposals: 118, approved: 99 },
+  { m: "T9",  proposals: 88,  approved: 72 },
+  { m: "T10", proposals: 95,  approved: 79 },
+  { m: "T11", proposals: 102, approved: 86 },
+  { m: "T12", proposals: 118, approved: 97 },
+  { m: "T1",  proposals: 42,  approved: 30 },
+  { m: "T2",  proposals: 58,  approved: 41 },
+  { m: "T3",  proposals: 71,  approved: 55 },
+  { m: "T4",  proposals: 63,  approved: 52 },
 ];
 const units = [
   { name: "Sở Giáo dục & Đào tạo",  score: 94.2, prev: 91.8, medal: "gold",   rank: 1 },
@@ -55,7 +55,7 @@ const ROLE_CONFIG: Record<string, {
 }> = {
   user: {
     subtitle: "Theo dõi tiến trình đề nghị khen thưởng của bạn",
-    progress: 62, progressLabel: "Tiến trình hồ sơ",
+    progress: 87, progressLabel: "Điểm thi đua",
     kpis: [
       { label:"Hồ sơ đang xử lý",  value:"2",    numVal:2,    delta:"+1",    up:true,  icon:FileSignature, accent:"#1C5FBE", module:"Đề nghị khen thưởng", spark:[1,2,1,3,2,1,2,2] },
       { label:"Đã được khen thưởng",value:"3",    numVal:3,    delta:"+1",    up:true,  icon:Award,         accent:"#8a6400", module:"Lịch sử khen thưởng", spark:[1,1,2,2,2,3,3,3] },
@@ -77,7 +77,7 @@ const ROLE_CONFIG: Record<string, {
     subtitle: "Quản lý thi đua khen thưởng của đơn vị",
     progress: 74, progressLabel: "Chỉ tiêu đơn vị",
     kpis: [
-      { label:"Cán bộ đơn vị",       value:"248", numVal:248, delta:"+12",  up:true,  icon:Users,         accent:"#1C5FBE", module:"Hồ sơ cán bộ",        spark:[230,235,238,240,242,245,246,248] },
+      { label:"Cán bộ đơn vị",       value:"86",  numVal:86,  delta:"+5",   up:true,  icon:Users,         accent:"#1C5FBE", module:"Hồ sơ cán bộ",        spark:[72,74,76,78,80,82,84,86] },
       { label:"Đề nghị đang xử lý",  value:"6",   numVal:6,   delta:"+3",   up:false, icon:FileSignature, accent:"#c8102e", module:"Đề nghị khen thưởng", spark:[2,3,4,3,5,4,6,6] },
       { label:"Tỉ lệ hoàn thành KH", value:"74%", numVal:74,  delta:"+6%",  up:true,  icon:BarChart3,     accent:"#0f7a3e", module:"Phân tích thi đua",   spark:[60,63,65,66,68,70,72,74] },
       { label:"Đủ điều kiện CSTĐCS", value:"3",   numVal:3,   delta:"mới",  up:true,  icon:Award,         accent:"#8a6400", module:"Hồ sơ cán bộ",        spark:[1,1,1,2,2,2,3,3] },
@@ -121,10 +121,10 @@ const ROLE_CONFIG: Record<string, {
       { label:"Chờ ký số",           value:"8",   numVal:8,   delta:"+3",  up:false, icon:FileSignature, accent:"#c8102e", module:"Ký số & Phê duyệt",  spark:[5,6,6,7,6,7,8,8] },
       { label:"Đã ký (tháng 4)",     value:"23",  numVal:23,  delta:"+5",  up:true,  icon:CheckCircle2,  accent:"#0f7a3e", module:"Ký số & Phê duyệt",  spark:[10,13,15,17,18,20,22,23] },
       { label:"Phong trào triển khai",value:"12", numVal:12,  delta:"+3",  up:true,  icon:Flame,         accent:"#8a6400", module:"Phong trào thi đua",  spark:[7,8,9,9,10,10,11,12] },
-      { label:"Tiến độ toàn tỉnh",   value:"68%", numVal:68,  delta:"+4%", up:true,  icon:BarChart3,     accent:"#1C5FBE", module:"Phân tích thi đua",   spark:[56,58,60,61,63,65,66,68] },
+      { label:"Đơn vị đạt chỉ tiêu", value:"18/26", numVal:18, delta:"+2",  up:true,  icon:CheckCircle2,  accent:"#0f7a3e", module:"Bảng xếp hạng",      spark:[12,13,14,14,15,16,17,18] },
     ],
     tasks: [
-      { icon:AlertTriangle, text:"2 quyết định khen thưởng quá hạn ký số",        action:"Ký ngay",      module:"Ký số & Phê duyệt",   urgent:true },
+      { icon:AlertTriangle, text:"2 trong 8 quyết định khen thưởng đã quá hạn ký số", action:"Ký ngay",    module:"Ký số & Phê duyệt",   urgent:true },
       { icon:FileSignature, text:"Tờ trình tổng hợp Q1/2026 cần phê duyệt",       action:"Xem tờ trình", module:"Đề nghị khen thưởng" },
       { icon:Flame,         text:"1 phong trào mới chờ phê duyệt phát động",      action:"Phê duyệt",    module:"Phong trào thi đua" },
     ],
@@ -141,7 +141,7 @@ const ROLE_CONFIG: Record<string, {
       { label:"Tổng người dùng",  value:"1.247", numVal:1247, delta:"+23",    up:true,  icon:Users,        accent:"#1C5FBE", module:"Phân quyền",          spark:[1180,1195,1210,1220,1228,1235,1242,1247] },
       { label:"Hồ sơ xử lý",     value:"47",    numVal:47,   delta:"+12",    up:true,  icon:ClipboardList,accent:"#8a6400", module:"Đề nghị khen thưởng", spark:[25,30,35,38,40,43,45,47] },
       { label:"Sự kiện bảo mật",  value:"8",     numVal:8,    delta:"+2",     up:false, icon:Shield,       accent:"#c8102e", module:"Audit Log",           spark:[3,4,5,6,6,7,7,8] },
-      { label:"System uptime",    value:"99.8%", numVal:99.8, delta:"7 ngày", up:true,  icon:Activity,     accent:"#0f7a3e", module:"Hệ thống",            spark:[99,99.5,99.8,99.6,99.9,99.8,99.9,99.8] },
+      { label:"Phiên đăng nhập",  value:"312",   numVal:312,  delta:"+47",   up:true,  icon:Zap,          accent:"#0f7a3e", module:"Audit Log",           spark:[220,240,255,270,280,295,305,312] },
     ],
     tasks: [
       { icon:Shield,   text:"5 lần đăng nhập thất bại từ IP 203.0.1.55",        action:"Kiểm tra",    module:"Audit Log",      urgent:true },
@@ -369,7 +369,7 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
 
 /* ═══ Deadline Card ═══════════════════════════════════════════ */
 const DEADLINES = [
-  { label:"Ký số NS-2026-0147",     date:"25/04", daysLeft:0,  color:"#c8102e", icon:FileSignature },
+  { label:"Ký số NS-2026-0152",     date:"25/04", daysLeft:0,  color:"#c8102e", icon:FileSignature },
   { label:"Thẩm định NS-2026-0153", date:"27/04", daysLeft:2,  color:"#b45309", icon:ClipboardList },
   { label:"Phiên họp HĐ-2026-04",   date:"28/04", daysLeft:3,  color:"#1C5FBE", icon:Gavel        },
   { label:"Báo cáo tháng 4",        date:"30/04", daysLeft:5,  color:"#0f7a3e", icon:BarChart3     },
@@ -750,7 +750,7 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
                 Xu hướng đề nghị & phê duyệt
               </h3>
               <p className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>
-                T1→T8/2026 · cập nhật realtime · so kỳ 2025
+                T9/2025–T4/2026 · thực tế · so cùng kỳ năm trước
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -765,9 +765,9 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
           <TrendChart />
           <div className="mt-4 pt-4 grid grid-cols-3 gap-4" style={{ borderTop: "1px solid #eef2f8" }}>
             {[
-              { label: "Tổng đề nghị T8", value: "118", color: "#1C5FBE", delta: "+21 so T7" },
-              { label: "Tổng phê duyệt T8", value: "99",  color: "#c8102e", delta: "+18 so T7" },
-              { label: "Tỉ lệ phê duyệt",   value: "84%", color: "#0f7a3e", delta: "+2% so T7" },
+              { label: "Tổng đề nghị T4/26", value: "63",  color: "#1C5FBE", delta: "−8 so T3" },
+              { label: "Tổng phê duyệt T4/26", value: "52", color: "#c8102e", delta: "−3 so T3" },
+              { label: "Tỉ lệ phê duyệt",   value: "83%", color: "#0f7a3e", delta: "−1% so T3" },
             ].map(s => (
               <div key={s.label} className="text-center">
                 <div className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: s.color }}>{s.value}</div>
