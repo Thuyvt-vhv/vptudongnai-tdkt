@@ -8,7 +8,7 @@ import { DsCard } from "./ds-card";
 function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
   return (
     <section className="space-y-5">
-      <div className="pb-3 border-b border-[#e8e2d4]">
+      <div className="pb-3 border-b border-[#e2e8f0]">
         <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 18 }} className="text-[#0b1426]">
           {title}
         </h3>
@@ -219,12 +219,12 @@ export function DsShowcase() {
         </Row>
 
         <Row label="Use case thực tế">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e8e2d4] bg-white">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e2e8f0] bg-white">
             <Award className="size-4 text-[#8a6400]" />
             <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Huân chương Lao động hạng Ba</span>
             <DsBadge variant="gold" size="sm">Cấp Nhà nước</DsBadge>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e8e2d4] bg-white">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e2e8f0] bg-white">
             <Clock className="size-4 text-[#635647]" />
             <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Hồ sơ #CB-2024-00847</span>
             <DsBadge variant="warning" size="sm" dot>Thẩm định</DsBadge>
@@ -398,7 +398,7 @@ export function DsShowcase() {
                 ["Ink Soft", "#4a5568"],
                 ["Muted Ink", "#635647"],
                 ["Paper", "#fbf8f2"],
-                ["Line", "#e8e2d4"],
+                ["Line", "#e2e8f0"],
                 ["Crimson", "#c8102e"],
                 ["Crimson Hover", "#a60d25"],
                 ["Gold", "#8a6400"],
@@ -446,7 +446,7 @@ export function DsShowcase() {
                 <p className="ds-input-label mb-1.5">Danh hiệu đề nghị</p>
                 <div className="flex flex-wrap gap-2">
                   {["Chiến sĩ thi đua cơ sở","Chiến sĩ thi đua cấp Tỉnh","Bằng khen UBND Tỉnh","Huân chương Lao động hạng Ba"].map((d) => (
-                    <button key={d} className="px-3 py-1.5 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#0b1426] hover:border-[#c8102e] hover:bg-[#c8102e]/5 transition-colors" style={{ fontFamily: "var(--font-sans)" }}>{d}</button>
+                    <button key={d} className="px-3 py-1.5 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#0b1426] hover:border-[#c8102e] hover:bg-[#c8102e]/5 transition-colors" style={{ fontFamily: "var(--font-sans)" }}>{d}</button>
                   ))}
                 </div>
               </div>

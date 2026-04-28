@@ -106,11 +106,11 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
       <div className="absolute inset-0" style={{ background:"rgba(11,20,38,0.55)", backdropFilter:"blur(4px)" }}/>
 
       <div className="relative rounded-[16px] border shadow-2xl overflow-hidden"
-        style={{ width:700, maxWidth:"92vw", maxHeight:"88vh", background:"white", borderColor:"#e8e2d4" }}
+        style={{ width:700, maxWidth:"92vw", maxHeight:"88vh", background:"white", borderColor:"#e2e8f0" }}
         onClick={e=>e.stopPropagation()}>
 
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#e8e2d4] flex items-center justify-between" style={{ background:"var(--color-paper)" }}>
+        <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between" style={{ background:"var(--color-paper)" }}>
           <div className="flex items-center gap-3">
             <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background:"#0b1426" }}>
               <Keyboard className="size-5 text-[#8a6400]"/>
@@ -120,14 +120,14 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
               <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tăng tốc làm việc với VPTU Đồng Nai</p>
             </div>
           </div>
-          <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f5f2ec] transition-colors">
+          <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
             <X className="size-4 text-[#635647]"/>
           </button>
         </div>
 
         {/* Content: 2 columns */}
         <div className="overflow-y-auto" style={{ maxHeight:"calc(88vh - 120px)" }}>
-          <div className="grid grid-cols-2 gap-0 divide-x divide-[#f0ece3]">
+          <div className="grid grid-cols-2 gap-0 divide-x divide-[#eef2f8]">
             {/* Left column */}
             <div className="p-6 space-y-6">
               {SHORTCUTS.slice(0, 3).map(g => (
@@ -192,9 +192,9 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-[#f0ece3] flex items-center gap-4" style={{ background:"#faf7f2" }}>
+        <div className="px-6 py-3 border-t border-[#eef2f8] flex items-center gap-4" style={{ background:"#f8fafc" }}>
           <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
-            Nhấn <kbd className="px-1.5 py-0.5 rounded border border-[#e8e2d4] bg-white text-[13px]" style={{ fontFamily:"JetBrains Mono,monospace" }}>?</kbd> để mở bất kỳ lúc nào
+            Nhấn <kbd className="px-1.5 py-0.5 rounded border border-[#e2e8f0] bg-white text-[13px]" style={{ fontFamily:"JetBrains Mono,monospace" }}>?</kbd> để mở bất kỳ lúc nào
           </span>
           <span className="text-[13px] text-[#6b5e47] mx-1">·</span>
           <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>

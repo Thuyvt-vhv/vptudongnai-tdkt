@@ -144,7 +144,7 @@ function AccessDenied({
         <div className="text-[#d1d5db] text-[24px]">→</div>
         <div
           className="rounded-xl border px-5 py-4 flex flex-col items-center gap-2 min-w-[160px]"
-          style={{ borderColor: "#e8e2d4", background: "#faf7f2" }}
+          style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}
         >
           <div
             className="size-10 rounded-full flex items-center justify-center"
@@ -171,8 +171,8 @@ function AccessDenied({
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-[8px] border text-[13px] transition-all hover:bg-[#f0ece3]"
-          style={{ borderColor: "#e8e2d4", color: "#5a5040", fontFamily: "var(--font-sans)", fontWeight: 500 }}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-[8px] border text-[13px] transition-all hover:bg-[#eef2f8]"
+          style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)", fontWeight: 500 }}
         >
           <ChevronLeft className="size-4" />Quay lại
         </button>

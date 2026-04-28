@@ -190,7 +190,7 @@ const initRecords: ConsultationRecord[] = [
 
 /* ─── Status config ──────────────────────────────────────────────── */
 const SC: Record<YKStatus, { label: string; color: string; bg: string; border: string; icon: typeof Clock }> = {
-  chua_bat_dau: { label: "Chưa bắt đầu", color: "#5a5040", bg: "#f0ece3", border: "#d9d1bd", icon: Clock },
+  chua_bat_dau: { label: "Chưa bắt đầu", color: "#5a5040", bg: "#eef2f8", border: "#d9d1bd", icon: Clock },
   dang_lay:     { label: "Đang lấy ý kiến", color: "#1a6a2e", bg: "#d1fae5", border: "#6ee7b7", icon: Megaphone },
   sap_het_han:  { label: "Sắp hết hạn", color: "#92400e", bg: "#fef3c7", border: "#fcd34d", icon: AlertCircle },
   da_ket_thuc:  { label: "Đã kết thúc", color: "#1a4fa0", bg: "#dbeafe", border: "#93c5fd", icon: CheckCircle2 },
@@ -330,7 +330,7 @@ function CountdownBadge({ record }: { record: ConsultationRecord }) {
           {done}/{record.soNgayQuyDinh} ngày
         </span>
       </div>
-      <div className="h-1.5 rounded-full overflow-hidden bg-[#e8e2d4]">
+      <div className="h-1.5 rounded-full overflow-hidden bg-[#e2e8f0]">
         <div className="h-full rounded-full transition-all duration-500"
           style={{ width: `${pct}%`, background: left <= 2 ? "#c2410c" : left <= 4 ? "#b45309" : "#1C5FBE" }} />
       </div>
@@ -364,7 +364,7 @@ function OpinionBar({ record }: { record: ConsultationRecord }) {
           {pct}%
         </div>
       </div>
-      <div className="h-1.5 rounded-full overflow-hidden bg-[#e8e2d4] flex gap-0.5">
+      <div className="h-1.5 rounded-full overflow-hidden bg-[#e2e8f0] flex gap-0.5">
         <div className="h-full rounded-full" style={{ width: `${(record.tanThanh / record.tongYKien) * 100}%`, background: "#16a34a" }} />
         <div className="h-full rounded-full" style={{ width: `${(record.coYKien / record.tongYKien) * 100}%`, background: "#b45309" }} />
         <div className="h-full rounded-full" style={{ width: `${(record.khongTanThanh / record.tongYKien) * 100}%`, background: "#dc2626" }} />
@@ -582,7 +582,7 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
 
         {/* Footer */}
         <div className="flex items-center justify-between gap-3 px-6 py-4 border-t"
-          style={{ borderColor: "var(--color-line)", background: "#faf7f2" }}>
+          style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
           <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Sau khi tạo, hệ thống sẽ gửi thông báo tới các thành viên liên quan.
           </p>
@@ -703,7 +703,7 @@ function OpinionForm({ record, onClose, onSubmitted }: {
               </div>
 
               {/* Anonymous toggle */}
-              <div className="rounded-[6px] p-3 border" style={{ borderColor: "var(--color-line)", background: "#faf7f2" }}>
+              <div className="rounded-[6px] p-3 border" style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
                 <label className="flex items-start gap-2.5 cursor-pointer">
                   <input type="checkbox" className="size-4 mt-0.5 rounded"
                     style={{ accentColor: theme.primary }}
@@ -753,7 +753,7 @@ function OpinionForm({ record, onClose, onSubmitted }: {
               </label>
             </div>
             <div className="flex items-center justify-end gap-2 px-6 py-4 border-t"
-              style={{ borderColor: "var(--color-line)", background: "#faf7f2" }}>
+              style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
               <DsButton variant="secondary" size="md" onClick={onClose}>Hủy</DsButton>
               <DsButton variant="primary" size="md"
                 disabled={!form.noiDung || !form.agreed || submitting}
@@ -825,12 +825,12 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
                 {record.loaiDoiTuong === "ca_nhan" ? <User className="size-3" /> : <Users className="size-3" />}
                 {record.loaiDoiTuong === "ca_nhan" ? record.chucVu : "Tập thể"}
               </span>
-              <span className="text-[#e8e2d4]">·</span>
+              <span className="text-[#e2e8f0]">·</span>
               <span className="flex items-center gap-1 text-[13px] text-[#4a5568]" style={{ fontFamily: "var(--font-sans)" }}>
                 <Building2 className="size-3" />
                 {record.donVi}
               </span>
-              <span className="text-[#e8e2d4]">·</span>
+              <span className="text-[#e2e8f0]">·</span>
               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[13px] bg-[#ddeafc] text-[#1a4fa0] border border-[#1C5FBE30]"
                 style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
                 <Star className="size-2.5" />
@@ -875,7 +875,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
             </div>
 
             {/* Thành tích */}
-            <div className="rounded-[6px] p-3 bg-[#faf7f2] border" style={{ borderColor: "var(--color-line)" }}>
+            <div className="rounded-[6px] p-3 bg-[#f8fafc] border" style={{ borderColor: "var(--color-line)" }}>
               <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
@@ -974,7 +974,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
 
         {/* Footer actions */}
         <div className="px-6 py-4 border-t flex items-center gap-2"
-          style={{ borderColor: "var(--color-line)", background: "#faf7f2" }}>
+          style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
           {isActive && (
             <DsButton variant="primary" size="md" onClick={onAddOpinion}>
               <MessageSquare className="size-4" />
@@ -1028,7 +1028,7 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
           ? "linear-gradient(to right, #16a34a, #22c55e)"
           : record.status === "da_tong_hop"
           ? "linear-gradient(to right, #1C5FBE, #3b82f6)"
-          : "#e8e2d4"
+          : "#e2e8f0"
       }} />
 
       <div className="p-4 flex flex-col gap-3 flex-1">
@@ -1066,7 +1066,7 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
 
         {/* Award */}
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px]"
-          style={{ background: "#faf7f2", border: "1px solid var(--color-line)" }}>
+          style={{ background: "#f8fafc", border: "1px solid var(--color-line)" }}>
           <Star className="size-3 shrink-0" style={{ color: "#8a6400" }} />
           <span className="text-[13px] text-[#0b1426] truncate"
             style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
@@ -1262,7 +1262,7 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
               {t.label}
               <span className="px-1.5 py-0.5 rounded text-[13px]"
                 style={{
-                  background: tab === t.key ? theme.tint : "#f0ece3",
+                  background: tab === t.key ? theme.tint : "#eef2f8",
                   color: tab === t.key ? theme.primary : "#5a5040",
                 }}>
                 {t.count}

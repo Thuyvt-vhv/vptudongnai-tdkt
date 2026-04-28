@@ -116,7 +116,7 @@ const MY_HO_SO: MyHoSo[] = [
 
 /* ─── Status config ─────────────────────────────────────────── */
 const SCONFIG: Record<TrackStatus, { label: string; color: string; bg: string; icon: typeof Clock }> = {
-  nhap:             { label:"Bản nháp",          color:"#5a5040", bg:"#f0ece3", icon:FileText },
+  nhap:             { label:"Bản nháp",          color:"#5a5040", bg:"#eef2f8", icon:FileText },
   da_nop:           { label:"Đã nộp",            color:"#0891b2", bg:"#e0f2fe", icon:Send },
   dang_tham_dinh:   { label:"Đang thẩm định",    color:"#b45309", bg:"#fef3c7", icon:Clock },
   yeu_cau_bo_sung:  { label:"Yêu cầu bổ sung",   color:"#c2410c", bg:"#fff7ed", icon:AlertCircle },
@@ -260,7 +260,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
         )}
 
         {/* Tabs */}
-        <div className="flex border-b border-[#e8e2d4] shrink-0" style={{ background: "#faf7f2" }}>
+        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#f8fafc" }}>
           {([
             ["timeline", "Dòng thời gian"],
             ["docs", `Tài liệu (${docs.filter(d => d.uploaded).length}/${docs.length})`],
@@ -283,7 +283,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
           {/* Timeline */}
           {tab === "timeline" && (
             <div className="relative">
-              <div className="absolute left-5 top-0 bottom-0 w-px bg-[#e8e2d4]" />
+              <div className="absolute left-5 top-0 bottom-0 w-px bg-[#e2e8f0]" />
               <div className="space-y-5">
                 {hs.timeline.map((ev, i) => {
                   const Icon = EVENT_ICON[ev.type];
@@ -294,7 +294,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                         style={{ background: `${color}20`, border: `1.5px solid ${color}` }}>
                         <Icon className="size-3" style={{ color }} />
                       </div>
-                      <div className="flex-1 rounded-[10px] border p-3.5" style={{ background: "white", borderColor: "#e8e2d4" }}>
+                      <div className="flex-1 rounded-[10px] border p-3.5" style={{ background: "white", borderColor: "#e2e8f0" }}>
                         <div className="flex items-start justify-between gap-2 mb-1">
                           <div>
                             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.event}</span>
@@ -306,7 +306,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                         </div>
                         {ev.note && (
                           <div className="mt-2 p-2 rounded-[6px] text-[13px] text-[#5a5040]"
-                            style={{ background: "#faf7f2", fontFamily: "var(--font-sans)", border: "1px solid #e8e2d4" }}>
+                            style={{ background: "#f8fafc", fontFamily: "var(--font-sans)", border: "1px solid #e2e8f0" }}>
                             {ev.note}
                           </div>
                         )}
@@ -334,7 +334,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
             <div className="space-y-3">
               {docs.map((d, i) => (
                 <div key={i} className="flex items-center gap-3 p-3.5 rounded-[10px] border"
-                  style={{ borderColor: d.uploaded ? "#86efac" : "#e8e2d4", background: d.uploaded ? "#f0fdf4" : "white" }}>
+                  style={{ borderColor: d.uploaded ? "#86efac" : "#e2e8f0", background: d.uploaded ? "#f0fdf4" : "white" }}>
                   <FileText className="size-5 shrink-0" style={{ color: d.uploaded ? "#166534" : "#635647" }} />
                   <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
                   {d.uploaded
@@ -365,7 +365,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                 <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tải lên tài liệu bổ sung</h3>
                 <div className="space-y-2">
                   {docs.filter(d => !d.uploaded).map((d, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3.5 rounded-[10px] border" style={{ borderColor: "#e8e2d4", background: "white" }}>
+                    <div key={i} className="flex items-center gap-3 p-3.5 rounded-[10px] border" style={{ borderColor: "#e2e8f0", background: "white" }}>
                       <FileText className="size-5 text-[#635647] shrink-0" />
                       <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
                       <button onClick={() => handleUpload(d.ten)}
@@ -391,7 +391,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                 <textarea value={reply} onChange={e => setReply(e.target.value)}
                   rows={3}
                   placeholder="Giải thích, lưu ý hoặc câu hỏi gửi thẩm định viên..."
-                  className="w-full px-4 py-3 border border-[#e8e2d4] rounded-[10px] text-[13px] outline-none focus:border-[#1C5FBE] resize-none"
+                  className="w-full px-4 py-3 border border-[#e2e8f0] rounded-[10px] text-[13px] outline-none focus:border-[#1C5FBE] resize-none"
                   style={{ fontFamily: "var(--font-sans)", background: "#fafaf9" }} />
                 {sent && <p className="text-[13px] text-[#166534] mt-1">✅ Ghi chú đã được gửi.</p>}
                 <div className="flex items-center gap-2 mt-2">
@@ -435,7 +435,7 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
   const inProg = hoSoList.filter(h => !["hoan_thanh","tu_choi","nhap"].includes(h.status));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {selected && <HoSoDetail hs={selected} onClose={() => setSelected(null)} />}
       {wizardOpen && (
         <TaoHoSoWizard
@@ -446,7 +446,7 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
       )}
 
       {/* Header */}
-      <div className="px-8 py-5 border-b border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+      <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h1>
           <p className="text-[13px] text-[#635647]">Theo dõi tiến trình xét duyệt · Cập nhật {new Date().toLocaleDateString("vi-VN")}</p>
@@ -459,9 +459,9 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
       </div>
 
       {/* Stats */}
-      <div className="px-8 py-4 grid grid-cols-4 gap-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "white" }}>
+      <div className="px-8 py-4 grid grid-cols-4 gap-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         {[
-          { l:"Tổng hồ sơ",     v:hoSoList.length, color:"#0b1426", bg:"#faf7f2" },
+          { l:"Tổng hồ sơ",     v:hoSoList.length, color:"#0b1426", bg:"#f8fafc" },
           { l:"Đang xử lý",     v:inProg.length,   color:"#1C5FBE", bg:"#f0f4ff" },
           { l:"Cần bổ sung",    v:urgent.length,   color:"#b45309", bg:"#fef9ec" },
           { l:"Đã hoàn thành",  v:done.length,     color:"#166534", bg:"#dcfce7" },
@@ -542,8 +542,8 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
     <div onClick={onClick}
       className="rounded-[12px] border bg-white p-5 hover:shadow-md transition-all cursor-pointer hover:border-[#1C5FBE]/40"
       style={{
-        borderColor: hs.status === "yeu_cau_bo_sung" ? "#fed7aa" : hs.status === "hoan_thanh" ? "#86efac" : "#e8e2d4",
-        borderLeft: hs.status === "yeu_cau_bo_sung" ? "3px solid #b45309" : hs.status === "hoan_thanh" ? "3px solid #166534" : "3px solid #e8e2d4",
+        borderColor: hs.status === "yeu_cau_bo_sung" ? "#fed7aa" : hs.status === "hoan_thanh" ? "#86efac" : "#e2e8f0",
+        borderLeft: hs.status === "yeu_cau_bo_sung" ? "3px solid #b45309" : hs.status === "hoan_thanh" ? "3px solid #166534" : "3px solid #e2e8f0",
       }}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
@@ -572,7 +572,7 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
         <div className="flex flex-col items-center gap-1 shrink-0">
           <div className="relative size-12">
             <svg viewBox="0 0 48 48" className="size-12 -rotate-90">
-              <circle cx="24" cy="24" r="19" fill="none" stroke="#f0ece3" strokeWidth="4" />
+              <circle cx="24" cy="24" r="19" fill="none" stroke="#eef2f8" strokeWidth="4" />
               <circle cx="24" cy="24" r="19" fill="none"
                 stroke={hs.aiScore >= 85 ? "#166534" : hs.aiScore >= 70 ? "#b45309" : "#c8102e"}
                 strokeWidth="4"
@@ -599,7 +599,7 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
             return (
               <div key={ws.label} className="flex items-center flex-1 gap-1">
                 <div className="h-1.5 flex-1 rounded-full transition-all"
-                  style={{ background: done ? "#166534" : cur ? "#1C5FBE" : "#e8e2d4" }} />
+                  style={{ background: done ? "#166534" : cur ? "#1C5FBE" : "#e2e8f0" }} />
               </div>
             );
           })}

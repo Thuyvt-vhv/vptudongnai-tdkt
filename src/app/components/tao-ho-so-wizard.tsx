@@ -168,7 +168,7 @@ function ProgressBar({ step }: { step: number }) {
               <div
                 className="size-8 rounded-full flex items-center justify-center text-[13px] transition-all"
                 style={{
-                  background: done    ? "#166534" : current ? "#1C5FBE" : "#f0ece3",
+                  background: done    ? "#166534" : current ? "#1C5FBE" : "#eef2f8",
                   color:      done    ? "white"   : current ? "white"   : "#635647",
                   border:     current ? "2px solid #1C5FBE" : "none",
                   fontFamily: "JetBrains Mono, monospace", fontWeight: 700,
@@ -182,7 +182,7 @@ function ProgressBar({ step }: { step: number }) {
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <div className="flex-1 h-px mt-[-16px] mx-1" style={{ background: done ? "#166534" : "#e8e2d4" }} />
+              <div className="flex-1 h-px mt-[-16px] mx-1" style={{ background: done ? "#166534" : "#e2e8f0" }} />
             )}
           </div>
         );
@@ -210,7 +210,7 @@ function Step1({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
             <button key={dh.id} onClick={() => onChange({ danhHieu: dh })}
               className="text-left p-4 rounded-[12px] border transition-all hover:shadow-md"
               style={{
-                borderColor: sel ? dh.color : "#e8e2d4",
+                borderColor: sel ? dh.color : "#e2e8f0",
                 borderWidth: sel ? 2 : 1,
                 background: sel ? dh.bg : "white",
                 boxShadow: sel ? `0 0 0 3px ${dh.color}20` : "none",
@@ -231,7 +231,7 @@ function Step1({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
                 {/* AI score ring */}
                 <div className="relative size-10 shrink-0">
                   <svg viewBox="0 0 40 40" className="size-10 -rotate-90">
-                    <circle cx="20" cy="20" r="16" fill="none" stroke="#f0ece3" strokeWidth="4" />
+                    <circle cx="20" cy="20" r="16" fill="none" stroke="#eef2f8" strokeWidth="4" />
                     <circle cx="20" cy="20" r="16" fill="none"
                       stroke={dh.aiScore >= 80 ? "#166534" : dh.aiScore >= 60 ? "#b45309" : "#c8102e"}
                       strokeWidth="4"
@@ -281,7 +281,7 @@ function Step2({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         {label}{required && <span className="text-[#c8102e] ml-0.5">*</span>}
       </label>
       <input value={value} onChange={e => oc(e.target.value)} type={type}
-        className="w-full px-3 border border-[#e8e2d4] rounded-[8px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] transition-colors"
+        className="w-full px-3 border border-[#e2e8f0] rounded-[8px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] transition-colors"
         style={{ height: 40, fontFamily: "var(--font-sans)", background: "#fafaf9" }} />
     </div>
   );
@@ -301,7 +301,7 @@ function Step2({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
           Giới tính<span className="text-[#c8102e] ml-0.5">*</span>
         </label>
         <select value={data.gioiTinh} onChange={e => onChange({ gioiTinh: e.target.value })}
-          className="w-full px-3 border border-[#e8e2d4] rounded-[8px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE]"
+          className="w-full px-3 border border-[#e2e8f0] rounded-[8px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE]"
           style={{ height: 40, fontFamily: "var(--font-sans)", background: "#fafaf9" }}>
           <option value="nam">Nam</option>
           <option value="nu">Nữ</option>
@@ -335,7 +335,7 @@ function Step3({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
           <textarea value={data.thanhTich} onChange={e => onChange({ thanhTich: e.target.value })}
             rows={7}
             placeholder="Ví dụ: Hoàn thành xuất sắc nhiệm vụ được giao trong 3 năm 2023–2025; đạt danh hiệu CSTĐ cơ sở 2 năm liên tiếp; chủ trì sáng kiến 'Số hóa quy trình tiếp nhận hồ sơ TĐKT' giảm 40% thời gian xử lý..."
-            className="w-full px-4 py-3 border border-[#e8e2d4] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
+            className="w-full px-4 py-3 border border-[#e2e8f0] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
             style={{ fontFamily: "var(--font-sans)", background: "#fafaf9", lineHeight: 1.7 }} />
           <span className="absolute bottom-3 right-3 text-[13px]"
             style={{ color: ttLen < 200 ? "#b45309" : ttLen < 500 ? "#1C5FBE" : "#166534", fontFamily: "JetBrains Mono, monospace" }}>
@@ -354,7 +354,7 @@ function Step3({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         <textarea value={data.sinhKien} onChange={e => onChange({ sinhKien: e.target.value })}
           rows={3}
           placeholder="Tên sáng kiến, cấp được công nhận, năm công nhận, phạm vi áp dụng..."
-          className="w-full px-4 py-3 border border-[#e8e2d4] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
+          className="w-full px-4 py-3 border border-[#e2e8f0] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
           style={{ fontFamily: "var(--font-sans)", background: "#fafaf9", lineHeight: 1.7 }} />
       </div>
 
@@ -365,7 +365,7 @@ function Step3({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         <textarea value={data.mucTieu} onChange={e => onChange({ mucTieu: e.target.value })}
           rows={3}
           placeholder="Cam kết, mục tiêu thi đua năm 2027..."
-          className="w-full px-4 py-3 border border-[#e8e2d4] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
+          className="w-full px-4 py-3 border border-[#e2e8f0] rounded-[10px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] resize-none"
           style={{ fontFamily: "var(--font-sans)", background: "#fafaf9", lineHeight: 1.7 }} />
       </div>
 
@@ -420,9 +420,9 @@ function Step4({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         <p className="text-[13px] uppercase tracking-widest text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bắt buộc</p>
         {required.map(m => (
           <div key={m.id} className="flex items-center gap-3 p-3.5 rounded-[10px] border transition-all"
-            style={{ borderColor: m.uploaded ? "#86efac" : "#e8e2d4", background: m.uploaded ? "#f0fdf4" : "white" }}>
+            style={{ borderColor: m.uploaded ? "#86efac" : "#e2e8f0", background: m.uploaded ? "#f0fdf4" : "white" }}>
             <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0"
-              style={{ background: m.uploaded ? "#dcfce7" : "#f0ece3" }}>
+              style={{ background: m.uploaded ? "#dcfce7" : "#eef2f8" }}>
               <FileText className="size-4" style={{ color: m.uploaded ? "#166534" : "#635647" }} />
             </div>
             <div className="flex-1 min-w-0">
@@ -448,9 +448,9 @@ function Step4({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         <p className="text-[13px] uppercase tracking-widest text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tùy chọn (khuyến nghị)</p>
         {optional.map(m => (
           <div key={m.id} className="flex items-center gap-3 p-3.5 rounded-[10px] border transition-all"
-            style={{ borderColor: m.uploaded ? "#86efac" : "#e8e2d4", background: m.uploaded ? "#f0fdf4" : "#faf7f2" }}>
+            style={{ borderColor: m.uploaded ? "#86efac" : "#e2e8f0", background: m.uploaded ? "#f0fdf4" : "#f8fafc" }}>
             <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0"
-              style={{ background: m.uploaded ? "#dcfce7" : "#f0ece3" }}>
+              style={{ background: m.uploaded ? "#dcfce7" : "#eef2f8" }}>
               <FileText className="size-4" style={{ color: m.uploaded ? "#166534" : "#635647" }} />
             </div>
             <div className="flex-1 min-w-0">
@@ -461,7 +461,7 @@ function Step4({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
               onClick={() => toggle(m.id, `${m.ten.split(" ").slice(0,2).join("_")}.pdf`)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] transition-all border"
               style={{
-                borderColor: m.uploaded ? "#86efac" : "#e8e2d4",
+                borderColor: m.uploaded ? "#86efac" : "#e2e8f0",
                 background: m.uploaded ? "#dcfce7" : "white",
                 color: m.uploaded ? "#166534" : "#5a5040",
                 fontFamily: "var(--font-sans)",
@@ -514,7 +514,7 @@ function Step5({ data }: { data: WizardData }) {
         <div className="flex flex-col items-center justify-center py-16 gap-5">
           <div className="relative size-20">
             <svg viewBox="0 0 80 80" className="size-20 animate-spin" style={{ animationDuration: "2s" }}>
-              <circle cx="40" cy="40" r="34" fill="none" stroke="#f0ece3" strokeWidth="6" />
+              <circle cx="40" cy="40" r="34" fill="none" stroke="#eef2f8" strokeWidth="6" />
               <circle cx="40" cy="40" r="34" fill="none" stroke="#7c3aed" strokeWidth="6"
                 strokeDasharray={`${2 * Math.PI * 34}`}
                 strokeDashoffset={`${2 * Math.PI * 34 * (1 - progress / 100)}`}
@@ -528,7 +528,7 @@ function Step5({ data }: { data: WizardData }) {
             <p className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI Tố Nga đang phân tích…</p>
             <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Đối chiếu Luật TĐKT 2022 · NĐ 152/2025/NĐ-CP · TT 15/2025</p>
           </div>
-          <div className="w-64 h-2 rounded-full overflow-hidden" style={{ background: "#f0ece3" }}>
+          <div className="w-64 h-2 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
             <div className="h-full rounded-full transition-all" style={{ width: `${progress}%`, background: "linear-gradient(to right,#7c3aed,#1C5FBE)" }} />
           </div>
           <span className="text-[13px] text-[#7c3aed]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>{Math.round(progress)}%</span>
@@ -540,7 +540,7 @@ function Step5({ data }: { data: WizardData }) {
             style={{ background: overallScore >= 80 ? "linear-gradient(135deg,#f0fdf4,#dcfce7)" : "linear-gradient(135deg,#fef9ec,#fef3c7)", border: `1px solid ${overallScore >= 80 ? "#86efac" : "#fde68a"}` }}>
             <div className="relative size-20 shrink-0">
               <svg viewBox="0 0 80 80" className="size-20 -rotate-90">
-                <circle cx="40" cy="40" r="34" fill="none" stroke="#e8e2d4" strokeWidth="6" />
+                <circle cx="40" cy="40" r="34" fill="none" stroke="#e2e8f0" strokeWidth="6" />
                 <circle cx="40" cy="40" r="34" fill="none"
                   stroke={overallScore >= 80 ? "#166534" : "#b45309"}
                   strokeWidth="6"
@@ -595,7 +595,7 @@ function Step6({ data, onSubmit, submitting, done }: { data: WizardData; onSubmi
       <div className="text-center">
         <h3 className="text-[18px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ đã được nộp thành công!</h3>
         <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
-          Mã hồ sơ: <code style={{ fontFamily: "JetBrains Mono, monospace", background: "#f0ece3", padding: "1px 6px", borderRadius: 4, fontWeight: 700 }}>TĐKT-2026-{String(Math.floor(Math.random()*100)+160).padStart(3,"0")}</code>
+          Mã hồ sơ: <code style={{ fontFamily: "JetBrains Mono, monospace", background: "#eef2f8", padding: "1px 6px", borderRadius: 4, fontWeight: 700 }}>TĐKT-2026-{String(Math.floor(Math.random()*100)+160).padStart(3,"0")}</code>
         </p>
         <p className="text-[13px] text-[#635647] mt-2" style={{ fontFamily: "var(--font-sans)" }}>
           Hội đồng cơ sở sẽ xem xét hồ sơ trong vòng <strong>15 ngày làm việc</strong>. Bạn sẽ nhận thông báo qua email và hệ thống.
@@ -724,7 +724,7 @@ export function TaoHoSoWizard({ user, onClose, onDone }: { user: LoginUser; onCl
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto px-7 py-6" style={{ background: "#faf7f2" }}>
+        <div className="flex-1 overflow-y-auto px-7 py-6" style={{ background: "#f8fafc" }}>
           <div className="mb-4">
             <h3 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               {STEPS[step - 1].label}
@@ -740,12 +740,12 @@ export function TaoHoSoWizard({ user, onClose, onDone }: { user: LoginUser; onCl
 
         {/* Footer */}
         {!done && (
-          <div className="px-7 py-4 border-t border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+          <div className="px-7 py-4 border-t border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
             <button
               onClick={() => setStep(s => Math.max(1, s - 1))}
               disabled={step === 1}
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-[8px] border text-[13px] transition-all disabled:opacity-40"
-              style={{ borderColor: "#e8e2d4", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
+              style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
               <ChevronLeft className="size-4" />Quay lại
             </button>
 

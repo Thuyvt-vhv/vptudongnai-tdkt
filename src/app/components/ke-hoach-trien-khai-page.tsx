@@ -69,7 +69,7 @@ const PRIORITY_CFG: Record<Priority,{ color:string; bg:string; border:string; la
   P0: { color:"#991b1b", bg:"#fee2e2", border:"#fca5a5", label:"Thiết yếu"  },
   P1: { color:"#92400e", bg:"#fef3c7", border:"#fcd34d", label:"Quan trọng" },
   P2: { color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", label:"Nên có"     },
-  P3: { color:"#5a5040", bg:"#f5f2ec", border:"#d6cfc3", label:"Tương lai"  },
+  P3: { color:"#5a5040", bg:"#f4f7fb", border:"#d6cfc3", label:"Tương lai"  },
 };
 
 const STATUS_CFG: Record<Status,{ label:string; color:string; bg:string; icon:typeof Circle }> = {
@@ -913,11 +913,11 @@ function EffortChip({ e }:{ e:Effort }) {
   const m = EFFORT_MAP[e];
   return (
     <span className="inline-flex items-center gap-1 text-[13px] px-2 py-0.5 rounded"
-      style={{ background:"#f5f2ec",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}
+      style={{ background:"#f4f7fb",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}
       title={m.days}>
       {[1,2,3,4].map(i=>(
         <span key={i} className="inline-block size-1.5 rounded-full"
-          style={{ background:i<=m.dots?"#0b1426":"#e8e2d4" }}/>
+          style={{ background:i<=m.dots?"#0b1426":"#e2e8f0" }}/>
       ))}
       <span>{m.days}</span>
     </span>
@@ -974,8 +974,8 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
     <div className="rounded-[10px] border transition-all duration-200"
       style={{
         background: isDone?"#fafaf8":"white",
-        borderColor: isP0&&!isDone?"#fca5a5":"#e8e2d4",
-        borderLeft: `3px solid ${isP0&&!isDone?"#dc2626":isDone?"#86efac":"#e8e2d4"}`,
+        borderColor: isP0&&!isDone?"#fca5a5":"#e2e8f0",
+        borderLeft: `3px solid ${isP0&&!isDone?"#dc2626":isDone?"#86efac":"#e2e8f0"}`,
         opacity: isDone ? 0.82 : 1,
       }}>
 
@@ -1036,12 +1036,12 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
       {open && (
         <div className="border-t border-[#f0ece5]">
           {/* Full description */}
-          <div className="px-4 py-3" style={{ background:"#faf7f2" }}>
+          <div className="px-4 py-3" style={{ background:"#f8fafc" }}>
             <p className="text-[13px] text-[#5a5040] leading-relaxed">{feature.description}</p>
           </div>
 
           {/* Tab bar */}
-          <div className="flex items-center border-b border-[#e8e2d4] px-4 gap-1 pt-2">
+          <div className="flex items-center border-b border-[#e2e8f0] px-4 gap-1 pt-2">
             {TABS.map(t=>{
               const Icon=t.icon;
               const active=tab===t.key;
@@ -1105,7 +1105,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
                     <div className="flex flex-wrap gap-1.5">
                       {feature.uiComponents.map(c=>(
                         <code key={c} className="text-[13px] px-2 py-0.5 rounded"
-                          style={{ background:"#f5f2ec",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>
+                          style={{ background:"#f4f7fb",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>
                           {c}
                         </code>
                       ))}
@@ -1196,10 +1196,10 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
 ═══════════════════════════════════════════════════════════════ */
 function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)=>void }) {
   return (
-    <aside className="w-[240px] shrink-0 border-r border-[#e8e2d4] flex flex-col overflow-y-auto"
+    <aside className="w-[240px] shrink-0 border-r border-[#e2e8f0] flex flex-col overflow-y-auto"
       style={{ background:"#faf8f4" }}>
 
-      <div className="px-4 pt-5 pb-4 border-b border-[#e8e2d4]">
+      <div className="px-4 pt-5 pb-4 border-b border-[#e2e8f0]">
         <div className="flex items-center gap-2 mb-0.5">
           <Layers className="size-4" style={{ color:"#c8102e" }}/>
           <span className="text-[13px] uppercase tracking-widest text-[#635647]">
@@ -1228,7 +1228,7 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
               className="w-full rounded-[10px] p-3 border text-left transition-all"
               style={{
                 background: active ? m.bg : "white",
-                borderColor: active ? m.border : "#e8e2d4",
+                borderColor: active ? m.border : "#e2e8f0",
                 boxShadow: active ? `0 0 0 2px ${m.border}55` : "none",
               }}>
 
@@ -1275,7 +1275,7 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
       </div>
 
       {/* Legend */}
-      <div className="mt-auto p-4 border-t border-[#e8e2d4] space-y-1.5">
+      <div className="mt-auto p-4 border-t border-[#e2e8f0] space-y-1.5">
         {(["P0","P1","P2"] as Priority[]).map(p=>{
           const c=PRIORITY_CFG[p];
           return (
@@ -1323,7 +1323,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
 
         {/* Role header banner */}
-        <div className="shrink-0 px-7 py-4 border-b border-[#e8e2d4]"
+        <div className="shrink-0 px-7 py-4 border-b border-[#e2e8f0]"
           style={{ background:`linear-gradient(to right, ${meta.bg}, white)` }}>
           <div className="flex items-center gap-4">
             <div className="size-12 rounded-xl flex items-center justify-center"
@@ -1370,7 +1370,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Module tabs */}
-        <div className="shrink-0 border-b border-[#e8e2d4] px-7 flex items-end gap-1 overflow-x-auto"
+        <div className="shrink-0 border-b border-[#e2e8f0] px-7 flex items-end gap-1 overflow-x-auto"
           style={{ background:"rgba(255,255,255,0.95)" }}>
           {spec.modules.map(mod=>{
             const Icon = mod.icon;
@@ -1390,7 +1390,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
                 <span>{mod.title}</span>
                 {/* Sprint chip */}
                 <span className="text-[13px] px-1.5 py-0.5 rounded"
-                  style={{ background:active?meta.bg:"#f5f2ec",color:active?meta.color:"#635647" }}>
+                  style={{ background:active?meta.bg:"#f4f7fb",color:active?meta.color:"#635647" }}>
                   {mod.sprint}
                 </span>
                 {/* P0 warning */}
@@ -1411,7 +1411,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
         {/* Module body */}
         <div className="flex-1 overflow-y-auto">
           {/* Module header */}
-          <div className="px-7 py-4 border-b border-[#e8e2d4]"
+          <div className="px-7 py-4 border-b border-[#e2e8f0]"
             style={{ background:"#faf8f4" }}>
             <div className="flex items-center gap-3">
               <div className="size-9 rounded-lg flex items-center justify-center"

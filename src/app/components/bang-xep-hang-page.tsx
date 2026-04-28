@@ -183,7 +183,7 @@ function RankRow({ entry, tick }: { entry: RankEntry; tick: number }) {
   const medalColor = ["#8a6400", "#C0C0C0", "#CD7F32"][entry.rank - 1] ?? null;
 
   return (
-    <tr className="border-b border-[#f0ece3] hover:bg-[#faf8f4] transition-colors">
+    <tr className="border-b border-[#eef2f8] hover:bg-[#faf8f4] transition-colors">
       {/* Rank */}
       <td className="pl-5 pr-3 py-3 w-14">
         <div className="flex items-center gap-1.5">
@@ -235,7 +235,7 @@ function RankRow({ entry, tick }: { entry: RankEntry; tick: number }) {
           {entry.diem.map(d => (
             <div key={d.label} className="flex items-center gap-2">
               <span className="text-[13px] text-[#6b5e47] w-14 text-right shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{d.label}</span>
-              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#f0ece3" }}>
+              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                 <div className="h-full rounded-full transition-all duration-700" style={{ width: `${d.v}%`, background: d.color }} />
               </div>
               <span className="text-[13px] w-7 shrink-0" style={{ fontFamily: "JetBrains Mono, monospace", color: d.color }}>{d.v}</span>
@@ -299,9 +299,9 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
   const lastUpdate = new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "linear-gradient(to bottom,#0b1426,#1a2744)" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "linear-gradient(to bottom,#0b1426,#1a2744)" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-11 rounded-[12px] flex items-center justify-center" style={{ background: "rgba(212,168,75,0.2)" }}>
             <Trophy className="size-6 text-[#8a6400]" />
@@ -365,7 +365,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
       <div className="flex-1 overflow-y-auto">
         {/* Podium */}
         {!search && top3.length >= 3 && (
-          <div className="border-b border-[#e8e2d4] px-6 py-2" style={{ background: "linear-gradient(to bottom,#1a2744,#0b1426)" }}>
+          <div className="border-b border-[#e2e8f0] px-6 py-2" style={{ background: "linear-gradient(to bottom,#1a2744,#0b1426)" }}>
             <Podium top3={top3} />
           </div>
         )}
@@ -374,7 +374,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
         <div style={{ background: "white" }}>
           <table className="w-full">
             <thead>
-              <tr className="border-b-2 border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+              <tr className="border-b-2 border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
                 {["Hạng", "Họ tên / Tập thể", "Đơn vị", "Điểm thành phần", "Tổng điểm", "Thành tích"].map(h => (
                   <th key={h} className="px-3 py-2.5 text-left text-[13px] uppercase tracking-wider text-[#635647]"
                     style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</th>
@@ -395,7 +395,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Legend */}
-        <div className="px-6 py-3 border-t border-[#e8e2d4] flex items-center gap-4" style={{ background: "#faf7f2" }}>
+        <div className="px-6 py-3 border-t border-[#e2e8f0] flex items-center gap-4" style={{ background: "#f8fafc" }}>
           {[["#8a6400", "Hạng Nhất"], ["#C0C0C0", "Hạng Nhì"], ["#CD7F32", "Hạng Ba"]].map(([c, l]) => (
             <div key={l} className="flex items-center gap-1.5 text-[13px] text-[#635647]">
               <div className="size-3 rounded-full" style={{ background: c as string }} />{l}

@@ -68,7 +68,7 @@ function ActionBtn({ icon: Icon, onClick, title, badge }: {
       className="relative size-[34px] rounded-[8px] flex items-center justify-center transition-all"
       style={{ color: "#6b7280" }}
       onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.background = "#f0ece3";
+        (e.currentTarget as HTMLElement).style.background = "#eef2f8";
         (e.currentTarget as HTMLElement).style.color = "#1a1409";
       }}
       onMouseLeave={e => {
@@ -92,7 +92,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
       <button onClick={() => setOpen(v => !v)}
         className="relative size-[34px] rounded-[8px] flex items-center justify-center transition-all"
         style={{ color: "#6b7280" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f0ece3"; (e.currentTarget as HTMLElement).style.color = "#1a1409"; }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; (e.currentTarget as HTMLElement).style.color = "#1a1409"; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}>
         <Bell className="size-4" strokeWidth={1.75} />
         {unread > 0 && (
@@ -305,12 +305,12 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
                   <div className="p-1.5 space-y-px">
                     <MenuRow icon={Settings}  label="Cài đặt tài khoản"    sub="Hồ sơ, bảo mật, thông báo"    onClick={() => { setShowMenu(false); onOpenSettings?.(); }} />
                     <MenuRow icon={Clock}     label="Thời gian hoạt động"   sub="Lịch sử phiên làm việc"        onClick={() => { setShowMenu(false); onSelectModule("Thời gian hoạt động"); }} />
-                    <div className="h-px my-1" style={{ background: "#f0ece3" }} />
+                    <div className="h-px my-1" style={{ background: "#eef2f8" }} />
                     <MenuRow icon={LogOut}    label="Đăng xuất"             sub=""                              onClick={() => { setShowMenu(false); onLogout(); }} danger />
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-2.5 flex items-center justify-end" style={{ borderTop: "1px solid #f0ece3", background: "#faf7f2" }}>
+                  <div className="px-4 py-2.5 flex items-center justify-end" style={{ borderTop: "1px solid #eef2f8", background: "#f8fafc" }}>
                     <span className="text-[13px] flex items-center gap-1" style={{ color: "#22c55e", fontFamily: "var(--font-sans)" }}>
                       <span className="size-1.5 rounded-full inline-block bg-green-400 animate-pulse" />
                       Hệ thống hoạt động

@@ -151,7 +151,7 @@ function NavBadge({ value, active }: { value: string; active: boolean }) {
   );
   return (
     <span className="flex items-center justify-center h-[17px] min-w-[17px] px-1 rounded-full text-[13px] shrink-0"
-      style={{ background: urgent ? "#c8102e" : "#ede8de", color: urgent ? "white" : "#7a6a4e", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
+      style={{ background: urgent ? "#c8102e" : "#e8eef5", color: urgent ? "white" : "#7a6a4e", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
       {value}
     </span>
   );
@@ -172,7 +172,7 @@ export function Sidebar({ user, active, onSelect }: {
 
   return (
     <aside className="w-[224px] shrink-0 flex flex-col h-full select-none"
-      style={{ background: "#f7f5f1", borderRight: "1px solid #e6e0d4" }}>
+      style={{ background: "#f4f7fb", borderRight: "1px solid #dde3ec" }}>
 
       {/* ── Dark brand header ──────────────────────────────────── */}
       <div style={{
@@ -288,7 +288,7 @@ export function Sidebar({ user, active, onSelect }: {
               {/* Divider between groups */}
               {gi < filteredNav.length - 1 && !isCollapsed && (
                 <div className="mx-2 mt-2 mb-0"
-                  style={{ height: 1, background: "linear-gradient(90deg, transparent, #ddd5c5 25%, #ddd5c5 75%, transparent)" }} />
+                  style={{ height: 1, background: "linear-gradient(90deg, transparent, #dde3ec 25%, #dde3ec 75%, transparent)" }} />
               )}
             </div>
           );

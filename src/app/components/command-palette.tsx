@@ -204,11 +204,11 @@ export function CommandPalette({
       {/* Panel */}
       <div
         className="relative w-full max-w-[640px] rounded-[16px] overflow-hidden shadow-2xl"
-        style={{ background: "white", border: "1px solid #e8e2d4" }}
+        style={{ background: "white", border: "1px solid #e2e8f0" }}
         onClick={e => e.stopPropagation()}
       >
         {/* Search input */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#e8e2d4]">
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#e2e8f0]">
           <Search className="size-5 text-[#635647] shrink-0" />
           <input
             ref={inputRef}
@@ -220,12 +220,12 @@ export function CommandPalette({
           />
           <div className="flex items-center gap-1 shrink-0">
             {query && (
-              <button onClick={() => setQuery("")} className="size-6 rounded flex items-center justify-center hover:bg-[#f0ece3]">
+              <button onClick={() => setQuery("")} className="size-6 rounded flex items-center justify-center hover:bg-[#eef2f8]">
                 <X className="size-3.5 text-[#635647]" />
               </button>
             )}
-            <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-[#e8e2d4] text-[13px] text-[#635647]"
-              style={{ fontFamily: "JetBrains Mono, monospace", background: "#faf7f2" }}>
+            <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-[#e2e8f0] text-[13px] text-[#635647]"
+              style={{ fontFamily: "JetBrains Mono, monospace", background: "#f8fafc" }}>
               ESC
             </kbd>
           </div>
@@ -257,7 +257,7 @@ export function CommandPalette({
                       style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                       {TYPE_LABEL[type]}
                     </span>
-                    <div className="flex-1 h-px bg-[#f0ece3]" />
+                    <div className="flex-1 h-px bg-[#eef2f8]" />
                   </div>
                   {/* Items */}
                   {items.map(item => {
@@ -274,7 +274,7 @@ export function CommandPalette({
                         style={{ background: isActive ? "#f0f4ff" : "transparent" }}
                       >
                         <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0"
-                          style={{ background: isActive ? `${item.color}20` : "#f5f2ec", transition: "background 0.15s" }}>
+                          style={{ background: isActive ? `${item.color}20` : "#f4f7fb", transition: "background 0.15s" }}>
                           <Icon className="size-4" style={{ color: item.color }} />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -299,18 +299,18 @@ export function CommandPalette({
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2.5 border-t border-[#f0ece3] flex items-center gap-4" style={{ background: "#faf7f2" }}>
+        <div className="px-4 py-2.5 border-t border-[#eef2f8] flex items-center gap-4" style={{ background: "#f8fafc" }}>
           <div className="flex items-center gap-3 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded border border-[#e8e2d4] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↑↓</kbd>
+              <kbd className="px-1 py-0.5 rounded border border-[#e2e8f0] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↑↓</kbd>
               Điều hướng
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded border border-[#e8e2d4] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↵</kbd>
+              <kbd className="px-1 py-0.5 rounded border border-[#e2e8f0] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↵</kbd>
               Chọn
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded border border-[#e8e2d4] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>ESC</kbd>
+              <kbd className="px-1 py-0.5 rounded border border-[#e2e8f0] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>ESC</kbd>
               Đóng
             </span>
           </div>

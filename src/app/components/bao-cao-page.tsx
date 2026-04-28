@@ -144,7 +144,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.7)" }}>
       <div className="w-[760px] max-h-[90vh] flex flex-col rounded-[16px] overflow-hidden shadow-2xl" style={{ background: "white" }}>
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background: report.bg }}>
             <report.icon className="size-5" style={{ color: report.color }} />
           </div>
@@ -152,15 +152,15 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
             <span className="text-[13px]" style={{ color: report.color, fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.code}</span>
             <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h3>
           </div>
-          <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f0ece3]">
+          <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#eef2f8]">
             <X className="size-4 text-[#635647]" />
           </button>
         </div>
         {/* Page mock */}
         <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-[600px] mx-auto border border-[#e8e2d4] rounded-[8px] p-8 space-y-5" style={{ background: "white" }}>
+          <div className="max-w-[600px] mx-auto border border-[#e2e8f0] rounded-[8px] p-8 space-y-5" style={{ background: "white" }}>
             {/* Document header */}
-            <div className="text-center border-b border-[#e8e2d4] pb-5">
+            <div className="text-center border-b border-[#e2e8f0] pb-5">
               <div className="text-[13px] uppercase tracking-widest text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>UBND TỈNH ĐỒNG NAI</div>
               <div className="text-[13px] text-[#635647] mb-3">Số: {report.code}/BC-TĐKT/{params.nam || "2026"}</div>
               <h2 className="text-[18px] text-[#0b1426] uppercase" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h2>
@@ -173,7 +173,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
               <p className="font-bold text-[#0b1426]">I. KẾT QUẢ TỔNG HỢP</p>
               <div className="grid grid-cols-3 gap-3">
                 {[["Tổng hồ sơ", "124"], ["Đã hoàn thành", "112"], ["Tỷ lệ đúng hạn", "97.2%"]].map(([k, v]) => (
-                  <div key={k} className="rounded-[8px] p-3 text-center" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+                  <div key={k} className="rounded-[8px] p-3 text-center" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
                     <div className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{v}</div>
                     <div className="text-[13px] text-[#635647]">{k}</div>
                   </div>
@@ -181,11 +181,11 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
               </div>
               <p className="font-bold text-[#0b1426] pt-2">II. DANH SÁCH CHI TIẾT</p>
               {[1, 2, 3].map(i => (
-                <div key={i} className="flex items-center gap-3 py-2 border-b border-[#f0ece3]">
+                <div key={i} className="flex items-center gap-3 py-2 border-b border-[#eef2f8]">
                   <span className="text-[#635647] w-5">{i}.</span>
                   <div className="flex-1">
-                    <div className="h-2 rounded bg-[#e8e2d4] w-3/4 mb-1" />
-                    <div className="h-2 rounded bg-[#f0ece3] w-1/2" />
+                    <div className="h-2 rounded bg-[#e2e8f0] w-3/4 mb-1" />
+                    <div className="h-2 rounded bg-[#eef2f8] w-1/2" />
                   </div>
                   <span className="text-[13px] text-[#6b5e47]">Page {i}</span>
                 </div>
@@ -195,7 +195,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
           </div>
         </div>
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-[#e8e2d4] flex gap-2" style={{ background: "#faf7f2" }}>
+        <div className="px-5 py-3 border-t border-[#e2e8f0] flex gap-2" style={{ background: "#f8fafc" }}>
           {report.outputs.map(fmt => {
             const cfg = { pdf: { icon: File, l: "Xuất PDF", c: "#c8102e" }, excel: { icon: FileSpreadsheet, l: "Xuất Excel", c: "#166534" }, word: { icon: FileText, l: "Xuất Word", c: "#1C5FBE" } }[fmt];
             return (
@@ -205,7 +205,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
               </button>
             );
           })}
-          <button onClick={onClose} className="ml-auto px-4 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Đóng</button>
+          <button onClick={onClose} className="ml-auto px-4 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Đóng</button>
         </div>
       </div>
     </div>
@@ -231,7 +231,7 @@ function ReportCard({ report, user, onGenerate }: { report: ReportTemplate; user
   };
 
   return (
-    <div className="rounded-[12px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white", opacity: canAccess ? 1 : 0.5 }}>
+    <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white", opacity: canAccess ? 1 : 0.5 }}>
       {/* Top accent */}
       <div className="h-1" style={{ background: `linear-gradient(to right,${report.color},${report.color}66)` }} />
       <div className="p-5">
@@ -312,12 +312,12 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
   const filtered = REPORTS.filter(r => filter === "all" || r.roles.includes(filter as any));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {preview && (
         <ReportPreview report={preview} params={{}} onClose={() => setPreview(null)} />
       )}
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <FileText className="size-5 text-[#8a6400]" />
@@ -353,7 +353,7 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
           {[["all", "Tất cả"], ["admin", "Admin"], ["leader", "Lãnh đạo"], ["council", "Hội đồng"], ["manager", "Đơn vị"]].map(([k, l]) => (
             <button key={k} onClick={() => setFilter(k)}
               className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all"
-              style={{ background: filter === k ? "#0b1426" : "white", color: filter === k ? "white" : "#5a5040", borderColor: filter === k ? "#0b1426" : "#e8e2d4", fontFamily: "var(--font-sans)", fontWeight: filter === k ? 700 : 400 }}>
+              style={{ background: filter === k ? "#0b1426" : "white", color: filter === k ? "white" : "#5a5040", borderColor: filter === k ? "#0b1426" : "#e2e8f0", fontFamily: "var(--font-sans)", fontWeight: filter === k ? 700 : 400 }}>
               {l}
             </button>
           ))}
@@ -368,7 +368,7 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
           ))}
         </div>
         {/* Bottom note */}
-        <div className="mt-6 p-4 rounded-[10px] border border-[#e8e2d4] flex items-start gap-3" style={{ background: "white" }}>
+        <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background: "white" }}>
           <AlertCircle className="size-4 text-[#1C5FBE] shrink-0 mt-0.5" />
           <p className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
             Tất cả báo cáo được tạo tự động từ dữ liệu hệ thống, đảm bảo tính nhất quán và đúng mẫu theo quy định.

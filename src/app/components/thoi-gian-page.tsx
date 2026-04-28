@@ -90,7 +90,7 @@ const ACTIVITY_BY_ROLE: Record<string, ActivityEntry[]> = {
 ═══════════════════════════════════════════════════════════════ */
 const ACTION_CFG: Record<ActionType, { label: string; color: string; bg: string; icon: typeof Clock }> = {
   login:   { label:"Đăng nhập",  color:"#166534", bg:"#dcfce7", icon:LogIn       },
-  logout:  { label:"Đăng xuất",  color:"#635647", bg:"#f5f2ec", icon:LogOut      },
+  logout:  { label:"Đăng xuất",  color:"#635647", bg:"#f4f7fb", icon:LogOut      },
   view:    { label:"Xem",        color:"#1C5FBE", bg:"#ddeafc", icon:Eye         },
   create:  { label:"Tạo mới",    color:"#8a6400", bg:"#fdf9f0", icon:FileText    },
   edit:    { label:"Chỉnh sửa",  color:"#b45309", bg:"#fef3c7", icon:Edit3       },
@@ -110,7 +110,7 @@ function ActivityItem({ entry, isLast }: { entry: ActivityEntry; isLast: boolean
   return (
     <div className="flex gap-4 relative">
       {/* Line */}
-      {!isLast && <div className="absolute left-[22px] top-11 bottom-0 w-px" style={{ background: "#e8e2d4" }} />}
+      {!isLast && <div className="absolute left-[22px] top-11 bottom-0 w-px" style={{ background: "#e2e8f0" }} />}
       {/* Icon node */}
       <div className="size-11 rounded-full flex items-center justify-center shrink-0 border-2"
         style={{ background: cfg.bg, borderColor: "white", boxShadow: `0 0 0 2px ${cfg.color}30` }}>
@@ -180,7 +180,7 @@ function WeeklyHeatmap() {
                 return (
                   <div key={h} title={`${d} ${h}:00 – ${Math.round(v * 100)}% hoạt động`}
                     className="size-5 rounded-[3px] cursor-pointer hover:ring-2 hover:ring-[#1C5FBE]/40 transition-all"
-                    style={{ background: v < 0.2 ? "#f0ece3" : v < 0.5 ? "#93c5fd" : v < 0.75 ? "#3b82f6" : "#1C5FBE" }} />
+                    style={{ background: v < 0.2 ? "#eef2f8" : v < 0.5 ? "#93c5fd" : v < 0.75 ? "#3b82f6" : "#1C5FBE" }} />
                 );
               })}
             </div>
@@ -193,7 +193,7 @@ function WeeklyHeatmap() {
       </div>
       <div className="flex items-center gap-2 mt-2 text-[13px] text-[#6b5e47]">
         <span>Thấp</span>
-        {["#f0ece3", "#93c5fd", "#3b82f6", "#1C5FBE"].map(c => <div key={c} className="size-3 rounded-[2px]" style={{ background: c }} />)}
+        {["#eef2f8", "#93c5fd", "#3b82f6", "#1C5FBE"].map(c => <div key={c} className="size-3 rounded-[2px]" style={{ background: c }} />)}
         <span>Cao</span>
       </div>
     </div>
@@ -224,9 +224,9 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
   const sessionLast = entries[entries.length - 1]?.time ?? "11:00";
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <Activity className="size-5 text-[#8a6400]" />
@@ -240,7 +240,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
             </p>
           </div>
           <div className="ml-auto flex gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
               <Download className="size-3.5" />Xuất lịch sử
             </button>
           </div>
@@ -253,7 +253,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
             { label: "Hồ sơ ký số", v: signCount, c: "#1C5FBE", bg: "#ddeafc", icon: Award },
             { label: "Hồ sơ tạo mới", v: createCount, c: "#8a6400", bg: "#fdf9f0", icon: FileText },
             { label: "Phiên dùng AI", v: aiCount, c: "#7c3aed", bg: "#f5f3ff", icon: Zap },
-            { label: "Tổng hoạt động", v: entries.length, c: "#0b1426", bg: "#f5f2ec", icon: BarChart2 },
+            { label: "Tổng hoạt động", v: entries.length, c: "#0b1426", bg: "#f4f7fb", icon: BarChart2 },
           ].map(s => {
             const Icon = s.icon;
             return (
@@ -283,7 +283,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
               if (t === "all") return (
                 <button key="all" onClick={() => setFilterType("all")}
                   className="px-2.5 py-1 rounded-[5px] border text-[13px] transition-all"
-                  style={{ background: filterType === "all" ? "#0b1426" : "white", color: filterType === "all" ? "white" : "#5a5040", borderColor: filterType === "all" ? "#0b1426" : "#e8e2d4", fontFamily: "var(--font-sans)", fontWeight: filterType === "all" ? 700 : 400 }}>
+                  style={{ background: filterType === "all" ? "#0b1426" : "white", color: filterType === "all" ? "white" : "#5a5040", borderColor: filterType === "all" ? "#0b1426" : "#e2e8f0", fontFamily: "var(--font-sans)", fontWeight: filterType === "all" ? 700 : 400 }}>
                   Tất cả
                 </button>
               );
@@ -291,7 +291,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
               return (
                 <button key={t} onClick={() => setFilterType(filterType === t ? "all" : t)}
                   className="px-2.5 py-1 rounded-[5px] border text-[13px] transition-all"
-                  style={{ background: filterType === t ? cfg.bg : "white", color: filterType === t ? cfg.color : "#5a5040", borderColor: filterType === t ? cfg.color : "#e8e2d4", fontFamily: "var(--font-sans)", fontWeight: filterType === t ? 700 : 400 }}>
+                  style={{ background: filterType === t ? cfg.bg : "white", color: filterType === t ? cfg.color : "#5a5040", borderColor: filterType === t ? cfg.color : "#e2e8f0", fontFamily: "var(--font-sans)", fontWeight: filterType === t ? 700 : 400 }}>
                   {cfg.label}
                 </button>
               );
@@ -334,9 +334,9 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
           </div>
 
           {/* Right panel: heatmap + summary */}
-          <div className="w-72 shrink-0 border-l border-[#e8e2d4] p-5 space-y-5" style={{ background: "white" }}>
+          <div className="w-72 shrink-0 border-l border-[#e2e8f0] p-5 space-y-5" style={{ background: "white" }}>
             {/* Weekly heatmap */}
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background: "#faf7f2" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background: "#f8fafc" }}>
               <WeeklyHeatmap />
             </div>
 
@@ -358,7 +358,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
                       <span className="text-[13px] text-[#5a5040] truncate" style={{ fontFamily: "var(--font-sans)" }}>{mod}</span>
                       <span className="text-[13px] text-[#0b1426] shrink-0" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>{cnt}</span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#f0ece3" }}>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                       <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "linear-gradient(to right,#1C5FBE,#4a90d9)" }} />
                     </div>
                   </div>
@@ -367,7 +367,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
             </div>
 
             {/* Session info */}
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4 space-y-2.5" style={{ background: "#faf7f2" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4 space-y-2.5" style={{ background: "#f8fafc" }}>
               <h3 className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên hiện tại</h3>
               {[
                 ["Đăng nhập lúc", entries[0]?.time ?? "—"],

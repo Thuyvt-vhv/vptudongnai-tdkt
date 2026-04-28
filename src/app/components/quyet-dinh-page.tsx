@@ -95,7 +95,7 @@ const LEVEL_CFG = {
   co_so:    { l:"Cơ sở",   c:"#166534", bg:"#dcfce7" },
 };
 const STATUS_CFG = {
-  draft:    { l:"Dự thảo",  c:"#635647", bg:"#f0ece3" },
+  draft:    { l:"Dự thảo",  c:"#635647", bg:"#eef2f8" },
   signed:   { l:"Đã ký",   c:"#b45309", bg:"#fef3c7" },
   published:{ l:"Đã ban hành",c:"#166534",bg:"#dcfce7" },
 };
@@ -111,7 +111,7 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
     <div className="fixed inset-0 z-50 flex" style={{ background:"rgba(0,0,0,0.6)" }}>
       <div className="ml-auto h-full w-[680px] flex flex-col shadow-2xl overflow-hidden" style={{ background:"white" }}>
         {/* Header */}
-        <div className="p-5 border-b border-[#e8e2d4]" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
+        <div className="p-5 border-b border-[#e2e8f0]" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
           <div className="flex items-center gap-3 mb-3">
             <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"rgba(200,150,12,0.2)" }}>
               <Award className="size-5 text-[#8a6400]"/>
@@ -131,10 +131,10 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           </div>
         </div>
         {/* Body */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-5" style={{ background:"#faf7f2" }}>
+        <div className="flex-1 overflow-y-auto p-5 space-y-5" style={{ background:"#f8fafc" }}>
           {/* Meta info */}
-          <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden" style={{ background:"white" }}>
-            <div className="px-4 py-2.5 border-b border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+          <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
+            <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
               <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông tin Quyết định</span>
             </div>
             <div className="p-4 grid grid-cols-2 gap-3">
@@ -152,17 +152,17 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           </div>
           {/* Recipients */}
           {qd.recipients.length>0&&(
-            <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden" style={{ background:"white" }}>
-              <div className="px-4 py-2.5 border-b border-[#e8e2d4] flex items-center gap-2" style={{ background:"#faf8f4" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
+              <div className="px-4 py-2.5 border-b border-[#e2e8f0] flex items-center gap-2" style={{ background:"#faf8f4" }}>
                 <Users className="size-4 text-[#1C5FBE]"/>
                 <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh sách được khen thưởng ({qd.recipients.length})</span>
               </div>
               <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-                <thead><tr style={{ background:"#f5f2ec" }}>
+                <thead><tr style={{ background:"#f4f7fb" }}>
                   {["#","Họ tên","Chức vụ","Đơn vị","Điểm"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
                 </tr></thead>
                 <tbody>{qd.recipients.map((r,i)=>(
-                  <tr key={i} className="border-t border-[#e8e2d4]">
+                  <tr key={i} className="border-t border-[#e2e8f0]">
                     <td className="px-3 py-2 text-[#635647]">{i+1}</td>
                     <td className="px-3 py-2" style={{ fontWeight:600,color:"#0b1426" }}>{r.name}</td>
                     <td className="px-3 py-2 text-[#5a5040]">{r.chucVu}</td>
@@ -174,7 +174,7 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
             </div>
           )}
           {/* Căn cứ pháp lý */}
-          <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+          <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
             <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Căn cứ pháp lý</div>
             {qd.canCu.map((c,i)=>(
               <div key={i} className="flex items-center gap-2 text-[13px] text-[#5a5040] mb-1">
@@ -219,7 +219,7 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           )}
         </div>
         {/* Footer actions */}
-        <div className="p-4 border-t border-[#e8e2d4] flex gap-2" style={{ background:"white" }}>
+        <div className="p-4 border-t border-[#e2e8f0] flex gap-2" style={{ background:"white" }}>
           <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] text-white" style={{ background:"#0b1426",fontFamily: "var(--font-sans)",fontWeight:600 }}>
             <Eye className="size-4"/>Xem PDF
           </button>
@@ -260,10 +260,10 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
   const totalRecipients=DECISIONS.flatMap(d=>d.recipients).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {detail&&<QDDetail qd={detail} onClose={()=>setDetail(null)}/>}
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4]" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <ScrollText className="size-5 text-[#8a6400]"/>
@@ -285,7 +285,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
         {/* Stats */}
         <div className="flex gap-3 mb-4">
           {[
-            { l:"Tổng QĐ",       v:stats.total,         c:"#0b1426",bg:"#f5f2ec" },
+            { l:"Tổng QĐ",       v:stats.total,         c:"#0b1426",bg:"#f4f7fb" },
             { l:"Đã ban hành",   v:stats.published,     c:"#166534",bg:"#dcfce7" },
             { l:"Cấp Nhà nước",  v:stats.nhaduoc,        c:"#c8102e",bg:"#fee2e2" },
             { l:"Cấp Tỉnh",      v:stats.tinh,          c:"#1C5FBE",bg:"#ddeafc" },
@@ -311,7 +311,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
           <div className="flex gap-1">
             {[["all","Tất cả cấp"],["nha_nuoc","Nhà nước"],["tinh","Cấp Tỉnh"],["co_so","Cơ sở"]].map(([k,l])=>(
               <button key={k} onClick={()=>setLevelFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all"
-                style={{ background:levelFilter===k?"#0b1426":"white",color:levelFilter===k?"white":"#5a5040",borderColor:levelFilter===k?"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:levelFilter===k?700:400 }}>{l}</button>
+                style={{ background:levelFilter===k?"#0b1426":"white",color:levelFilter===k?"white":"#5a5040",borderColor:levelFilter===k?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:levelFilter===k?700:400 }}>{l}</button>
             ))}
           </div>
           <span className="ml-auto text-[13px] text-[#635647]">{visible.length} quyết định</span>
@@ -324,7 +324,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
             {visible.map(qd=>{
               const lc=LEVEL_CFG[qd.awardLevel]; const sc=STATUS_CFG[qd.status];
               return (
-                <button key={qd.id} onClick={()=>setDetail(qd)} className="rounded-[12px] border border-[#e8e2d4] overflow-hidden text-left hover:shadow-md transition-all hover:border-[#8a6400]" style={{ background:"white" }}>
+                <button key={qd.id} onClick={()=>setDetail(qd)} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden text-left hover:shadow-md transition-all hover:border-[#8a6400]" style={{ background:"white" }}>
                   <div className="h-1.5" style={{ background:qd.status==="published"?"linear-gradient(to right,#8a6400,#f0c040)":"linear-gradient(to right,#d1d5db,#e5e7eb)" }}/>
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2 mb-3">
@@ -340,7 +340,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                       {qd.recipients.length>0&&<span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#fdf9f0",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{qd.recipients.length} người</span>}
                     </div>
                     <div className="text-[13px] text-[#635647] truncate">{qd.unit}</div>
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#f0ece3]">
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#eef2f8]">
                       <div className="flex items-center gap-1 text-[13px] text-[#635647]">
                         <Calendar className="size-3.5"/>{qd.signedDate}
                       </div>
@@ -352,7 +352,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
             })}
           </div>
         ) : (
-          <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+          <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
             <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
               <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
                 {["Mã QĐ","Nội dung","Đơn vị","Hình thức","Cấp","Ngày ký","Trạng thái",""].map(h=><th key={h} className="text-left px-3 py-3 text-white" style={{ fontWeight:700 }}>{h}</th>)}
@@ -360,7 +360,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
               <tbody>{visible.map((d,i)=>{
                 const lc=LEVEL_CFG[d.awardLevel]; const sc=STATUS_CFG[d.status];
                 return (
-                  <tr key={d.id} className="border-t border-[#e8e2d4] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
+                  <tr key={d.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
                     <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{d.code}</code></td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
@@ -376,7 +376,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                     <td className="px-3 py-3">
                       <div className="flex gap-1">
                         <button onClick={()=>setDetail(d)} className="size-7 rounded flex items-center justify-center hover:bg-[#ddeafc]"><Eye className="size-3.5 text-[#1C5FBE]"/></button>
-                        <button className="size-7 rounded flex items-center justify-center hover:bg-[#f5f2ec]"><Download className="size-3.5 text-[#5a5040]"/></button>
+                        <button className="size-7 rounded flex items-center justify-center hover:bg-[#f4f7fb]"><Download className="size-3.5 text-[#5a5040]"/></button>
                         {d.qrHash&&<button className="size-7 rounded flex items-center justify-center hover:bg-[#dcfce7]"><QrCode className="size-3.5 text-[#166534]"/></button>}
                       </div>
                     </td>

@@ -56,7 +56,7 @@ function ScoreBar({ score, max }: { score: number; max: number }) {
   const pct = max > 0 ? (score / max) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+      <div className="flex-1 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
         <div className="h-full rounded-full transition-all"
           style={{ width:`${pct}%`, background: pct >= 90 ? "#166534" : pct >= 70 ? theme.primary : "#b45309" }} />
       </div>
@@ -114,7 +114,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
           { icon:Star, label:"Đủ điều kiện khen", v:"5 đơn vị", color:"#b45309", bg:"#fef3c7" },
           { icon:AlertCircle, label:"Chưa nộp báo cáo", v:`${total-submitted} đơn vị`, color:"#9f1239", bg:"#fee2e2" },
         ].map(s => (
-          <div key={s.label} className="bg-white rounded-xl border border-[#e8e2d4] p-4 flex items-center gap-3">
+          <div key={s.label} className="bg-white rounded-xl border border-[#e2e8f0] p-4 flex items-center gap-3">
             <div className="size-10 rounded-xl grid place-items-center shrink-0" style={{ background: s.bg }}>
               <s.icon className="size-5" style={{ color: s.color }} />
             </div>
@@ -127,8 +127,8 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-[#e8e2d4] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#f0ece3] bg-[#faf7f2] flex items-center justify-between">
+      <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#f8fafc] flex items-center justify-between">
           <h3 className="text-[14px] font-semibold text-[#0b1426]">Bảng chấm điểm thi đua</h3>
           <div className="flex items-center gap-2">
             <button className="btn btn-sm btn-secondary"><Filter className="size-3.5" /> Lọc</button>
@@ -137,7 +137,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
         </div>
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#f0ece3] bg-[#faf7f2]">
+            <tr className="border-b border-[#eef2f8] bg-[#f8fafc]">
               <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider w-8">#</th>
               <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider">Đơn vị</th>
               {CRITERIA.map(c => (
@@ -155,7 +155,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
             {UNITS.map((u, idx) => (
               <React.Fragment key={u.id}>
                 <tr
-                  className={`border-b border-[#f5f2ec] transition-colors cursor-pointer hover:bg-[#faf7f2]
+                  className={`border-b border-[#f4f7fb] transition-colors cursor-pointer hover:bg-[#f8fafc]
                     ${expandedId === u.id ? "bg-[var(--color-primary-tint)]" : ""}`}
                   onClick={() => setExpandedId(expandedId === u.id ? null : u.id)}>
                   <td className="px-4 py-3 text-center">
@@ -201,7 +201,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                 </tr>
                 {expandedId === u.id && (
                   <tr>
-                    <td colSpan={9} className="px-6 py-4 bg-[#faf7f2] border-b border-[#f0ece3]">
+                    <td colSpan={9} className="px-6 py-4 bg-[#f8fafc] border-b border-[#eef2f8]">
                       <div className="space-y-3">
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-[13px] font-semibold text-[#0b1426]">Chi tiết điểm từng tiêu chí</p>

@@ -67,7 +67,7 @@ interface ColConfig {
 }
 
 const COLS: ColConfig[] = [
-  { id:"draft",   label:"Tạo & Nộp",      sublabel:"Chờ chuyển thẩm định", icon:FileText,       color:"#5a5040", bg:"#faf7f2", border:"#e8e2d4" },
+  { id:"draft",   label:"Tạo & Nộp",      sublabel:"Chờ chuyển thẩm định", icon:FileText,       color:"#5a5040", bg:"#f8fafc", border:"#e2e8f0" },
   { id:"review",  label:"Thẩm định",       sublabel:"Hội đồng cơ sở",       icon:Users,          color:"#1C5FBE", bg:"#f0f4ff", border:"#bfdbfe" },
   { id:"voting",  label:"Bỏ phiếu HĐ",    sublabel:"Hội đồng cấp tỉnh",    icon:Gavel,          color:"#7c3aed", bg:"#faf5ff", border:"#ddd6fe" },
   { id:"signing", label:"Ký số",           sublabel:"Lãnh đạo phê duyệt",   icon:FileSignature,  color:"#b45309", bg:"#fef9ec", border:"#fde68a" },
@@ -106,7 +106,7 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
       className="rounded-[10px] border bg-white select-none transition-all hover:shadow-md"
       style={{
         ...priorityStyle,
-        borderColor: "#e8e2d4",
+        borderColor: "#e2e8f0",
         opacity: isDragging ? 0.4 : 1,
         cursor: "grab",
         boxShadow: isDragging ? "none" : "0 1px 4px rgba(0,0,0,0.05)",
@@ -140,7 +140,7 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
             {/* AI score mini ring */}
             <div className="relative size-7">
               <svg viewBox="0 0 28 28" className="size-7 -rotate-90">
-                <circle cx="14" cy="14" r="10" fill="none" stroke="#f0ece3" strokeWidth="3" />
+                <circle cx="14" cy="14" r="10" fill="none" stroke="#eef2f8" strokeWidth="3" />
                 <circle cx="14" cy="14" r="10" fill="none" stroke={scoreColor} strokeWidth="3"
                   strokeDasharray={`${2 * Math.PI * 10}`}
                   strokeDashoffset={`${2 * Math.PI * 10 * (1 - card.aiScore / 100)}`}
@@ -168,7 +168,7 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
       </div>
 
       {/* Quick actions */}
-      <div className="border-t border-[#f5f2ec] px-3 py-1.5 flex items-center gap-2">
+      <div className="border-t border-[#f4f7fb] px-3 py-1.5 flex items-center gap-2">
         <button className="flex items-center gap-1 text-[13px] text-[#635647] hover:text-[#1C5FBE] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
           <Eye className="size-3" />Xem
         </button>
@@ -322,10 +322,10 @@ export function KanbanPage({ user }: { user: LoginUser }) {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+      <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
-        <div className="px-8 py-4 border-b border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+        <div className="px-8 py-4 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bảng Kanban Hồ sơ</h1>
@@ -340,7 +340,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
 
           {/* Filters */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+            <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
               {([["all","Tất cả"],["ok","Đúng hạn"],["warning","Sắp trễ"],["overdue","Quá hạn"]] as const).map(([v,l]) => (
                 <button key={v} onClick={() => setFilterSLA(v)}
                   className="px-2.5 py-1.5 rounded-[6px] text-[13px] transition-all"
@@ -356,13 +356,13 @@ export function KanbanPage({ user }: { user: LoginUser }) {
             </div>
 
             <select value={filterUnit} onChange={e => setFilterUnit(e.target.value)}
-              className="border border-[#e8e2d4] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
+              className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               <option value="all">Tất cả đơn vị</option>
               {units.map(u => <option key={u} value={u}>{u}</option>)}
             </select>
 
-            <button onClick={() => setCards(INITIAL_CARDS)} className="size-9 rounded-[8px] border border-[#e8e2d4] flex items-center justify-center hover:bg-[#f5f2ec] transition-colors" title="Làm mới">
+            <button onClick={() => setCards(INITIAL_CARDS)} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-[#f4f7fb] transition-colors" title="Làm mới">
               <RefreshCw className="size-4 text-[#635647]" />
             </button>
           </div>
@@ -383,7 +383,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Footer hint */}
-        <div className="px-8 py-2.5 border-t border-[#f0ece3] flex items-center gap-4 shrink-0" style={{ background: "#faf7f2" }}>
+        <div className="px-8 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#f8fafc" }}>
           <span className="flex items-center gap-1.5 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             <GripVertical className="size-3.5" />Kéo thả để chuyển bước quy trình
           </span>

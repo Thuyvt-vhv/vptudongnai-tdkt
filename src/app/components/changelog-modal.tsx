@@ -127,13 +127,13 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
     <div className="fixed inset-0 z-[90] flex items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0" style={{ background:"rgba(11,20,38,0.5)", backdropFilter:"blur(4px)" }}/>
 
-      <div className="relative flex overflow-hidden rounded-[16px] shadow-2xl border border-[#e8e2d4]"
+      <div className="relative flex overflow-hidden rounded-[16px] shadow-2xl border border-[#e2e8f0]"
         style={{ width:860, maxWidth:"95vw", maxHeight:"85vh", background:"white" }}
         onClick={e=>e.stopPropagation()}>
 
         {/* ── Left: version list ── */}
-        <div className="w-[220px] shrink-0 flex flex-col border-r border-[#e8e2d4]" style={{ background:"#faf7f2" }}>
-          <div className="px-5 py-4 border-b border-[#e8e2d4]">
+        <div className="w-[220px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background:"#f8fafc" }}>
+          <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Star className="size-4 text-[#8a6400]"/>
               <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Có gì mới</span>
@@ -177,7 +177,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
         {/* ── Right: detail ── */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="px-8 py-5 border-b border-[#e8e2d4] flex items-start justify-between">
+          <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-start justify-between">
             <div className="flex items-center gap-4">
               <div className="size-12 rounded-[10px] flex items-center justify-center"
                 style={{ background:`${ver.color}15` }}>
@@ -199,7 +199,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                 </div>
               </div>
             </div>
-            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f5f2ec] transition-colors">
+            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
               <X className="size-4 text-[#635647]"/>
             </button>
           </div>
@@ -222,7 +222,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                 const cfg = TYPE_CFG[c.type];
                 return (
                   <div key={i} className="flex items-start gap-3 p-3 rounded-[8px]"
-                    style={{ background:"#faf7f2", border:"1px solid #e8e2d4" }}>
+                    style={{ background:"#f8fafc", border:"1px solid #e2e8f0" }}>
                     <span className="text-[13px] px-2 py-1 rounded shrink-0 mt-0.5"
                       style={{ background:cfg.bg, color:cfg.color, fontFamily: "var(--font-sans)", fontWeight:700 }}>
                       {cfg.label}
@@ -237,7 +237,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
           </div>
 
           {/* Footer */}
-          <div className="px-8 py-4 border-t border-[#e8e2d4] flex items-center justify-between" style={{ background:"#faf7f2" }}>
+          <div className="px-8 py-4 border-t border-[#e2e8f0] flex items-center justify-between" style={{ background:"#f8fafc" }}>
             <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               VPTU Đồng Nai · Thi đua Khen thưởng · Tỉnh ủy Đồng Nai
             </div>

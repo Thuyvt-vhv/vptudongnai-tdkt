@@ -144,7 +144,7 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
           style={{ background: `linear-gradient(135deg,${ev.actorFrom},${ev.actorTo})`, fontFamily: "var(--font-sans)", fontWeight: 700, boxShadow: "0 0 0 3px white" }}>
           {ev.actorInitials}
         </div>
-        <div className="w-px flex-1 mt-1" style={{ background: "#e8e2d4", minHeight: 24 }} />
+        <div className="w-px flex-1 mt-1" style={{ background: "#e2e8f0", minHeight: 24 }} />
       </div>
 
       {/* Content */}
@@ -154,7 +154,7 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-0.5 flex-wrap">
               <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.actor}</span>
-              <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#f0ece3] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ev.actorRole}</span>
+              <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ev.actorRole}</span>
               <div className="flex items-center gap-1 text-[13px]" style={{ background: cfg.bg, color: cfg.color, padding: "1px 8px", borderRadius: 999, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 <Icon className="size-3" />{cfg.label}
               </div>
@@ -167,7 +167,7 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
 
         {/* Body */}
         <div className="rounded-[10px] p-3.5 mb-3"
-          style={{ background: ev.important ? "#fff9f9" : "#faf7f2", border: `1px solid ${ev.important ? "#fca5a5" : "#e8e2d4"}` }}>
+          style={{ background: ev.important ? "#fff9f9" : "#f8fafc", border: `1px solid ${ev.important ? "#fca5a5" : "#e2e8f0"}` }}>
           <p className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{ev.body}</p>
           {ev.tag && (
             <div className="flex items-center gap-2 mt-2">
@@ -188,8 +188,8 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
               <button key={r.emoji} onClick={() => onReact(ev.id, r.emoji)}
                 className="flex items-center gap-1 px-2 py-1 rounded-full text-[13px] transition-all hover:scale-110"
                 style={{
-                  background: r.reacted ? "#f0f4ff" : "#f5f2ec",
-                  border: `1px solid ${r.reacted ? "#bfdbfe" : "#e8e2d4"}`,
+                  background: r.reacted ? "#f0f4ff" : "#f4f7fb",
+                  border: `1px solid ${r.reacted ? "#bfdbfe" : "#e2e8f0"}`,
                   fontFamily: "JetBrains Mono,monospace",
                 }}>
                 {r.emoji}
@@ -197,7 +197,7 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
               </button>
             ))}
             <button className="flex items-center gap-1 px-2 py-1 rounded-full text-[13px] text-[#635647] hover:text-[#1C5FBE] hover:bg-[#f0f4ff] transition-all"
-              style={{ border: "1px solid #e8e2d4" }}>
+              style={{ border: "1px solid #e2e8f0" }}>
               + Thêm
             </button>
           </div>
@@ -285,10 +285,10 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
   const urgentCount = events.filter(e => e.kind === "sla" || e.important).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
 
       {/* Header */}
-      <div className="px-8 py-5 border-b border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+      <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -297,10 +297,10 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
             <button onClick={() => setIsLive(v => !v)}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[13px] transition-all"
               style={{
-                background: isLive ? "#dcfce7" : "#f0ece3",
+                background: isLive ? "#dcfce7" : "#eef2f8",
                 color: isLive ? "#166534" : "#635647",
                 fontFamily: "var(--font-sans)", fontWeight: 700,
-                border: `1px solid ${isLive ? "#86efac" : "#e8e2d4"}`,
+                border: `1px solid ${isLive ? "#86efac" : "#e2e8f0"}`,
               }}>
               <span className={`size-2 rounded-full ${isLive ? "animate-pulse bg-[#166534]" : "bg-[#d1d5db]"}`} />
               {isLive ? "Live" : "Tạm dừng"}
@@ -323,7 +323,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           )}
 
           {/* Kind filter */}
-          <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+          <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
             <button onClick={() => setFilterKind("all")}
               className="px-2.5 py-1.5 rounded-[6px] text-[13px] transition-all"
               style={{ background: filterKind === "all" ? "white" : "transparent", color: "#0b1426", fontFamily: "var(--font-sans)", fontWeight: filterKind === "all" ? 700 : 400 }}>
@@ -347,13 +347,13 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           </div>
 
           <select value={filterUnit} onChange={e => setFilterUnit(e.target.value)}
-            className="border border-[#e8e2d4] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
+            className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <option value="all">Tất cả đơn vị</option>
             {units.map(u => <option key={u} value={u}>{u}</option>)}
           </select>
 
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Download className="size-4" />Xuất
           </button>
@@ -366,12 +366,12 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           <div key={group.label} className="mb-6">
             {/* Date divider */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="h-px flex-1 bg-[#e8e2d4]" />
+              <div className="h-px flex-1 bg-[#e2e8f0]" />
               <span className="text-[13px] uppercase tracking-widest text-[#6b5e47] px-3 py-1.5 rounded-full"
-                style={{ background: "#faf7f2", border: "1px solid #e8e2d4", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 {group.label}
               </span>
-              <div className="h-px flex-1 bg-[#e8e2d4]" />
+              <div className="h-px flex-1 bg-[#e2e8f0]" />
             </div>
 
             {/* Events */}
@@ -398,7 +398,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
         {/* Load more */}
         {filteredEvents.length > 0 && (
           <div className="text-center py-4">
-            <button className="px-5 py-2.5 rounded-[8px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+            <button className="px-5 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               Tải thêm hoạt động cũ hơn
             </button>

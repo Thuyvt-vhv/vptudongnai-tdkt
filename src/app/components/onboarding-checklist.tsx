@@ -80,10 +80,10 @@ export function OnboardingBadge({
   return (
     <button onClick={onOpen}
       className="flex items-center gap-2 px-3 py-2 rounded-[10px] border shadow-md hover:shadow-lg transition-all"
-      style={{ background: "white", borderColor: "#e8e2d4" }}>
+      style={{ background: "white", borderColor: "#e2e8f0" }}>
       <div className="relative size-8">
         <svg className="size-8 -rotate-90" viewBox="0 0 32 32">
-          <circle cx="16" cy="16" r="13" fill="none" stroke="#f0ece3" strokeWidth="3" />
+          <circle cx="16" cy="16" r="13" fill="none" stroke="#eef2f8" strokeWidth="3" />
           <circle cx="16" cy="16" r="13" fill="none" stroke="#1C5FBE" strokeWidth="3"
             strokeDasharray={`${2 * Math.PI * 13}`}
             strokeDashoffset={`${2 * Math.PI * 13 * (1 - pct / 100)}`}
@@ -130,9 +130,9 @@ export function OnboardingPanel({
     <>
       <div className="fixed inset-0 z-[90]" onClick={onClose} />
       <div className="fixed bottom-20 right-6 z-[91] w-[380px] rounded-[16px] border shadow-2xl overflow-hidden"
-        style={{ background: "white", borderColor: "#e8e2d4" }}>
+        style={{ background: "white", borderColor: "#e2e8f0" }}>
         {/* Header */}
-        <div className="px-5 py-4 border-b border-[#e8e2d4]" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
+        <div className="px-5 py-4 border-b border-[#e2e8f0]" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Gift className="size-5 text-[#8a6400]" />
@@ -163,13 +163,13 @@ export function OnboardingPanel({
         </div>
 
         {/* Tasks */}
-        <div className="max-h-[340px] overflow-y-auto divide-y divide-[#f5f2ec]">
+        <div className="max-h-[340px] overflow-y-auto divide-y divide-[#f4f7fb]">
           {tasks.map(task => {
             const isCompleted = completedIds.includes(task.id);
             const Icon = task.icon;
             return (
               <div key={task.id}
-                className="flex items-start gap-3 px-4 py-3 hover:bg-[#faf7f2] transition-colors cursor-pointer group"
+                className="flex items-start gap-3 px-4 py-3 hover:bg-[#f8fafc] transition-colors cursor-pointer group"
                 onClick={() => {
                   if (!isCompleted) onComplete(task.id);
                   onNavigate(task.target);
@@ -215,7 +215,7 @@ export function OnboardingPanel({
             </div>
           </div>
         ) : (
-          <div className="px-5 py-3 border-t border-[#f0ece3] flex items-center justify-between" style={{ background: "#faf7f2" }}>
+          <div className="px-5 py-3 border-t border-[#eef2f8] flex items-center justify-between" style={{ background: "#f8fafc" }}>
             <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               {tasks.length - done} nhiệm vụ còn lại
             </span>

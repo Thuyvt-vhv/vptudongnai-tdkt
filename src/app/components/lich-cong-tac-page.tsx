@@ -97,7 +97,7 @@ function EventDetail({ ev, onClose }: { ev: CalEvent; onClose: () => void }) {
     <div className="fixed inset-0 z-[80] flex items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0" style={{ background: "rgba(11,20,38,0.35)", backdropFilter: "blur(2px)" }}/>
       <div className="relative rounded-[14px] border shadow-2xl overflow-hidden w-[400px]"
-        style={{ background: "white", borderColor: "#e8e2d4" }} onClick={e => e.stopPropagation()}>
+        style={{ background: "white", borderColor: "#e2e8f0" }} onClick={e => e.stopPropagation()}>
         {/* Colored top bar */}
         <div className="h-2" style={{ background: cfg.color }}/>
         <div className="p-5">
@@ -111,7 +111,7 @@ function EventDetail({ ev, onClose }: { ev: CalEvent; onClose: () => void }) {
                 {ev.urgent && <span className="ml-2 text-[13px] px-1.5 py-0.5 rounded" style={{ background: "#fff1f0", color: "#c8102e", fontFamily: "var(--font-sans)", fontWeight: 700 }}>KHẨN</span>}
               </div>
             </div>
-            <button onClick={onClose} className="size-7 rounded flex items-center justify-center hover:bg-[#f5f2ec]">
+            <button onClick={onClose} className="size-7 rounded flex items-center justify-center hover:bg-[#f4f7fb]">
               <X className="size-4 text-[#635647]"/>
             </button>
           </div>
@@ -125,11 +125,11 @@ function EventDetail({ ev, onClose }: { ev: CalEvent; onClose: () => void }) {
             {ev.attendees && <div className="flex items-center gap-2"><Users className="size-3.5 text-[#635647]"/>{ev.attendees} người tham dự</div>}
           </div>
         </div>
-        <div className="px-5 py-3 border-t border-[#f0ece3] flex gap-2" style={{ background: "#faf7f2" }}>
+        <div className="px-5 py-3 border-t border-[#eef2f8] flex gap-2" style={{ background: "#f8fafc" }}>
           <button className="flex-1 py-2 rounded-[7px] text-[13px] text-white" style={{ background: cfg.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
             Đặt nhắc nhở
           </button>
-          <button onClick={onClose} className="flex-1 py-2 rounded-[7px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-white transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+          <button onClick={onClose} className="flex-1 py-2 rounded-[7px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
             Đóng
           </button>
         </div>
@@ -149,8 +149,8 @@ function UpcomingSidebar({ events, onSelect }: { events: CalEvent[]; onSelect: (
     .slice(0, 8);
 
   return (
-    <div className="w-72 shrink-0 border-l border-[#e8e2d4] flex flex-col" style={{ background: "#faf7f2" }}>
-      <div className="px-4 py-4 border-b border-[#e8e2d4]">
+    <div className="w-72 shrink-0 border-l border-[#e2e8f0] flex flex-col" style={{ background: "#f8fafc" }}>
+      <div className="px-4 py-4 border-b border-[#e2e8f0]">
         <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sự kiện sắp tới</h3>
         <p className="text-[13px] text-[#635647] mt-0.5">{upcoming.length} sự kiện</p>
       </div>
@@ -219,9 +219,9 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
   const urgentCount = monthEvents.filter(ev => ev.urgent).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {/* ── Header ── */}
-      <div className="px-8 py-5 border-b border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+      <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lịch công tác & Sự kiện</h1>
           <p className="text-[13px] text-[#635647] mt-0.5">
@@ -230,7 +230,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
         </div>
         <div className="flex items-center gap-3">
           {/* Type filters */}
-          <div className="flex items-center gap-1.5 p-1 rounded-[10px] border border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+          <div className="flex items-center gap-1.5 p-1 rounded-[10px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
             <button onClick={() => setFilterType("all")}
               className="px-3 py-1.5 rounded-[7px] text-[13px] transition-all"
               style={{ background: filterType === "all" ? "white" : "transparent", color: filterType === "all" ? "#0b1426" : "#635647", fontFamily: "var(--font-sans)", fontWeight: filterType === "all" ? 700 : 400, boxShadow: filterType === "all" ? "0 1px 4px rgba(0,0,0,0.08)" : "none" }}>
@@ -261,18 +261,18 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
           {/* Month nav */}
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
-              <button onClick={prevMonth} className="size-9 rounded-[8px] border border-[#e8e2d4] flex items-center justify-center hover:bg-white transition-colors">
+              <button onClick={prevMonth} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-white transition-colors">
                 <ChevronLeft className="size-4 text-[#5a5040]"/>
               </button>
               <h2 className="text-[18px] text-[#0b1426] min-w-[200px] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 {MONTH_NAMES[month]} {year}
               </h2>
-              <button onClick={nextMonth} className="size-9 rounded-[8px] border border-[#e8e2d4] flex items-center justify-center hover:bg-white transition-colors">
+              <button onClick={nextMonth} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-white transition-colors">
                 <ChevronRight className="size-4 text-[#5a5040]"/>
               </button>
             </div>
             <button onClick={() => { setYear(today.getFullYear()); setMonth(today.getMonth()); }}
-              className="px-3 py-1.5 rounded-[7px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+              className="px-3 py-1.5 rounded-[7px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               Hôm nay
             </button>
@@ -304,7 +304,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
           {/* Calendar grid */}
           <div className="grid grid-cols-7 gap-1 flex-1">
             {cells.map((day, ci) => {
-              if (day === null) return <div key={`empty-${ci}`} className="rounded-[8px] min-h-[90px]" style={{ background: "#f5f2ec" }}/>;
+              if (day === null) return <div key={`empty-${ci}`} className="rounded-[8px] min-h-[90px]" style={{ background: "#f4f7fb" }}/>;
               const dateKey = toKey(year, month, day);
               const dayEvents = filteredEvents.filter(ev => ev.date === dateKey);
               const isToday   = dateKey === todayKey;
@@ -315,7 +315,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
                   className="rounded-[8px] p-1.5 flex flex-col gap-1 transition-all hover:shadow-sm"
                   style={{
                     background: isToday ? "#f0f4ff" : "white",
-                    border: `1.5px solid ${isToday ? "#bfdbfe" : "#f0ece3"}`,
+                    border: `1.5px solid ${isToday ? "#bfdbfe" : "#eef2f8"}`,
                     minHeight: 90,
                   }}>
                   <div className="flex items-center justify-between mb-0.5">

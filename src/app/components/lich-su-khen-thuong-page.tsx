@@ -51,9 +51,9 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
   const byYear=years.reduce((acc,y)=>{ acc[y]=filtered.filter(r=>r.nam===y); return acc; },{} as Record<number,HistoryRecord[]>);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4]" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <ScrollText className="size-5 text-[#8a6400]"/>
@@ -75,7 +75,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
         {/* Stats */}
         <div className="flex gap-3 mb-4">
           {[
-            { l:"Tổng QĐ",       v:MOCK_HISTORY.length,                                   c:"#0b1426",bg:"#f5f2ec" },
+            { l:"Tổng QĐ",       v:MOCK_HISTORY.length,                                   c:"#0b1426",bg:"#f4f7fb" },
             { l:"Nhà nước",      v:MOCK_HISTORY.filter(r=>r.level==="nha_nuoc").length,   c:"#c8102e",bg:"#fee2e2" },
             { l:"Cấp Tỉnh",      v:MOCK_HISTORY.filter(r=>r.level==="tinh").length,       c:"#1C5FBE",bg:"#ddeafc" },
             { l:"Cơ sở",         v:MOCK_HISTORY.filter(r=>r.level==="co_so").length,      c:"#166534",bg:"#dcfce7" },
@@ -126,7 +126,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
           /* Detail view */
           <div className="max-w-2xl mx-auto">
             <button onClick={()=>setDetail(null)} className="flex items-center gap-1.5 text-[13px] text-[#1C5FBE] mb-4" style={{ fontFamily: "var(--font-sans)" }}>← Quay lại</button>
-            <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden">
+            <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden">
               <div className="p-6" style={{ background:detail.color }}>
                 <div className="flex items-start gap-4">
                   <div className="size-16 rounded-xl flex items-center justify-center" style={{ background:"rgba(255,255,255,0.15)" }}>
@@ -153,7 +153,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                     <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Số Quyết định"?700:400 }}>{v as string}</span>
                   </div>
                 ))}
-                <div className="flex gap-3 pt-3 border-t border-[#e8e2d4]">
+                <div className="flex gap-3 pt-3 border-t border-[#e2e8f0]">
                   <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
                     <Eye className="size-4"/>Xem QĐ PDF
                   </button>
@@ -177,18 +177,18 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                     <Calendar className="size-3.5 text-[#8a6400]"/>
                     <span className="text-[14px] text-white" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{year}</span>
                   </div>
-                  <div className="flex-1 h-px" style={{ background:"#e8e2d4" }}/>
+                  <div className="flex-1 h-px" style={{ background:"#e2e8f0" }}/>
                   <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{(byYear[year]||[]).length} quyết định</span>
                 </div>
                 <div className="relative pl-5">
-                  <div className="absolute left-2 top-0 bottom-0 w-px" style={{ background:"#e8e2d4" }}/>
+                  <div className="absolute left-2 top-0 bottom-0 w-px" style={{ background:"#e2e8f0" }}/>
                   <div className="space-y-3">
                     {(byYear[year]||[]).map(r=>{
                       const lc=LEVEL_CFG[r.level];
                       return (
                         <div key={r.id} className="relative">
                           <div className="absolute -left-3 top-4 size-2 rounded-full" style={{ background:r.color }}/>
-                          <button onClick={()=>setDetail(r)} className="w-full rounded-[10px] border border-[#e8e2d4] p-4 text-left hover:bg-[#faf8f4] hover:border-[#d1ccc0] transition-all" style={{ background:"white" }}>
+                          <button onClick={()=>setDetail(r)} className="w-full rounded-[10px] border border-[#e2e8f0] p-4 text-left hover:bg-[#faf8f4] hover:border-[#d1ccc0] transition-all" style={{ background:"white" }}>
                             <div className="flex items-start gap-3">
                               <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background:`${r.color}18` }}>
                                 {r.loai==="tap_the"?<Users className="size-5" style={{ color:r.color }}/>:<User className="size-5" style={{ color:r.color }}/>}
@@ -197,7 +197,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                                 <div className="flex items-center gap-2 flex-wrap mb-1">
                                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{r.tenNguoi}</span>
                                   <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c,fontFamily: "var(--font-sans)" }}>{r.danhHieu}</span>
-                                  <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{r.loai==="ca_nhan"?"Cá nhân":"Tập thể"}</span>
+                                  <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{r.loai==="ca_nhan"?"Cá nhân":"Tập thể"}</span>
                                 </div>
                                 <div className="flex items-center gap-3 text-[13px] text-[#635647]">
                                   <span>{r.donVi}</span>
@@ -230,7 +230,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
           </div>
         ) : (
           /* Table view */
-          <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+          <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
             <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
               <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
                 {["Số QĐ","Ngày ký","Tên / Đơn vị","Danh hiệu","Cấp","Điểm","Người ký",""].map(h=><th key={h} className="text-left px-3 py-3 text-white" style={{ fontWeight:700 }}>{h}</th>)}
@@ -238,7 +238,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
               <tbody>{filtered.map((r,i)=>{
                 const lc=LEVEL_CFG[r.level];
                 return (
-                  <tr key={r.id} className="border-t border-[#e8e2d4] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
+                  <tr key={r.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
                     <td className="px-3 py-2.5"><code className="text-[13px]" style={{ color:"#1C5FBE",fontFamily:"JetBrains Mono, monospace" }}>{r.soQD}</code></td>
                     <td className="px-3 py-2.5 text-[#635647]">{r.ngayKy}</td>
                     <td className="px-3 py-2.5">

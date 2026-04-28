@@ -1,6 +1,6 @@
 ﻿/**
  * dashboard.tsx · VPTU Đồng Nai v4 — "Hall of Fame" Edition
- * Palette: Navy #1C5FBE · Đỏ son #c8102e · Vàng #8a6400 · Paper #f7f5f1
+ * Palette: Navy #1C5FBE · Đỏ son #c8102e · Vàng #8a6400 · Paper #f4f7fb
  */
 import { useState, useEffect } from "react";
 import {
@@ -211,9 +211,9 @@ function KpiCard({ label, value, numVal, delta, up, icon: Icon, accent, module: 
   return (
     <button onClick={onClick}
       className="relative bg-white rounded-[14px] p-5 text-left w-full group overflow-hidden transition-all duration-200"
-      style={{ border: "1px solid #e6e0d4", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
+      style={{ border: "1px solid #dde3ec", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 30px -8px ${accent}30, 0 2px 8px rgba(0,0,0,0.06)`; (e.currentTarget as HTMLElement).style.borderColor = `${accent}50`; }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLElement).style.borderColor = "#e6e0d4"; }}>
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLElement).style.borderColor = "#dde3ec"; }}>
 
       {/* Large bg glow */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -277,7 +277,7 @@ function TrendChart() {
         </defs>
         {yTicks.map(t => (
           <g key={t}>
-            <line x1={pad.l} x2={w - pad.r} y1={yFor(t)} y2={yFor(t)} stroke="#ede8de" strokeWidth={1} strokeDasharray="4 3" />
+            <line x1={pad.l} x2={w - pad.r} y1={yFor(t)} y2={yFor(t)} stroke="#e8eef5" strokeWidth={1} strokeDasharray="4 3" />
             <text x={pad.l - 8} y={yFor(t) + 4} textAnchor="end" fontSize="10" fill="#74654a" fontFamily="JetBrains Mono">{t}</text>
           </g>
         ))}
@@ -300,7 +300,7 @@ function TrendChart() {
 /* ═══ Funnel Pipeline ═════════════════════════════════════════ */
 function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
   return (
-    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #e6e0d4" }}>
+    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -349,7 +349,7 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
       </div>
 
       {/* Conversion rate */}
-      <div className="mt-3 pt-3 flex items-center justify-between" style={{ borderTop: "1px solid #f0ece3" }}>
+      <div className="mt-3 pt-3 flex items-center justify-between" style={{ borderTop: "1px solid #eef2f8" }}>
         <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>Tỉ lệ phê duyệt</span>
         <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono", fontWeight: 700, color: "#0f7a3e" }}>
           {((pipeline[3].count / pipeline[0].count) * 100).toFixed(0)}%
@@ -376,7 +376,7 @@ const DEADLINES = [
 ];
 function DeadlineCard({ onNavigate }: { onNavigate: (m: string) => void }) {
   return (
-    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #e6e0d4" }}>
+    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-3">
         <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>Hạn chót sắp đến</h3>
         <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: "rgba(200,16,46,0.09)", color: "#c8102e", fontFamily: "JetBrains Mono", fontWeight: 700 }}>
@@ -423,7 +423,7 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
   const labels = ["Nhì", "Nhất", "Ba"];
 
   return (
-    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #e6e0d4" }}>
+    <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-start justify-between mb-5">
         <div>
           <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -474,12 +474,12 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
       {/* Remaining units */}
       <div className="space-y-1">
         {units.slice(3).map((u, i) => (
-          <div key={u.name} className="flex items-center gap-3 px-3 py-2 rounded-[7px] hover:bg-[#f7f5f1] transition-colors cursor-pointer"
+          <div key={u.name} className="flex items-center gap-3 px-3 py-2 rounded-[7px] hover:bg-[#f4f7fb] transition-colors cursor-pointer"
             onClick={() => onNavigate("Bảng xếp hạng")}>
             <span className="w-5 text-center text-[13px]" style={{ fontFamily: "var(--font-sans)", fontStyle: "italic", color: "#74654a" }}>{i + 4}</span>
             <div className="flex-1 min-w-0">
               <div className="text-[12.5px] truncate" style={{ fontFamily: "var(--font-sans)", color: "#3d3020" }}>{u.name}</div>
-              <div className="mt-1 h-1 rounded-full overflow-hidden" style={{ background: "#f0ece3" }}>
+              <div className="mt-1 h-1 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                 <div className="h-full rounded-full" style={{ width: `${u.score}%`, background: "#c4b89a" }} />
               </div>
             </div>
@@ -500,7 +500,7 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
 function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
   const icons = { approve: CheckCircle2, submit: FileSignature, alert: AlertTriangle, ai: Sparkles };
   return (
-    <div className="bg-white rounded-[14px] p-5 flex flex-col" style={{ border: "1px solid #e6e0d4" }}>
+    <div className="bg-white rounded-[14px] p-5 flex flex-col" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -516,7 +516,7 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
 
       <div className="relative flex-1">
         {/* Vertical line */}
-        <div className="absolute left-[13px] top-0 bottom-0 w-px" style={{ background: "linear-gradient(180deg, #e6e0d4, transparent)" }} />
+        <div className="absolute left-[13px] top-0 bottom-0 w-px" style={{ background: "linear-gradient(180deg, #dde3ec, transparent)" }} />
 
         <div className="space-y-3">
           {feed.map((f, i) => {
@@ -543,9 +543,9 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
 
       <button onClick={() => onNavigate("Dòng thời gian")}
         className="mt-4 w-full h-8 rounded-[7px] text-[13px] flex items-center justify-center gap-1.5 transition-colors"
-        style={{ background: "#f7f5f1", border: "1px solid #e6e0d4", color: "#5a4e3c", fontFamily: "var(--font-sans)", fontWeight: 600 }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f0ece3"; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f7f5f1"; }}>
+        style={{ background: "#f4f7fb", border: "1px solid #dde3ec", color: "#5a4e3c", fontFamily: "var(--font-sans)", fontWeight: 600 }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; }}>
         Xem dòng thời gian đầy đủ <ChevronRight className="size-3" />
       </button>
     </div>
@@ -587,7 +587,7 @@ function TaskPanel({ cfg, onNavigate }: { cfg: typeof ROLE_CONFIG["user"]; onNav
           const TIcon = t.icon;
           return (
             <div key={i} className="px-4 py-4 flex items-start gap-3"
-              style={{ borderRight: i < cfg.tasks.length - 1 ? "1px solid #ede8de" : "none" }}>
+              style={{ borderRight: i < cfg.tasks.length - 1 ? "1px solid #e8eef5" : "none" }}>
               <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0 mt-0.5"
                 style={{ background: t.urgent ? "rgba(200,16,46,0.1)" : "rgba(28,95,190,0.07)", border: t.urgent ? "1px solid rgba(200,16,46,0.2)" : "1px solid rgba(28,95,190,0.14)" }}>
                 <TIcon className="size-3.5" strokeWidth={1.8} style={{ color: t.urgent ? "#c8102e" : "#1C5FBE" }} />
@@ -746,7 +746,7 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
       <div className="grid grid-cols-12 gap-4">
 
         {/* Trend chart */}
-        <div className="col-span-8 bg-white rounded-[14px] p-5" style={{ border: "1px solid #e6e0d4" }}>
+        <div className="col-span-8 bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -768,7 +768,7 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
           <TrendChart />
 
           {/* Summary strip below chart */}
-          <div className="mt-4 pt-4 grid grid-cols-3 gap-4" style={{ borderTop: "1px solid #f0ece3" }}>
+          <div className="mt-4 pt-4 grid grid-cols-3 gap-4" style={{ borderTop: "1px solid #eef2f8" }}>
             {[
               { label: "Tổng đề nghị T8", value: "118", color: "#1C5FBE", delta: "+21 so T7" },
               { label: "Tổng phê duyệt T8", value: "99",  color: "#c8102e", delta: "+18 so T7" },

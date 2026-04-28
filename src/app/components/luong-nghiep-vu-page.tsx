@@ -288,7 +288,7 @@ function SequenceView({ selectedStep, onSelect }: {
                   onClick={() => onSelect(step)}
                   className="w-full text-left rounded-[12px] border-2 transition-all hover:shadow-md"
                   style={{
-                    borderColor: isSelected ? rm.color : "#e8e2d4",
+                    borderColor: isSelected ? rm.color : "#e2e8f0",
                     background: isSelected ? rm.bg : "white",
                     boxShadow: isSelected ? `0 0 0 3px ${rm.color}20` : undefined,
                   }}>
@@ -538,7 +538,7 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
 
       <div className="px-6 pb-8">
         {/* ── Main flow view ── */}
-        <div className="rounded-[14px] border p-5 mb-4" style={{ background: "white", borderColor: "#e8e2d4" }}>
+        <div className="rounded-[14px] border p-5 mb-4" style={{ background: "white", borderColor: "#e2e8f0" }}>
           {viewMode === "flow"
             ? <FlowView selectedStep={selectedStep} onSelect={toggleStep} />
             : <SequenceView selectedStep={selectedStep} onSelect={toggleStep} />

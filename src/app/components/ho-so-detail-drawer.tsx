@@ -131,7 +131,7 @@ function WorkflowStepper({ currentStep }: { currentStep: number }) {
             </div>
             {/* Connector */}
             {i < STEPS.length - 1 && (
-              <div className="w-8 h-[2px] mb-6 shrink-0" style={{ background: i < currentStep ? "#166534" : "#e8e2d4" }} />
+              <div className="w-8 h-[2px] mb-6 shrink-0" style={{ background: i < currentStep ? "#166534" : "#e2e8f0" }} />
             )}
           </div>
         );
@@ -240,14 +240,14 @@ export function HoSoDetailDrawer({
 
       {/* Drawer panel */}
       <div className="fixed right-0 top-0 bottom-0 z-[71] flex flex-col overflow-hidden shadow-2xl"
-        style={{ width:"520px", background:"white", borderLeft:"1px solid #e8e2d4" }}>
+        style={{ width:"520px", background:"white", borderLeft:"1px solid #e2e8f0" }}>
 
         {/* ── Header ── */}
-        <div className="px-6 py-4 border-b border-[#e8e2d4] shrink-0" style={{ background:"var(--color-paper)" }}>
+        <div className="px-6 py-4 border-b border-[#e2e8f0] shrink-0" style={{ background:"var(--color-paper)" }}>
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <code className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#e8e2d4", color:"#5a5040", fontFamily:"JetBrains Mono,monospace" }}>{hs.id}</code>
+                <code className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#e2e8f0", color:"#5a5040", fontFamily:"JetBrains Mono,monospace" }}>{hs.id}</code>
                 <span className="text-[13px] px-2 py-0.5 rounded border" style={{ background:statusCfg.bg, color:statusCfg.color, borderColor:statusCfg.border, fontFamily: "var(--font-sans)", fontWeight:600 }}>
                   {statusCfg.label}
                 </span>
@@ -258,7 +258,7 @@ export function HoSoDetailDrawer({
               <h2 className="text-[18px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{hs.ten}</h2>
               <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{hs.danhHieu}</p>
             </div>
-            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f5f2ec] shrink-0 transition-colors">
+            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] shrink-0 transition-colors">
               <X className="size-4 text-[#635647]"/>
             </button>
           </div>
@@ -272,7 +272,7 @@ export function HoSoDetailDrawer({
         </div>
 
         {/* ── Tabs ── */}
-        <div className="flex border-b border-[#e8e2d4] shrink-0 px-2">
+        <div className="flex border-b border-[#e2e8f0] shrink-0 px-2">
           {([
             ["detail",   "Chi tiết",    FileText    ],
             ["history",  "Lịch sử",     History     ],
@@ -321,7 +321,7 @@ export function HoSoDetailDrawer({
                 ].map(f => {
                   const Icon = f.icon;
                   return (
-                    <div key={f.label} className="p-3 rounded-[8px]" style={{ background:"#faf7f2", border:"1px solid #e8e2d4" }}>
+                    <div key={f.label} className="p-3 rounded-[8px]" style={{ background:"#f8fafc", border:"1px solid #e2e8f0" }}>
                       <div className="flex items-center gap-1.5 mb-1">
                         <Icon className="size-3.5 text-[#635647]"/>
                         <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{f.label}</span>
@@ -357,7 +357,7 @@ export function HoSoDetailDrawer({
           {activeTab === "history" && (
             <div className="p-5">
               <div className="relative">
-                <div className="absolute left-3.5 top-0 bottom-0 w-px bg-[#e8e2d4]" />
+                <div className="absolute left-3.5 top-0 bottom-0 w-px bg-[#e2e8f0]" />
                 <div className="space-y-4">
                   {HISTORY_EVENTS.map((ev, i) => (
                     <div key={i} className="flex gap-4 relative">
@@ -366,7 +366,7 @@ export function HoSoDetailDrawer({
                         ev.type==="vote"?"bg-[#f5f3ff] border-[#ddd6fe]":
                         ev.type==="ai"?"bg-[#faf5ff] border-[#c4b5fd]":
                         ev.type==="submit"?"bg-[#f0f4ff] border-[#bfdbfe]":
-                        "bg-[#faf7f2] border-[#e8e2d4]"
+                        "bg-[#f8fafc] border-[#e2e8f0]"
                       }`}>
                         {ev.type==="sign"   && <CheckCheck className="size-3.5 text-[#166534]"/>}
                         {ev.type==="vote"   && <ThumbsUp className="size-3.5 text-[#7c3aed]"/>}
@@ -396,8 +396,8 @@ export function HoSoDetailDrawer({
                 {ATTACHMENTS.length} tài liệu đính kèm · Tổng dung lượng ~2.6 MB
               </p>
               {ATTACHMENTS.map((f,i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-[8px] hover:bg-[#f5f2ec] transition-colors"
-                  style={{ border:"1px solid #e8e2d4" }}>
+                <div key={i} className="flex items-center gap-3 p-3 rounded-[8px] hover:bg-[#f4f7fb] transition-colors"
+                  style={{ border:"1px solid #e2e8f0" }}>
                   <div className={`size-9 rounded-[6px] flex items-center justify-center text-[13px] font-bold shrink-0 ${
                     f.type==="pdf"?"bg-[#fee2e2] text-[#c8102e]":"bg-[#dbeafe] text-[#1C5FBE]"
                   }`} style={{ fontFamily:"JetBrains Mono,monospace" }}>
@@ -408,10 +408,10 @@ export function HoSoDetailDrawer({
                     <div className="text-[13px] text-[#635647]">{f.size}</div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="size-7 rounded flex items-center justify-center hover:bg-[#e8e2d4] transition-colors">
+                    <button className="size-7 rounded flex items-center justify-center hover:bg-[#e2e8f0] transition-colors">
                       <Eye className="size-3.5 text-[#635647]"/>
                     </button>
-                    <button className="size-7 rounded flex items-center justify-center hover:bg-[#e8e2d4] transition-colors">
+                    <button className="size-7 rounded flex items-center justify-center hover:bg-[#e2e8f0] transition-colors">
                       <Download className="size-3.5 text-[#635647]"/>
                     </button>
                   </div>
@@ -441,7 +441,7 @@ export function HoSoDetailDrawer({
                         <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily:"JetBrains Mono,monospace" }}>{c.time}</span>
                       </div>
                       <div className="text-[13px] text-[#5a5040] leading-relaxed p-2.5 rounded-[8px]"
-                        style={{ background:"#faf7f2", border:"1px solid #e8e2d4", fontFamily: "var(--font-sans)" }}>
+                        style={{ background:"#f8fafc", border:"1px solid #e2e8f0", fontFamily: "var(--font-sans)" }}>
                         {c.text}
                       </div>
                     </div>
@@ -473,7 +473,7 @@ export function HoSoDetailDrawer({
         </div>
 
         {/* ── Action footer ── */}
-        <div className="px-5 py-4 border-t border-[#e8e2d4] shrink-0 flex items-center gap-2.5" style={{ background:"var(--color-paper)" }}>
+        <div className="px-5 py-4 border-t border-[#e2e8f0] shrink-0 flex items-center gap-2.5" style={{ background:"var(--color-paper)" }}>
           {canSign && hs.status === "signed" && (
             <button onClick={()=>{onNavigate?.("Ký số & Phê duyệt"); onClose();}}
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-[8px] text-[13px] text-white flex-1"
@@ -498,7 +498,7 @@ export function HoSoDetailDrawer({
             style={{ color:"#7c3aed", fontFamily: "var(--font-sans)", fontWeight:600 }}>
             <Sparkles className="size-4"/>Hỏi AI
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-2.5 rounded-[8px] text-[13px] border border-[#e8e2d4] hover:bg-[#f5f2ec] transition-colors"
+          <button className="flex items-center gap-1.5 px-3 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors"
             style={{ color:"#5a5040", fontFamily: "var(--font-sans)" }}>
             <Printer className="size-4"/>In
           </button>

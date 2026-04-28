@@ -279,7 +279,7 @@ interface StatePermRow {
 }
 
 const STATE_PERMS: StatePermRow[] = [
-  { state:"draft",            label:"Soạn thảo",           color:"#5a5040", bg:"#f0ece3", description:"Tạo và chỉnh sửa phong trào/hồ sơ", user:"–",         manager:"Tạo & sửa",  council:"–",          leader:"Xem",        admin:"Toàn quyền" },
+  { state:"draft",            label:"Soạn thảo",           color:"#5a5040", bg:"#eef2f8", description:"Tạo và chỉnh sửa phong trào/hồ sơ", user:"–",         manager:"Tạo & sửa",  council:"–",          leader:"Xem",        admin:"Toàn quyền" },
   { state:"submitted",        label:"Trình phê duyệt",      color:"#0e7490", bg:"#e0f2fe", description:"Trình lên cấp có thẩm quyền",       user:"Nộp hồ sơ", manager:"Trình lên",  council:"–",          leader:"Xem",        admin:"Toàn quyền" },
   { state:"approved",         label:"Đã phê duyệt",         color:"#1C5FBE", bg:"#ddeafc", description:"Được cấp có thẩm quyền phê duyệt",   user:"Xem",       manager:"Xem",        council:"–",          leader:"✓ Phê duyệt",admin:"Toàn quyền" },
   { state:"published",        label:"Ban hành / Công bố",   color:"#4338ca", bg:"#e0e7ff", description:"Đã ban hành chính thức",             user:"Xem",       manager:"Xem",        council:"Xem",        leader:"✓ Ký ban hành",admin:"Toàn quyền" },
@@ -503,7 +503,7 @@ function RoleCard({ role, active, onClick }: { role: RoleDef; active: boolean; o
           <div style={{ width:`${(fullCount/totalActions)*100}%`, background:"#16a34a" }} />
           <div style={{ width:`${((ownCount+condCount)/totalActions)*100}%`, background:"#3b82f6" }} />
           <div style={{ width:`${(Object.values(MATRIX[role.id]).filter(v=>v==="view").length/totalActions)*100}%`, background:"#0e7490" }} />
-          <div className="flex-1" style={{ background:"#f0ece3" }} />
+          <div className="flex-1" style={{ background:"#eef2f8" }} />
         </div>
         <div className="mt-2 flex items-center gap-1 text-[13px]" style={{ color:"#635647", fontFamily: "var(--font-sans)" }}>
           <BookOpen className="size-2.5 shrink-0" />
@@ -527,7 +527,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
   return (
     <div className="space-y-3">
       {/* Legend */}
-      <div className="flex items-center gap-4 p-3 rounded-[8px] bg-[#faf7f2] border"
+      <div className="flex items-center gap-4 p-3 rounded-[8px] bg-[#f8fafc] border"
         style={{ borderColor:"var(--color-line)" }}>
         <span className="text-[13px] uppercase tracking-wide text-[#635647]"
           style={{ fontFamily: "var(--font-sans)" }}>Chú thích:</span>
@@ -582,7 +582,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
             <div key={group.id} className="border-b last:border-0" style={{ borderColor:"var(--color-line)" }}>
               {/* Group header */}
               <button
-                className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#faf7f2] transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#f8fafc] transition-colors"
                 onClick={() => setExpanded(p => isOpen ? p.filter(x=>x!==group.id) : [...p, group.id])}>
                 <div className="size-6 rounded-[4px] flex items-center justify-center shrink-0"
                   style={{ background:group.color+"15" }}>
@@ -611,7 +611,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
                   className="grid border-t"
                   style={{ gridTemplateColumns:"260px repeat(5, 1fr)",
                     borderColor:"var(--color-line)",
-                    background: ai % 2 === 0 ? "#fff" : "#faf7f2" }}>
+                    background: ai % 2 === 0 ? "#fff" : "#f8fafc" }}>
                   <div className="px-4 py-2.5 pl-10 flex items-center gap-2">
                     <div className="size-1 rounded-full shrink-0" style={{ background:group.color }} />
                     <div className="flex-1 min-w-0">
@@ -693,7 +693,7 @@ function WorkflowPermissions() {
 
         {STATE_PERMS.map((row, i) => (
           <div key={row.state}
-            className="grid border-b last:border-0 hover:bg-[#faf7f2] transition-colors"
+            className="grid border-b last:border-0 hover:bg-[#f8fafc] transition-colors"
             style={{ gridTemplateColumns:"180px 1fr repeat(5, 1fr)",
               borderColor:"var(--color-line)",
               background: i%2===0?"#fff":"#fafafa" }}>
@@ -812,7 +812,7 @@ function UserManagement({ focusRole }: { focusRole: RoleId | null }) {
               const initials = u.name === "Hệ thống" ? "HT"
                 : u.name.split(" ").slice(-2).map(w=>w[0]).join("");
               return (
-                <tr key={u.id} className="border-b hover:bg-[#faf7f2] transition-colors last:border-0"
+                <tr key={u.id} className="border-b hover:bg-[#f8fafc] transition-colors last:border-0"
                   style={{ borderColor:"var(--color-line)" }}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
@@ -884,7 +884,7 @@ function AuditLog() {
         {AUDIT_LOG.map((e, i) => {
           const roleDef = ROLE_DEFS.find(r => r.labelVi.includes(e.role) || r.label === e.role);
           return (
-            <div key={e.id} className="flex items-start gap-4 px-5 py-3.5 border-b last:border-0 hover:bg-[#faf7f2]"
+            <div key={e.id} className="flex items-start gap-4 px-5 py-3.5 border-b last:border-0 hover:bg-[#f8fafc]"
               style={{ borderColor:"var(--color-line)", background:i%2===0?"#fff":"#fafafa" }}>
               <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-[13px] text-white"
                 style={{ background:roleDef?.color??"#635647", fontFamily: "var(--font-sans)", fontWeight:700 }}>
@@ -993,7 +993,7 @@ export function PhanQuyenPage() {
                 className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[13px] transition-all"
                 style={{
                   color: activeRole === r.id ? r.color : "#5a5040",
-                  background: activeRole === r.id ? r.bg : "#faf7f2",
+                  background: activeRole === r.id ? r.bg : "#f8fafc",
                   borderColor: activeRole === r.id ? r.border : "var(--color-line)",
                   fontFamily: "var(--font-sans)", fontWeight: activeRole === r.id ? 600 : 400,
                 }}>

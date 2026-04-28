@@ -72,7 +72,7 @@ const MOCK_CASES: PublicCase[] = [
 const STATUS_CFG: Record<LYKStatus,{label:string;color:string;bg:string;border:string}> = {
   dang_lay:     { label:"Đang lấy ý kiến", color:"#166534", bg:"#dcfce7", border:"#86efac" },
   sap_het_han:  { label:"Sắp hết hạn",    color:"#b45309", bg:"#fef3c7", border:"#fde68a" },
-  da_ket_thuc:  { label:"Đã kết thúc",    color:"#5a5040", bg:"#f0ece3", border:"#d1ccc0" },
+  da_ket_thuc:  { label:"Đã kết thúc",    color:"#5a5040", bg:"#eef2f8", border:"#d1ccc0" },
 };
 const OPINION_CFG: Record<OpinionType,{label:string;icon:typeof ThumbsUp;color:string;bg:string}> = {
   tan_thanh: { label:"Tán thành",   icon:ThumbsUp,     color:"#166534", bg:"#dcfce7" },
@@ -224,7 +224,7 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
             const Icon=cfg.icon; const a=loai===k;
             return (
               <button key={k} onClick={()=>setLoai(k)} className="flex items-center gap-2 px-4 py-2 rounded-[8px] border-2 text-[13px] transition-all flex-1 justify-center"
-                style={{ background:a?cfg.bg:"white",borderColor:a?cfg.color:"#e8e2d4",color:a?cfg.color:"#5a5040",fontFamily: "var(--font-sans)",fontWeight:a?700:400 }}>
+                style={{ background:a?cfg.bg:"white",borderColor:a?cfg.color:"#e2e8f0",color:a?cfg.color:"#5a5040",fontFamily: "var(--font-sans)",fontWeight:a?700:400 }}>
                 <Icon className="size-4"/>{cfg.label}
               </button>
             );
@@ -252,7 +252,7 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
         </div>
       )}
       {/* Ẩn danh toggle */}
-      <div className="flex items-center gap-3 mb-4 p-3 rounded-[8px]" style={{ background:"white",border:"1px solid #e8e2d4" }}>
+      <div className="flex items-center gap-3 mb-4 p-3 rounded-[8px]" style={{ background:"white",border:"1px solid #e2e8f0" }}>
         <button onClick={()=>setAnon(!anon)} className="flex items-center gap-2 flex-1 text-left">
           {anon?<EyeOff className="size-4 text-[#5a5040]"/>:<Eye className="size-4 text-[#1C5FBE]"/>}
           <div>
@@ -274,7 +274,7 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
           {sending?<Loader2 className="size-4 animate-spin"/>:<Send className="size-4"/>}
           {sending?"Đang gửi...":"Gửi ý kiến"}
         </button>
-        <button onClick={onCancel} className="px-4 py-2.5 rounded-[8px] border border-[#e8e2d4] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+        <button onClick={onCancel} className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
           Hủy
         </button>
       </div>
@@ -303,7 +303,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background:"#f5f0e8",fontFamily: "var(--font-sans)" }}>
+    <div className="min-h-screen" style={{ background:"#f4f7fb",fontFamily: "var(--font-sans)" }}>
       {showOTP&&<OTPModal onVerified={p=>{ setPhone(p); setShowOTP(false); }} onClose={()=>setShowOTP(false)}/>}
       {/* Header */}
       <div style={{ background:"linear-gradient(135deg,#0b1426 0%,#1a2744 60%,#0b1426 100%)" }}>
@@ -359,12 +359,12 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
           const isDone=submitted.has(c.id); const isForm=formCase===c.id;
           const isOpen=showAll[c.id]; const ops=c.publicOpinions;
           return (
-            <div key={c.id} className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background:"white" }}>
+            <div key={c.id} className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
               {/* Header */}
-              <div className="p-5 border-b border-[#e8e2d4]">
+              <div className="p-5 border-b border-[#e2e8f0]">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
-                    <div className="size-12 rounded-[10px] flex items-center justify-center shrink-0" style={{ background:"#f5f2ec" }}>
+                    <div className="size-12 rounded-[10px] flex items-center justify-center shrink-0" style={{ background:"#f4f7fb" }}>
                       <Award className="size-6 text-[#8a6400]"/>
                     </div>
                     <div>
@@ -397,8 +397,8 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                 </div>
               </div>
               {/* Stats */}
-              <div className="px-5 py-3 flex items-center gap-4 border-b border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
-                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#f0ece3" }}>
+              <div className="px-5 py-3 flex items-center gap-4 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#eef2f8" }}>
                   <div className="h-full rounded-full" style={{ width:`${ttPct}%`,background:"#166534" }}/>
                 </div>
                 {([["tan_thanh",c.tanThanh,ThumbsUp,"#166534"],["co_y_kien",c.coYKien,MessageSquare,"#b45309"],["phan_doi",c.phanDoi,ThumbsDown,"#c8102e"]] as any[]).map(([k,v,Icon,col])=>(
@@ -436,7 +436,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                 )}
               </div>
               {/* Actions */}
-              <div className="px-5 py-3 border-t border-[#e8e2d4]">
+              <div className="px-5 py-3 border-t border-[#e2e8f0]">
                 {isDone ? (
                   <div className="flex items-center gap-2 text-[13px] text-[#166534]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>
                     <CheckCircle2 className="size-4"/>Đã gửi ý kiến thành công. Cảm ơn bạn!
@@ -459,7 +459,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
       </div>
       {/* Footer */}
       <div className="max-w-4xl mx-auto px-6 pb-8">
-        <div className="p-4 rounded-[10px] border border-[#e8e2d4] text-center" style={{ background:"white" }}>
+        <div className="p-4 rounded-[10px] border border-[#e2e8f0] text-center" style={{ background:"white" }}>
           <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Hệ thống VPTU Đồng Nai · Tỉnh ủy Đồng Nai · Thực hiện theo Điều 15 Thông tư 01/2024/TT-BNV<br/>
             Mọi thông tin cá nhân được bảo mật và chỉ dùng để xác thực. Không chia sẻ cho bên thứ ba.

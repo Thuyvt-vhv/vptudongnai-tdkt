@@ -22,7 +22,7 @@ const CATEGORIES: HelpCategory[] = [
   { id:"law",    icon:Scale,       label:"Pháp lý & Căn cứ",     desc:"Luật TĐKT 2022, NĐ 98, TT 01",     count:16, color:"#7c3aed", bg:"#faf5ff" },
   { id:"ai",     icon:Sparkles,    label:"AI Tố Nga",             desc:"Hướng dẫn sử dụng trợ lý AI",      count:10, color:"#7c3aed", bg:"#f5f3ff" },
   { id:"kyso",   icon:Shield,      label:"Ký số & Bảo mật",      desc:"Chữ ký CA, bảo mật hệ thống",      count:12, color:"#166534", bg:"#dcfce7" },
-  { id:"system", icon:Settings,    label:"Quản trị hệ thống",     desc:"Cấu hình, phân quyền, audit",      count:9,  color:"#5a5040", bg:"#faf7f2" },
+  { id:"system", icon:Settings,    label:"Quản trị hệ thống",     desc:"Cấu hình, phân quyền, audit",      count:9,  color:"#5a5040", bg:"#f8fafc" },
 ];
 
 interface FAQItem { q: string; a: string; category: string; }
@@ -66,14 +66,14 @@ function FAQAccordion({ items }: { items: FAQItem[] }) {
     <div className="space-y-2">
       {items.map((item, i) => (
         <div key={i} className="rounded-[10px] border overflow-hidden transition-all"
-          style={{ borderColor: open === i ? "#bfdbfe" : "#e8e2d4", background: open === i ? "#f8fbff" : "white" }}>
+          style={{ borderColor: open === i ? "#bfdbfe" : "#e2e8f0", background: open === i ? "#f8fbff" : "white" }}>
           <button className="w-full flex items-center justify-between px-5 py-4 text-left"
             onClick={() => setOpen(open === i ? null : i)}>
             <span className="text-[13px] text-[#0b1426] flex-1 pr-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{item.q}</span>
             <ChevronDown className={`size-4 text-[#635647] shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
           </button>
           {open === i && (
-            <div className="px-5 pb-4 border-t border-[#f0ece3]">
+            <div className="px-5 pb-4 border-t border-[#eef2f8]">
               <p className="text-[13px] text-[#5a5040] leading-relaxed mt-3" style={{ fontFamily: "var(--font-sans)" }}>{item.a}</p>
               <div className="mt-3 flex items-center gap-3">
                 <button className="flex items-center gap-1.5 text-[13px] text-[#1C5FBE] hover:text-[#1752a8]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
@@ -106,7 +106,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
   });
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
 
       {/* Hero */}
       <div className="relative overflow-hidden px-8 py-14 text-center"
@@ -157,7 +157,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           <button onClick={() => setActiveCategory("all")}
             className="flex flex-col items-center gap-2 p-4 rounded-[12px] border text-center transition-all hover:shadow-md"
-            style={{ background: activeCategory === "all" ? "#0b1426" : "white", borderColor: activeCategory === "all" ? "#0b1426" : "#e8e2d4" }}>
+            style={{ background: activeCategory === "all" ? "#0b1426" : "white", borderColor: activeCategory === "all" ? "#0b1426" : "#e2e8f0" }}>
             <BookOpen className="size-6" style={{ color: activeCategory === "all" ? "#8a6400" : "#635647" }} />
             <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: activeCategory === "all" ? "white" : "#0b1426" }}>Tất cả</span>
             <span className="text-[13px]" style={{ color: activeCategory === "all" ? "rgba(255,255,255,0.6)" : "#635647", fontFamily: "var(--font-sans)" }}>{FAQ_ITEMS.length} bài</span>
@@ -168,7 +168,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
             return (
               <button key={cat.id} onClick={() => setActiveCategory(cat.id)}
                 className="flex flex-col items-center gap-2 p-4 rounded-[12px] border text-center transition-all hover:shadow-md"
-                style={{ background: active ? cat.color : "white", borderColor: active ? cat.color : "#e8e2d4" }}>
+                style={{ background: active ? cat.color : "white", borderColor: active ? cat.color : "#e2e8f0" }}>
                 <CatIcon className="size-6" style={{ color: active ? "white" : cat.color }} />
                 <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: active ? "white" : "#0b1426" }}>{cat.label}</span>
                 <span className="text-[13px]" style={{ color: active ? "rgba(255,255,255,0.7)" : "#635647", fontFamily: "var(--font-sans)" }}>{cat.count} bài</span>
@@ -178,7 +178,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 border-b border-[#e8e2d4] mb-6">
+        <div className="flex items-center gap-1 border-b border-[#e2e8f0] mb-6">
           {([["faq","Câu hỏi thường gặp",HelpCircle],["legal","Pháp lý & Văn bản",Scale],["videos","Video hướng dẫn",PlayCircle],["contact","Liên hệ hỗ trợ",MessageSquare]] as const).map(([id,label,Icon]) => (
             <button key={id} onClick={() => setActiveTab(id)}
               className="flex items-center gap-1.5 px-5 py-3 text-[13px] border-b-2 transition-all"
@@ -210,22 +210,22 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
             </p>
             {LEGAL_REFS.map((ref, i) => (
               <div key={i} className="flex items-start gap-4 p-4 rounded-[12px] border bg-white hover:shadow-md transition-all"
-                style={{ borderColor: "#e8e2d4", borderLeft: `4px solid ${ref.color}` }}>
+                style={{ borderColor: "#e2e8f0", borderLeft: `4px solid ${ref.color}` }}>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <code className="text-[13px] px-2 py-0.5 rounded" style={{ background: `${ref.color}15`, color: ref.color, fontFamily: "JetBrains Mono,monospace", fontWeight: 700 }}>
                       {ref.code}
                     </code>
-                    <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#f0ece3] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ref.tag}</span>
+                    <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ref.tag}</span>
                     <span className="text-[13px] text-[#6b5e47]">{ref.year}</span>
                   </div>
                   <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ref.title}</p>
                 </div>
                 <div className="ml-auto flex items-center gap-2 shrink-0">
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e8e2d4] hover:bg-[#f5f2ec] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
                     <BookOpen className="size-3.5" />Xem
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e8e2d4] hover:bg-[#f5f2ec] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
                     <Sparkles className="size-3.5" />Hỏi AI
                   </button>
                 </div>
@@ -239,7 +239,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
           <div className="grid grid-cols-2 gap-5 max-w-3xl">
             {VIDEOS.map((v, i) => (
               <div key={i} className="rounded-[12px] border bg-white overflow-hidden hover:shadow-lg transition-all"
-                style={{ borderColor: "#e8e2d4" }}>
+                style={{ borderColor: "#e2e8f0" }}>
                 {/* Thumbnail */}
                 <div className="relative h-36 flex items-center justify-center"
                   style={{ background: `linear-gradient(135deg,#0b1426,#1a2744)` }}>
@@ -275,7 +275,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
               const CIcon = c.icon;
               return (
                 <div key={i} className="rounded-[12px] border p-5 bg-white hover:shadow-md transition-all"
-                  style={{ borderColor: "#e8e2d4" }}>
+                  style={{ borderColor: "#e2e8f0" }}>
                   <div className="size-10 rounded-[10px] flex items-center justify-center mb-3" style={{ background: `${c.color}15` }}>
                     <CIcon className="size-5" style={{ color: c.color }} />
                   </div>

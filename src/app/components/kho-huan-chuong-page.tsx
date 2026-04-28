@@ -135,9 +135,9 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
   });
   const totalAwarded=AWARDS.reduce((s,a)=>s+a.totalAwarded,0);
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4]" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#8a6400,#f0c040)" }}>
             <Medal className="size-5 text-white"/>
@@ -155,7 +155,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
         {/* Stats row */}
         <div className="flex gap-3 mb-4">
           {[
-            { l:"Tổng danh hiệu", v:AWARDS.length,bg:"#f5f2ec",c:"#0b1426" },
+            { l:"Tổng danh hiệu", v:AWARDS.length,bg:"#f4f7fb",c:"#0b1426" },
             { l:"Cấp Nhà nước",   v:AWARDS.filter(a=>a.level==="nha_nuoc").length,bg:"#fee2e2",c:"#c8102e" },
             { l:"Cấp Tỉnh",       v:AWARDS.filter(a=>a.level==="tinh").length,bg:"#ddeafc",c:"#1C5FBE" },
             { l:"Cơ sở",          v:AWARDS.filter(a=>a.level==="co_so").length,bg:"#dcfce7",c:"#166534" },
@@ -176,12 +176,12 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
           </div>
           <div className="flex gap-1">
             {[["all","Tất cả"],["nha_nuoc","Nhà nước"],["tinh","Cấp Tỉnh"],["co_so","Cơ sở"]].map(([k,l])=>(
-              <button key={k} onClick={()=>setLevelFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:levelFilter===k?"#0b1426":"white",color:levelFilter===k?"white":"#5a5040",borderColor:levelFilter===k?"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:levelFilter===k?700:400 }}>{l}</button>
+              <button key={k} onClick={()=>setLevelFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:levelFilter===k?"#0b1426":"white",color:levelFilter===k?"white":"#5a5040",borderColor:levelFilter===k?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:levelFilter===k?700:400 }}>{l}</button>
             ))}
           </div>
           <div className="flex gap-1">
             {Object.entries(CAT_CFG).concat([["all",{label:"Tất cả loại",emoji:""}] as any]).reverse().map(([k,v]:any)=>(
-              <button key={k} onClick={()=>setCatFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:catFilter===k?"#1C5FBE":"white",color:catFilter===k?"white":"#5a5040",borderColor:catFilter===k?"#1C5FBE":"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:catFilter===k?700:400 }}>{v.emoji} {v.label}</button>
+              <button key={k} onClick={()=>setCatFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:catFilter===k?"#1C5FBE":"white",color:catFilter===k?"white":"#5a5040",borderColor:catFilter===k?"#1C5FBE":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:catFilter===k?700:400 }}>{v.emoji} {v.label}</button>
             ))}
           </div>
         </div>
@@ -194,7 +194,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
             <button onClick={()=>setSelected(null)} className="flex items-center gap-1.5 text-[13px] text-[#1C5FBE] mb-4" style={{ fontFamily: "var(--font-sans)" }}>
               ← Quay lại danh sách
             </button>
-            <div className="rounded-[14px] overflow-hidden border border-[#e8e2d4]">
+            <div className="rounded-[14px] overflow-hidden border border-[#e2e8f0]">
               {/* Hero */}
               <div className="p-8 flex items-center gap-6" style={{ background:selected.gradient }}>
                 <div className="text-[72px] leading-none filter drop-shadow-lg">{selected.emoji}</div>
@@ -217,7 +217,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
                   ))}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-0 divide-x divide-[#e8e2d4]" style={{ background:"white" }}>
+              <div className="grid grid-cols-2 gap-0 divide-x divide-[#e2e8f0]" style={{ background:"white" }}>
                 <div className="p-6">
                   <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Điều kiện xét tặng</h3>
                   <ul className="space-y-2">
@@ -260,7 +260,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
               {filtered.map(a=>{
                 const lc=LEVEL_CFG[a.level];
                 return (
-                  <button key={a.id} onClick={()=>setSelected(a)} className="rounded-[12px] border border-[#e8e2d4] overflow-hidden text-left hover:shadow-md transition-all hover:scale-[1.01] cursor-pointer" style={{ background:"white" }}>
+                  <button key={a.id} onClick={()=>setSelected(a)} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden text-left hover:shadow-md transition-all hover:scale-[1.01] cursor-pointer" style={{ background:"white" }}>
                     <div className="h-20 flex items-center justify-between px-4" style={{ background:a.gradient }}>
                       <div className="text-[44px] leading-none">{a.emoji}</div>
                       <div className="text-right">
@@ -271,7 +271,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
                     <div className="p-4">
                       <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.color,fontFamily: "var(--font-sans)",fontWeight:700 }}>{lc.label}</span>
-                        <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{CAT_CFG[a.category].label}</span>
+                        <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{CAT_CFG[a.category].label}</span>
                       </div>
                       <h3 className="text-[13px] text-[#0b1426] leading-snug mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{a.name}</h3>
                       <p className="text-[13px] text-[#635647] line-clamp-2">{a.description.slice(0,90)}...</p>

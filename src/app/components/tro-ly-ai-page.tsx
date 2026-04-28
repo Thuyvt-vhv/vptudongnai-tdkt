@@ -136,8 +136,8 @@ function getResponse(msg:string): typeof AI_RESPONSES[string] {
 
 function renderMarkdown(text:string) {
   return text.split("\n").map((line,i)=>{
-    if (line.startsWith("**")&&line.endsWith("**")) return <p key={i} className="text-[13px] text-[#e8e2d4] mb-2 mt-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{line.replace(/\*\*/g,"")}</p>;
-    if (line.startsWith("• ")) return <p key={i} className="text-[13px] text-white/70 flex items-start gap-2 mb-1"><span style={{ color:"#8a6400" }}>•</span><span dangerouslySetInnerHTML={{ __html:line.slice(2).replace(/\*\*(.+?)\*\*/g,"<strong style='color:#e8e2d4'>$1</strong>") }}/></p>;
+    if (line.startsWith("**")&&line.endsWith("**")) return <p key={i} className="text-[13px] text-[#e2e8f0] mb-2 mt-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{line.replace(/\*\*/g,"")}</p>;
+    if (line.startsWith("• ")) return <p key={i} className="text-[13px] text-white/70 flex items-start gap-2 mb-1"><span style={{ color:"#8a6400" }}>•</span><span dangerouslySetInnerHTML={{ __html:line.slice(2).replace(/\*\*(.+?)\*\*/g,"<strong style='color:#e2e8f0'>$1</strong>") }}/></p>;
     if (line.startsWith("🥇")||line.startsWith("📋")||line.startsWith("⏳")||line.startsWith("⚠️")||line.startsWith("💡")) return <p key={i} className="text-[13px] text-white/80 mb-2 pl-1">{line}</p>;
     if (line.startsWith("→")) return <p key={i} className="text-[13px] text-white/50 pl-4 mb-1 italic">{line}</p>;
     if (line==="|---|---|---|"||line.startsWith("|---")) return null;
@@ -150,7 +150,7 @@ function renderMarkdown(text:string) {
       );
     }
     if (line.trim()==="") return <div key={i} className="h-2"/>;
-    return <p key={i} className="text-[13px] text-white/70 mb-1 leading-relaxed" dangerouslySetInnerHTML={{ __html:line.replace(/\*\*(.+?)\*\*/g,"<strong style='color:#e8e2d4'>$1</strong>") }}/>;
+    return <p key={i} className="text-[13px] text-white/70 mb-1 leading-relaxed" dangerouslySetInnerHTML={{ __html:line.replace(/\*\*(.+?)\*\*/g,"<strong style='color:#e2e8f0'>$1</strong>") }}/>;
   });
 }
 

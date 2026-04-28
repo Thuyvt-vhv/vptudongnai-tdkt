@@ -44,7 +44,7 @@ function SLAGauge({ pct, color }:{ pct:number; color:string }) {
   const r=28; const circ=2*Math.PI*r; const dash=circ*(1-pct/100);
   return (
     <svg width={72} height={72} viewBox="0 0 72 72">
-      <circle cx="36" cy="36" r={r} fill="none" stroke="#f5f2ec" strokeWidth={7}/>
+      <circle cx="36" cy="36" r={r} fill="none" stroke="#f4f7fb" strokeWidth={7}/>
       <circle cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth={7}
         strokeDasharray={circ} strokeDashoffset={dash} strokeLinecap="round"
         transform="rotate(-90 36 36)" style={{ transition:"stroke-dashoffset 0.6s ease" }}/>
@@ -64,9 +64,9 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
   const slaRate=Math.round((counts.on_time/(ITEMS.length))*100);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4]" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#b45309,#c8102e)" }}>
             <Activity className="size-5 text-white"/>
@@ -101,7 +101,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
             return (
               <button key={s} onClick={()=>setStatusFilter(statusFilter===s?"all":s)}
                 className="rounded-[10px] border-2 p-4 flex flex-col items-center justify-center gap-1 transition-all"
-                style={{ background:statusFilter===s?cfg.bg:"white",borderColor:statusFilter===s?cfg.border:"#e8e2d4" }}>
+                style={{ background:statusFilter===s?cfg.bg:"white",borderColor:statusFilter===s?cfg.border:"#e2e8f0" }}>
                 <Icon className="size-5" style={{ color:cfg.color }}/>
                 <div className="text-[24px] leading-none" style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:cfg.color }}>{v}</div>
                 <div className="text-[13px]" style={{ color:cfg.color,fontFamily: "var(--font-sans)" }}>{l}</div>
@@ -130,7 +130,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
             </div>
           </div>
         )}
-        <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+        <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
             <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
               {["Hồ sơ","Cá nhân / Đơn vị","Danh hiệu","Giai đoạn hiện tại","Deadline","Còn lại","Người phụ trách","Trạng thái",""].map(h=><th key={h} className="text-left px-3 py-3 text-white" style={{ fontWeight:700 }}>{h}</th>)}
@@ -139,7 +139,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
               const cfg=STATUS_CFG[item.status]; const SIcon=cfg.icon;
               const daysColor=item.daysLeft<0?"#c8102e":item.daysLeft<=1?"#c8102e":item.daysLeft<=3?"#b45309":"#166534";
               return (
-                <tr key={item.id} className="border-t border-[#e8e2d4] hover:bg-[#faf8f4] transition-colors" style={{ background:item.status==="critical"||item.status==="overdue"?"#fff8f8":i%2===0?"white":"#fdfcfa" }}>
+                <tr key={item.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:item.status==="critical"||item.status==="overdue"?"#fff8f8":i%2===0?"white":"#fdfcfa" }}>
                   <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{item.hoSoId}</code></td>
                   <td className="px-3 py-3">
                     <div className="text-[13px] text-[#0b1426]" style={{ fontWeight:600 }}>{item.tenNguoi}</div>
@@ -176,7 +176,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
           </table>
         </div>
         {/* SLA rules reminder */}
-        <div className="mt-4 p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#fdf9f0" }}>
+        <div className="mt-4 p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#fdf9f0" }}>
           <div className="flex items-center gap-2 mb-2">
             <Clock className="size-4 text-[#b45309]"/>
             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quy định SLA theo TT 15/2025/TT-BNV</span>

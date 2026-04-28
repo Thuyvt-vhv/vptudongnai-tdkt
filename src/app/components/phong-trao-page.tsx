@@ -101,7 +101,7 @@ const STATE_CFG: Record<CampaignState, {
   color: string; bg: string; border: string;
   phase: 0|1|2|3; icon: typeof Clock; canCu: string;
 }> = {
-  draft:             { label:"Soạn thảo",           short:"Nháp",       color:"#5a5040", bg:"#f0ece3", border:"#d9d1bd", phase:0, icon:PenLine,       canCu:"Nội bộ" },
+  draft:             { label:"Soạn thảo",           short:"Nháp",       color:"#5a5040", bg:"#eef2f8", border:"#d9d1bd", phase:0, icon:PenLine,       canCu:"Nội bộ" },
   submitted:         { label:"Trình phê duyệt",      short:"Đã trình",   color:"#0e7490", bg:"#e0f2fe", border:"#67e8f9", phase:0, icon:Send,           canCu:"NĐ 152/2025/NĐ-CP" },
   approved:          { label:"Đã phê duyệt",         short:"Duyệt",      color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", phase:0, icon:CheckCircle2,   canCu:"Điều 18 Luật TĐKT" },
   published:         { label:"Ban hành / Công bố",   short:"Công bố",    color:"#4338ca", bg:"#e0e7ff", border:"#a5b4fc", phase:0, icon:Megaphone,      canCu:"TT 15/2025/TT-BNV" },
@@ -501,7 +501,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
     <div className="px-8 py-3 border-b flex items-center gap-0 overflow-x-auto"
       style={{ background:"#fafaf9", borderColor:"var(--color-line)" }}>
       {/* State pill */}
-      <div className="flex items-center gap-2 pr-4 border-r mr-4 shrink-0" style={{ borderColor:"#e8e2d4" }}>
+      <div className="flex items-center gap-2 pr-4 border-r mr-4 shrink-0" style={{ borderColor:"#e2e8f0" }}>
         <div className="size-2 rounded-full animate-pulse" style={{ background:scfg.color, animationPlayState: c.state === "active" ? "running" : "paused" }} />
         <span className="text-[13px] font-semibold" style={{ color:scfg.color, fontFamily: "var(--font-sans)" }}>{scfg.short}</span>
         <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>· {scfg.canCu}</span>
@@ -509,7 +509,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
       {/* KPI items */}
       {items.map((item, i) => (
         <div key={i} className="flex items-center gap-3 pr-6 mr-2 shrink-0">
-          {i > 0 && <div className="h-8 w-px bg-[#e8e2d4] -ml-2 mr-4" />}
+          {i > 0 && <div className="h-8 w-px bg-[#e2e8f0] -ml-2 mr-4" />}
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-[14px] font-bold" style={{ color:item.color, fontFamily: "var(--font-sans)" }}>{item.value}</span>
@@ -577,7 +577,7 @@ function buildUnitTrack(c: Campaign): UnitTrackItem[] {
 const UNIT_STATUS_CFG: Record<UnitStatus,{ label:string; color:string; bg:string; border:string; dot:string }> = {
   da_duyet: { label:"Đã được duyệt", color:"#0f7a3e", bg:"#d1fae5", border:"#6ee7b7", dot:"#0f7a3e" },
   da_nop:   { label:"Đã nộp",        color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", dot:"#1C5FBE" },
-  chua_nop: { label:"Chưa nộp",      color:"#635647", bg:"#f0ece3", border:"#d9d1bd", dot:"#635647" },
+  chua_nop: { label:"Chưa nộp",      color:"#635647", bg:"#eef2f8", border:"#d9d1bd", dot:"#635647" },
   tre_han:  { label:"Trễ hạn",       color:"#c8102e", bg:"#fee2e2", border:"#fca5a5", dot:"#c8102e" },
 };
 
@@ -640,7 +640,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
         <div className="h-full bg-[#0f7a3e] transition-all" style={{ width:`${units.length > 0 ? counts.da_duyet/units.length*100 : 0}%` }} />
         <div className="h-full bg-[#1C5FBE] transition-all" style={{ width:`${units.length > 0 ? counts.da_nop/units.length*100 : 0}%` }} />
         <div className="h-full bg-[#c8102e] transition-all" style={{ width:`${units.length > 0 ? counts.tre_han/units.length*100 : 0}%` }} />
-        <div className="h-full flex-1 bg-[#e8e2d4]" />
+        <div className="h-full flex-1 bg-[#e2e8f0]" />
       </div>
 
       {/* Filter tabs */}
@@ -670,7 +670,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
       </div>
 
       {/* Table */}
-      <div className="divide-y" style={{ divideColor:"#f0ece3" }}>
+      <div className="divide-y" style={{ divideColor:"#eef2f8" }}>
         {paged.length === 0 ? (
           <div className="py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Không tìm thấy đơn vị nào
@@ -748,7 +748,7 @@ function FullStateTimeline({ state }: { state: CampaignState }) {
             <div key={pi} className="flex justify-center" style={{ flex: phase.states.length }}>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-full text-[13px] font-semibold whitespace-nowrap"
                 style={{
-                  background: phaseComplete ? "#dcfce7" : phaseActive ? phase.color : "#f0ece3",
+                  background: phaseComplete ? "#dcfce7" : phaseActive ? phase.color : "#eef2f8",
                   color:      phaseComplete ? "#166534" : phaseActive ? "#fff"      : "#635647",
                 }}>
                 {phaseComplete && <Check className="size-2.5" strokeWidth={2.5} />}
@@ -907,7 +907,7 @@ function OverviewTab({ c }: { c: Campaign }) {
             <Users className="size-4" style={{ color:theme.primary }} />
             <span className="text-[14px] text-[#0b1426]"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Đối tượng tham gia</span>
-            <span className="ml-auto text-[13px] px-2 py-0.5 rounded bg-[#f0ece3] text-[#5a5040]"
+            <span className="ml-auto text-[13px] px-2 py-0.5 rounded bg-[#eef2f8] text-[#5a5040]"
               style={{ fontFamily: "var(--font-sans)" }}>{SUBJECT_LABELS[c.subjectType]}</span>
           </div>
           <div className="px-5 py-4">
@@ -920,7 +920,7 @@ function OverviewTab({ c }: { c: Campaign }) {
         {/* Scoring criteria */}
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <button
-            className="w-full px-5 py-3 border-b flex items-center gap-2 hover:bg-[#faf7f2] transition-colors"
+            className="w-full px-5 py-3 border-b flex items-center gap-2 hover:bg-[#f8fafc] transition-colors"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}
             onClick={() => setExpandCriteria(!expandCriteria)}>
             <Scale className="size-4" style={{ color:theme.primary }} />
@@ -1029,7 +1029,7 @@ function OverviewTab({ c }: { c: Campaign }) {
             {/* Simple ring progress */}
             <div className="relative size-28">
               <svg viewBox="0 0 120 120" className="size-full -rotate-90">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="#f0ece3" strokeWidth="12" />
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#eef2f8" strokeWidth="12" />
                 <circle cx="60" cy="60" r="50" fill="none"
                   stroke={joinPct === 100 ? "#16a34a" : theme.primary}
                   strokeWidth="12"
@@ -1207,7 +1207,7 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
               {p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"} · TT 12/2019 + TT 15/2025/TT-BNV
             </div>
           </div>
-          <button className="size-7 rounded-[4px] flex items-center justify-center hover:bg-[#f0ece3] text-[#635647]" onClick={onClose}>
+          <button className="size-7 rounded-[4px] flex items-center justify-center hover:bg-[#eef2f8] text-[#635647]" onClick={onClose}>
             <X className="size-4" />
           </button>
         </div>
@@ -1221,7 +1221,7 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
               {pct}% hoàn chỉnh
             </span>
           </div>
-          <div className="w-full h-2 rounded-full bg-[#f0ece3] overflow-hidden">
+          <div className="w-full h-2 rounded-full bg-[#eef2f8] overflow-hidden">
             <div className="h-full rounded-full transition-all"
               style={{ width: `${pct}%`, background: validation.valid ? "#16a34a" : pct >= 50 ? "#f59e0b" : "#dc2626" }} />
           </div>
@@ -1337,7 +1337,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
 
   if (!c.participants.length) return (
     <div className="flex flex-col items-center gap-3 py-24 text-center">
-      <Users className="size-12 text-[#e8e2d4]" />
+      <Users className="size-12 text-[#e2e8f0]" />
       <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
         Chưa có hồ sơ tham gia. Phong trào sẽ mở nhận hồ sơ khi được phát động chính thức.
       </p>
@@ -1365,7 +1365,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
               fontFamily: "var(--font-sans)" }}>
             {cfg.label}
             <span className="size-4 rounded-full flex items-center justify-center text-[13px]"
-              style={{ background:filter===key?cfg.color+"20":"#f0ece3", color:cfg.color }}>
+              style={{ background:filter===key?cfg.color+"20":"#eef2f8", color:cfg.color }}>
               {counts[key]}
             </span>
           </button>
@@ -1400,7 +1400,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
               const isTop3 = (p.rank ?? 99) <= 3;
               const medalColors = ["#8a6400","#4f5d6e","#cd7c3b"];
               return (
-                <tr key={p.id} className="border-b hover:bg-[#faf7f2] transition-colors"
+                <tr key={p.id} className="border-b hover:bg-[#f8fafc] transition-colors"
                   style={{ borderColor:"var(--color-line)" }}>
                   <td className="px-4 py-3">
                     {p.rank ? (
@@ -1442,7 +1442,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
                             color:p.score>=90?"#0f7a3e":p.score>=75?theme.primary:"#c2410c" }}>
                           {p.score}
                         </div>
-                        <div className="flex-1 w-16 h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+                        <div className="flex-1 w-16 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
                           <div className="h-full rounded-full"
                             style={{ width:`${p.score}%`,
                               background:p.score>=90?"#16a34a":p.score>=75?theme.primary:"#dc2626" }} />
@@ -1488,7 +1488,7 @@ function ScoringTab({ c }: { c: Campaign }) {
 
   if (!c.unitScores.length) return (
     <div className="flex flex-col items-center gap-3 py-24 text-center">
-      <BarChart2 className="size-12 text-[#e8e2d4]" />
+      <BarChart2 className="size-12 text-[#e2e8f0]" />
       <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
         Chưa có dữ liệu chấm điểm. Giai đoạn này sẽ bắt đầu sau khi hội đồng xét duyệt.
       </p>
@@ -1528,7 +1528,7 @@ function ScoringTab({ c }: { c: Campaign }) {
           const pct     = maxScore ? u.total / maxScore : 0;
           const isOpen  = expandId === u.unitId;
           const isTop3  = idx < 3;
-          const medalBg = idx===0?"#fdf3d9":idx===1?"#f3f4f6":idx===2?"#fff7ed":"#faf7f2";
+          const medalBg = idx===0?"#fdf3d9":idx===1?"#f3f4f6":idx===2?"#fff7ed":"#f8fafc";
           const medalFg = idx===0?"#7d4a00":idx===1?"#374151":idx===2?"#92400e":"#5a5040";
           const scoreColor = pct>=0.9?"#0f7a3e":pct>=0.75?theme.primary:"#c2410c";
 
@@ -1537,7 +1537,7 @@ function ScoringTab({ c }: { c: Campaign }) {
               className="rounded-[10px] border overflow-hidden transition-shadow hover:shadow-sm"
               style={{ borderColor: u.status==="chua_cham"?"#fcd34d":isTop3?"#d9d1bd":"var(--color-line)" }}>
               <button
-                className="w-full flex items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[#faf7f2]"
+                className="w-full flex items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[#f8fafc]"
                 onClick={() => setExpandId(isOpen ? null : u.unitId)}>
 
                 {/* Rank medal */}
@@ -1566,7 +1566,7 @@ function ScoringTab({ c }: { c: Campaign }) {
                     <div className="flex items-center gap-1.5">
                       {c.tieuChi.map((t,ti) => (
                         <div key={t.id} className="relative" style={{ width:`${(t.maxScore/maxScore)*100}%`, minWidth:20 }}>
-                          <div className="h-2 rounded-sm overflow-hidden bg-[#f0ece3]">
+                          <div className="h-2 rounded-sm overflow-hidden bg-[#eef2f8]">
                             <div className="h-full rounded-sm"
                               style={{ width:`${(u.scores[t.id]??0)/t.maxScore*100}%`, background:criteriaColors[ti] }} />
                           </div>
@@ -1618,7 +1618,7 @@ function ScoringTab({ c }: { c: Campaign }) {
                             {val}
                           </div>
                           <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>/{t.maxScore}</div>
-                          <div className="mt-2 h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+                          <div className="mt-2 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
                             <div className="h-full rounded-full" style={{ width:`${p*100}%`, background:cc }} />
                           </div>
                         </div>
@@ -1655,12 +1655,12 @@ function HistoryTab({ c }: { c: Campaign }) {
 
       {!c.auditLog.length ? (
         <div className="flex flex-col items-center gap-3 py-16 text-center">
-          <FileText className="size-10 text-[#e8e2d4]" />
+          <FileText className="size-10 text-[#e2e8f0]" />
           <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chưa có lịch sử hoạt động</p>
         </div>
       ) : (
         <div className="relative pl-6 max-w-3xl">
-          <div className="absolute left-2.5 top-0 bottom-0 w-0.5 bg-[#e8e2d4]" />
+          <div className="absolute left-2.5 top-0 bottom-0 w-0.5 bg-[#e2e8f0]" />
           {[...c.auditLog].reverse().map((e) => {
             const sc = STATE_CFG[e.state];
             const phase = getPhaseOf(e.state);
@@ -1736,9 +1736,9 @@ function SectionHeader({ icon: Icon, title, sub, color }: {
 
 function CheckRow({ done, text }: { done: boolean; text: string }) {
   return (
-    <div className="flex items-center gap-2.5 py-2 border-b last:border-b-0" style={{ borderColor: "#f0ece3" }}>
+    <div className="flex items-center gap-2.5 py-2 border-b last:border-b-0" style={{ borderColor: "#eef2f8" }}>
       <div className={`size-5 rounded-full flex items-center justify-center shrink-0`}
-        style={{ background: done ? "#dcfce7" : "#f0ece3", border: `1.5px solid ${done ? "#86efac" : "#d1ccc0"}` }}>
+        style={{ background: done ? "#dcfce7" : "#eef2f8", border: `1.5px solid ${done ? "#86efac" : "#d1ccc0"}` }}>
         {done ? <CheckCircle2 className="size-3 text-[#166534]" /> : <CircleDot className="size-3 text-[#b8b0a0]" />}
       </div>
       <span className="text-[13px]" style={{ color: done ? "#0b1426" : "#635647", fontFamily: "var(--font-sans)", fontDecoration: done ? "none" : "none" }}>
@@ -1831,7 +1831,7 @@ function PersonalStatusBanner({ c, myP, danh_hieu, hoTen, indivDone }: {
               <div className="flex flex-col items-center gap-1 shrink-0">
                 <div className="size-6 rounded-full flex items-center justify-center text-[13px]"
                   style={{
-                    background: s.done ? "#166534" : i === activeStep ? "#fcd34d" : "#e8e2d4",
+                    background: s.done ? "#166534" : i === activeStep ? "#fcd34d" : "#e2e8f0",
                     color: s.done ? "white" : i === activeStep ? "#92400e" : "#4f5d6e",
                     fontWeight: 700,
                     border: i === activeStep ? "2px solid #b45309" : "none",
@@ -1845,7 +1845,7 @@ function PersonalStatusBanner({ c, myP, danh_hieu, hoTen, indivDone }: {
               </div>
               {i < steps.length - 1 && (
                 <div className="flex-1 h-0.5 mx-1.5 mt-[-10px] rounded-full"
-                  style={{ background: s.done && steps[i + 1].done ? "#166534" : s.done ? "#bbf7d0" : "#e8e2d4" }} />
+                  style={{ background: s.done && steps[i + 1].done ? "#166534" : s.done ? "#bbf7d0" : "#e2e8f0" }} />
               )}
             </div>
           ))}
@@ -1918,7 +1918,7 @@ function UnitLeaderContextPanel({ c, user, unitDecisions }: {
         {[
           { label: "Đã nộp",   val: display.filter(p => p.hoSoStatus !== "chua_nop").length, color: "#1C5FBE", bg: "#dbeafe" },
           { label: "Đã duyệt", val: approved, color: "#166534", bg: "#dcfce7" },
-          { label: "Chờ xét",  val: pending, color: pending > 0 ? "#c2410c" : "#635647", bg: pending > 0 ? "#fff7ed" : "#f5f2ec" },
+          { label: "Chờ xét",  val: pending, color: pending > 0 ? "#c2410c" : "#635647", bg: pending > 0 ? "#fff7ed" : "#f4f7fb" },
         ].map(k => (
           <div key={k.label} className="text-center py-2 rounded-[8px]" style={{ background: k.bg }}>
             <div className="text-[18px] font-bold" style={{ color: k.color, fontFamily: "var(--font-sans)" }}>{k.val}</div>
@@ -2862,7 +2862,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách hồ sơ thẩm định</span>
             <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: Khoản 2 Điều 55 Luật TĐKT</span>
           </div>
-          <div className="divide-y" style={{ borderColor: "#f0ece3" }}>
+          <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
             {displayList.map(p => {
               const status = effectiveStatus(p);
               const hs = hsCfg[status];
@@ -3064,7 +3064,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               </span>
               <span className="ml-auto text-[13px] text-[#7c3aed]">{Object.keys(votes).length}/{candidates.length} hồ sơ đã xét</span>
             </div>
-            <div className="divide-y" style={{ borderColor: "#f0ece3" }}>
+            <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
               {candidates.map(p => (
                 <div key={p.id} className="px-5 py-4 flex items-center gap-4">
                   <div className="flex-1">
@@ -3272,7 +3272,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             <span className="ml-auto text-[13px] px-2 py-0.5 rounded-full"
               style={{ background: "#fca5a5", color: "#9f1239", fontWeight: 600 }}>Đã qua Hội đồng xét duyệt</span>
           </div>
-          <div className="divide-y" style={{ borderColor: "#f0ece3" }}>
+          <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
             {(approved.length > 0 ? approved : c.participants.slice(0, 3)).map((p, i) => (
               <div key={p.id} className="px-5 py-3.5 flex items-center gap-3">
                 <div className="size-7 rounded-full flex items-center justify-center text-white text-[13px] shrink-0"
@@ -4041,7 +4041,7 @@ function FinancialTab({ c }: { c: Campaign }) {
                 const nguon = reward?.nguonKinhPhi;
                 const nc = nguon ? nguonColors[nguon] : { color: "#6b7280", bg: "#f3f4f6", border: "#e5e7eb" };
                 return (
-                  <tr key={p.id} className="border-b hover:bg-[#faf7f2] transition-colors"
+                  <tr key={p.id} className="border-b hover:bg-[#f8fafc] transition-colors"
                     style={{ borderColor: "var(--color-line)" }}>
                     <td className="px-4 py-3">
                       <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
@@ -4123,7 +4123,7 @@ function FinancialTab({ c }: { c: Campaign }) {
             );
           })}
         </div>
-        <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "var(--color-line)", background: "#faf7f2" }}>
+        <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
           <BookOpen className="size-3.5 text-[#635647]" />
           <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Căn cứ: Chương VII NĐ 152/2025/NĐ-CP · Điều 3–8 TT 28/2025/TT-BTC · Điều 7–10 TT 118/2025/TT-BTC
@@ -4174,19 +4174,19 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
         style={{ background:"white", borderColor:"var(--color-line)", boxShadow:"0 1px 6px rgba(11,20,38,0.07)" }}>
 
         <button onClick={onBack}
-          className="flex items-center gap-1 text-[13px] px-2.5 h-7 rounded-[6px] border transition-colors hover:bg-[#f0ece3] shrink-0"
+          className="flex items-center gap-1 text-[13px] px-2.5 h-7 rounded-[6px] border transition-colors hover:bg-[#eef2f8] shrink-0"
           style={{ color:"#6b7280", borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}>
           <ChevronLeft className="size-3" />Danh sách
         </button>
 
         <button onClick={() => setSidebarCollapsed(v => !v)}
-          className="flex items-center gap-1 text-[13px] px-2 h-7 rounded-[6px] border transition-colors hover:bg-[#f0ece3] shrink-0"
+          className="flex items-center gap-1 text-[13px] px-2 h-7 rounded-[6px] border transition-colors hover:bg-[#eef2f8] shrink-0"
           style={{ color:"#6b7280", borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}
           title={sidebarCollapsed ? "Mở sidebar" : "Ẩn sidebar"}>
           <Layers className="size-3" />
         </button>
 
-        <div className="h-4 w-px bg-[#e8e2d4] shrink-0" />
+        <div className="h-4 w-px bg-[#e2e8f0] shrink-0" />
 
         {/* Status dot + label */}
         <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[13px] border shrink-0"
@@ -4463,7 +4463,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
                   {t.label}
                   {t.badge && (
                     <span className="px-1.5 py-0.5 rounded-full text-[13px]"
-                      style={{ background: active ? theme.tint : "#f0ece3", color: active ? theme.primary : "#5a5040" }}>
+                      style={{ background: active ? theme.tint : "#eef2f8", color: active ? theme.primary : "#5a5040" }}>
                       {t.badge}
                     </span>
                   )}
@@ -4517,7 +4517,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
                 {c.state==="active"&&<div className="size-1 rounded-full animate-pulse" style={{ background:scfg.color }} />}
                 {scfg.short}
               </span>
-              <span className="text-[13px] px-1.5 py-0.5 rounded bg-[#f0ece3] text-[#635647]"
+              <span className="text-[13px] px-1.5 py-0.5 rounded bg-[#eef2f8] text-[#635647]"
                 style={{ fontFamily: "var(--font-sans)" }}>{TYPE_LABELS[c.type]}</span>
               {c.urgent&&<span className="text-[13px] text-[#c8102e]">🔴</span>}
             </div>
@@ -4534,7 +4534,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
             </span>
             <span style={{ color:phase.color, fontFamily: "var(--font-sans)", fontWeight:600 }}>{phasePct}%</span>
           </div>
-          <div className="h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+          <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
             <div className="h-full rounded-full transition-all"
               style={{ width:`${phasePct}%`, background:phase.color }} />
           </div>
@@ -4551,7 +4551,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
                 {joinPct}%
               </span>
             </div>
-            <div className="h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+            <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
               <div className="h-full rounded-full"
                 style={{ width:`${joinPct}%`, background:joinPct===100?"#16a34a":theme.primary }} />
             </div>
@@ -4874,7 +4874,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     const count = form.budget[a] ?? 0;
                     return (
                       <div key={a} className="flex items-center gap-3 px-3 py-2 rounded-[6px] border"
-                        style={{ borderColor:"var(--color-line)", background:"#faf7f2" }}>
+                        style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
                         <span className="flex-1 text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</span>
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button className="size-6 rounded border text-[14px] flex items-center justify-center"
@@ -4929,7 +4929,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     ))}
                   </div>
                 )}
-                <div className="rounded-[8px] p-4 bg-[#faf7f2] border space-y-2" style={{ borderColor:"var(--color-line)" }}>
+                <div className="rounded-[8px] p-4 bg-[#f8fafc] border space-y-2" style={{ borderColor:"var(--color-line)" }}>
                   {[
                     ["Tên", form.name||"(Chưa nhập)"],
                     ["Cấp", TYPE_LABELS[form.type]],
@@ -4980,7 +4980,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
           })()}
         </div>
         <div className="flex items-center justify-between gap-3 px-6 py-4 border-t"
-          style={{ borderColor:"var(--color-line)", background:"#faf7f2" }}>
+          style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
           <DsButton variant="secondary" size="md" onClick={()=>step>0?setStep(p=>p-1):onClose()}>
             <ChevronLeft className="size-4" />{step===0?"Hủy":"Quay lại"}
           </DsButton>
@@ -5084,7 +5084,7 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
   return (
     <div className="h-full flex flex-col" style={{ background:"var(--color-paper)" }}>
       {/* Header — giống Phân tích Thi đua */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background:"white" }}>
         {/* Title row */}
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center shrink-0" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
@@ -5111,7 +5111,7 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
               color:filterPhase==="all"?"white":"#5a5040", fontWeight:filterPhase==="all"?700:400 }}>
             Tất cả
             <span className="px-1.5 py-0.5 rounded text-[13px]"
-              style={{ background:filterPhase==="all"?"white20":"#f0ece3", color:filterPhase==="all"?"white":"#635647" }}>
+              style={{ background:filterPhase==="all"?"white20":"#eef2f8", color:filterPhase==="all"?"white":"#635647" }}>
               {campaigns.length}
             </span>
           </button>
@@ -5122,7 +5122,7 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
                 color:filterPhase===i?"white":"#5a5040", fontWeight:filterPhase===i?700:400 }}>
               {p.label}
               <span className="px-1.5 py-0.5 rounded text-[13px]"
-                style={{ background:filterPhase===i?"rgba(255,255,255,0.2)":"#f0ece3",
+                style={{ background:filterPhase===i?"rgba(255,255,255,0.2)":"#eef2f8",
                   color:filterPhase===i?"white":"#635647" }}>
                 {campaigns.filter(c=>STATE_CFG[c.state].phase===i).length}
               </span>

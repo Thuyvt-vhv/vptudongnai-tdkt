@@ -179,7 +179,7 @@ function ToTrinhDoc({ isSigned }: { isSigned: boolean }) {
           <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">II. DANH SÁCH ĐỀ NGHỊ KHEN THƯỞNG</div>
           <table className="w-full text-[13px] border-collapse" style={{ borderColor: "#d1d5db" }}>
             <thead>
-              <tr style={{ background: "#f5f2ec" }}>
+              <tr style={{ background: "#f4f7fb" }}>
                 {["STT", "Họ và tên", "Đơn vị", "Danh hiệu đề nghị", "Điểm"].map(h => (
                   <th key={h} className="border px-2 py-1.5 text-left font-bold text-[#0b1426]" style={{ borderColor: "#d1d5db" }}>{h}</th>
                 ))}
@@ -259,7 +259,7 @@ function QuyetDinhDoc({ isSigned }: { isSigned: boolean }) {
           </div>
           <table className="w-full text-[13px] border-collapse mt-2">
             <thead>
-              <tr style={{ background: "#f5f2ec" }}>
+              <tr style={{ background: "#f4f7fb" }}>
                 {["STT", "Họ và tên", "Đơn vị", "Danh hiệu", "Tiền thưởng"].map(h => (
                   <th key={h} className="border px-2 py-1 text-left font-bold" style={{ borderColor: "#d1d5db" }}>{h}</th>
                 ))}
@@ -438,7 +438,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section I */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f5f2ec] px-3 py-1.5 mb-3">I. THÔNG TIN CÁ NHÂN</div>
+          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">I. THÔNG TIN CÁ NHÂN</div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 pl-2 text-[13px] text-[#0b1426]">
             {[
               ["Họ và tên:", w.ten],
@@ -464,9 +464,9 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section II */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f5f2ec] px-3 py-1.5 mb-3">II. THÀNH TÍCH NỔI BẬT (Căn cứ Điều 7 TT 12/2019/TT-BNV)</div>
+          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">II. THÀNH TÍCH NỔI BẬT (Căn cứ Điều 7 TT 12/2019/TT-BNV)</div>
           <div className="pl-2 space-y-2 text-[13px] text-[#0b1426]">
-            <div className="p-2.5 rounded" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+            <div className="p-2.5 rounded" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
               Hoàn thành xuất sắc 100% nhiệm vụ được giao năm 2025. Chủ trì 02 đề tài nghiên cứu cấp tỉnh được nghiệm thu xếp loại Xuất sắc. Có 01 sáng kiến kinh nghiệm được Hội đồng sáng kiến tỉnh công nhận, tiết kiệm ngân sách ước tính 250 triệu đồng/năm.
             </div>
           </div>
@@ -474,10 +474,10 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section III */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f5f2ec] px-3 py-1.5 mb-3">III. DANH HIỆU ĐÃ ĐƯỢC TẶNG</div>
+          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">III. DANH HIỆU ĐÃ ĐƯỢC TẶNG</div>
           <table className="w-full text-[13px] border-collapse pl-2">
             <thead>
-              <tr style={{ background: "#f5f2ec" }}>
+              <tr style={{ background: "#f4f7fb" }}>
                 {["Năm", "Danh hiệu/Hình thức KT", "Cơ quan tặng"].map(h => (
                   <th key={h} className="border px-2 py-1 text-left font-bold" style={{ borderColor: "#d1d5db" }}>{h}</th>
                 ))}
@@ -501,7 +501,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section IV — Hình thức đề nghị */}
         <div className="mb-5 text-[13px] text-[#0b1426]">
-          <div className="text-[13px] font-bold uppercase bg-[#f5f2ec] px-3 py-1.5 mb-2">IV. ĐỀ NGHỊ XÉT TẶNG</div>
+          <div className="text-[13px] font-bold uppercase bg-[#f4f7fb] px-3 py-1.5 mb-2">IV. ĐỀ NGHỊ XÉT TẶNG</div>
           <div className="pl-2">
             Đề nghị tặng danh hiệu: <strong className="text-[#1C5FBE]">{w.danhHieu}</strong> năm 2026
           </div>
@@ -686,13 +686,13 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
       <div className="absolute inset-0" style={{ background: "rgba(11,20,38,0.55)", backdropFilter: "blur(4px)" }} />
 
       <div
-        className="relative flex overflow-hidden rounded-[16px] border border-[#e8e2d4] shadow-2xl"
+        className="relative flex overflow-hidden rounded-[16px] border border-[#e2e8f0] shadow-2xl"
         style={{ width: 980, maxWidth: "96vw", maxHeight: "92vh", background: "white" }}
         onClick={e => e.stopPropagation()}
       >
         {/* ── Left panel ── */}
-        <div className="w-[270px] shrink-0 flex flex-col border-r border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
-          <div className="px-5 py-4 border-b border-[#e8e2d4]">
+        <div className="w-[270px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+          <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Printer className="size-4 text-[#1C5FBE]" />
               <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>In / Xuất tài liệu</span>
@@ -713,7 +713,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
                   return (
                     <button key={dt.id} onClick={() => setDocType(dt.id)}
                       className="w-full flex items-start gap-2.5 px-3 py-2.5 rounded-[8px] text-left transition-all"
-                      style={{ background: active ? dt.color + "15" : "white", border: `1.5px solid ${active ? dt.color + "60" : "#e8e2d4"}` }}>
+                      style={{ background: active ? dt.color + "15" : "white", border: `1.5px solid ${active ? dt.color + "60" : "#e2e8f0"}` }}>
                       <DTIcon className="size-4 shrink-0 mt-0.5" style={{ color: active ? dt.color : "#635647" }} />
                       <div>
                         <div className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: active ? 700 : 500, color: active ? dt.color : "#0b1426" }}>{dt.label}</div>
@@ -774,7 +774,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-[#e8e2d4] space-y-2">
+          <div className="p-4 border-t border-[#e2e8f0] space-y-2">
             <button
               onClick={handleDownload}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] text-white transition-all"
@@ -787,7 +787,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
               onClick={handlePrint}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-[8px] border text-[13px] transition-colors"
               style={{
-                borderColor: printed ? "#166534" : "#e8e2d4",
+                borderColor: printed ? "#166534" : "#e2e8f0",
                 color: printed ? "#166534" : "#5a5040",
                 background: printed ? "#f0fdf4" : "white",
                 fontFamily: "var(--font-sans)",
@@ -802,7 +802,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
         {/* ── Right: Preview ── */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Preview header */}
-          <div className="px-6 py-3.5 border-b border-[#e8e2d4] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+          <div className="px-6 py-3.5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
             <div className="flex items-center gap-2 flex-wrap">
               <Eye className="size-4 text-[#635647]" />
               <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xem trước</span>
@@ -820,7 +820,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
                 </span>
               )}
             </div>
-            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f5f2ec] transition-colors">
+            <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
               <X className="size-4 text-[#635647]" />
             </button>
           </div>
@@ -833,7 +833,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-2.5 border-t border-[#f0ece3] flex items-center justify-between shrink-0" style={{ background: "#faf7f2" }}>
+          <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center justify-between shrink-0" style={{ background: "#f8fafc" }}>
             <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               Trang 1/1 · Khổ A4 · Chuẩn QCVN 01:2019/BNV
             </span>

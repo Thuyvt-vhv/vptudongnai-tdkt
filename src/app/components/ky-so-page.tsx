@@ -68,8 +68,8 @@ export function KySoPage({ user }: { user: LoginUser }) {
     <div className="flex h-full overflow-hidden" style={{ background: "var(--color-paper)" }}>
 
       {/* Left: document list */}
-      <div className="w-[300px] shrink-0 border-r border-[#e8e2d4] bg-white flex flex-col overflow-hidden">
-        <div className="px-4 py-4 border-b border-[#f0ece3] bg-[#faf7f2]">
+      <div className="w-[300px] shrink-0 border-r border-[#e2e8f0] bg-white flex flex-col overflow-hidden">
+        <div className="px-4 py-4 border-b border-[#eef2f8] bg-[#f8fafc]">
           <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
             Ký số & Phê duyệt
           </h2>
@@ -78,7 +78,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
               <div className="text-[18px] font-bold" style={{ color: theme.primary, fontFamily: "var(--font-sans)" }}>{pending.length}</div>
               <div className="text-[13px] text-[#635647]">Chờ ký</div>
             </div>
-            <div className="w-px h-8 bg-[#e8e2d4]" />
+            <div className="w-px h-8 bg-[#e2e8f0]" />
             <div className="flex-1 text-center">
               <div className="text-[18px] font-bold text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>{signed.length}</div>
               <div className="text-[13px] text-[#635647]">Đã ký</div>
@@ -87,7 +87,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* CA cert info */}
-        <div className="px-4 py-3 border-b border-[#f0ece3] bg-[#f0f7ff]">
+        <div className="px-4 py-3 border-b border-[#eef2f8] bg-[#f0f7ff]">
           <div className="flex items-center gap-2">
             <Shield className="size-4 shrink-0" style={{ color: theme.primary }} />
             <div className="flex-1 min-w-0">
@@ -102,8 +102,8 @@ export function KySoPage({ user }: { user: LoginUser }) {
           {docs.map(doc => (
             <button key={doc.id}
               onClick={() => setSelectedId(doc.id)}
-              className={`w-full text-left px-4 py-3 border-b border-[#f5f2ec] transition-colors
-                ${doc.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#faf7f2]"}`}>
+              className={`w-full text-left px-4 py-3 border-b border-[#f4f7fb] transition-colors
+                ${doc.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#f8fafc]"}`}>
               <div className="flex items-start gap-2.5">
                 <div className="size-8 rounded-lg grid place-items-center shrink-0 mt-0.5"
                   style={{ background: doc.status === "da_ky" ? "#dcfce7" : theme.tint }}>
@@ -127,7 +127,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
       {/* Right: document viewer + actions */}
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         {/* Doc header */}
-        <div className="px-6 py-4 border-b border-[#f0ece3] bg-white flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#eef2f8] bg-white flex items-center justify-between">
           <div>
             <p className="text-[13px] font-mono text-[#635647]">{selected.code}</p>
             <h3 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{selected.title}</h3>
@@ -143,7 +143,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Doc tabs */}
-        <div className="px-6 flex gap-4 border-b border-[#f0ece3] bg-white">
+        <div className="px-6 flex gap-4 border-b border-[#eef2f8] bg-white">
           {(["preview","chain"] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
               className={`py-2.5 text-[13px] border-b-2 transition-colors
@@ -159,7 +159,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
           {tab === "preview" && (
             <div className="max-w-2xl mx-auto">
               {/* Document paper */}
-              <div className="bg-white rounded-xl border border-[#e8e2d4] shadow-sm overflow-hidden">
+              <div className="bg-white rounded-xl border border-[#e2e8f0] shadow-sm overflow-hidden">
                 {/* Letterhead */}
                 <div className="bg-[#0b1426] text-white px-8 py-4 text-center">
                   <p className="text-[13px] tracking-[0.2em] text-white/60 uppercase">Tỉnh Đồng Nai · UBND Tỉnh</p>
@@ -184,7 +184,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
                           <p className="text-[13px] text-[#635647] font-mono mt-1">SHA256: 3a4f2b...d9e1</p>
                         </div>
                       ) : (
-                        <div className="mt-4 border-2 border-dashed border-[#e8e2d4] rounded-lg p-4 bg-[#faf7f2]">
+                        <div className="mt-4 border-2 border-dashed border-[#e2e8f0] rounded-lg p-4 bg-[#f8fafc]">
                           <FileSignature className="size-6 text-[#c9bfa6] mx-auto" />
                           <p className="text-[13px] text-[#c9bfa6] mt-1">Chờ chữ ký số</p>
                         </div>
@@ -209,10 +209,10 @@ export function KySoPage({ user }: { user: LoginUser }) {
                       style={!step.done ? { background: theme.primary, opacity: 0.4 } : undefined}>
                       {step.done ? <CheckCheck className="size-4" /> : i + 1}
                     </div>
-                    {i < 2 && <div className={`w-px flex-1 mt-1 ${step.done ? "bg-[#166534]" : "bg-[#e8e2d4]"}`} style={{ minHeight: 32 }} />}
+                    {i < 2 && <div className={`w-px flex-1 mt-1 ${step.done ? "bg-[#166534]" : "bg-[#e2e8f0]"}`} style={{ minHeight: 32 }} />}
                   </div>
                   <div className="flex-1 pb-6">
-                    <div className="bg-white rounded-xl border border-[#e8e2d4] p-4">
+                    <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[13px] text-[#635647] uppercase tracking-wide">{step.role}</span>
                         {step.done && <span className="text-[13px] text-[#166534] font-semibold flex items-center gap-1"><CheckCircle2 className="size-3" /> {step.date}</span>}
@@ -229,7 +229,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
 
         {/* Action footer */}
         {canSign && selected.status === "cho_ky" && (
-          <div className="px-6 py-4 border-t border-[#f0ece3] bg-white">
+          <div className="px-6 py-4 border-t border-[#eef2f8] bg-white">
             {!signing ? (
               <div className="flex items-center gap-3">
                 <div className="flex-1 rounded-lg bg-[#fef3c7] border border-[#fde68a] px-4 py-2.5 flex items-center gap-2">
@@ -251,7 +251,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
                     {CA_CERTS.map(cert => (
                       <label key={cert.id}
                         className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-colors
-                          ${selectedCert === cert.id ? "" : "border-[#e8e2d4] hover:border-[#c9bfa6]"}`}
+                          ${selectedCert === cert.id ? "" : "border-[#e2e8f0] hover:border-[#c9bfa6]"}`}
                         style={selectedCert === cert.id ? { borderColor: theme.primary, background: theme.tint } : undefined}>
                         <input type="radio" name="cert" value={cert.id}
                           checked={selectedCert === cert.id} onChange={() => setSelectedCert(cert.id)}
@@ -292,7 +292,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
           </div>
         )}
         {!canSign && (
-          <div className="px-6 py-3 border-t border-[#f0ece3] bg-[#faf7f2] flex items-center gap-2">
+          <div className="px-6 py-3 border-t border-[#eef2f8] bg-[#f8fafc] flex items-center gap-2">
             <AlertTriangle className="size-4 text-[#b45309]" />
             <span className="text-[13px] text-[#635647]">Chỉ Lãnh đạo VP Tỉnh ủy mới có quyền ký số văn bản này.</span>
           </div>

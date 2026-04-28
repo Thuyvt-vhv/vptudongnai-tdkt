@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Eye, EyeOff, LogIn, CheckCircle2, Settings, Crown, Gavel,
   Users, User, Shield, Megaphone, ArrowRight, Sparkles, ChevronRight } from "lucide-react";
 
@@ -264,7 +264,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
           {/* Login form card */}
           <div className="rounded-2xl p-6 mb-5" style={{
             background:"#ffffff",
-            border:"1px solid #e8e2d4",
+            border:"1px solid #e2e8f0",
             boxShadow:"0 4px 24px rgba(11,20,38,0.07), 0 1px 3px rgba(11,20,38,0.04)",
           }}>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -338,7 +338,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
 
           {/* Quick-access role section */}
           <div className="rounded-2xl overflow-hidden" style={{
-            border:"1px solid #e8e2d4",
+            border:"1px solid #e2e8f0",
             boxShadow:"0 2px 12px rgba(11,20,38,0.05)",
           }}>
             {/* Header */}
@@ -350,7 +350,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
               </div>
               <span className="text-[13px] font-semibold text-[#0b1426]">Đăng nhập nhanh theo vai trò</span>
               <span className="ml-auto text-[12px] px-2 py-0.5 rounded-full font-semibold"
-                style={{ background:"#f0ece3", color:"#635647" }}>Demo</span>
+                style={{ background:"#eef2f8", color:"#635647" }}>Demo</span>
             </div>
 
             {/* Role pills row */}
@@ -426,7 +426,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                   <ChevronRight className="size-4 opacity-40"/>
                   <span>Di chuyển chuột lên vai trò để xem thông tin tài khoản</span>
                   <code className="ml-auto px-2 py-0.5 rounded-lg text-[12px]"
-                    style={{ background:"#f0ece3", color:"#5a5040" }}>demo123</code>
+                    style={{ background:"#eef2f8", color:"#5a5040" }}>demo123</code>
                 </div>
               )}
             </div>

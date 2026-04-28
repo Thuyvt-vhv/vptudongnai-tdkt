@@ -208,7 +208,7 @@ function AiEligibilityPanel({ cb, onClose }: { cb: CanBo; onClose: () => void })
                 </div>
               )}
               {cb.note && (
-                <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background: "#faf9f6", border: "1px solid #e8e2d4" }}>
+                <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background: "#faf9f6", border: "1px solid #e2e8f0" }}>
                   <AlertCircle className="size-3.5 text-[#8a6400] shrink-0 mt-0.5" />
                   <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{cb.note}</p>
                 </div>
@@ -266,7 +266,7 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           </button>
         </div>
         {/* Tabs */}
-        <div className="flex border-b border-[#e8e2d4] shrink-0" style={{ background: "#faf7f2" }}>
+        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#f8fafc" }}>
           {([["overview", "Tổng quan"], ["awards", `Thành tích (${cb.awards.length})`], ["work", "Quá trình"], ["docs", "Tài liệu"]] as const).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className="flex-1 py-2.5 text-[13px] border-b-2 transition-colors"
@@ -276,11 +276,11 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           ))}
         </div>
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-5" style={{ background: "#faf7f2" }}>
+        <div className="flex-1 overflow-y-auto p-5" style={{ background: "#f8fafc" }}>
           {tab === "overview" && (
             <div className="space-y-4">
-              <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-                <div className="px-4 py-2.5 border-b border-[#e8e2d4]" style={{ background: "#faf8f4" }}>
+              <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+                <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background: "#faf8f4" }}>
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông tin cơ bản</span>
                 </div>
                 <div className="p-4 grid grid-cols-2 gap-3 text-[13px]">
@@ -308,12 +308,12 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
                 </div>
               )}
               {/* Score */}
-              <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background: "white" }}>
+              <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background: "white" }}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Điểm thi đua năm 2026</span>
                   <span className="text-[24px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.score}</span>
                 </div>
-                <div className="h-2 rounded-full overflow-hidden" style={{ background: "#f0ece3" }}>
+                <div className="h-2 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                   <div className="h-full rounded-full" style={{ width: `${cb.score}%`, background: `linear-gradient(to right,#8a6400,#f0c040)` }} />
                 </div>
               </div>
@@ -328,9 +328,9 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
                 </div>
               )}
               {cb.awards.map((a, i) => {
-                const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#f0ece3" };
+                const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#eef2f8" };
                 return (
-                  <div key={i} className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background: "white" }}>
+                  <div key={i} className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background: "white" }}>
                     <div className="flex items-start gap-3">
                       <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background: lc.bg }}>
                         <Award className="size-5" style={{ color: lc.color }} />
@@ -356,12 +356,12 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           )}
           {tab === "work" && (
             <div className="relative">
-              <div className="absolute left-5 top-0 bottom-0 w-px" style={{ background: "#e8e2d4" }} />
+              <div className="absolute left-5 top-0 bottom-0 w-px" style={{ background: "#e2e8f0" }} />
               <div className="space-y-4">
                 {cb.workHistory.map((w, i) => (
                   <div key={i} className="flex gap-4 pl-11 relative">
                     <div className="absolute left-3.5 top-2 size-3 rounded-full border-2" style={{ background: i === 0 ? "#1C5FBE" : "white", borderColor: "#1C5FBE" }} />
-                    <div className="flex-1 rounded-[10px] border border-[#e8e2d4] p-3" style={{ background: "white" }}>
+                    <div className="flex-1 rounded-[10px] border border-[#e2e8f0] p-3" style={{ background: "white" }}>
                       <div className="text-[13px] text-[#0b1426] mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{w.chucVu}</div>
                       <div className="text-[13px] text-[#5a5040]">{w.donVi}</div>
                       <div className="flex items-center justify-between mt-1.5">
@@ -379,7 +379,7 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           {tab === "docs" && (
             <div className="space-y-2">
               {["Lý lịch trích ngang (06-BNV)", "Bằng khen gốc scan", "Quyết định bổ nhiệm", "Bảng điểm thi đua 3 năm gần nhất"].map(d => (
-                <div key={d} className="flex items-center gap-3 p-3 rounded-[8px] border border-[#e8e2d4]" style={{ background: "white" }}>
+                <div key={d} className="flex items-center gap-3 p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background: "white" }}>
                   <FileText className="size-4 text-[#1C5FBE]" />
                   <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{d}</span>
                   <button className="flex items-center gap-1 text-[13px] text-[#1C5FBE]" style={{ fontFamily: "var(--font-sans)" }}>
@@ -415,12 +415,12 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
   });
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {selected && <ProfileDrawer cb={selected} onClose={() => setSelected(null)} onAICheck={() => { setAiTarget(selected); }} />}
       {aiTarget && <AiEligibilityPanel cb={aiTarget} onClose={() => setAiTarget(null)} />}
 
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <Users className="size-5 text-[#8a6400]" />
@@ -432,7 +432,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
           <div className="ml-auto flex gap-2">
             <button onClick={() => setFilterEligible(f => !f)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border text-[13px] transition-all"
-              style={{ background: filterEligible ? "#dcfce7" : "white", borderColor: filterEligible ? "#166534" : "#e8e2d4", color: filterEligible ? "#166534" : "#5a5040", fontFamily: "var(--font-sans)", fontWeight: filterEligible ? 700 : 400 }}>
+              style={{ background: filterEligible ? "#dcfce7" : "white", borderColor: filterEligible ? "#166534" : "#e2e8f0", color: filterEligible ? "#166534" : "#5a5040", fontFamily: "var(--font-sans)", fontWeight: filterEligible ? 700 : 400 }}>
               <Sparkles className="size-3.5" />
               {filterEligible ? "Đủ điều kiện KT" : "Lọc: Đủ ĐK KT"}
             </button>
@@ -441,7 +441,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
         {/* Stats row */}
         <div className="flex gap-3 mb-4">
           {[
-            { l: "Tổng cán bộ", v: CAN_BO_LIST.length, c: "#0b1426", bg: "#f5f2ec" },
+            { l: "Tổng cán bộ", v: CAN_BO_LIST.length, c: "#0b1426", bg: "#f4f7fb" },
             { l: "Đủ điều kiện KT", v: CAN_BO_LIST.filter(c => c.eligibleFor.length > 0).length, c: "#166534", bg: "#dcfce7" },
             { l: "Hồ sơ đầy đủ ≥90%", v: CAN_BO_LIST.filter(c => c.completeness >= 90).length, c: "#1C5FBE", bg: "#ddeafc" },
             { l: "Cần bổ sung", v: CAN_BO_LIST.filter(c => c.completeness < 80).length, c: "#b45309", bg: "#fef3c7" },
@@ -467,7 +467,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
           {visible.map(cb => {
             const hasEligible = cb.eligibleFor.length > 0;
             return (
-              <div key={cb.id} className="rounded-[12px] border border-[#e8e2d4] overflow-hidden hover:shadow-md transition-all hover:border-[#1C5FBE]/40 cursor-pointer" style={{ background: "white" }}
+              <div key={cb.id} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden hover:shadow-md transition-all hover:border-[#1C5FBE]/40 cursor-pointer" style={{ background: "white" }}
                 onClick={() => setSelected(cb)}>
                 {/* Top bar */}
                 <div className="h-1.5" style={{ background: hasEligible ? "linear-gradient(to right,#166534,#4ade80)" : "linear-gradient(to right,#d1d5db,#e5e7eb)" }} />
@@ -486,16 +486,16 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
                   </div>
                   {/* Score + completeness */}
                   <div className="flex gap-2 mb-3">
-                    <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+                    <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
                       <div className="text-[18px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.score}</div>
                       <div className="text-[13px] text-[#635647] uppercase tracking-wider">Điểm TĐ</div>
                     </div>
-                    <div className="flex-1 rounded-[6px] p-2" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+                    <div className="flex-1 rounded-[6px] p-2" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-[13px] text-[#635647] uppercase tracking-wider">Hồ sơ</span>
                         <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }}>{cb.completeness}%</span>
                       </div>
-                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#e8e2d4" }}>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
                         <div className="h-full rounded-full transition-all" style={{ width: `${cb.completeness}%`, background: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }} />
                       </div>
                     </div>
@@ -503,7 +503,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
                   {/* Awards */}
                   <div className="flex flex-wrap gap-1 mb-3">
                     {cb.awards.slice(0, 2).map((a, i) => {
-                      const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#f0ece3" };
+                      const lc = LEVEL_CFG[a.level] ?? { color: "#635647", bg: "#eef2f8" };
                       return (
                         <span key={i} className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: lc.bg, color: lc.color, fontFamily: "var(--font-sans)" }}>
                           {a.type.split(" ").slice(0, 3).join(" ")} {a.year}
@@ -515,7 +515,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
                   {/* AI check button */}
                   <button onClick={e => { e.stopPropagation(); setAiTarget(cb); }}
                     className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-[6px] border text-[13px] hover:border-[#7c3aed] hover:text-[#7c3aed] transition-colors"
-                    style={{ borderColor: "#e8e2d4", color: "#635647", fontFamily: "var(--font-sans)" }}>
+                    style={{ borderColor: "#e2e8f0", color: "#635647", fontFamily: "var(--font-sans)" }}>
                     <Brain className="size-3.5" />Kiểm tra điều kiện AI
                   </button>
                 </div>

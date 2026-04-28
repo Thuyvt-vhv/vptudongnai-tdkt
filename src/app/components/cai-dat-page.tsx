@@ -43,7 +43,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
   return (
     <div className="space-y-6">
       {/* Avatar */}
-      <div className="flex items-center gap-6 p-5 rounded-[12px] border border-[#e8e2d4]" style={{ background: "#faf7f2" }}>
+      <div className="flex items-center gap-6 p-5 rounded-[12px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
         <div className="relative">
           <div className="size-20 rounded-full flex items-center justify-center text-white text-[24px] shadow-lg"
             style={{ background: `linear-gradient(135deg,${user.avatarFrom},${user.avatarTo})`, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -62,7 +62,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
           </span>
         </div>
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Upload className="size-3.5" />Tải ảnh lên
           </button>
@@ -113,7 +113,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
           {saved ? <CheckCircle2 className="size-4" /> : <Save className="size-4" />}
           {saved ? "Đã lưu!" : "Lưu thay đổi"}
         </button>
-        <button className="px-4 py-2.5 rounded-[8px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-[#f5f2ec] transition-colors"
+        <button className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
           style={{ fontFamily: "var(--font-sans)" }}>
           Huỷ
         </button>
@@ -140,7 +140,7 @@ function SecurityTab() {
   return (
     <div className="space-y-6">
       {/* Change password */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <h3 className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đổi mật khẩu</h3>
         <div className="space-y-3 max-w-sm">
           {[
@@ -164,7 +164,7 @@ function SecurityTab() {
           {/* Password strength */}
           <div className="flex items-center gap-2 mt-1">
             {["bg-[#c8102e]","bg-[#b45309]","bg-[#8a6400]","bg-[#4ade80]"].map((c, i) => (
-              <div key={i} className={`flex-1 h-1 rounded-full ${i < 3 ? c : "bg-[#e8e2d4]"}`} />
+              <div key={i} className={`flex-1 h-1 rounded-full ${i < 3 ? c : "bg-[#e2e8f0]"}`} />
             ))}
             <span className="text-[13px] text-[#b45309]" style={{ fontFamily: "var(--font-sans)" }}>Trung bình</span>
           </div>
@@ -176,7 +176,7 @@ function SecurityTab() {
       </div>
 
       {/* MFA */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background: "#dcfce7" }}>
@@ -202,7 +202,7 @@ function SecurityTab() {
       </div>
 
       {/* Active sessions */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên đăng nhập đang hoạt động</h3>
           <button className="text-[13px] text-[#c8102e] hover:underline" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Đăng xuất tất cả</button>
@@ -210,7 +210,7 @@ function SecurityTab() {
         <div className="space-y-2">
           {sessions.map((s, i) => (
             <div key={i} className="flex items-center gap-3 p-3 rounded-[8px]"
-              style={{ background: s.current ? "#f0f4ff" : "#faf7f2", border: `1px solid ${s.current ? "#bfdbfe" : "#e8e2d4"}` }}>
+              style={{ background: s.current ? "#f0f4ff" : "#f8fafc", border: `1px solid ${s.current ? "#bfdbfe" : "#e2e8f0"}` }}>
               <Smartphone className="size-5 shrink-0" style={{ color: s.current ? "#1C5FBE" : "#635647" }} />
               <div className="flex-1 min-w-0">
                 <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: s.current ? 700 : 500 }}>
@@ -256,16 +256,16 @@ function NotificationsTab() {
       <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
         Cài đặt kênh nhận thông báo cho từng loại sự kiện.
       </p>
-      <div className="rounded-[12px] border border-[#e8e2d4] overflow-hidden">
+      <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden">
         {/* Header */}
-        <div className="grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-2.5 border-b border-[#f0ece3]" style={{ background: "#faf7f2" }}>
+        <div className="grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-2.5 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
           <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại thông báo</span>
           {["Email", "Trình duyệt", "SMS"].map(h => (
             <span key={h} className="text-[13px] uppercase tracking-wider text-[#635647] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</span>
           ))}
         </div>
         {rows.map((r, ri) => (
-          <div key={r.key} className={`grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-3.5 items-center ${ri < rows.length - 1 ? "border-b border-[#f5f2ec]" : ""}`}>
+          <div key={r.key} className={`grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-3.5 items-center ${ri < rows.length - 1 ? "border-b border-[#f4f7fb]" : ""}`}>
             <div className="flex items-center gap-2.5">
               <div className="size-2 rounded-full" style={{ background: r.color }} />
               <div>
@@ -290,7 +290,7 @@ function NotificationsTab() {
         ))}
       </div>
       {/* Quiet hours */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Giờ im lặng (Quiet Hours)</h3>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
@@ -322,7 +322,7 @@ function DisplayTab() {
   return (
     <div className="space-y-5">
       {/* Language */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Ngôn ngữ & Định dạng</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -347,13 +347,13 @@ function DisplayTab() {
       </div>
 
       {/* Density */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Mật độ hiển thị</h3>
         <div className="flex gap-3">
           {([["comfortable", "Thoải mái", "Nhiều khoảng trắng hơn, dễ đọc"], ["compact", "Gọn", "Hiển thị nhiều dữ liệu hơn trên màn hình"]] as const).map(([v, l, d]) => (
             <button key={v} onClick={() => setDensity(v)}
               className="flex-1 px-4 py-3 rounded-[10px] border text-left transition-all"
-              style={{ borderColor: density === v ? "#1C5FBE" : "#e8e2d4", background: density === v ? "#f0f4ff" : "white" }}>
+              style={{ borderColor: density === v ? "#1C5FBE" : "#e2e8f0", background: density === v ? "#f0f4ff" : "white" }}>
               <div className="text-[13px] text-[#0b1426] mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: density === v ? 700 : 500 }}>{l}</div>
               <div className="text-[13px] text-[#635647]">{d}</div>
               {density === v && <CheckCircle2 className="size-4 text-[#1C5FBE] mt-1.5" />}
@@ -363,7 +363,7 @@ function DisplayTab() {
       </div>
 
       {/* Sidebar */}
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sidebar thu gọn mặc định</h3>
@@ -386,7 +386,7 @@ function DisplayTab() {
 function DataTab({ user }: { user: LoginUser }) {
   return (
     <div className="space-y-5">
-      <div className="rounded-[12px] border border-[#e8e2d4] p-5">
+      <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <h3 className="text-[13px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xuất dữ liệu cá nhân</h3>
         <p className="text-[13px] text-[#5a5040] mb-4 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
           Theo Điều 11 NĐ 13/2023/NĐ-CP, bạn có quyền nhận một bản sao dữ liệu cá nhân của mình đang được xử l�� trong hệ thống VPTU Đồng Nai.
@@ -397,7 +397,7 @@ function DataTab({ user }: { user: LoginUser }) {
             ["Lịch sử hoạt động", "CSV / Excel", "Activity.csv"],
             ["Lịch sử khen thưởng", "PDF", "Awards.pdf"],
           ].map(([label, fmt, file]) => (
-            <div key={label} className="p-3 rounded-[8px] border border-[#e8e2d4] text-center" style={{ background: "#faf7f2" }}>
+            <div key={label} className="p-3 rounded-[8px] border border-[#e2e8f0] text-center" style={{ background: "#f8fafc" }}>
               <Download className="size-5 text-[#635647] mx-auto mb-1.5" />
               <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{label}</div>
               <div className="text-[13px] text-[#635647] mb-2">{fmt}</div>
@@ -442,9 +442,9 @@ export function CaiDatPage({ user }: { user: LoginUser }) {
   };
 
   return (
-    <div className="h-full flex overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {/* Left nav */}
-      <div className="w-64 shrink-0 border-r border-[#e8e2d4] p-4 space-y-1" style={{ background: "white" }}>
+      <div className="w-64 shrink-0 border-r border-[#e2e8f0] p-4 space-y-1" style={{ background: "white" }}>
         <div className="px-3 py-3 mb-2">
           <div className="size-12 rounded-full flex items-center justify-center text-white text-[14px] mb-2"
             style={{ background: `linear-gradient(135deg,${user.avatarFrom},${user.avatarTo})`, fontFamily: "var(--font-sans)", fontWeight: 700 }}>

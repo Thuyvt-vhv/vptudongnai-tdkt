@@ -84,7 +84,7 @@ function ScoreGauge({ score, label }: { score: number; label: string }) {
     <div className="flex flex-col items-center gap-2">
       <div className="relative size-32">
         <svg viewBox="0 0 120 120" className="size-32 -rotate-90">
-          <circle cx="60" cy="60" r={r} fill="none" stroke="#f0ece3" strokeWidth="10" />
+          <circle cx="60" cy="60" r={r} fill="none" stroke="#eef2f8" strokeWidth="10" />
           <circle cx="60" cy="60" r={r} fill="none"
             stroke={score >= 85 ? "#166534" : score >= 70 ? "#b45309" : "#c8102e"}
             strokeWidth="10"
@@ -121,7 +121,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
   const greeting = hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {wizardOpen && (
         <TaoHoSoWizard
           user={user}
@@ -206,8 +206,8 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
         <div className="col-span-2 space-y-5">
 
           {/* AI Eligibility */}
-          <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #f0ece3" }}>
+          <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Sparkles className="size-4 text-[#7c3aed]" />
                 <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI gợi ý danh hiệu phù hợp</h2>
@@ -217,11 +217,11 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             <div className="p-4 space-y-3">
               {AI_SUGGESTIONS.map((s, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-[10px] border transition-all hover:shadow-sm cursor-pointer"
-                  style={{ borderColor: s.ok ? "#e8e2d4" : "#f5e3c8", background: s.ok ? "#fafaf9" : "#fffbf5" }}>
+                  style={{ borderColor: s.ok ? "#e2e8f0" : "#f5e3c8", background: s.ok ? "#fafaf9" : "#fffbf5" }}>
                   {/* Score ring */}
                   <div className="relative size-12 shrink-0">
                     <svg viewBox="0 0 48 48" className="size-12 -rotate-90">
-                      <circle cx="24" cy="24" r="19" fill="none" stroke="#f0ece3" strokeWidth="4" />
+                      <circle cx="24" cy="24" r="19" fill="none" stroke="#eef2f8" strokeWidth="4" />
                       <circle cx="24" cy="24" r="19" fill="none"
                         stroke={s.score >= 80 ? s.color : "#b45309"}
                         strokeWidth="4"
@@ -255,8 +255,8 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
           </div>
 
           {/* My Hồ sơ */}
-          <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #f0ece3" }}>
+          <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <FileText className="size-4 text-[#1C5FBE]" />
                 <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h2>
@@ -267,7 +267,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                 Xem tất cả <ChevronRight className="size-3.5" />
               </button>
             </div>
-            <div className="divide-y divide-[#f5f2ec]">
+            <div className="divide-y divide-[#f4f7fb]">
               {MY_HO_SO.map((h, i) => (
                 <div key={i} className="px-5 py-4 flex items-center gap-4 hover:bg-[#fafaf9] transition-colors cursor-pointer"
                   onClick={() => onNavigate("Đề nghị khen thưởng")}>
@@ -275,7 +275,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                   <div className="flex gap-0.5 items-center shrink-0">
                     {[1,2,3,4,5].map(s => (
                       <div key={s} className="w-4 h-1.5 rounded-full"
-                        style={{ background: h.step >= s ? h.statusColor : "#e8e2d4" }} />
+                        style={{ background: h.step >= s ? h.statusColor : "#e2e8f0" }} />
                     ))}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -290,7 +290,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                 </div>
               ))}
             </div>
-            <div className="px-5 py-3 border-t border-[#f5f2ec]">
+            <div className="px-5 py-3 border-t border-[#f4f7fb]">
               <button onClick={() => setWizardOpen(true)}
                 className="w-full flex items-center justify-center gap-2 py-2 rounded-[8px] border-2 border-dashed border-[#d1d5db] text-[13px] text-[#635647] hover:border-[#1C5FBE] hover:text-[#1C5FBE] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
@@ -300,8 +300,8 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
           </div>
 
           {/* Phong trào tham gia */}
-          <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #f0ece3" }}>
+          <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Megaphone className="size-4 text-[#8a6400]" />
                 <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phong trào đang tham gia</h2>
@@ -313,7 +313,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             </div>
             <div className="p-4 space-y-4">
               {MY_PHONG_TRAO.map(pt => (
-                <div key={pt.id} className="p-4 rounded-[10px]" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+                <div key={pt.id} className="p-4 rounded-[10px]" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{pt.ten}</h3>
@@ -321,7 +321,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                     </div>
                     <span className="text-[14px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: pt.color }}>{pt.progress}%</span>
                   </div>
-                  <div className="h-2 rounded-full overflow-hidden" style={{ background: "#e8e2d4" }}>
+                  <div className="h-2 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
                     <div className="h-full rounded-full transition-all" style={{ width: `${pt.progress}%`, background: pt.color }} />
                   </div>
                   <div className="flex items-center justify-between mt-2 text-[13px] text-[#635647]">
@@ -340,8 +340,8 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
         <div className="space-y-5">
 
           {/* Thông báo */}
-          <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #f0ece3" }}>
+          <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+            <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Bell className="size-4 text-[#c8102e]" />
                 <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông báo</h2>
@@ -372,8 +372,8 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
           </div>
 
           {/* Quick Actions */}
-          <div className="rounded-[14px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
-            <div className="px-5 py-4" style={{ borderBottom: "1px solid #f0ece3" }}>
+          <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
+            <div className="px-5 py-4" style={{ borderBottom: "1px solid #eef2f8" }}>
               <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thao tác nhanh</h2>
             </div>
             <div className="p-4 space-y-2">

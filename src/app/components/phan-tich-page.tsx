@@ -77,7 +77,7 @@ const slaData = [
 const CustomTooltip = ({ active,payload,label }:any) => {
   if(!active||!payload?.length) return null;
   return (
-    <div className="rounded-[8px] border border-[#e8e2d4] p-3 shadow-lg text-[13px]" style={{ background:"white",fontFamily: "var(--font-sans)" }}>
+    <div className="rounded-[8px] border border-[#e2e8f0] p-3 shadow-lg text-[13px]" style={{ background:"white",fontFamily: "var(--font-sans)" }}>
       <p className="text-[#0b1426] mb-2" style={{ fontWeight:700 }}>{label}</p>
       {payload.map((p:any,i:number)=>(
         <div key={i} className="flex items-center gap-2 mb-1">
@@ -95,7 +95,7 @@ const CustomTooltip = ({ active,payload,label }:any) => {
 ═══════════════════════════════════════════════════════════════ */
 function KpiCard({ title, value, sub, trend, icon:Icon, color }:{ title:string; value:string|number; sub:string; trend:number; icon:typeof Trophy; color:string }) {
   return (
-    <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+    <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
       <div className="flex items-start justify-between mb-3">
         <div className="size-10 rounded-[8px] flex items-center justify-center" style={{ background:`${color}18` }}>
           <Icon className="size-5" style={{ color }}/>
@@ -117,13 +117,13 @@ function KpiCard({ title, value, sub, trend, icon:Icon, color }:{ title:string; 
 ═══════════════════════════════════════════════════════════════ */
 function Leaderboard() {
   return (
-    <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e8e2d4]" style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
+    <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
         <Trophy className="size-4 text-[#8a6400]"/>
         <span className="text-[13px] text-white" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Bảng xếp hạng Thi đua 2026</span>
         <span className="ml-auto text-[13px] text-white/60">Cập nhật realtime</span>
       </div>
-      <div className="divide-y divide-[#e8e2d4]">
+      <div className="divide-y divide-[#e2e8f0]">
         {unitData.map((u,i)=>{
           const medal = i===0?"🥇":i===1?"🥈":i===2?"🥉":null;
           const pct = u.diem;
@@ -141,7 +141,7 @@ function Leaderboard() {
                     {u.change>=0?"+":""}{u.change}
                   </span>
                 </div>
-                <div className="h-1.5 rounded-full overflow-hidden" style={{ background:"#f5f2ec" }}>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background:"#f4f7fb" }}>
                   <div className="h-full rounded-full" style={{ width:`${pct}%`,background:barColor }}/>
                 </div>
               </div>
@@ -162,8 +162,8 @@ function Leaderboard() {
 ═══════════════════════════════════════════════════════════════ */
 function SLACompliance() {
   return (
-    <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
         <Clock className="size-4 text-[#b45309]"/>
         <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>SLA Compliance theo Giai đoạn</span>
       </div>
@@ -181,7 +181,7 @@ function SLACompliance() {
                   <span className="text-[13px] px-2 py-0.5 rounded" style={{ background:bg,color,fontFamily: "var(--font-sans)",fontWeight:700 }}>{s.ontime}%</span>
                 </div>
               </div>
-              <div className="h-2 rounded-full overflow-hidden" style={{ background:"#f5f2ec" }}>
+              <div className="h-2 rounded-full overflow-hidden" style={{ background:"#f4f7fb" }}>
                 <div className="h-full rounded-full transition-all" style={{ width:`${s.ontime}%`,background:color }}/>
               </div>
             </div>
@@ -203,9 +203,9 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
   const refresh=()=>{ setLoading(true); setTimeout(()=>setLoading(false),1200); };
   const VIEWS:[ViewMode,string,typeof BarChart3][]=[["overview","Tổng quan",BarChart3],["units","Theo đơn vị",Building2],["awards","Theo danh hiệu",Award],["sla","SLA & Tiến độ",Clock]];
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <BarChart3 className="size-5 text-[#8a6400]"/>
@@ -252,7 +252,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
           <>
             <div className="grid grid-cols-3 gap-5">
               {/* Monthly trend */}
-              <div className="col-span-2 rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+              <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Xu hướng Hồ sơ theo Tháng</span>
                   <span className="text-[13px] text-[#635647]">Năm {year}</span>
@@ -269,7 +269,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                         <stop offset="95%" stopColor="#166534" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0ece3"/>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#eef2f8"/>
                     <XAxis dataKey="month" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                     <YAxis tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                     <Tooltip content={<CustomTooltip/>}/>
@@ -280,7 +280,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                 </ResponsiveContainer>
               </div>
               {/* Award type pie */}
-              <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+              <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
                 <div className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Phân bố Danh hiệu</div>
                 <ResponsiveContainer width="100%" height={150}>
                   <PieChart>
@@ -309,11 +309,11 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
 
         {view==="units"&&(
           <div className="grid grid-cols-2 gap-5">
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
               <div className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Hồ sơ đề nghị theo Đơn vị</div>
               <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={unitData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0ece3" horizontal={false}/>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#eef2f8" horizontal={false}/>
                   <XAxis type="number" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                   <YAxis type="category" dataKey="name" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false} width={100}/>
                   <Tooltip content={<CustomTooltip/>}/>
@@ -322,11 +322,11 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
               <div className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Radar Đánh giá 5 Tiêu chí</div>
               <ResponsiveContainer width="100%" height={280}>
                 <RadarChart data={radarData}>
-                  <PolarGrid stroke="#f0ece3"/>
+                  <PolarGrid stroke="#eef2f8"/>
                   <PolarAngleAxis dataKey="subject" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }}/>
                   <PolarRadiusAxis angle={30} domain={[0,100]} tick={{ fontSize: 13 }}/>
                   <Radar name="Điểm cao nhất" dataKey="A" stroke="#8a6400" fill="#8a6400" fillOpacity={0.2}/>
@@ -340,11 +340,11 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
 
         {view==="awards"&&(
           <div className="grid grid-cols-2 gap-5">
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
               <div className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Số lượng trao tặng theo Danh hiệu</div>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={awardTypeData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0ece3"/>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#eef2f8"/>
                   <XAxis dataKey="name" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                   <YAxis tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                   <Tooltip content={<CustomTooltip/>}/>
@@ -354,12 +354,12 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden" style={{ background:"white" }}>
-              <div className="px-4 py-3 border-b border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
+              <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
                 <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chi tiết Thống kê Danh hiệu</span>
               </div>
               <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-                <thead><tr style={{ background:"#f5f2ec" }}>
+                <thead><tr style={{ background:"#f4f7fb" }}>
                   {["Danh hiệu","Số lượng","Tỷ lệ","So sánh 2025"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
                 </tr></thead>
                 <tbody>{awardTypeData.map((a,i)=>{
@@ -367,7 +367,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                   const pct=((a.value/total)*100).toFixed(1);
                   const chg=["+12%","+8%","+15%","+5%","+3%","+22%","+18%"][i];
                   return (
-                    <tr key={a.name} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+                    <tr key={a.name} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
                       <td className="px-3 py-2.5"><div className="flex items-center gap-2"><span className="size-2.5 rounded-full" style={{ background:a.color }}/>{a.name}</div></td>
                       <td className="px-3 py-2.5 text-center" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:a.color }}>{a.value}</td>
                       <td className="px-3 py-2.5">{pct}%</td>
@@ -400,16 +400,16 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                 );
               })}
             </div>
-            <div className="rounded-[10px] border border-[#e8e2d4] p-4" style={{ background:"white" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
               <div className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thời gian xử lý thực tế vs SLA target</div>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={slaData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0ece3"/>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#eef2f8"/>
                   <XAxis dataKey="stage" tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false}/>
                   <YAxis tick={{ fontSize: 13,fontFamily: "var(--font-sans)" }} axisLine={false} tickLine={false} unit="n"/>
                   <Tooltip content={<CustomTooltip/>}/>
                   <Legend wrapperStyle={{ fontSize: 13,fontFamily: "var(--font-sans)" }}/>
-                  <Bar dataKey="target" name="SLA target" fill="#e8e2d4" radius={[4,4,0,0]} barSize={20}/>
+                  <Bar dataKey="target" name="SLA target" fill="#e2e8f0" radius={[4,4,0,0]} barSize={20}/>
                   <Bar dataKey="actual" name="Thực tế" fill="#1C5FBE" radius={[4,4,0,0]} barSize={20}/>
                 </BarChart>
               </ResponsiveContainer>

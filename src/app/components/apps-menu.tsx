@@ -35,7 +35,7 @@ const APP_ITEMS: AppItem[] = [
     desc: "Tham số hệ thống & đơn vị tổ chức",
     icon: Settings,
     color: "#5a5040",
-    bg: "#f0ece3",
+    bg: "#eef2f8",
   },
   {
     id: "Phân tích thi đua",
@@ -148,14 +148,14 @@ export function AppsMenu({
           className="absolute right-0 top-[calc(100%+8px)] w-[300px] rounded-2xl border shadow-2xl overflow-hidden z-50"
           style={{
             background: "white",
-            borderColor: "#e8e2d4",
+            borderColor: "#e2e8f0",
             boxShadow: "0 8px 32px rgba(11,20,38,0.14), 0 2px 8px rgba(11,20,38,0.06)",
           }}
         >
           {/* Header */}
           <div
             className="flex items-center justify-between px-4 py-3 border-b"
-            style={{ borderColor: "#f0ece3", background: "#fbf8f2" }}
+            style={{ borderColor: "#eef2f8", background: "#fbf8f2" }}
           >
             <div className="flex items-center gap-2">
               <GridIcon className="size-4 text-[#635647]" />
@@ -168,7 +168,7 @@ export function AppsMenu({
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="size-6 flex items-center justify-center rounded-md hover:bg-[#e8e2d4] transition-colors text-[#635647]"
+              className="size-6 flex items-center justify-center rounded-md hover:bg-[#e2e8f0] transition-colors text-[#635647]"
             >
               <X className="size-3.5" />
             </button>
@@ -186,7 +186,7 @@ export function AppsMenu({
                   className="flex flex-col items-start gap-2.5 p-3 rounded-xl text-left transition-all outline-none focus-visible:ring-2 focus-visible:ring-[#1C5FBE]/50"
                   style={{
                     background: isCurrent ? app.bg : "#fbf8f2",
-                    border: `1.5px solid ${isCurrent ? app.color + "40" : "#f0ece3"}`,
+                    border: `1.5px solid ${isCurrent ? app.color + "40" : "#eef2f8"}`,
                   }}
                 >
                   {/* Icon box */}
@@ -241,7 +241,7 @@ export function AppsMenu({
           {/* Footer */}
           <div
             className="px-4 py-2.5 border-t text-center"
-            style={{ borderColor: "#f0ece3", background: "#fbf8f2" }}
+            style={{ borderColor: "#eef2f8", background: "#fbf8f2" }}
           >
             <p className="text-[13px]" style={{ color: "#6b5e47", fontFamily: "var(--font-sans)" }}>
               Phiên bản 1.0.0 · VPTU Đồng Nai © 2026

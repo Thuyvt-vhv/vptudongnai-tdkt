@@ -9,7 +9,7 @@ function ThemePreview({ theme, active }: { theme: typeof THEMES[0]; active: bool
       onClick={() => {}}
       className="group relative rounded-xl overflow-hidden border-2 text-left w-full transition-all duration-150"
       style={{
-        borderColor: active ? theme.primary : "#e8e2d4",
+        borderColor: active ? theme.primary : "#e2e8f0",
         boxShadow: active
           ? `0 0 0 3px rgba(${theme.primaryRgb}, 0.15), 0 4px 12px rgba(${theme.primaryRgb}, 0.18)`
           : "0 1px 3px rgba(11,20,38,0.06)",
@@ -116,14 +116,14 @@ export function ThemeSwitcherButton() {
           className="absolute right-0 top-[calc(100%+8px)] w-[500px] rounded-2xl border overflow-hidden z-50"
           style={{
             background: "#fff",
-            borderColor: "#e8e2d4",
+            borderColor: "#e2e8f0",
             boxShadow: "0 20px 40px -8px rgba(11,20,38,0.18), 0 4px 12px rgba(11,20,38,0.08)",
           }}
         >
           {/* Header */}
           <div
             className="px-5 py-4 border-b flex items-center justify-between"
-            style={{ borderColor: "#f0ece3", background: "#faf7f2" }}
+            style={{ borderColor: "#eef2f8", background: "#f8fafc" }}
           >
             <div className="flex items-center gap-3">
               {/* Color dot cluster */}
@@ -206,13 +206,13 @@ export function ThemeSwitcherButton() {
           {/* Footer */}
           <div
             className="px-5 py-3 border-t flex items-center justify-between"
-            style={{ borderColor: "#f0ece3", background: "#faf7f2" }}
+            style={{ borderColor: "#eef2f8", background: "#f8fafc" }}
           >
             <div className="flex items-center gap-1.5">
               {/* Current palette dots */}
               <div className="size-3 rounded-full" style={{ background: theme.primary }} />
               <div className="size-3 rounded-full" style={{ background: theme.gold }} />
-              <div className="size-3 rounded-full border" style={{ background: theme.tint, borderColor: "#e8e2d4" }} />
+              <div className="size-3 rounded-full border" style={{ background: theme.tint, borderColor: "#e2e8f0" }} />
               <p className="text-[13px] text-[#635647] ml-1">
                 {theme.desc}
               </p>

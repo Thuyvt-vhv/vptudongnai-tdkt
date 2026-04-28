@@ -209,7 +209,7 @@ function ScoreInput({
           <button
             disabled={disabled || value <= 0}
             onClick={() => onChange(Math.max(0, value - 1))}
-            className="size-6 rounded border flex items-center justify-center transition-colors hover:bg-[#f0ece3] disabled:opacity-30 disabled:cursor-not-allowed"
+            className="size-6 rounded border flex items-center justify-center transition-colors hover:bg-[#eef2f8] disabled:opacity-30 disabled:cursor-not-allowed"
             style={{ borderColor:"var(--color-line)" }}>
             <span className="text-[14px] leading-none text-[#4a5568]">−</span>
           </button>
@@ -232,14 +232,14 @@ function ScoreInput({
           <button
             disabled={disabled || value >= criterion.maxScore}
             onClick={() => onChange(Math.min(criterion.maxScore, value + 1))}
-            className="size-6 rounded border flex items-center justify-center transition-colors hover:bg-[#f0ece3] disabled:opacity-30 disabled:cursor-not-allowed"
+            className="size-6 rounded border flex items-center justify-center transition-colors hover:bg-[#eef2f8] disabled:opacity-30 disabled:cursor-not-allowed"
             style={{ borderColor:"var(--color-line)" }}>
             <span className="text-[14px] leading-none text-[#4a5568]">+</span>
           </button>
         </div>
       </div>
       {/* Progress */}
-      <div className="h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+      <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
         <div className="h-full rounded-full transition-all duration-300"
           style={{ width:`${pct*100}%`, background:criterion.color }} />
       </div>
@@ -285,7 +285,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
       className="ds-card ds-card-default ds-card-hoverable cursor-pointer rounded-[10px] overflow-hidden">
       <div className="h-1" style={{ background:
         s.status==="in_progress"?"linear-gradient(to right,#16a34a,#22c55e)":
-        s.status==="completed"?"linear-gradient(to right,#1C5FBE,#3b82f6)":"#e8e2d4" }} />
+        s.status==="completed"?"linear-gradient(to right,#1C5FBE,#3b82f6)":"#e2e8f0" }} />
       <div className="p-5">
         <div className="flex items-start gap-3 mb-4">
           <div className="size-10 rounded-[8px] flex items-center justify-center shrink-0"
@@ -317,7 +317,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
             const Icon = st.icon;
             return (
               <div key={st.label} className="rounded-[6px] p-2 border text-center"
-                style={{ borderColor:"var(--color-line)", background:"#faf7f2" }}>
+                style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
                 <Icon className="size-3.5 mx-auto mb-1 text-[#635647]" />
                 <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{st.v}</div>
                 <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{st.label}</div>
@@ -331,7 +331,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
             <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tiến độ chấm điểm</span>
             <span style={{ color:theme.primary, fontFamily: "var(--font-sans)", fontWeight:600 }}>{done}/{total}</span>
           </div>
-          <div className="h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+          <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
             <div className="h-full rounded-full" style={{ width:`${total?done/total*100:0}%`, background:theme.primary }} />
           </div>
         </div>
@@ -451,7 +451,7 @@ function ScoringTab({
             </div>
           </div>
           <div className="p-4 space-y-3">
-            <div className="rounded-[6px] p-3 bg-[#faf7f2]" style={{ border:"1px solid var(--color-line)" }}>
+            <div className="rounded-[6px] p-3 bg-[#f8fafc]" style={{ border:"1px solid var(--color-line)" }}>
               <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
@@ -535,7 +535,7 @@ function ScoringTab({
                   borderColor: alreadyScored
                     ? scoreColor(calcTotal(existingScore?.scores||{}) / MAX_TOTAL) + "60"
                     : scoreColor(localPct) + "60",
-                  background: "#faf7f2",
+                  background: "#f8fafc",
                 }}>
                 <div>
                   <div className="text-[13px] uppercase tracking-wide text-[#635647]"
@@ -577,7 +577,7 @@ function ScoringTab({
                     onChange={e => setComment(e.target.value)} />
                 </div>
               ) : (
-                <div className="rounded-[6px] p-3 bg-[#faf7f2] border" style={{ borderColor:"var(--color-line)" }}>
+                <div className="rounded-[6px] p-3 bg-[#f8fafc] border" style={{ borderColor:"var(--color-line)" }}>
                   <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Nhận xét đã nộp</div>
                   <p className="text-[13px] text-[#0b1426] italic" style={{ fontFamily: "var(--font-sans)" }}>
                     "{existingScore?.comment}"
@@ -607,8 +607,8 @@ function ScoringTab({
           </div>
         )}
         {coi.level === "hard" && (
-          <div className="rounded-[8px] p-4 bg-[#f9f6f0] border border-[#e8e2d4] text-center">
-            <Lock className="size-8 mx-auto mb-2 text-[#e8e2d4]" />
+          <div className="rounded-[8px] p-4 bg-[#f9f6f0] border border-[#e2e8f0] text-center">
+            <Lock className="size-8 mx-auto mb-2 text-[#e2e8f0]" />
             <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               Bạn không thể chấm điểm hồ sơ này do xung đột lợi ích.<br/>
               Điểm sẽ được ghi nhận là "Vắng / Kiêng kỵ" trong biên bản.
@@ -761,7 +761,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
 
       {compared.length < 2 ? (
         <div className="flex flex-col items-center gap-3 py-16 text-center">
-          <Columns className="size-10 text-[#e8e2d4]" />
+          <Columns className="size-10 text-[#e2e8f0]" />
           <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Chọn ít nhất 2 hồ sơ để so sánh
           </p>
@@ -790,7 +790,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
           {CRITERIA.map(c => {
             const maxVal = Math.max(...avgs.map(a => a.byCriteria.find(x=>x.criteriaId===c.id)?.avg ?? 0));
             return (
-              <div key={c.id} className="grid border-b hover:bg-[#faf7f2] transition-colors"
+              <div key={c.id} className="grid border-b hover:bg-[#f8fafc] transition-colors"
                 style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`, borderColor:"var(--color-line)" }}>
                 <div className="px-4 py-3 flex items-center gap-1.5">
                   <div className="size-2 rounded-full shrink-0" style={{ background:c.color }} />
@@ -814,7 +814,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
                         {val}
                       </div>
                       {isMax && <Trophy className="size-3.5 text-[#8a6400]" />}
-                      <div className="flex-1 h-1.5 rounded-full bg-[#f0ece3] overflow-hidden">
+                      <div className="flex-1 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
                         <div className="h-full rounded-full" style={{ width:`${(val/c.maxScore)*100}%`, background:c.color }} />
                       </div>
                     </div>
@@ -896,7 +896,7 @@ function ResultsTab({
     pass:    { label:"Đã thông qua",      color:"#166534", bg:"#dcfce7" },
     reject:  { label:"Không thông qua",   color:"#9f1239", bg:"#fee2e2" },
     defer:   { label:"Hoãn",              color:"#92400e", bg:"#fef3c7" },
-    pending: { label:"Chờ biểu quyết",    color:"#5a5040", bg:"#f0ece3" },
+    pending: { label:"Chờ biểu quyết",    color:"#5a5040", bg:"#eef2f8" },
   };
 
   return (
@@ -929,7 +929,7 @@ function ResultsTab({
                 {/* Rank */}
                 <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-[13px] shrink-0"
                   style={{
-                    background: idx===0?"#fdf3d9":idx===1?"#f0ece3":idx===2?"#fff7ed":"#f3f4f6",
+                    background: idx===0?"#fdf3d9":idx===1?"#eef2f8":idx===2?"#fff7ed":"#f3f4f6",
                     color: idx===0?"#7d4a00":idx===1?"#374151":idx===2?"#92400e":"#6b7280",
                     fontFamily: "var(--font-sans)", fontWeight:700,
                   }}>
@@ -1069,7 +1069,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
             <div className="text-[13px] uppercase tracking-widest text-[#635647]">
               HỘI ĐỒNG THI ĐUA – KHEN THƯỞNG
             </div>
-            <div className="h-px bg-[#e8e2d4] my-2" />
+            <div className="h-px bg-[#e2e8f0] my-2" />
             <h2 className="text-[18px] text-[#0b1426]"
               style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
               BIÊN BẢN HỌP HỘI ĐỒNG XÉT DUYỆT
@@ -1096,7 +1096,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
               </thead>
               <tbody>
                 {session.members.map((m, i) => (
-                  <tr key={m.id} className="hover:bg-[#faf7f2]">
+                  <tr key={m.id} className="hover:bg-[#f8fafc]">
                     <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
                     <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:m.isChair||m.isSecretary?600:400 }}>
                       {m.name}</td>
@@ -1139,7 +1139,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
                   const dec = session.decisions.find(d => d.nominationId === n.id);
                   const decLabel = dec?.decision==="pass"?"✓ Thông qua":dec?.decision==="reject"?"✗ Không thông qua":dec?.decision==="defer"?"Hoãn":"Chờ biểu quyết";
                   return (
-                    <tr key={n.id} className="hover:bg-[#faf7f2]">
+                    <tr key={n.id} className="hover:bg-[#f8fafc]">
                       <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
                       <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:600 }}>{n.tenDoiTuong}</td>
                       <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>{n.donVi}</td>
@@ -1253,7 +1253,7 @@ function Workspace({ session: initSession, user, onBack }: {
           onMouseLeave={e=>(e.currentTarget as HTMLButtonElement).style.color="#635647"}>
           <ChevronLeft className="size-4" />Danh sách phiên họp
         </button>
-        <div className="h-4 w-px bg-[#e8e2d4]" />
+        <div className="h-4 w-px bg-[#e2e8f0]" />
         <div className="flex items-center gap-2">
           <Gavel className="size-4" style={{ color:theme.primary }} />
           <div>
@@ -1343,7 +1343,7 @@ function Workspace({ session: initSession, user, onBack }: {
 
           {/* COI legend */}
           <div className="px-4 py-2">
-            <div className="rounded-[6px] p-2 bg-[#faf7f2] border" style={{ borderColor:"var(--color-line)" }}>
+            <div className="rounded-[6px] p-2 bg-[#f8fafc] border" style={{ borderColor:"var(--color-line)" }}>
               <div className="text-[13px] text-[#635647] uppercase tracking-wide mb-1.5"
                 style={{ fontFamily: "var(--font-sans)" }}>Chú thích</div>
               {[
@@ -1447,7 +1447,7 @@ function Workspace({ session: initSession, user, onBack }: {
                   {t.badge && (
                     <span className="px-1.5 py-0.5 rounded text-[13px]"
                       style={{
-                        background: tab===t.key ? theme.tint : "#f0ece3",
+                        background: tab===t.key ? theme.tint : "#eef2f8",
                         color: tab===t.key ? theme.primary : "#635647",
                       }}>{t.badge}</span>
                   )}

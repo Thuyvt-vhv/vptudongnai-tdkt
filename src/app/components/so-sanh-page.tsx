@@ -138,7 +138,7 @@ function HoSoSelector({ value, onChange, excluded }: {
     <div className="relative">
       <button onClick={() => setOpen(v => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 rounded-[10px] border text-left transition-all hover:border-[#1C5FBE]"
-        style={{ background: value ? "white" : "#faf7f2", borderColor: value ? "#bfdbfe" : "#e8e2d4" }}>
+        style={{ background: value ? "white" : "#f8fafc", borderColor: value ? "#bfdbfe" : "#e2e8f0" }}>
         {value ? (
           <>
             <div className="size-9 rounded-full flex items-center justify-center text-white text-[13px] shrink-0"
@@ -166,13 +166,13 @@ function HoSoSelector({ value, onChange, excluded }: {
       {open && (
         <>
           <div className="fixed inset-0 z-30" onClick={() => setOpen(false)}/>
-          <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-40 rounded-[10px] border border-[#e8e2d4] shadow-xl overflow-hidden"
+          <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-40 rounded-[10px] border border-[#e2e8f0] shadow-xl overflow-hidden"
             style={{ background: "white" }}>
             {options.length === 0 ? (
               <div className="px-4 py-3 text-[13px] text-[#635647]">Không còn hồ sơ để chọn</div>
             ) : options.map(hs => (
               <button key={hs.id} onClick={() => { onChange(hs); setOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-[#f5f2ec] transition-colors">
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-[#f4f7fb] transition-colors">
                 <div className="size-8 rounded-full flex items-center justify-center text-white text-[13px] shrink-0"
                   style={{ background: `linear-gradient(135deg,${hs.avatarFrom},${hs.avatarTo})`, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   {hs.ten.split(" ").slice(-1)[0][0]}
@@ -200,7 +200,7 @@ function ScoreBar({ score, max = 100, color }: { score: number; max?: number; co
   const pct = (score / max) * 100;
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-2 rounded-full overflow-hidden bg-[#f0ece3]">
+      <div className="flex-1 h-2 rounded-full overflow-hidden bg-[#eef2f8]">
         <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }}/>
       </div>
       <span className="text-[13px] w-8 text-right" style={{ fontFamily: "JetBrains Mono,monospace", fontWeight: 700, color }}>{score}</span>
@@ -230,7 +230,7 @@ function AIRecommendation({ cols }: { cols: (HoSoFull | null)[] }) {
       <div className="flex flex-wrap gap-2">
         {filled.map(h => (
           <div key={h.id} className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px]"
-            style={{ background: h.id === winner.id ? "#7c3aed" : "white", border: `1px solid ${h.id === winner.id ? "#7c3aed" : "#e8e2d4"}` }}>
+            style={{ background: h.id === winner.id ? "#7c3aed" : "white", border: `1px solid ${h.id === winner.id ? "#7c3aed" : "#e2e8f0"}` }}>
             {h.id === winner.id && <Trophy className="size-3.5 text-white"/>}
             <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: h.id === winner.id ? "white" : "#5a5040" }}>
               {h.ten.split(" ").slice(-2).join(" ")}
@@ -275,7 +275,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
   const colColors = ["#1C5FBE", "#166534", "#7c3aed"];
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       <div className="max-w-[1100px] mx-auto px-8 py-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -363,7 +363,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                 )}
               </div>
             ) : (
-              <div key={i} className="rounded-[12px] border-2 border-dashed border-[#e8e2d4] p-4 flex flex-col items-center justify-center min-h-[160px] text-center">
+              <div key={i} className="rounded-[12px] border-2 border-dashed border-[#e2e8f0] p-4 flex flex-col items-center justify-center min-h-[160px] text-center">
                 <Plus className="size-8 text-[#d1d5db] mb-2"/>
                 <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>Chọn hồ sơ thứ {i+1}</span>
               </div>
@@ -373,14 +373,14 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
 
         {/* Detail comparison table */}
         {filledCols.length >= 2 && (
-          <div className="rounded-[12px] border border-[#e8e2d4] overflow-hidden" style={{ background: "white" }}>
+          <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
             {/* Table header */}
-            <div className="grid border-b border-[#e8e2d4]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)", background: "#faf7f2" }}>
+            <div className="grid border-b border-[#e2e8f0]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)", background: "#f8fafc" }}>
               <div className="px-4 py-3 text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Tiêu chí
               </div>
               {cols.map((col, i) => (
-                <div key={i} className="px-4 py-3 border-l border-[#f0ece3]">
+                <div key={i} className="px-4 py-3 border-l border-[#eef2f8]">
                   <div className="flex items-center gap-1.5">
                     <div className="size-2.5 rounded-full" style={{ background: colColors[i] }}/>
                     <span className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: col ? 700 : 400 }}>
@@ -395,7 +395,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
             {CRITERIA.map(group => (
               <div key={group.group}>
                 {/* Group header */}
-                <div className="px-4 py-2 border-b border-[#f0ece3]" style={{ background: "#faf7f2" }}>
+                <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
                   <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     {group.group}
                   </span>
@@ -403,7 +403,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                 {group.items.map(crit => {
                   const bestIdx = getBestColIdx(crit);
                   return (
-                    <div key={String(crit.key)} className="grid border-b border-[#f5f2ec] last:border-0 hover:bg-[#faf7f2] transition-colors"
+                    <div key={String(crit.key)} className="grid border-b border-[#f4f7fb] last:border-0 hover:bg-[#f8fafc] transition-colors"
                       style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
                       <div className="px-4 py-3">
                         <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{crit.label}</span>
@@ -412,7 +412,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                         const isBest = bestIdx === i && col !== null;
                         const val = col ? String(crit.render(col)) : null;
                         return (
-                          <div key={i} className="px-4 py-3 border-l border-[#f5f2ec] flex items-center gap-1.5">
+                          <div key={i} className="px-4 py-3 border-l border-[#f4f7fb] flex items-center gap-1.5">
                             {!col ? (
                               <Minus className="size-4 text-[#d1d5db]"/>
                             ) : (
@@ -435,13 +435,13 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
 
             {/* Thành tích */}
             <div>
-              <div className="px-4 py-2 border-b border-[#f0ece3]" style={{ background: "#faf7f2" }}>
+              <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
                 <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thành tích nổi bật</span>
               </div>
-              <div className="grid border-b border-[#f5f2ec]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
+              <div className="grid border-b border-[#f4f7fb]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
                 <div className="px-4 py-3"><span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách thành tích</span></div>
                 {cols.map((col, i) => (
-                  <div key={i} className="px-4 py-3 border-l border-[#f5f2ec]">
+                  <div key={i} className="px-4 py-3 border-l border-[#f4f7fb]">
                     {col ? (
                       <ul className="space-y-1">
                         {col.tienTichCaNhan.map((t, ti) => (

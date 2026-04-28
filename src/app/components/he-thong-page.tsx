@@ -63,7 +63,7 @@ function Gauge({ value, max=100, color, size=80 }:{ value:number; max?:number; c
   const c=danger?"#c8102e":warn?"#b45309":color;
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#f0ece3" strokeWidth={8}/>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#eef2f8" strokeWidth={8}/>
       <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={c} strokeWidth={8}
         strokeDasharray={`${dash} ${gap}`} strokeLinecap="round" transform={`rotate(-90 ${size/2} ${size/2})`}
         style={{ transition:"stroke-dasharray 1s ease, stroke 0.5s ease" }}/>
@@ -99,7 +99,7 @@ export function HeThongPage({ user }: { user: LoginUser }) {
 
   if(user.role!=="quản trị hệ thống") {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-4" style={{ background:"#faf7f2" }}>
+      <div className="flex flex-col items-center justify-center h-full gap-4" style={{ background:"#f8fafc" }}>
         <Shield className="size-14 text-[#d1d5db]"/>
         <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chỉ Admin mới có quyền xem System Health</p>
       </div>

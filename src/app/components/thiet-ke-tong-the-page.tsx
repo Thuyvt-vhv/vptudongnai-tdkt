@@ -394,7 +394,7 @@ const MODULES: ModuleSpec[] = [
   },
   {
     id:"dashboard", title:"Dashboard & Báo cáo", icon:BarChart3,
-    color:"#635647", bg:"#f5f2ec", border:"#d6cfc3",
+    color:"#635647", bg:"#f4f7fb", border:"#d6cfc3",
     desc:"KPI realtime, bảng xếp hạng, BI multi-dim, SLA monitor, scheduled reports, custom widgets.",
     screens:[
       { code:"DB-001", title:"Dashboard Chính (Role-adaptive)", desc:"Widgets thích ứng theo role: User thấy hồ sơ mình, Admin thấy toàn hệ thống.", roles:["cá nhân","lãnh đạo đơn vị","hội đồng","lãnh đạo cấp cao","quản trị hệ thống"],
@@ -611,7 +611,7 @@ function ModuleSection({ mod }:{ mod:ModuleSpec }) {
   return (
     <section id={mod.id} className="mb-10">
       <SectionHeader id={`h-${mod.id}`} icon={mod.icon} color={mod.color} title={mod.title} subtitle={mod.desc}/>
-      <div className="flex gap-1 border-b border-[#e8e2d4] mb-4">
+      <div className="flex gap-1 border-b border-[#e2e8f0] mb-4">
         {TABS.map(([k,l,I])=>{const a=tab===k;return(
           <button key={k} onClick={()=>setTab(k)} className="flex items-center gap-1.5 px-4 py-2.5 text-[13px] border-b-2 transition-all" style={{ borderColor:a?mod.color:"transparent",color:a?mod.color:"#635647",fontFamily: "var(--font-sans)",fontWeight:a?700:400,marginBottom:-1 }}>
             <I className="size-3.5"/>{l}
@@ -621,7 +621,7 @@ function ModuleSection({ mod }:{ mod:ModuleSpec }) {
       {tab==="screens"&&(
         <div className="space-y-2">
           {mod.screens.map(sc=>(
-            <div key={sc.code} className="rounded-[8px] border border-[#e8e2d4] overflow-hidden">
+            <div key={sc.code} className="rounded-[8px] border border-[#e2e8f0] overflow-hidden">
               <button className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[#faf8f4] transition-colors" onClick={()=>setOpenSc(openSc===sc.code?null:sc.code)}>
                 <code className="text-[13px] px-2 py-0.5 rounded shrink-0" style={{ background:mod.bg,color:mod.color,border:`1px solid ${mod.border}`,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{sc.code}</code>
                 <div className="flex-1 min-w-0">
@@ -634,7 +634,7 @@ function ModuleSection({ mod }:{ mod:ModuleSpec }) {
                 {openSc===sc.code?<ChevronDown className="size-4 shrink-0 text-[#635647]"/>:<ChevronRight className="size-4 shrink-0 text-[#635647]"/>}
               </button>
               {openSc===sc.code&&(
-                <div className="border-t border-[#e8e2d4] px-4 py-3 grid grid-cols-2 gap-4" style={{ background:"#faf8f4" }}>
+                <div className="border-t border-[#e2e8f0] px-4 py-3 grid grid-cols-2 gap-4" style={{ background:"#faf8f4" }}>
                   <div>
                     <p className="text-[13px] text-[#5a5040] leading-relaxed mb-3">{sc.desc}</p>
                     <div className="flex flex-wrap gap-1 mb-3">{sc.roles.map(r=><RoleBadge key={r} role={r}/>)}</div>
@@ -669,15 +669,15 @@ function ModuleSection({ mod }:{ mod:ModuleSpec }) {
         </>
       )}
       {tab==="fields"&&(
-        <div className="overflow-x-auto rounded-[8px] border border-[#e8e2d4]">
+        <div className="overflow-x-auto rounded-[8px] border border-[#e2e8f0]">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-            <thead><tr style={{ background:"#f5f2ec" }}>
+            <thead><tr style={{ background:"#f4f7fb" }}>
               {["Trường dữ liệu","Kiểu","Bắt buộc","Validation / Ghi chú"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
             </tr></thead>
             <tbody>{mod.fields.map((f,i)=>(
-              <tr key={i} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+              <tr key={i} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
                 <td className="px-3 py-2 text-[#0b1426]" style={{ fontWeight:600 }}>{f.name}</td>
-                <td className="px-3 py-2"><code className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>{f.type}</code></td>
+                <td className="px-3 py-2"><code className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>{f.type}</code></td>
                 <td className="text-center px-3 py-2">{f.req?<CheckCircle2 className="size-4 inline" style={{ color:"#166534" }}/>:<Circle className="size-4 inline" style={{ color:"#d1d5db" }}/>}</td>
                 <td className="px-3 py-2 text-[#5a5040]">{f.note}</td>
               </tr>
@@ -686,20 +686,20 @@ function ModuleSection({ mod }:{ mod:ModuleSpec }) {
         </div>
       )}
       {tab==="perms"&&(
-        <div className="overflow-x-auto rounded-[8px] border border-[#e8e2d4]">
+        <div className="overflow-x-auto rounded-[8px] border border-[#e2e8f0]">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
             <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
               <th className="text-left px-4 py-2.5 text-white" style={{ fontWeight:700 }}>Hành động</th>
               {(["cá nhân","lãnh đạo đơn vị","hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] as RoleId[]).map(r=><th key={r} className="text-center px-3 py-2.5"><RoleBadge role={r}/></th>)}
             </tr></thead>
             <tbody>{mod.perms.map((p,i)=>(
-              <tr key={i} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+              <tr key={i} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
                 <td className="px-4 py-2 text-[#0b1426]" style={{ fontWeight:500 }}>{p.action}</td>
                 <PermCell v={p.user}/><PermCell v={p.manager}/><PermCell v={p.council}/><PermCell v={p.leader}/><PermCell v={p.admin}/>
               </tr>
             ))}</tbody>
           </table>
-          <div className="px-4 py-2 flex gap-4 border-t border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+          <div className="px-4 py-2 flex gap-4 border-t border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
             {(["✓ Đầy đủ","○ Hạn chế","✗ Không có"] as const).map(s=><span key={s} className="text-[13px] text-[#5a5040]">{s}</span>)}
           </div>
         </div>
@@ -717,12 +717,12 @@ function ButtonDemo() {
   const VARIANTS=[
     { id:"primary",  label:"Primary",   bg:"#1C5FBE", hoverBg:"#1752a8", text:"white" },
     { id:"secondary",label:"Secondary", bg:"transparent", border:"#1C5FBE", text:"#1C5FBE" },
-    { id:"ghost",    label:"Ghost",     bg:"transparent", border:"#e8e2d4", text:"#5a5040" },
+    { id:"ghost",    label:"Ghost",     bg:"transparent", border:"#e2e8f0", text:"#5a5040" },
     { id:"dark",     label:"Dark",      bg:"#0b1426", hoverBg:"#1a2744", text:"white" },
     { id:"danger",   label:"Danger",    bg:"#c8102e", hoverBg:"#991b1b", text:"white" },
   ];
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <p className="text-[13px] text-[#5a5040] mb-3" style={{ fontFamily: "var(--font-sans)" }}>Click để thấy loading state (1.8s). Tất cả nút có height 40px, border-radius 8px.</p>
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map(v=>{
@@ -747,7 +747,7 @@ function FormValidationDemo() {
   const err=touched&&val.length<5?"Tên phải có ít nhất 5 ký tự":touched&&val.length>50?"Tên không quá 50 ký tự":"";
   const ok=touched&&!err&&val.length>0;
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <p className="text-[13px] text-[#5a5040] mb-3" style={{ fontFamily: "var(--font-sans)" }}>Validation inline realtime — blur để trigger. Input height 40px.</p>
       <div className="space-y-1.5 max-w-xs">
         <label className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>
@@ -776,12 +776,12 @@ function LoadingStatesDemo() {
     if(mode==="progress"){ const t=setInterval(()=>setProg(p=>{ if(p>=100){clearInterval(t);setMode("none");return 0;} return p+8; }),120); return ()=>clearInterval(t); }
   },[mode]);
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <div className="flex gap-2 mb-4 flex-wrap">
         {(["skeleton","spinner","progress"] as const).map(m=>(
           <button key={m} onClick={()=>{ setMode(m); if(m==="progress")setProg(0); }}
             className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all"
-            style={{ background:mode===m?"#0b1426":"white",color:mode===m?"white":"#5a5040",borderColor:mode===m?"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)" }}>
+            style={{ background:mode===m?"#0b1426":"white",color:mode===m?"white":"#5a5040",borderColor:mode===m?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)" }}>
             {m==="skeleton"?"Skeleton Loader":m==="spinner"?"Spinner":m==="progress"?"Progress Bar":""}
           </button>
         ))}
@@ -790,10 +790,10 @@ function LoadingStatesDemo() {
         <div className="space-y-2">
           {[1,2,3].map(i=>(
             <div key={i} className="flex gap-3 items-center">
-              <div className="size-8 rounded-full bg-[#e8e2d4] animate-pulse shrink-0"/>
+              <div className="size-8 rounded-full bg-[#e2e8f0] animate-pulse shrink-0"/>
               <div className="flex-1 space-y-1.5">
-                <div className="h-3 rounded bg-[#e8e2d4] animate-pulse" style={{ width:`${60+i*15}%` }}/>
-                <div className="h-2.5 rounded bg-[#e8e2d4] animate-pulse" style={{ width:`${40+i*10}%` }}/>
+                <div className="h-3 rounded bg-[#e2e8f0] animate-pulse" style={{ width:`${60+i*15}%` }}/>
+                <div className="h-2.5 rounded bg-[#e2e8f0] animate-pulse" style={{ width:`${40+i*10}%` }}/>
               </div>
             </div>
           ))}
@@ -810,7 +810,7 @@ function LoadingStatesDemo() {
           <div className="flex items-center justify-between text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
             <span>Đang xử lý ký số...</span><span style={{ fontFamily:"JetBrains Mono, monospace" }}>{prog}%</span>
           </div>
-          <div className="h-2 rounded-full overflow-hidden" style={{ background:"#e8e2d4" }}>
+          <div className="h-2 rounded-full overflow-hidden" style={{ background:"#e2e8f0" }}>
             <div className="h-full rounded-full transition-all" style={{ width:`${prog}%`,background:"linear-gradient(to right,#1C5FBE,#166534)" }}/>
           </div>
         </div>
@@ -829,7 +829,7 @@ function ToastDemo() {
   };
   const cfgs={"success":{bg:"#dcfce7",border:"#86efac",color:"#166534",icon:CheckCircle2},"error":{bg:"#fee2e2",border:"#fca5a5",color:"#991b1b",icon:XCircle},"warning":{bg:"#fef3c7",border:"#fcd34d",color:"#92400e",icon:AlertTriangle},"info":{bg:"#ddeafc",border:"#93c5fd",color:"#1C5FBE",icon:Info}};
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <p className="text-[13px] text-[#5a5040] mb-3" style={{ fontFamily: "var(--font-sans)" }}>Max 3 toasts. Error không auto-dismiss. Click ✕ để đóng.</p>
       <div className="flex gap-2 mb-4 flex-wrap">
         {(["success","error","warning","info"] as const).map(t=>{
@@ -863,9 +863,9 @@ function EmptyStateDemo() {
   const [idx,setIdx]=useState(0);
   const s=STATES[idx];
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <div className="flex gap-2 mb-4">
-        {STATES.map((_,i)=><button key={i} onClick={()=>setIdx(i)} className="text-[13px] px-2.5 py-1 rounded border transition-all" style={{ background:idx===i?"#0b1426":"white",color:idx===i?"white":"#5a5040",borderColor:idx===i?"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)" }}>State {i+1}</button>)}
+        {STATES.map((_,i)=><button key={i} onClick={()=>setIdx(i)} className="text-[13px] px-2.5 py-1 rounded border transition-all" style={{ background:idx===i?"#0b1426":"white",color:idx===i?"white":"#5a5040",borderColor:idx===i?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)" }}>State {i+1}</button>)}
       </div>
       <div className="flex flex-col items-center justify-center py-6 gap-3">
         <div className="text-[40px]">{s.icon}</div>
@@ -885,10 +885,10 @@ function SLACountdownDemo() {
   const color=pct>50?"#166534":pct>25?"#b45309":"#c8102e";
   const bg=pct>50?"#dcfce7":pct>25?"#fef3c7":"#fee2e2";
   return (
-    <div className="p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+    <div className="p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
       <p className="text-[13px] text-[#5a5040] mb-3" style={{ fontFamily: "var(--font-sans)" }}>SLA countdown realtime — thay đổi màu theo mức độ còn lại (xanh→vàng→đỏ).</p>
       <div className="flex items-center gap-4">
-        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#e8e2d4" }}>
+        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#e2e8f0" }}>
           <div className="h-full rounded-full transition-all" style={{ width:`${pct}%`,background:color }}/>
         </div>
         <span className="px-3 py-1 rounded text-[13px]" style={{ background:bg,color,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>
@@ -919,7 +919,7 @@ function UXPatternsSection() {
         {PATTERNS.map(p=>{
           const Icon=p.icon; const isOpen=open===p.id;
           return (
-            <div key={p.id} className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+            <div key={p.id} className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
               <button className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-[#faf8f4] transition-colors" onClick={()=>setOpen(isOpen?null:p.id)}>
                 <div className="size-8 rounded-lg flex items-center justify-center shrink-0" style={{ background:"#f5f3ff" }}>
                   <Icon className="size-4" style={{ color:"#7c3aed" }}/>
@@ -930,7 +930,7 @@ function UXPatternsSection() {
                 </div>
                 {isOpen?<ChevronDown className="size-4 text-[#7c3aed]"/>:<ChevronRight className="size-4 text-[#635647]"/>}
               </button>
-              {isOpen&&<div className="border-t border-[#e8e2d4] p-4">{p.demo}</div>}
+              {isOpen&&<div className="border-t border-[#e2e8f0] p-4">{p.demo}</div>}
             </div>
           );
         })}
@@ -938,7 +938,7 @@ function UXPatternsSection() {
       {/* Conditional UI table */}
       <div className="mt-6">
         <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Conditional UI — Hiển thị theo Context</h3>
-        <div className="overflow-x-auto rounded-[8px] border border-[#e8e2d4]">
+        <div className="overflow-x-auto rounded-[8px] border border-[#e2e8f0]">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
             <thead><tr style={{ background:"linear-gradient(to right,#7c3aed,#6d28d9)" }}>
               {["Điều kiện","UI Element","Hiển thị / Ẩn","Trạng thái"].map(h=><th key={h} className="text-left px-3 py-2.5 text-white" style={{ fontWeight:700 }}>{h}</th>)}
@@ -955,7 +955,7 @@ function UXPatternsSection() {
               ["Đợt LYK đã đóng","Form gửi ý kiến","Ẩn","N/A"],
               ["Chứng thư hết hạn","Nút ký CA","Disabled + tooltip","Error"],
             ].map((r,i)=>(
-              <tr key={i} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+              <tr key={i} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
                 {r.map((c,j)=><td key={j} className="px-3 py-2 text-[#5a5040]">{j===0?<code className="text-[13px]" style={{ fontFamily:"JetBrains Mono, monospace",color:"#7c3aed" }}>{c}</code>:c}</td>)}
               </tr>
             ))}</tbody>
@@ -986,7 +986,7 @@ function UserFlowsSection() {
       <div className="flex gap-2 mb-5 flex-wrap">
         {(Object.keys(ROLE_FULL) as RoleId2[]).map(r=>{
           const m=ROLE_FULL[r]; const RI=m.icon; const a=sel===r;
-          return <button key={r} onClick={()=>setSel(r)} className="flex items-center gap-2 px-3 py-2 rounded-[8px] border text-[13px] transition-all" style={{ background:a?m.bg:"white",borderColor:a?m.color:"#e8e2d4",color:a?m.color:"#635647",fontFamily: "var(--font-sans)",fontWeight:a?700:400 }}>
+          return <button key={r} onClick={()=>setSel(r)} className="flex items-center gap-2 px-3 py-2 rounded-[8px] border text-[13px] transition-all" style={{ background:a?m.bg:"white",borderColor:a?m.color:"#e2e8f0",color:a?m.color:"#635647",fontFamily: "var(--font-sans)",fontWeight:a?700:400 }}>
             <RI className="size-3.5"/>{m.label.split("—")[0].trim()}
           </button>;
         })}
@@ -1061,8 +1061,8 @@ function ScalabilitySection() {
         {ARCH.map((a,i)=>{
           const I=a.icon;
           return (
-            <div key={i} className="flex items-start gap-3 p-3 rounded-[8px] border border-[#e8e2d4]" style={{ background:"white" }}>
-              <div className="size-8 rounded-lg flex items-center justify-center shrink-0" style={{ background:"#f5f2ec" }}>
+            <div key={i} className="flex items-start gap-3 p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background:"white" }}>
+              <div className="size-8 rounded-lg flex items-center justify-center shrink-0" style={{ background:"#f4f7fb" }}>
                 <I className="size-4" style={{ color:"#1C5FBE" }}/>
               </div>
               <div className="flex-1 min-w-0">
@@ -1077,13 +1077,13 @@ function ScalabilitySection() {
         })}
       </div>
       <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Performance Targets</h3>
-      <div className="overflow-x-auto rounded-[8px] border border-[#e8e2d4]">
+      <div className="overflow-x-auto rounded-[8px] border border-[#e2e8f0]">
         <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
           <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
             {["Metric","Target","Ghi chú đo lường"].map(h=><th key={h} className="text-left px-4 py-2.5 text-white" style={{ fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>{PERF.map((p,i)=>(
-            <tr key={i} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+            <tr key={i} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
               <td className="px-4 py-2.5 text-[#0b1426]" style={{ fontWeight:600 }}>{p.metric}</td>
               <td className="px-4 py-2.5"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#dcfce7",color:"#166534",fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{p.target}</span></td>
               <td className="px-4 py-2.5 text-[#5a5040]">{p.desc}</td>
@@ -1107,12 +1107,12 @@ function BusinessRulesSection() {
       <SectionHeader id="h-biz-rules" icon={Shield} color="#1a2744" title="Business Rules & Ràng buộc Nghiệp vụ" subtitle={`${BUSINESS_RULES.length} rules — phân loại theo module & mức độ ưu tiên`}/>
       <div className="flex gap-2 mb-4 flex-wrap">
         {["all","P0","P1",...["Đề nghị KT","Hội đồng","Chấm điểm","Ký số","Lấy ý kiến","Quyết định","Hệ thống","UX","Scalability","Phong trào"]].map(f=>(
-          <button key={f} onClick={()=>setFilter(f)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:filter===f?"#0b1426":"white",color:filter===f?"white":"#5a5040",borderColor:filter===f?"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:filter===f?700:400 }}>
+          <button key={f} onClick={()=>setFilter(f)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:filter===f?"#0b1426":"white",color:filter===f?"white":"#5a5040",borderColor:filter===f?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:filter===f?700:400 }}>
             {f==="all"?`Tất cả (${BUSINESS_RULES.length})`:f==="P0"?`P0 Bắt buộc (${BUSINESS_RULES.filter(r=>r.prio==="P0").length})`:f==="P1"?`P1 Quan trọng (${BUSINESS_RULES.filter(r=>r.prio==="P1").length})`:f}
           </button>
         ))}
       </div>
-      <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+      <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
         <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
           <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
             <th className="text-left px-3 py-2.5 text-white" style={{ fontWeight:700,width:75 }}>Mã</th>
@@ -1122,10 +1122,10 @@ function BusinessRulesSection() {
             <th className="text-left px-3 py-2.5 text-white" style={{ fontWeight:700,width:140 }}>Căn cứ</th>
           </tr></thead>
           <tbody>{visible.map((r,i)=>(
-            <tr key={r.id} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+            <tr key={r.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
               <td className="px-3 py-2.5"><code className="text-[13px]" style={{ fontFamily:"JetBrains Mono, monospace",color:"#1C5FBE" }}>{r.id}</code></td>
               <td className="px-3 py-2.5 text-[#0b1426] leading-snug">{r.rule}</td>
-              <td className="px-3 py-2.5"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040" }}>{r.module}</span></td>
+              <td className="px-3 py-2.5"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040" }}>{r.module}</span></td>
               <td className="text-center px-3 py-2.5"><span className="text-[13px] px-1.5 py-0.5 rounded border" style={{ background:r.prio==="P0"?"#fee2e2":"#fef3c7",color:r.prio==="P0"?"#991b1b":"#92400e",borderColor:r.prio==="P0"?"#fca5a5":"#fcd34d",fontWeight:700 }}>{r.prio}</span></td>
               <td className="px-3 py-2.5 text-[#635647] text-[13px]">{r.legal||<span className="text-[#d1d5db]">—</span>}</td>
             </tr>
@@ -1150,8 +1150,8 @@ function DesignSystemSection() {
     { name:"Cam Hổ Phách",hex:"#b45309",role:"Warning, in-progress, SLA" },
     { name:"Tím HĐ",hex:"#7c3aed",role:"Council, formal proceedings" },
     { name:"Xanh Cyan",hex:"#0891b2",role:"Info, secondary actions" },
-    { name:"Paper",hex:"#faf7f2",role:"Page background warm" },
-    { name:"Border",hex:"#e8e2d4",role:"Borders, dividers" },
+    { name:"Paper",hex:"#f8fafc",role:"Page background warm" },
+    { name:"Border",hex:"#e2e8f0",role:"Borders, dividers" },
   ];
   const SPACING=["4px (xs)","8px (sm)","12px (md)","16px (base)","20px (lg)","24px (xl)","32px (2xl)","48px (3xl)"];
   const RADII=["4px (chip)","6px (tag)","8px (card/button)","10px (card)","12px (modal panel)","16px (hero card)","24px (feature card)","9999px (pill/badge)"];
@@ -1177,7 +1177,7 @@ function DesignSystemSection() {
       <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Color Tokens</h3>
       <div className="grid grid-cols-5 gap-2 mb-6">
         {COLORS.map(c=>(
-          <div key={c.hex} className="rounded-[8px] border border-[#e8e2d4] overflow-hidden">
+          <div key={c.hex} className="rounded-[8px] border border-[#e2e8f0] overflow-hidden">
             <div className="h-8" style={{ background:c.hex }}/>
             <div className="p-2">
               <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{c.name}</div>
@@ -1214,9 +1214,9 @@ function DesignSystemSection() {
       <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Component Library ({COMPONENTS.length} components)</h3>
       <div className="grid grid-cols-2 gap-2">
         {COMPONENTS.map((c,i)=>(
-          <div key={i} className="rounded-[8px] border border-[#e8e2d4] p-3">
+          <div key={i} className="rounded-[8px] border border-[#e2e8f0] p-3">
             <div className="flex items-start gap-2">
-              <code className="text-[13px] px-2 py-0.5 rounded shrink-0 mt-0.5" style={{ background:"#f5f2ec",color:"#0b1426",fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{c.name}</code>
+              <code className="text-[13px] px-2 py-0.5 rounded shrink-0 mt-0.5" style={{ background:"#f4f7fb",color:"#0b1426",fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{c.name}</code>
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap gap-1 mb-0.5">
                   {c.v.split("|").map(v=><span key={v} className="text-[13px] px-1 py-0.5 rounded" style={{ background:"#ddeafc",color:"#1C5FBE",fontFamily: "var(--font-sans)" }}>{v}</span>)}
@@ -1424,7 +1424,7 @@ function SprintRoadmapSection() {
         {SPRINTS.map(s=>(
           <button key={s.n} onClick={()=>setActiveSprint(s.n)}
             className="shrink-0 rounded-[10px] border px-4 py-3 text-left transition-all min-w-[120px]"
-            style={{ background:activeSprint===s.n?s.color:"white",borderColor:activeSprint===s.n?s.color:"#e8e2d4" }}>
+            style={{ background:activeSprint===s.n?s.color:"white",borderColor:activeSprint===s.n?s.color:"#e2e8f0" }}>
             <div className="text-[13px]" style={{ color:activeSprint===s.n?"rgba(255,255,255,0.7)":"#635647",fontFamily: "var(--font-sans)" }}>Sprint {s.n}</div>
             <div className="text-[13px] leading-tight" style={{ color:activeSprint===s.n?"white":"#0b1426",fontFamily: "var(--font-sans)",fontWeight:700 }}>{s.name}</div>
             <div className="text-[13px] mt-1" style={{ color:activeSprint===s.n?"rgba(255,255,255,0.6)":"#635647",fontFamily:"JetBrains Mono, monospace" }}>{s.weeks}</div>
@@ -1433,7 +1433,7 @@ function SprintRoadmapSection() {
         ))}
       </div>
       {/* Sprint detail */}
-      <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+      <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
         <div className="px-5 py-4 flex items-center gap-3" style={{ background:`linear-gradient(to right,${sp.color},${sp.color}cc)` }}>
           <div>
             <div className="text-[13px] text-white/70" style={{ fontFamily: "var(--font-sans)" }}>Sprint {sp.n} · {sp.weeks}</div>
@@ -1451,7 +1451,7 @@ function SprintRoadmapSection() {
             })}
           </div>
         </div>
-        <div className="divide-y divide-[#e8e2d4]">
+        <div className="divide-y divide-[#e2e8f0]">
           {sp.tasks.map((t,i)=>{
             const tc=TYPE_CFG[t.type];
             return (
@@ -1460,7 +1460,7 @@ function SprintRoadmapSection() {
                 <code className="text-[13px] px-1.5 py-0.5 rounded shrink-0" style={{ background:tc.bg,color:tc.color,border:`1px solid ${tc.color}40`,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{t.code}</code>
                 <span className="flex-1 text-[13px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)" }}>{t.title}</span>
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{t.module}</span>
+                  <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{t.module}</span>
                   <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:tc.bg,color:tc.color,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{EFFORT_DAYS[t.effort]}</span>
                 </div>
               </div>
@@ -1592,7 +1592,7 @@ function ApiContractSection() {
         {API_GROUPS.map(g=>(
           <button key={g.module} onClick={()=>setSelModule(g.module)}
             className="flex items-center gap-2 px-3 py-1.5 rounded-[8px] border text-[13px] transition-all"
-            style={{ background:selModule===g.module?g.color:"white",color:selModule===g.module?"white":"#5a5040",borderColor:selModule===g.module?g.color:"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:selModule===g.module?700:400 }}>
+            style={{ background:selModule===g.module?g.color:"white",color:selModule===g.module?"white":"#5a5040",borderColor:selModule===g.module?g.color:"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:selModule===g.module?700:400 }}>
             {g.module} <span className="text-[13px]">({g.endpoints.length})</span>
           </button>
         ))}
@@ -1603,7 +1603,7 @@ function ApiContractSection() {
         </code>
         <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>+ rate limit: 100 req/min/user</span>
       </div>
-      <div className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+      <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
         <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
           <thead><tr style={{ background:"linear-gradient(to right,#0b1426,#1a2744)" }}>
             {["Method","Path","Auth","Mô tả","Body / Response"].map(h=><th key={h} className="text-left px-3 py-2.5 text-white" style={{ fontWeight:700 }}>{h}</th>)}
@@ -1611,7 +1611,7 @@ function ApiContractSection() {
           <tbody>{grp.endpoints.map((ep,i)=>{
             const mc=METHOD_CFG[ep.method];
             return (
-              <tr key={i} className="border-t border-[#e8e2d4]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+              <tr key={i} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
                 <td className="px-3 py-2.5"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:mc.bg,color:mc.color,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{ep.method}</span></td>
                 <td className="px-3 py-2.5"><code className="text-[13px]" style={{ fontFamily:"JetBrains Mono, monospace",color:"#1C5FBE" }}>{grp.base}{ep.path}</code></td>
                 <td className="px-3 py-2.5 text-[13px] text-[#635647]">{ep.auth}</td>
@@ -1630,8 +1630,8 @@ function ApiContractSection() {
           { title:"Auth header", code:`Authorization: Bearer <access_token>\nX-Refresh-Token: <refresh_token> (only /auth/refresh)` },
           { title:"Rate limit headers", code:`X-RateLimit-Limit: 100\nX-RateLimit-Remaining: 87\nX-RateLimit-Reset: 1745678400` },
         ].map(p=>(
-          <div key={p.title} className="rounded-[8px] border border-[#e8e2d4] overflow-hidden">
-            <div className="px-3 py-2 border-b border-[#e8e2d4]" style={{ background:"#f5f2ec" }}>
+          <div key={p.title} className="rounded-[8px] border border-[#e2e8f0] overflow-hidden">
+            <div className="px-3 py-2 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
               <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{p.title}</span>
             </div>
             <pre className="px-3 py-2 text-[13px] overflow-x-auto" style={{ fontFamily:"JetBrains Mono, monospace",color:"#5a5040",background:"white" }}>{p.code}</pre>
@@ -1672,7 +1672,7 @@ function SecuritySection() {
           <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Authentication Flows</h3>
           <div className="space-y-3">
             {AUTH_FLOWS.map(f=>(
-              <div key={f.step} className="rounded-[8px] border border-[#e8e2d4] overflow-hidden">
+              <div key={f.step} className="rounded-[8px] border border-[#e2e8f0] overflow-hidden">
                 <div className="px-3 py-2 flex items-center gap-2" style={{ background:"#fee2e2" }}>
                   <span className="size-5 rounded-full flex items-center justify-center text-[13px] text-white" style={{ background:"#c8102e",fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{f.step}</span>
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{f.title}</span>
@@ -1695,7 +1695,7 @@ function SecuritySection() {
             {SECURITY_LAYERS.map(l=>{
               const Icon=l.icon;
               return (
-                <div key={l.layer} className="flex items-start gap-2.5 p-2.5 rounded-[6px] border border-[#e8e2d4]">
+                <div key={l.layer} className="flex items-start gap-2.5 p-2.5 rounded-[6px] border border-[#e2e8f0]">
                   <div className="size-7 rounded flex items-center justify-center shrink-0" style={{ background:"#fee2e2" }}>
                     <Icon className="size-4" style={{ color:"#c8102e" }}/>
                   </div>
@@ -1769,7 +1769,7 @@ function IntegrationsSection() {
         {INTEGRATIONS.map(intg=>{
           const Icon=intg.icon; const isOpen=openInt===intg.name;
           return (
-            <div key={intg.name} className="rounded-[10px] border border-[#e8e2d4] overflow-hidden">
+            <div key={intg.name} className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
               <button className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-[#faf8f4] transition-colors" onClick={()=>setOpenInt(isOpen?null:intg.name)}>
                 <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background:`${intg.color}20` }}>
                   <Icon className="size-5" style={{ color:intg.color }}/>
@@ -1782,7 +1782,7 @@ function IntegrationsSection() {
                 {isOpen?<ChevronDown className="size-4 text-[#635647] shrink-0"/>:<ChevronRight className="size-4 text-[#635647] shrink-0"/>}
               </button>
               {isOpen&&(
-                <div className="border-t border-[#e8e2d4] grid grid-cols-3 gap-4 px-4 py-4" style={{ background:"#faf8f4" }}>
+                <div className="border-t border-[#e2e8f0] grid grid-cols-3 gap-4 px-4 py-4" style={{ background:"#faf8f4" }}>
                   <div>
                     <p className="text-[13px] text-[#5a5040] leading-relaxed mb-3">{intg.desc}</p>
                     {intg.legal&&<div className="text-[13px] px-2.5 py-2 rounded" style={{ background:"#fdf3d9",color:"#7d5a10",fontFamily: "var(--font-sans)" }}>⚖ {intg.legal}</div>}
@@ -1932,7 +1932,7 @@ function TestingSection() {
         </div>
       </div>
       {/* CI/CD integration note */}
-      <div className="mt-4 p-4 rounded-[10px] border border-[#e8e2d4]" style={{ background:"#0b1426" }}>
+      <div className="mt-4 p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#0b1426" }}>
         <div className="text-[13px] text-[#93c5fd] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>CI/CD Pipeline (GitLab CI)</div>
         <pre className="text-[13px] text-white/80 overflow-x-auto" style={{ fontFamily:"JetBrains Mono, monospace" }}>{`stages: [lint, unit-test, build, integration-test, e2e-test, security-scan, deploy-staging, performance-test, deploy-prod]
 
@@ -1961,8 +1961,8 @@ export function ThietKeTongThePage({ user }: { user: LoginUser }) {
   };
   return (
     <div className="h-full flex overflow-hidden" style={{ fontFamily: "var(--font-sans)" }}>
-      <aside className="w-[224px] shrink-0 border-r border-[#e8e2d4] overflow-y-auto flex flex-col" style={{ background:"#faf8f4" }}>
-        <div className="px-4 pt-5 pb-3 border-b border-[#e8e2d4]">
+      <aside className="w-[224px] shrink-0 border-r border-[#e2e8f0] overflow-y-auto flex flex-col" style={{ background:"#faf8f4" }}>
+        <div className="px-4 pt-5 pb-3 border-b border-[#e2e8f0]">
           <div className="text-[13px] uppercase tracking-widest text-[#635647] mb-0.5">VPTU Đồng Nai v2.0</div>
           <h2 className="text-[14px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kế hoạch Thiết kế & Phát triển</h2>
           <p className="text-[13px] text-[#635647] mt-0.5">{TOC_ITEMS.length} sections · PRD toàn diện</p>
@@ -1976,7 +1976,7 @@ export function ThietKeTongThePage({ user }: { user: LoginUser }) {
             </button>
           );})}
         </nav>
-        <div className="p-4 border-t border-[#e8e2d4] text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+        <div className="p-4 border-t border-[#e2e8f0] text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
           PRD v2.0 · Đồng Nai · 24/04/2026
         </div>
       </aside>
@@ -1993,7 +1993,7 @@ export function ThietKeTongThePage({ user }: { user: LoginUser }) {
         <SecuritySection/>
         <IntegrationsSection/>
         <TestingSection/>
-        <div className="border-t border-[#e8e2d4] pt-6 pb-8 text-center">
+        <div className="border-t border-[#e2e8f0] pt-6 pb-8 text-center">
           <div className="text-[13px] text-[#5a5040]">Tài liệu PRD toàn diện · Nền tảng VPTU Đồng Nai v2.0</div>
           <div className="text-[13px] text-[#635647] mt-1">Văn phòng Tỉnh ủy Đồng Nai · {MODULES.reduce((s,m)=>s+m.screens.length,0)} screens · {BUSINESS_RULES.length} rules · {SPRINTS.reduce((s,sp)=>s+sp.tasks.length,0)} sprint tasks · {API_GROUPS.reduce((s,g)=>s+g.endpoints.length,0)} API endpoints · 5 roles</div>
           <div className="flex flex-wrap gap-2 justify-center mt-3">

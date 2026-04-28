@@ -113,9 +113,9 @@ function NotifItem({
       className="flex gap-4 p-4 rounded-[12px] border transition-all hover:shadow-sm cursor-pointer group"
       style={{
         background: n.read ? "white" : isUrgent ? "#fff5f5" : "#fdfcf9",
-        borderColor: n.read ? "#e8e2d4" : isUrgent ? "#fca5a5" : "#e8e2d4",
+        borderColor: n.read ? "#e2e8f0" : isUrgent ? "#fca5a5" : "#e2e8f0",
         borderLeftWidth: n.read ? 1 : 3,
-        borderLeftColor: n.read ? "#e8e2d4" : cfg.color,
+        borderLeftColor: n.read ? "#e2e8f0" : cfg.color,
       }}
       onClick={() => !n.read && onRead(n.id)}
     >
@@ -155,7 +155,7 @@ function NotifItem({
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
             {!n.read && (
               <button onClick={e => { e.stopPropagation(); onRead(n.id); }}
-                className="size-7 rounded-[6px] flex items-center justify-center hover:bg-[#f0ece3]" title="Đánh dấu đã đọc">
+                className="size-7 rounded-[6px] flex items-center justify-center hover:bg-[#eef2f8]" title="Đánh dấu đã đọc">
                 <Eye className="size-3.5 text-[#635647]" />
               </button>
             )}
@@ -230,9 +230,9 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
   }));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#faf7f2", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4] shrink-0" style={{ background: "white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
             <Bell className="size-5 text-[#8a6400]" />
@@ -255,14 +255,14 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
             )}
             {unread > 0 && (
               <button onClick={markAll}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-[#f5f2ec] transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <CheckCircle2 className="size-3.5" />Đọc tất cả
               </button>
             )}
             {notifs.some(n => n.read) && (
               <button onClick={deleteRead}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#635647] hover:bg-[#f5f2ec] transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#635647] hover:bg-[#f4f7fb] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <Archive className="size-3.5" />Xóa đã đọc
               </button>
@@ -280,7 +280,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-[8px] border text-[13px] transition-all"
                 style={{
                   background: filterType === tc.type ? cfg.bg : "white",
-                  borderColor: filterType === tc.type ? cfg.color : "#e8e2d4",
+                  borderColor: filterType === tc.type ? cfg.color : "#e2e8f0",
                   color: filterType === tc.type ? cfg.color : "#5a5040",
                   fontWeight: filterType === tc.type ? 700 : 400,
                 }}>
@@ -288,7 +288,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
                 {cfg.label}
                 {tc.count > 0 && (
                   <span className="px-1 rounded text-[13px]"
-                    style={{ background: tc.unread > 0 ? cfg.color : "#e8e2d4", color: tc.unread > 0 ? "white" : "#635647", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
+                    style={{ background: tc.unread > 0 ? cfg.color : "#e2e8f0", color: tc.unread > 0 ? "white" : "#635647", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
                     {tc.count}
                   </span>
                 )}
@@ -305,7 +305,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
               className="w-full pl-8 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
               style={{ height: 34, fontFamily: "var(--font-sans)" }} />
           </div>
-          <div className="flex rounded-[6px] overflow-hidden border border-[#e8e2d4]">
+          <div className="flex rounded-[6px] overflow-hidden border border-[#e2e8f0]">
             {([["all", "Tất cả"], ["unread", "Chưa đọc"], ["read", "Đã đọc"]] as const).map(([k, l]) => (
               <button key={k} onClick={() => setFilterRead(k)}
                 className="px-3 py-1.5 text-[13px] transition-colors"
@@ -334,7 +334,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-[13px] uppercase tracking-widest text-[#635647]"
                       style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{g}</span>
-                    <div className="flex-1 h-px" style={{ background: "#e8e2d4" }} />
+                    <div className="flex-1 h-px" style={{ background: "#e2e8f0" }} />
                     <span className="text-[13px] text-[#6b5e47]">{items.length}</span>
                   </div>
                   <div className="space-y-2">
@@ -350,7 +350,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-3 border-t border-[#e8e2d4] flex items-center gap-2" style={{ background: "white" }}>
+      <div className="px-6 py-3 border-t border-[#e2e8f0] flex items-center gap-2" style={{ background: "white" }}>
         <div className="flex items-center gap-1.5">
           <div className="size-1.5 rounded-full bg-[#4ade80]" style={{ boxShadow: "0 0 6px #4ade80" }} />
           <span className="text-[13px] text-[#635647]">Kết nối realtime · Cập nhật tức thì</span>

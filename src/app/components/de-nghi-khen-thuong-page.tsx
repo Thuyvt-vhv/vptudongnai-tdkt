@@ -31,7 +31,7 @@ interface Nomination {
 
 /* ─── Status config ──────────────────────────────────────────────── */
 const SC: Record<NomStatus, { label: string; color: string; bg: string; dot: string }> = {
-  nhap:            { label: "Bản nháp",           color: "#5a5040", bg: "#f0ece3", dot: "#635647" },
+  nhap:            { label: "Bản nháp",           color: "#5a5040", bg: "#eef2f8", dot: "#635647" },
   cho_duyet:       { label: "Chờ đơn vị duyệt",   color: "#0e7490", bg: "#e0f2fe", dot: "#0891b2" },
   da_gui_phong:    { label: "Đã gửi Phòng TĐKT",  color: "#4338ca", bg: "#e0e7ff", dot: "#4f46e5" },
   dang_tham_dinh:  { label: "Đang thẩm định",      color: "#b45309", bg: "#fef3c7", dot: "#b45309" },
@@ -133,7 +133,7 @@ function WorkflowStepper({ status }: { status: NomStatus }) {
               <div className={`size-5 rounded-full flex items-center justify-center text-[13px] font-bold transition-colors
                 ${rejected ? "bg-[#fee2e2] text-[#e11d48] border border-[#fca5a5]"
                   : done ? "bg-[#166534] text-white"
-                  : active ? "border-2 text-white" : "bg-[#f0ece3] text-[#635647] border border-[#e8e2d4]"}`}
+                  : active ? "border-2 text-white" : "bg-[#eef2f8] text-[#635647] border border-[#e2e8f0]"}`}
                 style={active && !rejected ? { background: "var(--color-primary-btn)", borderColor: "transparent" } : undefined}>
                 {done ? <CheckCheck className="size-2.5" /> : i + 1}
               </div>
@@ -144,7 +144,7 @@ function WorkflowStepper({ status }: { status: NomStatus }) {
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <div className={`h-px w-6 mb-4 ${done ? "bg-[#166534]" : "bg-[#e8e2d4]"}`} />
+              <div className={`h-px w-6 mb-4 ${done ? "bg-[#166534]" : "bg-[#e2e8f0]"}`} />
             )}
           </div>
         );
@@ -175,7 +175,7 @@ function ActionBar({
       className={`flex items-center gap-1.5 px-3 h-9 rounded-lg text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed
         ${variant === "primary" ? "text-white" : variant === "danger" ? "bg-[#fee2e2] text-[#c8102e] hover:bg-[#fecaca]"
           : variant === "warn" ? "bg-[#fef3c7] text-[#92400e] hover:bg-[#fde68a]"
-          : "bg-[#f5f2ec] text-[#0b1426] hover:bg-[#ece6d6]"}`}
+          : "bg-[#f4f7fb] text-[#0b1426] hover:bg-[#ece6d6]"}`}
       style={variant === "primary" && !disabled ? { background: theme.primary } : undefined}
     >
       {Icon && <Icon className="size-3.5" />} {label}
@@ -309,11 +309,11 @@ function FilterDropdown({
         <ChevronDown className="size-3" />
       </button>
       {open && (
-        <div className="absolute top-full mt-1 right-0 z-30 w-52 bg-white rounded-xl shadow-xl border border-[#e8e2d4] py-1 overflow-hidden">
+        <div className="absolute top-full mt-1 right-0 z-30 w-52 bg-white rounded-xl shadow-xl border border-[#e2e8f0] py-1 overflow-hidden">
           {STATUS_FILTER_OPTIONS.map(opt => (
             <button key={opt.value}
               onClick={() => { onChange(opt.value as any); setOpen(false); }}
-              className="w-full flex items-center justify-between px-3 py-2 text-[13px] text-left hover:bg-[#faf7f2] transition-colors">
+              className="w-full flex items-center justify-between px-3 py-2 text-[13px] text-left hover:bg-[#f8fafc] transition-colors">
               {opt.label}
               {value === opt.value && <Check className="size-3.5 text-[var(--color-primary-btn)]" />}
             </button>
@@ -349,9 +349,9 @@ function DetailPanel({
   const sla = calcSla(nom);
 
   return (
-    <div className="w-[440px] shrink-0 border-l border-[#e8e2d4] bg-white flex flex-col h-full overflow-hidden">
+    <div className="w-[440px] shrink-0 border-l border-[#e2e8f0] bg-white flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-4 border-b border-[#f0ece3] bg-[#faf7f2] flex items-start justify-between">
+      <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#f8fafc] flex items-start justify-between">
         <div className="flex-1 min-w-0 pr-3">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className="text-[13px] font-mono text-[#635647]">{nom.code}</span>
@@ -380,12 +380,12 @@ function DetailPanel({
       </div>
 
       {/* Workflow stepper */}
-      <div className="px-5 py-3 border-b border-[#f0ece3] bg-white overflow-x-auto">
+      <div className="px-5 py-3 border-b border-[#eef2f8] bg-white overflow-x-auto">
         <WorkflowStepper status={nom.status} />
       </div>
 
       {/* Tabs */}
-      <div className="px-5 flex gap-4 border-b border-[#f0ece3]">
+      <div className="px-5 flex gap-4 border-b border-[#eef2f8]">
         {(["info","docs","history"] as const).map(t => (
           <button key={t}
             onClick={() => setTab(t)}
@@ -417,7 +417,7 @@ function DetailPanel({
                 ...(nom.handler ? [{ icon: Users, label: "Người phụ trách", value: nom.handler }] : []),
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-3">
-                  <div className="size-7 rounded-md bg-[#f5f2ec] grid place-items-center shrink-0 mt-0.5">
+                  <div className="size-7 rounded-md bg-[#f4f7fb] grid place-items-center shrink-0 mt-0.5">
                     <Icon className="size-3.5 text-[#635647]" />
                   </div>
                   <div>
@@ -427,7 +427,7 @@ function DetailPanel({
                 </div>
               ))}
             </div>
-            <div className="rounded-lg bg-[#f5f2ec] p-3">
+            <div className="rounded-lg bg-[#f4f7fb] p-3">
               <p className="text-[13px] text-[#635647] mb-1 uppercase tracking-wide">Tóm tắt thành tích</p>
               <p className="text-[13px] text-[#0b1426] leading-relaxed">{nom.achievements}</p>
             </div>
@@ -444,7 +444,7 @@ function DetailPanel({
             {nom.documents.length === 0 ? (
               <div className="text-center py-8 text-[13px] text-[#635647]">Chưa có tài liệu đính kèm</div>
             ) : nom.documents.map(doc => (
-              <div key={doc} className="flex items-center gap-3 p-3 rounded-lg border border-[#e8e2d4] hover:bg-[#faf7f2] transition-colors">
+              <div key={doc} className="flex items-center gap-3 p-3 rounded-lg border border-[#e2e8f0] hover:bg-[#f8fafc] transition-colors">
                 <div className="size-8 rounded-md bg-[#fee2e2] grid place-items-center shrink-0">
                   <FileText className="size-4 text-[#c8102e]" />
                 </div>
@@ -453,7 +453,7 @@ function DetailPanel({
               </div>
             ))}
             {(["cá nhân","lãnh đạo đơn vị","quản trị hệ thống"].includes(user.role)) && (
-              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e8e2d4] rounded-lg text-[13px] text-[#635647] hover:border-[#c9bfa6] hover:bg-[#faf7f2] transition-colors flex items-center justify-center gap-2">
+              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e2e8f0] rounded-lg text-[13px] text-[#635647] hover:border-[#c9bfa6] hover:bg-[#f8fafc] transition-colors flex items-center justify-center gap-2">
                 <Upload className="size-4" /> Thêm tài liệu
               </button>
             )}
@@ -473,7 +473,7 @@ function DetailPanel({
                   style={{ background: "var(--color-primary-btn)" }}>
                   {c.by.split(" ").pop()?.charAt(0)}
                 </div>
-                <div className="flex-1 rounded-lg bg-[#f5f2ec] px-3 py-2">
+                <div className="flex-1 rounded-lg bg-[#f4f7fb] px-3 py-2">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[13px] font-semibold text-[#0b1426]">{c.by}</span>
                     <span className="text-[13px] text-[#635647]">· {c.role}</span>
@@ -485,7 +485,7 @@ function DetailPanel({
             ))}
 
             {/* Comment input */}
-            <div className="mt-2 pt-3 border-t border-[#f0ece3]">
+            <div className="mt-2 pt-3 border-t border-[#eef2f8]">
               <textarea
                 value={commentText}
                 onChange={e => setCommentText(e.target.value)}
@@ -507,7 +507,7 @@ function DetailPanel({
       </div>
 
       {/* Action bar */}
-      <div className="px-5 py-4 border-t border-[#f0ece3] bg-[#faf7f2]">
+      <div className="px-5 py-4 border-t border-[#eef2f8] bg-[#f8fafc]">
         <ActionBar nom={nom} user={user} onAction={onAction} />
       </div>
     </div>
@@ -541,7 +541,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[600px] overflow-hidden">
-        <div className="px-6 py-5 border-b border-[#f0ece3] bg-[#faf7f2] flex items-center justify-between">
+        <div className="px-6 py-5 border-b border-[#eef2f8] bg-[#f8fafc] flex items-center justify-between">
           <div>
             <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Tạo đề nghị khen thưởng mới</h2>
             <p className="text-[13px] text-[#635647] mt-0.5">Điền đầy đủ thông tin để lập hồ sơ đề nghị</p>
@@ -556,7 +556,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
                 <button key={t}
                   onClick={() => set("type", t)}
                   className="flex-1 h-10 rounded-lg border-2 text-[13px] font-medium transition-colors"
-                  style={form.type === t ? { borderColor: theme.primary, color: theme.primary, background: theme.tint } : { borderColor: "#e8e2d4", color: "#5a5040" }}>
+                  style={form.type === t ? { borderColor: theme.primary, color: theme.primary, background: theme.tint } : { borderColor: "#e2e8f0", color: "#5a5040" }}>
                   {t === "ca_nhan" ? "👤 Cá nhân" : "👥 Tập thể"}
                 </button>
               ))}
@@ -617,7 +617,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
             </div>
           </div>
         </div>
-        <div className="px-6 py-4 border-t border-[#f0ece3] bg-[#faf7f2] flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-[#eef2f8] bg-[#f8fafc] flex justify-end gap-3">
           <button onClick={onClose} className="btn btn-md btn-secondary">Huỷ</button>
           <button onClick={handleSubmit} className="btn btn-md btn-primary" style={{ opacity: isValid ? 1 : 0.65 }}>
             <Plus className="size-4" /> Tạo hồ sơ nháp
@@ -760,7 +760,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
       {/* Main area */}
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="px-8 pt-6 pb-0 bg-white border-b border-[#f0ece3]">
+        <div className="px-8 pt-6 pb-0 bg-white border-b border-[#eef2f8]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
@@ -793,7 +793,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
             {tabs.map(t => (
               <button key={t}
                 onClick={() => { setActiveTab(t); setSelectedId(null); setStatusFilter("all"); }}
-                className={`px-4 h-10 text-[13px] font-medium border-b-2 transition-colors rounded-t-lg ${activeTab === t ? "" : "border-transparent text-[#635647] hover:text-[#0b1426] hover:bg-[#f5f2ec]"}`}
+                className={`px-4 h-10 text-[13px] font-medium border-b-2 transition-colors rounded-t-lg ${activeTab === t ? "" : "border-transparent text-[#635647] hover:text-[#0b1426] hover:bg-[#f4f7fb]"}`}
                 style={activeTab === t ? { borderColor: theme.primary, color: theme.primary } : undefined}>
                 {t}
               </button>
@@ -802,9 +802,9 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Toolbar */}
-        <div className="px-8 py-3 bg-white border-b border-[#f0ece3] flex items-center gap-3">
+        <div className="px-8 py-3 bg-white border-b border-[#eef2f8] flex items-center gap-3">
           <div className="flex-1 max-w-sm">
-            <label className="flex items-center gap-2 h-9 px-3 rounded-lg bg-[#f5f2ec] border border-[#e8e2d4] focus-within:border-[var(--color-primary-btn)] transition">
+            <label className="flex items-center gap-2 h-9 px-3 rounded-lg bg-[#f4f7fb] border border-[#e2e8f0] focus-within:border-[var(--color-primary-btn)] transition">
               <Search className="size-3.5 text-[#635647]" />
               <input value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Tìm theo tên, đơn vị, mã HS…"
@@ -825,7 +825,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         <div className="flex-1 overflow-y-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#f0ece3] bg-[#faf7f2] sticky top-0">
+              <tr className="border-b border-[#eef2f8] bg-[#f8fafc] sticky top-0">
                 {["Mã HS","Đối tượng","Hình thức khen thưởng","Trạng thái","SLA","Ngày đề nghị",""].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
@@ -835,8 +835,8 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
               {visible.map(n => (
                 <tr key={n.id}
                   onClick={() => setSelectedId(n.id === selectedId ? null : n.id)}
-                  className={`border-b border-[#f0ece3] cursor-pointer transition-colors
-                    ${n.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#faf7f2]"}`}>
+                  className={`border-b border-[#eef2f8] cursor-pointer transition-colors
+                    ${n.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#f8fafc]"}`}>
                   <td className="px-4 py-3 text-[13px] font-mono text-[#635647] whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       {n.urgent && <span className="size-1.5 rounded-full bg-[#c8102e] shrink-0" />}

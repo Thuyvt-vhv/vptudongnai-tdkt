@@ -79,7 +79,7 @@ function StepDot({ steps, current }: { steps: string[]; current: number }) {
           <div className="flex flex-col items-center gap-1">
             <div className="size-7 rounded-full flex items-center justify-center text-[13px] transition-all"
               style={{
-                background: i < current ? "#16a34a" : i === current ? "#1C5FBE" : "#f0ece3",
+                background: i < current ? "#16a34a" : i === current ? "#1C5FBE" : "#eef2f8",
                 color: i <= current ? "white" : "#635647",
                 fontFamily: "var(--font-sans)", fontWeight: 700,
                 boxShadow: i === current ? "0 0 0 3px #1C5FBE30" : "none",
@@ -149,7 +149,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(11,20,38,0.6)" }}>
       <div className="w-full max-w-lg rounded-[14px] bg-white shadow-2xl flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: "#e8e2d4", background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
+        <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: "#e2e8f0", background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background: "rgba(200,150,12,0.25)" }}>
             <Flag className="size-5 text-[#8a6400]" />
           </div>
@@ -195,7 +195,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                   {(["ca_nhan", "tap_the"] as const).map(t => (
                     <button key={t} onClick={() => setForm(p => ({ ...p, type: t }))}
                       className="flex-1 flex items-center gap-2 px-4 py-3 rounded-[8px] border transition-all"
-                      style={{ borderColor: form.type === t ? "#1C5FBE" : "#e8e2d4", background: form.type === t ? "#f0f4ff" : "white" }}>
+                      style={{ borderColor: form.type === t ? "#1C5FBE" : "#e2e8f0", background: form.type === t ? "#f0f4ff" : "white" }}>
                       {form.type === t
                         ? <CheckCircle2 className="size-4 text-[#1C5FBE]" />
                         : <div className="size-4 rounded-full border-2 border-[#d1d5db]" />}
@@ -225,7 +225,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                   {DANH_HIEU_OPTIONS.map(d => (
                     <button key={d} onClick={() => setForm(p => ({ ...p, danhHieuDeNghi: d }))}
                       className="w-full flex items-center gap-3 px-4 py-3 rounded-[8px] border text-left transition-all"
-                      style={{ borderColor: form.danhHieuDeNghi === d ? "#1C5FBE" : "#e8e2d4", background: form.danhHieuDeNghi === d ? "#f0f4ff" : "white" }}>
+                      style={{ borderColor: form.danhHieuDeNghi === d ? "#1C5FBE" : "#e2e8f0", background: form.danhHieuDeNghi === d ? "#f0f4ff" : "white" }}>
                       {form.danhHieuDeNghi === d
                         ? <CheckCircle2 className="size-4 text-[#1C5FBE] shrink-0" />
                         : <div className="size-4 rounded-full border-2 border-[#d1d5db] shrink-0" />}
@@ -252,7 +252,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
 
           {step === 2 && (
             <div className="space-y-4">
-              <div className="rounded-[10px] border p-4 space-y-3" style={{ borderColor: "#e8e2d4" }}>
+              <div className="rounded-[10px] border p-4 space-y-3" style={{ borderColor: "#e2e8f0" }}>
                 {[
                   ["Họ tên", form.ten], ["Chức vụ", form.position],
                   ["Đơn vị", form.donVi], ["Năm công tác", `${form.namCongTac} năm`],
@@ -279,10 +279,10 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e8e2d4" }}>
+        <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e2e8f0" }}>
           <button onClick={() => step === 0 ? onClose() : setStep(s => s - 1)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f5f2ec] transition-colors"
-            style={{ borderColor: "#e8e2d4", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f4f7fb] transition-colors"
+            style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
             <ChevronLeft className="size-4" />{step === 0 ? "Hủy" : "Quay lại"}
           </button>
           {step < 2 ? (
@@ -347,7 +347,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(11,20,38,0.6)" }}>
       <div className="w-full max-w-2xl rounded-[14px] bg-white shadow-2xl flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: "#e8e2d4", background: "linear-gradient(135deg,#0b1426,#1752a8)" }}>
+        <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: "#e2e8f0", background: "linear-gradient(135deg,#0b1426,#1752a8)" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background: "rgba(255,255,255,0.15)" }}>
             <Send className="size-5 text-white" />
           </div>
@@ -370,8 +370,8 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
           {/* Step 0: Xem lại thông tin */}
           {step === 0 && (
             <div className="space-y-4">
-              <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e8e2d4" }}>
-                <div className="px-4 py-3 border-b" style={{ borderColor: "#e8e2d4", background: "#faf7f2" }}>
+              <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e2e8f0" }}>
+                <div className="px-4 py-3 border-b" style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}>
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     Thông tin cơ bản hồ sơ
                   </span>
@@ -393,7 +393,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                 </div>
               </div>
               {hoSo.tomTatThanhTich && (
-                <div className="rounded-[10px] border p-4" style={{ borderColor: "#e8e2d4" }}>
+                <div className="rounded-[10px] border p-4" style={{ borderColor: "#e2e8f0" }}>
                   <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
                   <p className="text-[13px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{hoSo.tomTatThanhTich}</p>
                 </div>
@@ -421,9 +421,9 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
               </div>
               {minhChung.map(mc => (
                 <div key={mc.id} className="flex items-start gap-3 p-4 rounded-[10px] border transition-all"
-                  style={{ borderColor: mc.uploaded ? "#86efac" : mc.loai === "Bắt buộc" ? "#fca5a5" : "#e8e2d4", background: mc.uploaded ? "#f0fdf4" : "white" }}>
+                  style={{ borderColor: mc.uploaded ? "#86efac" : mc.loai === "Bắt buộc" ? "#fca5a5" : "#e2e8f0", background: mc.uploaded ? "#f0fdf4" : "white" }}>
                   <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0"
-                    style={{ background: mc.uploaded ? "#dcfce7" : mc.loai === "Bắt buộc" ? "#fee2e2" : "#f0ece3" }}>
+                    style={{ background: mc.uploaded ? "#dcfce7" : mc.loai === "Bắt buộc" ? "#fee2e2" : "#eef2f8" }}>
                     {mc.uploaded
                       ? <CheckCircle2 className="size-5 text-[#166534]" />
                       : <FileText className="size-5" style={{ color: mc.loai === "Bắt buộc" ? "#c8102e" : "#635647" }} />}
@@ -432,7 +432,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                     <div className="flex items-center gap-2 mb-0.5">
                       <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{mc.ten}</span>
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{
-                        background: mc.loai === "Bắt buộc" ? "#fee2e2" : "#f0ece3",
+                        background: mc.loai === "Bắt buộc" ? "#fee2e2" : "#eef2f8",
                         color: mc.loai === "Bắt buộc" ? "#c8102e" : "#5a5040",
                         fontFamily: "var(--font-sans)", fontWeight: 700,
                       }}>{mc.loai}</span>
@@ -465,7 +465,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
           {/* Step 2: Kiểm tra AI */}
           {step === 2 && (
             <div className="space-y-4">
-              <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e8e2d4", background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
+              <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e2e8f0", background: "linear-gradient(135deg,#0b1426,#1a2744)" }}>
                 <div className="p-6 text-center">
                   <Sparkles className="size-10 text-[#8a6400] mx-auto mb-3" />
                   <h3 className="text-[14px] text-white mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -547,10 +547,10 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e8e2d4" }}>
+        <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e2e8f0" }}>
           <button onClick={() => step === 0 ? onClose() : setStep(s => s - 1)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f5f2ec]"
-            style={{ borderColor: "#e8e2d4", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f4f7fb]"
+            style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
             <ChevronLeft className="size-4" />{step === 0 ? "Hủy" : "Quay lại"}
           </button>
           {step < 3 ? (
@@ -597,7 +597,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
     da_nop:  { label: "Chờ thẩm định", color: "#1a4fa0", bg: "#dbeafe", border: "#93c5fd" },
     da_duyet:{ label: "Đã duyệt",       color: "#166534", bg: "#dcfce7", border: "#86efac" },
     tra_lai: { label: "Trả lại",         color: "#9f1239", bg: "#fee2e2", border: "#fca5a5" },
-    dang_soan:{ label: "Đang soạn",     color: "#635647", bg: "#f0ece3", border: "#d9d1bd" },
+    dang_soan:{ label: "Đang soạn",     color: "#635647", bg: "#eef2f8", border: "#d9d1bd" },
   };
 
   const renderCard = (h: HoSoThamGia, showActions: boolean) => {
@@ -606,8 +606,8 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
 
     return (
       <div key={h.id} className="rounded-[10px] border overflow-hidden transition-all"
-        style={{ borderColor: isOpen ? "#1C5FBE" : "#e8e2d4" }}>
-        <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#faf7f2] transition-colors"
+        style={{ borderColor: isOpen ? "#1C5FBE" : "#e2e8f0" }}>
+        <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#f8fafc] transition-colors"
           onClick={() => setExpandId(isOpen ? null : h.id)}>
           <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0"
             style={{ background: "linear-gradient(135deg,#1C5FBE,#0b1426)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -627,7 +627,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
         </button>
 
         {isOpen && (
-          <div className="px-5 pb-5 border-t" style={{ borderColor: "#f0ece3" }}>
+          <div className="px-5 pb-5 border-t" style={{ borderColor: "#eef2f8" }}>
             {/* Documents */}
             <div className="mt-4 mb-4">
               <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -646,7 +646,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
             </div>
 
             {h.tomTatThanhTich && (
-              <div className="mb-4 p-3 rounded-[8px]" style={{ background: "#faf7f2", border: "1px solid #e8e2d4" }}>
+              <div className="mb-4 p-3 rounded-[8px]" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
                 <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
                 <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{h.tomTatThanhTich}</p>
               </div>
@@ -675,7 +675,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
                       </div>
                     )}
                     <div className="flex gap-2">
-                      <button onClick={() => setConfirming(null)} className="flex-1 py-2 rounded-[8px] border text-[13px]" style={{ borderColor: "#e8e2d4", color: "#5a5040", fontFamily: "var(--font-sans)" }}>Hủy</button>
+                      <button onClick={() => setConfirming(null)} className="flex-1 py-2 rounded-[8px] border text-[13px]" style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>Hủy</button>
                       <button
                         onClick={() => {
                           if (confirming.action === "approve") onApprove(h.id, note[h.id] ?? "");
@@ -733,7 +733,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
       {/* Summary */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: "Tổng hồ sơ", v: hoSoList.length, c: "#0b1426", bg: "#f5f2ec" },
+          { label: "Tổng hồ sơ", v: hoSoList.length, c: "#0b1426", bg: "#f4f7fb" },
           { label: "Chờ thẩm định", v: pending.length, c: "#1a4fa0", bg: "#dbeafe" },
           { label: "Đã duyệt", v: hoSoList.filter(h => h.status === "da_duyet").length, c: "#166534", bg: "#dcfce7" },
           { label: "Trả lại", v: hoSoList.filter(h => h.status === "tra_lai").length, c: "#9f1239", bg: "#fee2e2" },
@@ -796,7 +796,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
     dong_y:        { label: "Đồng ý",    icon: ThumbsUp,  color: "#166534", bg: "#dcfce7" },
     khong_dong_y:  { label: "Không đồng ý", icon: ThumbsDown, color: "#c8102e", bg: "#fee2e2" },
     kien_nghi:     { label: "Kiến nghị", icon: MessageSquare, color: "#b45309", bg: "#fef9ec" },
-    chua_bo_phieu: { label: "Chưa bỏ phiếu", icon: Clock, color: "#635647", bg: "#f0ece3" },
+    chua_bo_phieu: { label: "Chưa bỏ phiếu", icon: Clock, color: "#635647", bg: "#eef2f8" },
   };
 
   return (
@@ -834,8 +834,8 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
 
           return (
             <div key={h.id} className="rounded-[10px] border overflow-hidden"
-              style={{ borderColor: isOpen ? "#7c3aed" : "#e8e2d4" }}>
-              <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#faf7f2]"
+              style={{ borderColor: isOpen ? "#7c3aed" : "#e2e8f0" }}>
+              <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#f8fafc]"
                 onClick={() => setExpandId(isOpen ? null : h.id)}>
                 <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0"
                   style={{ background: "linear-gradient(135deg,#7c3aed,#5b21b6)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -851,7 +851,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
                   <div className="text-right">
                     <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{dongY}/{tong} đồng ý</div>
                     <div className="flex items-center gap-1 mt-1">
-                      <div className="w-20 h-1.5 rounded-full overflow-hidden bg-[#f0ece3]">
+                      <div className="w-20 h-1.5 rounded-full overflow-hidden bg-[#eef2f8]">
                         <div className="h-full rounded-full" style={{ width: `${(dongY / tong) * 100}%`, background: passed ? "#166534" : "#b45309" }} />
                       </div>
                       <span className="text-[13px]" style={{ color: passed ? "#166534" : "#b45309", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -867,7 +867,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
               </button>
 
               {isOpen && (
-                <div className="px-5 pb-5 border-t" style={{ borderColor: "#f0ece3" }}>
+                <div className="px-5 pb-5 border-t" style={{ borderColor: "#eef2f8" }}>
                   <div className="mt-4 mb-5 grid grid-cols-3 gap-3">
                     {[
                       { v: dongY, label: "Đồng ý", color: "#166534", bg: "#dcfce7" },
@@ -893,7 +893,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
                         <button key={v} onClick={() => onVote(h.id, v)}
                           className="flex items-center justify-center gap-2 py-3 rounded-[8px] border transition-all"
                           style={{
-                            borderColor: isSelected ? cfg.color : "#e8e2d4",
+                            borderColor: isSelected ? cfg.color : "#e2e8f0",
                             background: isSelected ? cfg.bg : "white",
                             boxShadow: isSelected ? `0 0 0 2px ${cfg.color}40` : "none",
                           }}>
@@ -1020,7 +1020,7 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
           const pct = h.voteCount ? Math.round(h.voteCount.dongY / h.voteCount.tong * 100) : 0;
           return (
             <div key={h.id} className="flex items-center gap-4 p-4 rounded-[10px] border transition-all cursor-pointer"
-              style={{ borderColor: isSelected ? "#8a6400" : "#e8e2d4", background: isSelected ? "#fdf9ec" : "white" }}
+              style={{ borderColor: isSelected ? "#8a6400" : "#e2e8f0", background: isSelected ? "#fdf9ec" : "white" }}
               onClick={() => setSelected(prev => { const s = new Set(prev); isSelected ? s.delete(h.id) : s.add(h.id); return s; })}>
               <input type="checkbox" checked={isSelected} onChange={() => {}} className="size-4 rounded shrink-0 cursor-pointer" />
               <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0"
@@ -1100,7 +1100,7 @@ export function KetQuaPanel({ hoSoList, campaignName }: KetQuaPanelProps) {
       <div className="space-y-3">
         {sorted.map((h, idx) => (
           <div key={h.id} className="flex items-center gap-4 p-4 rounded-[10px] border"
-            style={{ borderColor: idx < 3 ? "#f0dba0" : "#e8e2d4", background: idx < 3 ? "#fdf9ec" : "white" }}>
+            style={{ borderColor: idx < 3 ? "#f0dba0" : "#e2e8f0", background: idx < 3 ? "#fdf9ec" : "white" }}>
             <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0 text-[14px]"
               style={{ background: idx < 3 ? `linear-gradient(135deg,${medalColors[idx]},${medalColors[idx]}90)` : "#e5e7eb", fontFamily: "var(--font-sans)", fontWeight: 700, color: idx < 3 ? "white" : "#6b7280" }}>
               {idx + 1}
@@ -1127,7 +1127,7 @@ export function KetQuaPanel({ hoSoList, campaignName }: KetQuaPanelProps) {
 
       {awarded.length > 0 && (
         <button className="w-full flex items-center justify-center gap-2 py-3 rounded-[10px] border text-[14px]"
-          style={{ borderColor: "#e8e2d4", color: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+          style={{ borderColor: "#e2e8f0", color: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
           <Download className="size-5" />Tải xuống Danh sách khen thưởng (.PDF)
         </button>
       )}

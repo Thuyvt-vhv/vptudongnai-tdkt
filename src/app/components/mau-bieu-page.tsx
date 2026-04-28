@@ -153,7 +153,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6" style={{ background:"rgba(0,0,0,0.7)" }}>
       <div className="w-[720px] max-h-[90vh] rounded-[14px] overflow-hidden shadow-2xl flex flex-col" style={{ background:"white" }}>
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e8e2d4]" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background:mau.color+"20" }}>
             <FileText className="size-5" style={{ color:mau.color }}/>
           </div>
@@ -168,13 +168,13 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
             <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600 }}>
               <Download className="size-3.5"/>Tải PDF
             </button>
-            <button onClick={onClose} className="size-8 rounded-[6px] flex items-center justify-center border border-[#e8e2d4] hover:bg-[#fee2e2]">
+            <button onClick={onClose} className="size-8 rounded-[6px] flex items-center justify-center border border-[#e2e8f0] hover:bg-[#fee2e2]">
               <X className="size-4 text-[#c8102e]"/>
             </button>
           </div>
         </div>
         {/* A4 Paper */}
-        <div className="flex-1 overflow-y-auto p-6 bg-[#e8e2d4]">
+        <div className="flex-1 overflow-y-auto p-6 bg-[#e2e8f0]">
           <div className="bg-white mx-auto shadow-lg" style={{ width:595,minHeight:842,padding:"48px 56px",fontFamily: "var(--font-sans)" }}>
             {/* Letterhead */}
             <div className="flex items-start justify-between mb-8">
@@ -219,7 +219,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
               {mau.nhom!=="quyet_dinh"&&(
                 <>
                   {mau.bando.map((f,i)=>(
-                    <div key={i} className="flex items-start gap-3 pb-2 border-b border-dashed border-[#e8e2d4]">
+                    <div key={i} className="flex items-start gap-3 pb-2 border-b border-dashed border-[#e2e8f0]">
                       <span className="w-[160px] shrink-0 text-[#5a5040]">{f}:</span>
                       <span style={{ fontWeight:SAMPLE_DATA[f]?400:400,color:SAMPLE_DATA[f]?"#0b1426":"#d1d5db",fontStyle:SAMPLE_DATA[f]?"normal":"italic" }}>
                         {SAMPLE_DATA[f]||".........................................................................."}
@@ -239,7 +239,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
               </div>
             </div>
             {/* TT15 compliance note */}
-            <div className="mt-6 pt-4 border-t border-[#e8e2d4] text-[13px] text-[#635647] text-center italic">
+            <div className="mt-6 pt-4 border-t border-[#e2e8f0] text-[13px] text-[#635647] text-center italic">
               Mẫu biểu chuẩn theo {mau.canCu} · Hệ thống VPTU Đồng Nai v2.0
             </div>
           </div>
@@ -262,10 +262,10 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
     return ms&&mn;
   });
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#faf7f2",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
       {preview&&<PDFPreview mau={preview} onClose={()=>setPreview(null)}/>}
       {/* Header */}
-      <div className="px-6 pt-5 pb-4 border-b border-[#e8e2d4]" style={{ background:"white" }}>
+      <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="size-10 rounded-[10px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#92400e,#8a6400)" }}>
             <BookOpen className="size-5 text-white"/>
@@ -284,7 +284,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
         {/* Stats */}
         <div className="flex gap-3 mb-4">
           {[
-            { l:"Tổng mẫu biểu",  v:MAUS.length,                                   c:"#0b1426",bg:"#f5f2ec" },
+            { l:"Tổng mẫu biểu",  v:MAUS.length,                                   c:"#0b1426",bg:"#f4f7fb" },
             { l:"Đề nghị KT",     v:MAUS.filter(m=>m.nhom==="de_nghi").length,     c:"#1C5FBE",bg:"#ddeafc" },
             { l:"Hội đồng",       v:MAUS.filter(m=>m.nhom==="hoi_dong").length,     c:"#7c3aed",bg:"#f5f3ff" },
             { l:"Quyết định",     v:MAUS.filter(m=>m.nhom==="quyet_dinh").length,   c:"#0b1426",bg:"#e8ecf3" },
@@ -306,7 +306,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
           </div>
           <div className="flex gap-1">
             {[["all","Tất cả nhóm"],...Object.entries(NHOM_CFG).map(([k,v])=>[k,v.l])].map(([k,l])=>(
-              <button key={k} onClick={()=>setNhomFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"white",color:nhomFilter===k?"white":"#5a5040",borderColor:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"#e8e2d4",fontFamily: "var(--font-sans)",fontWeight:nhomFilter===k?700:400 }}>{l}</button>
+              <button key={k} onClick={()=>setNhomFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"white",color:nhomFilter===k?"white":"#5a5040",borderColor:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:nhomFilter===k?700:400 }}>{l}</button>
             ))}
           </div>
           <span className="ml-auto text-[13px] text-[#635647]">{filtered.length} mẫu biểu</span>
@@ -319,7 +319,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
             const Icon=m.icon;
             const nc=NHOM_CFG[m.nhom];
             return (
-              <div key={m.id} className="rounded-[12px] border border-[#e8e2d4] overflow-hidden hover:shadow-md transition-all" style={{ background:"white" }}>
+              <div key={m.id} className="rounded-[12px] border border-[#e2e8f0] overflow-hidden hover:shadow-md transition-all" style={{ background:"white" }}>
                 {/* Top band */}
                 <div className="h-2" style={{ background:m.color }}/>
                 <div className="p-4">
@@ -335,7 +335,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
                   <p className="text-[13px] text-[#635647] leading-relaxed mb-3">{m.moTa}</p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:nc.bg,color:nc.c,fontFamily: "var(--font-sans)",fontWeight:700 }}>{nc.l}</span>
-                    <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f5f2ec",color:"#5a5040",fontFamily: "var(--font-sans)" }}>
+                    <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>
                       {m.doiTuong==="ca_nhan"?"Cá nhân":m.doiTuong==="tap_the"?"Tập thể":"Cả hai"}
                     </span>
                     <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#fdf3d9",color:"#7d5a10",fontFamily: "var(--font-sans)" }}>
@@ -347,7 +347,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
                     {m.bando.slice(0,3).join(", ")}{m.bando.length>3&&`... +${m.bando.length-3} nữa`}
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e8e2d4] text-[13px] text-[#5a5040] hover:bg-[#faf8f4] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#faf8f4] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
                       <Eye className="size-3.5"/>Xem trước
                     </button>
                     <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white" style={{ background:m.color,fontFamily: "var(--font-sans)",fontWeight:600 }}>
@@ -360,7 +360,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
           })}
         </div>
         {/* Legal footer */}
-        <div className="mt-6 p-4 rounded-[10px] border border-[#e8e2d4] flex items-start gap-3" style={{ background:"#fdf9f0" }}>
+        <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background:"#fdf9f0" }}>
           <AlertCircle className="size-5 text-[#b45309] shrink-0 mt-0.5"/>
           <div className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
             <span style={{ fontWeight:700,color:"#0b1426" }}>Lưu ý pháp lý:</span>{" "}
