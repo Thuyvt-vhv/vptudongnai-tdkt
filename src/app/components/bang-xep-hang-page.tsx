@@ -183,7 +183,7 @@ function RankRow({ entry, tick }: { entry: RankEntry; tick: number }) {
   const medalColor = ["#8a6400", "#C0C0C0", "#CD7F32"][entry.rank - 1] ?? null;
 
   return (
-    <tr className="border-b border-[#eef2f8] hover:bg-[#faf8f4] transition-colors">
+    <tr className="border-b border-[#eef2f8] hover:bg-[#f4f7fb] transition-colors">
       {/* Rank */}
       <td className="pl-5 pr-3 py-3 w-14">
         <div className="flex items-center gap-1.5">
@@ -299,7 +299,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
   const lastUpdate = new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "linear-gradient(to bottom,#0b1426,#1a2744)" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -374,7 +374,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
         <div style={{ background: "white" }}>
           <table className="w-full">
             <thead>
-              <tr className="border-b-2 border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+              <tr className="border-b-2 border-[#e2e8f0]" style={{ background: "#ffffff" }}>
                 {["Hạng", "Họ tên / Tập thể", "Đơn vị", "Điểm thành phần", "Tổng điểm", "Thành tích"].map(h => (
                   <th key={h} className="px-3 py-2.5 text-left text-[13px] uppercase tracking-wider text-[#635647]"
                     style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</th>
@@ -395,7 +395,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Legend */}
-        <div className="px-6 py-3 border-t border-[#e2e8f0] flex items-center gap-4" style={{ background: "#f8fafc" }}>
+        <div className="px-6 py-3 border-t border-[#e2e8f0] flex items-center gap-4" style={{ background: "#ffffff" }}>
           {[["#8a6400", "Hạng Nhất"], ["#C0C0C0", "Hạng Nhì"], ["#CD7F32", "Hạng Ba"]].map(([c, l]) => (
             <div key={l} className="flex items-center gap-1.5 text-[13px] text-[#635647]">
               <div className="size-3 rounded-full" style={{ background: c as string }} />{l}

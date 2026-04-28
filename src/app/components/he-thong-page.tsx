@@ -99,7 +99,7 @@ export function HeThongPage({ user }: { user: LoginUser }) {
 
   if(user.role!=="quản trị hệ thống") {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-4" style={{ background:"#f8fafc" }}>
+      <div className="flex flex-col items-center justify-center h-full gap-4" style={{ background:"#ffffff" }}>
         <Shield className="size-14 text-[#d1d5db]"/>
         <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chỉ Admin mới có quyền xem System Health</p>
       </div>

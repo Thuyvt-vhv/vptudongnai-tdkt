@@ -153,7 +153,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6" style={{ background:"rgba(0,0,0,0.7)" }}>
       <div className="w-[720px] max-h-[90vh] rounded-[14px] overflow-hidden shadow-2xl flex flex-col" style={{ background:"white" }}>
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background:mau.color+"20" }}>
             <FileText className="size-5" style={{ color:mau.color }}/>
           </div>
@@ -262,7 +262,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
     return ms&&mn;
   });
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {preview&&<PDFPreview mau={preview} onClose={()=>setPreview(null)}/>}
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
@@ -347,7 +347,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
                     {m.bando.slice(0,3).join(", ")}{m.bando.length>3&&`... +${m.bando.length-3} nữa`}
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#faf8f4] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
                       <Eye className="size-3.5"/>Xem trước
                     </button>
                     <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white" style={{ background:m.color,fontFamily: "var(--font-sans)",fontWeight:600 }}>

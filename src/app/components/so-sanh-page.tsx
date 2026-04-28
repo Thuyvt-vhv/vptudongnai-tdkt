@@ -138,7 +138,7 @@ function HoSoSelector({ value, onChange, excluded }: {
     <div className="relative">
       <button onClick={() => setOpen(v => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 rounded-[10px] border text-left transition-all hover:border-[#1C5FBE]"
-        style={{ background: value ? "white" : "#f8fafc", borderColor: value ? "#bfdbfe" : "#e2e8f0" }}>
+        style={{ background: value ? "white" : "#ffffff", borderColor: value ? "#bfdbfe" : "#e2e8f0" }}>
         {value ? (
           <>
             <div className="size-9 rounded-full flex items-center justify-center text-white text-[13px] shrink-0"
@@ -275,7 +275,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
   const colColors = ["#1C5FBE", "#166534", "#7c3aed"];
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       <div className="max-w-[1100px] mx-auto px-8 py-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -375,7 +375,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
         {filledCols.length >= 2 && (
           <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
             {/* Table header */}
-            <div className="grid border-b border-[#e2e8f0]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)", background: "#f8fafc" }}>
+            <div className="grid border-b border-[#e2e8f0]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)", background: "#ffffff" }}>
               <div className="px-4 py-3 text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Tiêu chí
               </div>
@@ -395,7 +395,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
             {CRITERIA.map(group => (
               <div key={group.group}>
                 {/* Group header */}
-                <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
+                <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
                   <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     {group.group}
                   </span>
@@ -403,7 +403,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                 {group.items.map(crit => {
                   const bestIdx = getBestColIdx(crit);
                   return (
-                    <div key={String(crit.key)} className="grid border-b border-[#f4f7fb] last:border-0 hover:bg-[#f8fafc] transition-colors"
+                    <div key={String(crit.key)} className="grid border-b border-[#f4f7fb] last:border-0 hover:bg-[#ffffff] transition-colors"
                       style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
                       <div className="px-4 py-3">
                         <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{crit.label}</span>
@@ -435,7 +435,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
 
             {/* Thành tích */}
             <div>
-              <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
+              <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
                 <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thành tích nổi bật</span>
               </div>
               <div className="grid border-b border-[#f4f7fb]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>

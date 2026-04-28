@@ -139,7 +139,7 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
               <div>
                 <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Số điện thoại</label>
                 <div className="flex gap-2">
-                  <div className="flex items-center gap-1.5 px-3 border border-[#d1d5db] rounded-[6px] text-[13px] text-[#5a5040]" style={{ background:"#faf8f4",fontFamily: "var(--font-sans)" }}>
+                  <div className="flex items-center gap-1.5 px-3 border border-[#d1d5db] rounded-[6px] text-[13px] text-[#5a5040]" style={{ background:"#f4f7fb",fontFamily: "var(--font-sans)" }}>
                     🇻🇳 +84
                   </div>
                   <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="9xx xxx xxx"
@@ -385,7 +385,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                     <div className="text-[13px] text-[#635647]">điểm/100</div>
                   </div>
                 </div>
-                <div className="mt-3 p-3 rounded-[8px]" style={{ background:"#faf8f4" }}>
+                <div className="mt-3 p-3 rounded-[8px]" style={{ background:"#f4f7fb" }}>
                   <div className="text-[13px] text-[#5a5040] leading-relaxed">{c.tomTat}</div>
                   <div className="flex items-center gap-3 mt-2 text-[13px] text-[#635647]">
                     <span className="flex items-center gap-1"><Award className="size-3"/>Đề nghị: <strong className="text-[#0b1426]">{c.danhHieu}</strong></span>
@@ -397,7 +397,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                 </div>
               </div>
               {/* Stats */}
-              <div className="px-5 py-3 flex items-center gap-4 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+              <div className="px-5 py-3 flex items-center gap-4 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
                 <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#eef2f8" }}>
                   <div className="h-full rounded-full" style={{ width:`${ttPct}%`,background:"#166534" }}/>
                 </div>
@@ -413,7 +413,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                 {(isOpen?ops:ops.slice(0,2)).map(op=>{
                   const oc=OPINION_CFG[op.loai]; const OIcon=oc.icon;
                   return (
-                    <div key={op.id} className="flex items-start gap-2.5 p-3 rounded-[8px]" style={{ background:"#faf8f4" }}>
+                    <div key={op.id} className="flex items-start gap-2.5 p-3 rounded-[8px]" style={{ background:"#f4f7fb" }}>
                       <div className="size-7 rounded-full flex items-center justify-center shrink-0" style={{ background:oc.bg }}>
                         <OIcon className="size-3.5" style={{ color:oc.color }}/>
                       </div>

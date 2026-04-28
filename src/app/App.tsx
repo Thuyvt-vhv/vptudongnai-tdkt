@@ -144,7 +144,7 @@ function AccessDenied({
         <div className="text-[#d1d5db] text-[24px]">→</div>
         <div
           className="rounded-xl border px-5 py-4 flex flex-col items-center gap-2 min-w-[160px]"
-          style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}
+          style={{ borderColor: "#e2e8f0", background: "#ffffff" }}
         >
           <div
             className="size-10 rounded-full flex items-center justify-center"

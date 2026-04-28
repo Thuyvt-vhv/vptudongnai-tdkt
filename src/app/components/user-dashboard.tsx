@@ -121,7 +121,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
   const greeting = hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {wizardOpen && (
         <TaoHoSoWizard
           user={user}
@@ -313,7 +313,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             </div>
             <div className="p-4 space-y-4">
               {MY_PHONG_TRAO.map(pt => (
-                <div key={pt.id} className="p-4 rounded-[10px]" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                <div key={pt.id} className="p-4 rounded-[10px]" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{pt.ten}</h3>

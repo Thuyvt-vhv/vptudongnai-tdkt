@@ -167,7 +167,7 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
 
         {/* Body */}
         <div className="rounded-[10px] p-3.5 mb-3"
-          style={{ background: ev.important ? "#fff9f9" : "#f8fafc", border: `1px solid ${ev.important ? "#fca5a5" : "#e2e8f0"}` }}>
+          style={{ background: ev.important ? "#fff9f9" : "#ffffff", border: `1px solid ${ev.important ? "#fca5a5" : "#e2e8f0"}` }}>
           <p className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{ev.body}</p>
           {ev.tag && (
             <div className="flex items-center gap-2 mt-2">
@@ -285,7 +285,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
   const urgentCount = events.filter(e => e.kind === "sla" || e.important).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
       {/* Header */}
       <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
@@ -323,7 +323,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           )}
 
           {/* Kind filter */}
-          <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+          <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#ffffff" }}>
             <button onClick={() => setFilterKind("all")}
               className="px-2.5 py-1.5 rounded-[6px] text-[13px] transition-all"
               style={{ background: filterKind === "all" ? "white" : "transparent", color: "#0b1426", fontFamily: "var(--font-sans)", fontWeight: filterKind === "all" ? 700 : 400 }}>
@@ -368,7 +368,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 bg-[#e2e8f0]" />
               <span className="text-[13px] uppercase tracking-widest text-[#6b5e47] px-3 py-1.5 rounded-full"
-                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                style={{ background: "#ffffff", border: "1px solid #e2e8f0", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 {group.label}
               </span>
               <div className="h-px flex-1 bg-[#e2e8f0]" />

@@ -135,7 +135,7 @@ function OrgTab() {
     <div className="grid grid-cols-5 gap-4 h-full">
       {/* Tree panel */}
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Building2 className="size-4 text-[#1C5FBE]"/>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cây tổ chức · {total} đơn vị</span>
           <div className="ml-auto flex gap-2">
@@ -168,7 +168,7 @@ function OrgTab() {
         <div className="p-3 overflow-y-auto flex-1">
           <OrgNode unit={MOCK_ORG} onSelect={u=>setSelected(u.id)} selected={selected}/>
         </div>
-        <div className="flex px-4 py-2 border-t border-[#e2e8f0] gap-3" style={{ background:"#faf8f4" }}>
+        <div className="flex px-4 py-2 border-t border-[#e2e8f0] gap-3" style={{ background:"#f4f7fb" }}>
           {Object.entries(LEVEL_CFG).map(([k,v])=>(
             <span key={k} className="flex items-center gap-1 text-[13px]" style={{ color:v.color,fontFamily: "var(--font-sans)" }}>
               <span className="size-2 rounded-full" style={{ background:v.color }}/>
@@ -179,7 +179,7 @@ function OrgTab() {
       </div>
       {/* Detail panel */}
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chi tiết Đơn vị</span>
         </div>
         {selected ? (
@@ -218,7 +218,7 @@ function AwardsTab() {
   return (
     <div className="grid grid-cols-5 gap-4 h-full">
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="flex items-center px-4 py-3 border-b border-[#e2e8f0] gap-2" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center px-4 py-3 border-b border-[#e2e8f0] gap-2" style={{ background:"#f4f7fb" }}>
           <Award className="size-4 text-[#8a6400]"/>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh hiệu Thi đua ({MOCK_AWARDS.length})</span>
           <button className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#8a6400",fontFamily: "var(--font-sans)",fontWeight:600 }}>
@@ -234,7 +234,7 @@ function AwardsTab() {
               const lc=LEVEL_LABEL[a.level]; const isSel=sel?.id===a.id;
               return (
                 <tr key={a.id} onClick={()=>setSel(a)} className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
-                  style={{ background:isSel?"#fdf9f0":i%2===0?"white":"#faf8f4" }}>
+                  style={{ background:isSel?"#fdf9f0":i%2===0?"white":"#f4f7fb" }}>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="size-2 rounded-full" style={{ background:a.color }}/>
@@ -259,7 +259,7 @@ function AwardsTab() {
         </div>
       </div>
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình Điều kiện</span>
         </div>
         {sel ? (
@@ -276,7 +276,7 @@ function AwardsTab() {
                 { label:"Đối tượng áp dụng", value:sel.type==="individual"?"Cá nhân":sel.type==="collective"?"Tập thể":"Cá nhân & Tập thể", key:"type" },
                 { label:"Căn cứ pháp lý", value:sel.canCu, key:"canCu" },
               ].map(f=>(
-                <div key={f.key} className="p-3 rounded-[8px] border border-[#e2e8f0] relative group" style={{ background:"#faf8f4" }}>
+                <div key={f.key} className="p-3 rounded-[8px] border border-[#e2e8f0] relative group" style={{ background:"#f4f7fb" }}>
                   <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{f.label}</div>
                   <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{f.value}</div>
                   <button onClick={()=>setEditField(f.key)} className="absolute top-1.5 right-1.5 size-5 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" style={{ background:"#fef3c7" }}>
@@ -331,7 +331,7 @@ function SigningTab() {
   };
   return (
     <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden h-full flex flex-col">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
         <Lock className="size-4 text-[#92400e]"/>
         <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền Ký số — theo QĐ 34/2021 + NĐ 152/2025/NĐ-CP</span>
         <div className="ml-auto flex gap-2">
@@ -353,8 +353,8 @@ function SigningTab() {
             ))}
           </tr></thead>
           <tbody>{MOCK_AWARDS.map((a,i)=>(
-            <tr key={a.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
-              <td className="px-4 py-3 sticky left-0" style={{ background:i%2===0?"white":"#faf8f4" }}>
+            <tr key={a.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#f4f7fb" }}>
+              <td className="px-4 py-3 sticky left-0" style={{ background:i%2===0?"white":"#f4f7fb" }}>
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full shrink-0" style={{ background:a.color }}/>
                   <div>
@@ -380,7 +380,7 @@ function SigningTab() {
           ))}</tbody>
         </table>
       </div>
-      <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-3" style={{ background:"#faf8f4" }}>
+      <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-3" style={{ background:"#f4f7fb" }}>
         <Info className="size-4 text-[#1C5FBE]"/>
         <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: QĐ 34/2021/QĐ-TTg và NĐ 152/2025/NĐ-CP/NĐ-CP. Thẩm quyền ký phải được Lãnh đạo Tỉnh ủy phê duyệt.</span>
       </div>
@@ -397,7 +397,7 @@ function SLATab() {
   return (
     <div className="space-y-4 h-full overflow-y-auto">
       <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Clock className="size-4 text-[#b45309]"/>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình SLA theo TT 15/2025/TT-BNV</span>
           <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tổng: <strong>{total}</strong> ngày làm việc</span>
@@ -407,7 +407,7 @@ function SLATab() {
             {["#","Giai đoạn","Vai trò","Thời gian (ngày LV)","Cảnh báo trước","Loại ngày"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>{stages.map((s,i)=>(
-            <tr key={s.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+            <tr key={s.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#f4f7fb" }}>
               <td className="px-3 py-3 text-[#635647]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{i+1}</td>
               <td className="px-3 py-3 text-[#0b1426]">{s.name}</td>
               <td className="px-3 py-3"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#f5f3ff",color:"#7c3aed",fontFamily: "var(--font-sans)" }}>{s.role}</span></td>
@@ -443,14 +443,14 @@ function SLATab() {
             </tr>
           ))}</tbody>
         </table>
-        <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-2" style={{ background:"#faf8f4" }}>
+        <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-2" style={{ background:"#f4f7fb" }}>
           <AlertTriangle className="size-4 text-[#b45309]"/>
           <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Giai đoạn LYK công khai phải tối thiểu 5 ngày làm việc theo Điều 15 TT 15/2025/TT-BNV</span>
         </div>
       </div>
       {/* Kỳ xét config */}
       <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Calendar className="size-4 text-[#1C5FBE]"/>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kỳ xét tặng năm 2026</span>
         </div>
@@ -534,7 +534,7 @@ function KinhPhiTab() {
     <div className="grid grid-cols-5 gap-4 h-full">
       {/* ── Left: catalog table ─────────────────────────────────── */}
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#faf8f4" }}>
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
           <Wallet className="size-4 text-[#1C5FBE]" />
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             Mức tiền thưởng — TT 28/2025/TT-BTC &amp; NĐ 152/2025/NĐ-CP
@@ -565,7 +565,7 @@ function KinhPhiTab() {
                     key={r.id}
                     onClick={() => openEdit(r)}
                     className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
-                    style={{ background: isSel ? "#fdf9f0" : i % 2 === 0 ? "white" : "#faf8f4" }}
+                    style={{ background: isSel ? "#fdf9f0" : i % 2 === 0 ? "white" : "#f4f7fb" }}
                   >
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-2">
@@ -603,7 +603,7 @@ function KinhPhiTab() {
           </table>
         </div>
         {/* Footer — nguon totals */}
-        <div className="px-4 py-3 border-t border-[#e2e8f0] flex items-center gap-4" style={{ background: "#faf8f4" }}>
+        <div className="px-4 py-3 border-t border-[#e2e8f0] flex items-center gap-4" style={{ background: "#f4f7fb" }}>
           {(Object.entries(totals) as [NguonKinhPhi, number][]).map(([nguon, amt]) => {
             const nc = NGUON_CFG[nguon];
             return (
@@ -620,7 +620,7 @@ function KinhPhiTab() {
 
       {/* ── Right: edit panel ────────────────────────────────────── */}
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#faf8f4" }}>
+        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
           <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             Cấu hình Kinh phí
           </span>
@@ -692,7 +692,7 @@ function KinhPhiTab() {
             </div>
 
             {/* can cu */}
-            <div className="p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#faf8f4" }}>
+            <div className="p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
               <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Căn cứ tiền thưởng</div>
               <p className="text-[13px] text-[#5a5040]">{sel.canCuTien}</p>
             </div>
@@ -773,7 +773,7 @@ function GeneralTab() {
       <div className="grid grid-cols-2 gap-4">
         {/* Feature toggles */}
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+          <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Tính năng Hệ thống</span>
           </div>
           <div className="p-4 space-y-3">
@@ -800,7 +800,7 @@ function GeneralTab() {
         </div>
         {/* System params */}
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+          <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông số Hệ thống</span>
           </div>
           <div className="p-4 space-y-3">
@@ -863,7 +863,7 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
   ];
   if(user.role!=="quản trị hệ thống") {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#f8fafc" }}>
+      <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#ffffff" }}>
         <Shield className="size-16 text-[#d1d5db]"/>
         <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chỉ Admin mới có quyền truy cập</h2>
         <p className="text-[14px] text-[#635647]">Trang Cấu hình hệ thống yêu cầu vai trò Admin.</p>
@@ -871,7 +871,7 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
     );
   }
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">

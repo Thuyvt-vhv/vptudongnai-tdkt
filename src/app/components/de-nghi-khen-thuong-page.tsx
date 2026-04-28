@@ -313,7 +313,7 @@ function FilterDropdown({
           {STATUS_FILTER_OPTIONS.map(opt => (
             <button key={opt.value}
               onClick={() => { onChange(opt.value as any); setOpen(false); }}
-              className="w-full flex items-center justify-between px-3 py-2 text-[13px] text-left hover:bg-[#f8fafc] transition-colors">
+              className="w-full flex items-center justify-between px-3 py-2 text-[13px] text-left hover:bg-[#ffffff] transition-colors">
               {opt.label}
               {value === opt.value && <Check className="size-3.5 text-[var(--color-primary-btn)]" />}
             </button>
@@ -351,7 +351,7 @@ function DetailPanel({
   return (
     <div className="w-[440px] shrink-0 border-l border-[#e2e8f0] bg-white flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#f8fafc] flex items-start justify-between">
+      <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#ffffff] flex items-start justify-between">
         <div className="flex-1 min-w-0 pr-3">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className="text-[13px] font-mono text-[#635647]">{nom.code}</span>
@@ -444,7 +444,7 @@ function DetailPanel({
             {nom.documents.length === 0 ? (
               <div className="text-center py-8 text-[13px] text-[#635647]">Chưa có tài liệu đính kèm</div>
             ) : nom.documents.map(doc => (
-              <div key={doc} className="flex items-center gap-3 p-3 rounded-lg border border-[#e2e8f0] hover:bg-[#f8fafc] transition-colors">
+              <div key={doc} className="flex items-center gap-3 p-3 rounded-lg border border-[#e2e8f0] hover:bg-[#ffffff] transition-colors">
                 <div className="size-8 rounded-md bg-[#fee2e2] grid place-items-center shrink-0">
                   <FileText className="size-4 text-[#c8102e]" />
                 </div>
@@ -453,7 +453,7 @@ function DetailPanel({
               </div>
             ))}
             {(["cá nhân","lãnh đạo đơn vị","quản trị hệ thống"].includes(user.role)) && (
-              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e2e8f0] rounded-lg text-[13px] text-[#635647] hover:border-[#c9bfa6] hover:bg-[#f8fafc] transition-colors flex items-center justify-center gap-2">
+              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e2e8f0] rounded-lg text-[13px] text-[#635647] hover:border-[#c9bfa6] hover:bg-[#ffffff] transition-colors flex items-center justify-center gap-2">
                 <Upload className="size-4" /> Thêm tài liệu
               </button>
             )}
@@ -507,7 +507,7 @@ function DetailPanel({
       </div>
 
       {/* Action bar */}
-      <div className="px-5 py-4 border-t border-[#eef2f8] bg-[#f8fafc]">
+      <div className="px-5 py-4 border-t border-[#eef2f8] bg-[#ffffff]">
         <ActionBar nom={nom} user={user} onAction={onAction} />
       </div>
     </div>
@@ -541,7 +541,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[600px] overflow-hidden">
-        <div className="px-6 py-5 border-b border-[#eef2f8] bg-[#f8fafc] flex items-center justify-between">
+        <div className="px-6 py-5 border-b border-[#eef2f8] bg-[#ffffff] flex items-center justify-between">
           <div>
             <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Tạo đề nghị khen thưởng mới</h2>
             <p className="text-[13px] text-[#635647] mt-0.5">Điền đầy đủ thông tin để lập hồ sơ đề nghị</p>
@@ -617,7 +617,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
             </div>
           </div>
         </div>
-        <div className="px-6 py-4 border-t border-[#eef2f8] bg-[#f8fafc] flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-[#eef2f8] bg-[#ffffff] flex justify-end gap-3">
           <button onClick={onClose} className="btn btn-md btn-secondary">Huỷ</button>
           <button onClick={handleSubmit} className="btn btn-md btn-primary" style={{ opacity: isValid ? 1 : 0.65 }}>
             <Plus className="size-4" /> Tạo hồ sơ nháp
@@ -825,7 +825,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         <div className="flex-1 overflow-y-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#eef2f8] bg-[#f8fafc] sticky top-0">
+              <tr className="border-b border-[#eef2f8] bg-[#ffffff] sticky top-0">
                 {["Mã HS","Đối tượng","Hình thức khen thưởng","Trạng thái","SLA","Ngày đề nghị",""].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
@@ -836,7 +836,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
                 <tr key={n.id}
                   onClick={() => setSelectedId(n.id === selectedId ? null : n.id)}
                   className={`border-b border-[#eef2f8] cursor-pointer transition-colors
-                    ${n.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#f8fafc]"}`}>
+                    ${n.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#ffffff]"}`}>
                   <td className="px-4 py-3 text-[13px] font-mono text-[#635647] whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       {n.urgent && <span className="size-1.5 rounded-full bg-[#c8102e] shrink-0" />}

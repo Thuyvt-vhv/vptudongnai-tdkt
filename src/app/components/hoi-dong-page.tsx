@@ -317,7 +317,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
             const Icon = st.icon;
             return (
               <div key={st.label} className="rounded-[6px] p-2 border text-center"
-                style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
+                style={{ borderColor:"var(--color-line)", background:"#ffffff" }}>
                 <Icon className="size-3.5 mx-auto mb-1 text-[#635647]" />
                 <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{st.v}</div>
                 <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{st.label}</div>
@@ -451,7 +451,7 @@ function ScoringTab({
             </div>
           </div>
           <div className="p-4 space-y-3">
-            <div className="rounded-[6px] p-3 bg-[#f8fafc]" style={{ border:"1px solid var(--color-line)" }}>
+            <div className="rounded-[6px] p-3 bg-[#ffffff]" style={{ border:"1px solid var(--color-line)" }}>
               <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
@@ -535,7 +535,7 @@ function ScoringTab({
                   borderColor: alreadyScored
                     ? scoreColor(calcTotal(existingScore?.scores||{}) / MAX_TOTAL) + "60"
                     : scoreColor(localPct) + "60",
-                  background: "#f8fafc",
+                  background: "#ffffff",
                 }}>
                 <div>
                   <div className="text-[13px] uppercase tracking-wide text-[#635647]"
@@ -577,7 +577,7 @@ function ScoringTab({
                     onChange={e => setComment(e.target.value)} />
                 </div>
               ) : (
-                <div className="rounded-[6px] p-3 bg-[#f8fafc] border" style={{ borderColor:"var(--color-line)" }}>
+                <div className="rounded-[6px] p-3 bg-[#ffffff] border" style={{ borderColor:"var(--color-line)" }}>
                   <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Nhận xét đã nộp</div>
                   <p className="text-[13px] text-[#0b1426] italic" style={{ fontFamily: "var(--font-sans)" }}>
                     "{existingScore?.comment}"
@@ -790,7 +790,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
           {CRITERIA.map(c => {
             const maxVal = Math.max(...avgs.map(a => a.byCriteria.find(x=>x.criteriaId===c.id)?.avg ?? 0));
             return (
-              <div key={c.id} className="grid border-b hover:bg-[#f8fafc] transition-colors"
+              <div key={c.id} className="grid border-b hover:bg-[#ffffff] transition-colors"
                 style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`, borderColor:"var(--color-line)" }}>
                 <div className="px-4 py-3 flex items-center gap-1.5">
                   <div className="size-2 rounded-full shrink-0" style={{ background:c.color }} />
@@ -1096,7 +1096,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
               </thead>
               <tbody>
                 {session.members.map((m, i) => (
-                  <tr key={m.id} className="hover:bg-[#f8fafc]">
+                  <tr key={m.id} className="hover:bg-[#ffffff]">
                     <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
                     <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:m.isChair||m.isSecretary?600:400 }}>
                       {m.name}</td>
@@ -1139,7 +1139,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
                   const dec = session.decisions.find(d => d.nominationId === n.id);
                   const decLabel = dec?.decision==="pass"?"✓ Thông qua":dec?.decision==="reject"?"✗ Không thông qua":dec?.decision==="defer"?"Hoãn":"Chờ biểu quyết";
                   return (
-                    <tr key={n.id} className="hover:bg-[#f8fafc]">
+                    <tr key={n.id} className="hover:bg-[#ffffff]">
                       <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
                       <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:600 }}>{n.tenDoiTuong}</td>
                       <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>{n.donVi}</td>
@@ -1343,7 +1343,7 @@ function Workspace({ session: initSession, user, onBack }: {
 
           {/* COI legend */}
           <div className="px-4 py-2">
-            <div className="rounded-[6px] p-2 bg-[#f8fafc] border" style={{ borderColor:"var(--color-line)" }}>
+            <div className="rounded-[6px] p-2 bg-[#ffffff] border" style={{ borderColor:"var(--color-line)" }}>
               <div className="text-[13px] text-[#635647] uppercase tracking-wide mb-1.5"
                 style={{ fontFamily: "var(--font-sans)" }}>Chú thích</div>
               {[

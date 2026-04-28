@@ -129,7 +129,7 @@ function Leaderboard() {
           const pct = u.diem;
           const barColor = pct>=90?"#8a6400":pct>=85?"#7c3aed":pct>=80?"#1C5FBE":"#166534";
           return (
-            <div key={u.name} className="flex items-center gap-3 px-4 py-3 hover:bg-[#faf8f4] transition-colors">
+            <div key={u.name} className="flex items-center gap-3 px-4 py-3 hover:bg-[#f4f7fb] transition-colors">
               <div className="w-7 text-center shrink-0">
                 {medal ? <span className="text-[18px]">{medal}</span>
                        : <span className="text-[13px] text-[#635647]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>#{i+1}</span>}
@@ -163,7 +163,7 @@ function Leaderboard() {
 function SLACompliance() {
   return (
     <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
         <Clock className="size-4 text-[#b45309]"/>
         <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>SLA Compliance theo Giai đoạn</span>
       </div>
@@ -203,7 +203,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
   const refresh=()=>{ setLoading(true); setTimeout(()=>setLoading(false),1200); };
   const VIEWS:[ViewMode,string,typeof BarChart3][]=[["overview","Tổng quan",BarChart3],["units","Theo đơn vị",Building2],["awards","Theo danh hiệu",Award],["sla","SLA & Tiến độ",Clock]];
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -355,7 +355,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
               </ResponsiveContainer>
             </div>
             <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
-              <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+              <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
                 <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chi tiết Thống kê Danh hiệu</span>
               </div>
               <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
@@ -367,7 +367,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
                   const pct=((a.value/total)*100).toFixed(1);
                   const chg=["+12%","+8%","+15%","+5%","+3%","+22%","+18%"][i];
                   return (
-                    <tr key={a.name} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#faf8f4" }}>
+                    <tr key={a.name} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#f4f7fb" }}>
                       <td className="px-3 py-2.5"><div className="flex items-center gap-2"><span className="size-2.5 rounded-full" style={{ background:a.color }}/>{a.name}</div></td>
                       <td className="px-3 py-2.5 text-center" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:a.color }}>{a.value}</td>
                       <td className="px-3 py-2.5">{pct}%</td>

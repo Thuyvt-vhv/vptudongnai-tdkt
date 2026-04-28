@@ -69,7 +69,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
 
       {/* Left: document list */}
       <div className="w-[300px] shrink-0 border-r border-[#e2e8f0] bg-white flex flex-col overflow-hidden">
-        <div className="px-4 py-4 border-b border-[#eef2f8] bg-[#f8fafc]">
+        <div className="px-4 py-4 border-b border-[#eef2f8] bg-[#ffffff]">
           <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
             Ký số & Phê duyệt
           </h2>
@@ -103,7 +103,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
             <button key={doc.id}
               onClick={() => setSelectedId(doc.id)}
               className={`w-full text-left px-4 py-3 border-b border-[#f4f7fb] transition-colors
-                ${doc.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#f8fafc]"}`}>
+                ${doc.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#ffffff]"}`}>
               <div className="flex items-start gap-2.5">
                 <div className="size-8 rounded-lg grid place-items-center shrink-0 mt-0.5"
                   style={{ background: doc.status === "da_ky" ? "#dcfce7" : theme.tint }}>
@@ -184,7 +184,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
                           <p className="text-[13px] text-[#635647] font-mono mt-1">SHA256: 3a4f2b...d9e1</p>
                         </div>
                       ) : (
-                        <div className="mt-4 border-2 border-dashed border-[#e2e8f0] rounded-lg p-4 bg-[#f8fafc]">
+                        <div className="mt-4 border-2 border-dashed border-[#e2e8f0] rounded-lg p-4 bg-[#ffffff]">
                           <FileSignature className="size-6 text-[#c9bfa6] mx-auto" />
                           <p className="text-[13px] text-[#c9bfa6] mt-1">Chờ chữ ký số</p>
                         </div>
@@ -292,7 +292,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
           </div>
         )}
         {!canSign && (
-          <div className="px-6 py-3 border-t border-[#eef2f8] bg-[#f8fafc] flex items-center gap-2">
+          <div className="px-6 py-3 border-t border-[#eef2f8] bg-[#ffffff] flex items-center gap-2">
             <AlertTriangle className="size-4 text-[#b45309]" />
             <span className="text-[13px] text-[#635647]">Chỉ Lãnh đạo VP Tỉnh ủy mới có quyền ký số văn bản này.</span>
           </div>

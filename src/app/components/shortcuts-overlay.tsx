@@ -192,7 +192,7 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-[#eef2f8] flex items-center gap-4" style={{ background:"#f8fafc" }}>
+        <div className="px-6 py-3 border-t border-[#eef2f8] flex items-center gap-4" style={{ background:"#ffffff" }}>
           <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             Nhấn <kbd className="px-1.5 py-0.5 rounded border border-[#e2e8f0] bg-white text-[13px]" style={{ fontFamily:"JetBrains Mono,monospace" }}>?</kbd> để mở bất kỳ lúc nào
           </span>

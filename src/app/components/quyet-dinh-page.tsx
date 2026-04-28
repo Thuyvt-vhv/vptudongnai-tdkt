@@ -131,10 +131,10 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           </div>
         </div>
         {/* Body */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-5" style={{ background:"#f8fafc" }}>
+        <div className="flex-1 overflow-y-auto p-5 space-y-5" style={{ background:"#ffffff" }}>
           {/* Meta info */}
           <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
-            <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background:"#faf8f4" }}>
+            <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
               <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông tin Quyết định</span>
             </div>
             <div className="p-4 grid grid-cols-2 gap-3">
@@ -153,7 +153,7 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           {/* Recipients */}
           {qd.recipients.length>0&&(
             <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
-              <div className="px-4 py-2.5 border-b border-[#e2e8f0] flex items-center gap-2" style={{ background:"#faf8f4" }}>
+              <div className="px-4 py-2.5 border-b border-[#e2e8f0] flex items-center gap-2" style={{ background:"#f4f7fb" }}>
                 <Users className="size-4 text-[#1C5FBE]"/>
                 <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh sách được khen thưởng ({qd.recipients.length})</span>
               </div>
@@ -260,7 +260,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
   const totalRecipients=DECISIONS.flatMap(d=>d.recipients).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {detail&&<QDDetail qd={detail} onClose={()=>setDetail(null)}/>}
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
@@ -360,7 +360,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
               <tbody>{visible.map((d,i)=>{
                 const lc=LEVEL_CFG[d.awardLevel]; const sc=STATUS_CFG[d.status];
                 return (
-                  <tr key={d.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
+                  <tr key={d.id} className="border-t border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
                     <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{d.code}</code></td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">

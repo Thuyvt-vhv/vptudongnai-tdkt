@@ -85,7 +85,7 @@ export function AuditLogPage({ user }: { user: LoginUser }) {
 
   if(user.role!=="quản trị hệ thống") {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#f8fafc" }}>
+      <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#ffffff" }}>
         <Shield className="size-16 text-[#d1d5db]"/>
         <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chỉ Admin mới có quyền xem Audit Log</h2>
       </div>

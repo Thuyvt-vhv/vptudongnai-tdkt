@@ -123,7 +123,7 @@ export function ThemeSwitcherButton() {
           {/* Header */}
           <div
             className="px-5 py-4 border-b flex items-center justify-between"
-            style={{ borderColor: "#eef2f8", background: "#f8fafc" }}
+            style={{ borderColor: "#eef2f8", background: "#ffffff" }}
           >
             <div className="flex items-center gap-3">
               {/* Color dot cluster */}
@@ -206,7 +206,7 @@ export function ThemeSwitcherButton() {
           {/* Footer */}
           <div
             className="px-5 py-3 border-t flex items-center justify-between"
-            style={{ borderColor: "#eef2f8", background: "#f8fafc" }}
+            style={{ borderColor: "#eef2f8", background: "#ffffff" }}
           >
             <div className="flex items-center gap-1.5">
               {/* Current palette dots */}

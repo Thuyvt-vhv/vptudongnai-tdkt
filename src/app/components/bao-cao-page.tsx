@@ -144,7 +144,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.7)" }}>
       <div className="w-[760px] max-h-[90vh] flex flex-col rounded-[16px] overflow-hidden shadow-2xl" style={{ background: "white" }}>
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#e2e8f0]" style={{ background: "#ffffff" }}>
           <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background: report.bg }}>
             <report.icon className="size-5" style={{ color: report.color }} />
           </div>
@@ -173,7 +173,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
               <p className="font-bold text-[#0b1426]">I. KẾT QUẢ TỔNG HỢP</p>
               <div className="grid grid-cols-3 gap-3">
                 {[["Tổng hồ sơ", "124"], ["Đã hoàn thành", "112"], ["Tỷ lệ đúng hạn", "97.2%"]].map(([k, v]) => (
-                  <div key={k} className="rounded-[8px] p-3 text-center" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                  <div key={k} className="rounded-[8px] p-3 text-center" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                     <div className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{v}</div>
                     <div className="text-[13px] text-[#635647]">{k}</div>
                   </div>
@@ -195,7 +195,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
           </div>
         </div>
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-[#e2e8f0] flex gap-2" style={{ background: "#f8fafc" }}>
+        <div className="px-5 py-3 border-t border-[#e2e8f0] flex gap-2" style={{ background: "#ffffff" }}>
           {report.outputs.map(fmt => {
             const cfg = { pdf: { icon: File, l: "Xuất PDF", c: "#c8102e" }, excel: { icon: FileSpreadsheet, l: "Xuất Excel", c: "#166534" }, word: { icon: FileText, l: "Xuất Word", c: "#1C5FBE" } }[fmt];
             return (
@@ -312,7 +312,7 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
   const filtered = REPORTS.filter(r => filter === "all" || r.roles.includes(filter as any));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {preview && (
         <ReportPreview report={preview} params={{}} onClose={() => setPreview(null)} />
       )}

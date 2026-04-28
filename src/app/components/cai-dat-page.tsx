@@ -43,7 +43,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
   return (
     <div className="space-y-6">
       {/* Avatar */}
-      <div className="flex items-center gap-6 p-5 rounded-[12px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+      <div className="flex items-center gap-6 p-5 rounded-[12px] border border-[#e2e8f0]" style={{ background: "#ffffff" }}>
         <div className="relative">
           <div className="size-20 rounded-full flex items-center justify-center text-white text-[24px] shadow-lg"
             style={{ background: `linear-gradient(135deg,${user.avatarFrom},${user.avatarTo})`, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -210,7 +210,7 @@ function SecurityTab() {
         <div className="space-y-2">
           {sessions.map((s, i) => (
             <div key={i} className="flex items-center gap-3 p-3 rounded-[8px]"
-              style={{ background: s.current ? "#f0f4ff" : "#f8fafc", border: `1px solid ${s.current ? "#bfdbfe" : "#e2e8f0"}` }}>
+              style={{ background: s.current ? "#f0f4ff" : "#ffffff", border: `1px solid ${s.current ? "#bfdbfe" : "#e2e8f0"}` }}>
               <Smartphone className="size-5 shrink-0" style={{ color: s.current ? "#1C5FBE" : "#635647" }} />
               <div className="flex-1 min-w-0">
                 <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: s.current ? 700 : 500 }}>
@@ -258,7 +258,7 @@ function NotificationsTab() {
       </p>
       <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden">
         {/* Header */}
-        <div className="grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-2.5 border-b border-[#eef2f8]" style={{ background: "#f8fafc" }}>
+        <div className="grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-2.5 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
           <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại thông báo</span>
           {["Email", "Trình duyệt", "SMS"].map(h => (
             <span key={h} className="text-[13px] uppercase tracking-wider text-[#635647] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</span>
@@ -397,7 +397,7 @@ function DataTab({ user }: { user: LoginUser }) {
             ["Lịch sử hoạt động", "CSV / Excel", "Activity.csv"],
             ["Lịch sử khen thưởng", "PDF", "Awards.pdf"],
           ].map(([label, fmt, file]) => (
-            <div key={label} className="p-3 rounded-[8px] border border-[#e2e8f0] text-center" style={{ background: "#f8fafc" }}>
+            <div key={label} className="p-3 rounded-[8px] border border-[#e2e8f0] text-center" style={{ background: "#ffffff" }}>
               <Download className="size-5 text-[#635647] mx-auto mb-1.5" />
               <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{label}</div>
               <div className="text-[13px] text-[#635647] mb-2">{fmt}</div>
@@ -442,7 +442,7 @@ export function CaiDatPage({ user }: { user: LoginUser }) {
   };
 
   return (
-    <div className="h-full flex overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* Left nav */}
       <div className="w-64 shrink-0 border-r border-[#e2e8f0] p-4 space-y-1" style={{ background: "white" }}>
         <div className="px-3 py-3 mb-2">

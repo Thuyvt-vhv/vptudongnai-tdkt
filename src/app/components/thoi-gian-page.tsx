@@ -224,7 +224,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
   const sessionLast = entries[entries.length - 1]?.time ?? "11:00";
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -336,7 +336,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
           {/* Right panel: heatmap + summary */}
           <div className="w-72 shrink-0 border-l border-[#e2e8f0] p-5 space-y-5" style={{ background: "white" }}>
             {/* Weekly heatmap */}
-            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background: "#f8fafc" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background: "#ffffff" }}>
               <WeeklyHeatmap />
             </div>
 
@@ -367,7 +367,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
             </div>
 
             {/* Session info */}
-            <div className="rounded-[10px] border border-[#e2e8f0] p-4 space-y-2.5" style={{ background: "#f8fafc" }}>
+            <div className="rounded-[10px] border border-[#e2e8f0] p-4 space-y-2.5" style={{ background: "#ffffff" }}>
               <h3 className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên hiện tại</h3>
               {[
                 ["Đăng nhập lúc", entries[0]?.time ?? "—"],

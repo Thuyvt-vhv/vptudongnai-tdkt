@@ -67,7 +67,7 @@ interface ColConfig {
 }
 
 const COLS: ColConfig[] = [
-  { id:"draft",   label:"Tạo & Nộp",      sublabel:"Chờ chuyển thẩm định", icon:FileText,       color:"#5a5040", bg:"#f8fafc", border:"#e2e8f0" },
+  { id:"draft",   label:"Tạo & Nộp",      sublabel:"Chờ chuyển thẩm định", icon:FileText,       color:"#5a5040", bg:"#ffffff", border:"#e2e8f0" },
   { id:"review",  label:"Thẩm định",       sublabel:"Hội đồng cơ sở",       icon:Users,          color:"#1C5FBE", bg:"#f0f4ff", border:"#bfdbfe" },
   { id:"voting",  label:"Bỏ phiếu HĐ",    sublabel:"Hội đồng cấp tỉnh",    icon:Gavel,          color:"#7c3aed", bg:"#faf5ff", border:"#ddd6fe" },
   { id:"signing", label:"Ký số",           sublabel:"Lãnh đạo phê duyệt",   icon:FileSignature,  color:"#b45309", bg:"#fef9ec", border:"#fde68a" },
@@ -322,7 +322,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+      <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
         <div className="px-8 py-4 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
@@ -340,7 +340,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
 
           {/* Filters */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+            <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#ffffff" }}>
               {([["all","Tất cả"],["ok","Đúng hạn"],["warning","Sắp trễ"],["overdue","Quá hạn"]] as const).map(([v,l]) => (
                 <button key={v} onClick={() => setFilterSLA(v)}
                   className="px-2.5 py-1.5 rounded-[6px] text-[13px] transition-all"
@@ -383,7 +383,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Footer hint */}
-        <div className="px-8 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#f8fafc" }}>
+        <div className="px-8 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#ffffff" }}>
           <span className="flex items-center gap-1.5 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             <GripVertical className="size-3.5" />Kéo thả để chuyển bước quy trình
           </span>

@@ -135,7 +135,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
   });
   const totalAwarded=AWARDS.reduce((s,a)=>s+a.totalAwarded,0);
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -234,7 +234,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
                   <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền & Căn cứ</h3>
                   <div className="space-y-3">
                     {[["Thẩm quyền ký",selected.signingAuth,"🖊️"],["Căn cứ pháp lý",selected.canCu,"⚖️"],["Đối tượng",selected.type==="individual"?"Cá nhân":selected.type==="collective"?"Tập thể":"Cá nhân & Tập thể","👤"],["Số năm thi đua",`Tối thiểu ${selected.minYears} năm liên tục`,"📅"],["Điểm xếp loại",`Tối thiểu ${selected.minScore}/100 điểm`,"⭐"]].map(([k,v,ic])=>(
-                      <div key={k as string} className="flex items-start gap-2.5 p-3 rounded-[8px]" style={{ background:"#faf8f4" }}>
+                      <div key={k as string} className="flex items-start gap-2.5 p-3 rounded-[8px]" style={{ background:"#f4f7fb" }}>
                         <span className="text-[14px] shrink-0">{ic as string}</span>
                         <div>
                           <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{k as string}</div>

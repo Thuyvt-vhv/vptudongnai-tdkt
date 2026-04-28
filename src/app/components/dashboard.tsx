@@ -582,7 +582,7 @@ function TaskPanel({ cfg, onNavigate }: { cfg: typeof ROLE_CONFIG["user"]; onNav
       </div>
 
       {/* Tasks */}
-      <div style={{ background: "#faf8f4", display: "grid", gridTemplateColumns: `repeat(${cfg.tasks.length}, 1fr)` }}>
+      <div style={{ background: "#f4f7fb", display: "grid", gridTemplateColumns: `repeat(${cfg.tasks.length}, 1fr)` }}>
         {cfg.tasks.map((t, i) => {
           const TIcon = t.icon;
           return (

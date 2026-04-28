@@ -466,7 +466,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
         <div className="mb-4">
           <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">II. THÀNH TÍCH NỔI BẬT (Căn cứ Điều 7 TT 12/2019/TT-BNV)</div>
           <div className="pl-2 space-y-2 text-[13px] text-[#0b1426]">
-            <div className="p-2.5 rounded" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+            <div className="p-2.5 rounded" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
               Hoàn thành xuất sắc 100% nhiệm vụ được giao năm 2025. Chủ trì 02 đề tài nghiên cứu cấp tỉnh được nghiệm thu xếp loại Xuất sắc. Có 01 sáng kiến kinh nghiệm được Hội đồng sáng kiến tỉnh công nhận, tiết kiệm ngân sách ước tính 250 triệu đồng/năm.
             </div>
           </div>
@@ -691,7 +691,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
         onClick={e => e.stopPropagation()}
       >
         {/* ── Left panel ── */}
-        <div className="w-[270px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+        <div className="w-[270px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background: "#ffffff" }}>
           <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Printer className="size-4 text-[#1C5FBE]" />
@@ -833,7 +833,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center justify-between shrink-0" style={{ background: "#f8fafc" }}>
+          <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center justify-between shrink-0" style={{ background: "#ffffff" }}>
             <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               Trang 1/1 · Khổ A4 · Chuẩn QCVN 01:2019/BNV
             </span>

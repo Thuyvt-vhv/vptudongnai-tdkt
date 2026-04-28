@@ -22,7 +22,7 @@ const CATEGORIES: HelpCategory[] = [
   { id:"law",    icon:Scale,       label:"Pháp lý & Căn cứ",     desc:"Luật TĐKT 2022, NĐ 98, TT 01",     count:16, color:"#7c3aed", bg:"#faf5ff" },
   { id:"ai",     icon:Sparkles,    label:"AI Tố Nga",             desc:"Hướng dẫn sử dụng trợ lý AI",      count:10, color:"#7c3aed", bg:"#f5f3ff" },
   { id:"kyso",   icon:Shield,      label:"Ký số & Bảo mật",      desc:"Chữ ký CA, bảo mật hệ thống",      count:12, color:"#166534", bg:"#dcfce7" },
-  { id:"system", icon:Settings,    label:"Quản trị hệ thống",     desc:"Cấu hình, phân quyền, audit",      count:9,  color:"#5a5040", bg:"#f8fafc" },
+  { id:"system", icon:Settings,    label:"Quản trị hệ thống",     desc:"Cấu hình, phân quyền, audit",      count:9,  color:"#5a5040", bg:"#ffffff" },
 ];
 
 interface FAQItem { q: string; a: string; category: string; }
@@ -106,7 +106,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
   });
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
       {/* Hero */}
       <div className="relative overflow-hidden px-8 py-14 text-center"

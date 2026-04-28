@@ -234,7 +234,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
           RIGHT — Login Panel
       ══════════════════════════════════════════ */}
       <div className="flex-1 flex items-center justify-center overflow-y-auto py-10"
-        style={{ background:"#f8f6f1" }}>
+        style={{ background:"#ffffff" }}>
 
         <div className="w-full max-w-[480px] px-6">
 
@@ -280,11 +280,11 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                   autoComplete="username" required
                   className="w-full h-11 px-4 rounded-xl border text-[14px] outline-none transition-all"
                   style={{
-                    borderColor:"#e0d9cd", background:"#faf8f4",
+                    borderColor:"#e2e8f0", background:"#f4f7fb",
                     color:"#0b1426",
                   }}
                   onFocus={e => { e.target.style.borderColor="#1C5FBE"; e.target.style.boxShadow="0 0 0 3px rgba(28,95,190,0.12)"; }}
-                  onBlur={e => { e.target.style.borderColor="#e0d9cd"; e.target.style.boxShadow="none"; }}
+                  onBlur={e => { e.target.style.borderColor="#e2e8f0"; e.target.style.boxShadow="none"; }}
                 />
               </div>
 
@@ -300,9 +300,9 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                     placeholder="••••••••"
                     autoComplete="current-password" required
                     className="w-full h-11 pl-4 pr-12 rounded-xl border text-[14px] outline-none transition-all"
-                    style={{ borderColor:"#e0d9cd", background:"#faf8f4", color:"#0b1426" }}
+                    style={{ borderColor:"#e2e8f0", background:"#f4f7fb", color:"#0b1426" }}
                     onFocus={e => { e.target.style.borderColor="#1C5FBE"; e.target.style.boxShadow="0 0 0 3px rgba(28,95,190,0.12)"; }}
-                    onBlur={e => { e.target.style.borderColor="#e0d9cd"; e.target.style.boxShadow="none"; }}
+                    onBlur={e => { e.target.style.borderColor="#e2e8f0"; e.target.style.boxShadow="none"; }}
                   />
                   <button type="button" onClick={() => setShowPass(v => !v)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors"
@@ -343,7 +343,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
           }}>
             {/* Header */}
             <div className="px-5 py-3.5 flex items-center gap-2"
-              style={{ background:"#ffffff", borderBottom:"1px solid #f0ebe0" }}>
+              style={{ background:"#ffffff", borderBottom:"1px solid #e2e8f0" }}>
               <div className="w-5 h-5 rounded-md flex items-center justify-center"
                 style={{ background:"#0b1426" }}>
                 <User className="size-3 text-white"/>
@@ -354,7 +354,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
             </div>
 
             {/* Role pills row */}
-            <div className="p-4 flex gap-2 flex-wrap" style={{ background:"#faf8f4" }}>
+            <div className="p-4 flex gap-2 flex-wrap" style={{ background:"#f4f7fb" }}>
               {DEMO_ACCOUNTS.map(acc => {
                 const rv = ROLE_VISUAL[
                   acc.role === "quản trị hệ thống" ? "admin"
@@ -393,7 +393,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
             </div>
 
             {/* Hovered account preview */}
-            <div style={{ background:"#ffffff", borderTop:"1px solid #f0ebe0", minHeight:72 }}>
+            <div style={{ background:"#ffffff", borderTop:"1px solid #e2e8f0", minHeight:72 }}>
               {hovered ? (
                 <div className="px-5 py-4 flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-[13px] font-bold text-white"
@@ -437,10 +437,10 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
             <button onClick={onPublicLYK}
               className="w-full mt-4 h-11 rounded-xl flex items-center justify-center gap-2 text-[13px] font-medium transition-all"
               style={{
-                background:"#ffffff", border:"1.5px solid #e0d9cd", color:"#635647",
+                background:"#ffffff", border:"1.5px solid #e2e8f0", color:"#635647",
               }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor="#1C5FBE"; (e.currentTarget as HTMLElement).style.color="#1C5FBE"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor="#e0d9cd"; (e.currentTarget as HTMLElement).style.color="#635647"; }}>
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor="#e2e8f0"; (e.currentTarget as HTMLElement).style.color="#635647"; }}>
               <Megaphone className="size-4"/>
               Góp ý Hồ sơ Khen thưởng Công khai
               <span className="px-2 py-0.5 rounded-full text-[12px]"

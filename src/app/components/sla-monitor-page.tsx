@@ -64,7 +64,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
   const slaRate=Math.round((counts.on_time/(ITEMS.length))*100);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -139,7 +139,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
               const cfg=STATUS_CFG[item.status]; const SIcon=cfg.icon;
               const daysColor=item.daysLeft<0?"#c8102e":item.daysLeft<=1?"#c8102e":item.daysLeft<=3?"#b45309":"#166534";
               return (
-                <tr key={item.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:item.status==="critical"||item.status==="overdue"?"#fff8f8":i%2===0?"white":"#fdfcfa" }}>
+                <tr key={item.id} className="border-t border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ background:item.status==="critical"||item.status==="overdue"?"#fff8f8":i%2===0?"white":"#fdfcfa" }}>
                   <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{item.hoSoId}</code></td>
                   <td className="px-3 py-3">
                     <div className="text-[13px] text-[#0b1426]" style={{ fontWeight:600 }}>{item.tenNguoi}</div>

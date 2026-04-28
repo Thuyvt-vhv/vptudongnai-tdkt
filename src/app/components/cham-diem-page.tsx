@@ -128,7 +128,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
 
       {/* Table */}
       <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#f8fafc] flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#ffffff] flex items-center justify-between">
           <h3 className="text-[14px] font-semibold text-[#0b1426]">Bảng chấm điểm thi đua</h3>
           <div className="flex items-center gap-2">
             <button className="btn btn-sm btn-secondary"><Filter className="size-3.5" /> Lọc</button>
@@ -137,7 +137,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
         </div>
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#eef2f8] bg-[#f8fafc]">
+            <tr className="border-b border-[#eef2f8] bg-[#ffffff]">
               <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider w-8">#</th>
               <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider">Đơn vị</th>
               {CRITERIA.map(c => (
@@ -155,7 +155,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
             {UNITS.map((u, idx) => (
               <React.Fragment key={u.id}>
                 <tr
-                  className={`border-b border-[#f4f7fb] transition-colors cursor-pointer hover:bg-[#f8fafc]
+                  className={`border-b border-[#f4f7fb] transition-colors cursor-pointer hover:bg-[#ffffff]
                     ${expandedId === u.id ? "bg-[var(--color-primary-tint)]" : ""}`}
                   onClick={() => setExpandedId(expandedId === u.id ? null : u.id)}>
                   <td className="px-4 py-3 text-center">
@@ -201,7 +201,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                 </tr>
                 {expandedId === u.id && (
                   <tr>
-                    <td colSpan={9} className="px-6 py-4 bg-[#f8fafc] border-b border-[#eef2f8]">
+                    <td colSpan={9} className="px-6 py-4 bg-[#ffffff] border-b border-[#eef2f8]">
                       <div className="space-y-3">
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-[13px] font-semibold text-[#0b1426]">Chi tiết điểm từng tiêu chí</p>

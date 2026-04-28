@@ -132,7 +132,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
         onClick={e=>e.stopPropagation()}>
 
         {/* ── Left: version list ── */}
-        <div className="w-[220px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background:"#f8fafc" }}>
+        <div className="w-[220px] shrink-0 flex flex-col border-r border-[#e2e8f0]" style={{ background:"#ffffff" }}>
           <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Star className="size-4 text-[#8a6400]"/>
@@ -222,7 +222,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                 const cfg = TYPE_CFG[c.type];
                 return (
                   <div key={i} className="flex items-start gap-3 p-3 rounded-[8px]"
-                    style={{ background:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                    style={{ background:"#ffffff", border:"1px solid #e2e8f0" }}>
                     <span className="text-[13px] px-2 py-1 rounded shrink-0 mt-0.5"
                       style={{ background:cfg.bg, color:cfg.color, fontFamily: "var(--font-sans)", fontWeight:700 }}>
                       {cfg.label}
@@ -237,7 +237,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
           </div>
 
           {/* Footer */}
-          <div className="px-8 py-4 border-t border-[#e2e8f0] flex items-center justify-between" style={{ background:"#f8fafc" }}>
+          <div className="px-8 py-4 border-t border-[#e2e8f0] flex items-center justify-between" style={{ background:"#ffffff" }}>
             <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               VPTU Đồng Nai · Thi đua Khen thưởng · Tỉnh ủy Đồng Nai
             </div>

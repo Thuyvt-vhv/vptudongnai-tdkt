@@ -230,7 +230,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
   }));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         <div className="flex items-center gap-3 mb-4">

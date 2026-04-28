@@ -51,7 +51,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
   const byYear=years.reduce((acc,y)=>{ acc[y]=filtered.filter(r=>r.nam===y); return acc; },{} as Record<number,HistoryRecord[]>);
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#f8fafc",fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 border-b border-[#e2e8f0]" style={{ background:"white" }}>
         <div className="flex items-center gap-3 mb-4">
@@ -188,7 +188,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                       return (
                         <div key={r.id} className="relative">
                           <div className="absolute -left-3 top-4 size-2 rounded-full" style={{ background:r.color }}/>
-                          <button onClick={()=>setDetail(r)} className="w-full rounded-[10px] border border-[#e2e8f0] p-4 text-left hover:bg-[#faf8f4] hover:border-[#d1ccc0] transition-all" style={{ background:"white" }}>
+                          <button onClick={()=>setDetail(r)} className="w-full rounded-[10px] border border-[#e2e8f0] p-4 text-left hover:bg-[#f4f7fb] hover:border-[#d1ccc0] transition-all" style={{ background:"white" }}>
                             <div className="flex items-start gap-3">
                               <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background:`${r.color}18` }}>
                                 {r.loai==="tap_the"?<Users className="size-5" style={{ color:r.color }}/>:<User className="size-5" style={{ color:r.color }}/>}
@@ -238,7 +238,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
               <tbody>{filtered.map((r,i)=>{
                 const lc=LEVEL_CFG[r.level];
                 return (
-                  <tr key={r.id} className="border-t border-[#e2e8f0] hover:bg-[#faf8f4] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
+                  <tr key={r.id} className="border-t border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
                     <td className="px-3 py-2.5"><code className="text-[13px]" style={{ color:"#1C5FBE",fontFamily:"JetBrains Mono, monospace" }}>{r.soQD}</code></td>
                     <td className="px-3 py-2.5 text-[#635647]">{r.ngayKy}</td>
                     <td className="px-3 py-2.5">

@@ -169,7 +169,7 @@ export function OnboardingPanel({
             const Icon = task.icon;
             return (
               <div key={task.id}
-                className="flex items-start gap-3 px-4 py-3 hover:bg-[#f8fafc] transition-colors cursor-pointer group"
+                className="flex items-start gap-3 px-4 py-3 hover:bg-[#ffffff] transition-colors cursor-pointer group"
                 onClick={() => {
                   if (!isCompleted) onComplete(task.id);
                   onNavigate(task.target);
@@ -215,7 +215,7 @@ export function OnboardingPanel({
             </div>
           </div>
         ) : (
-          <div className="px-5 py-3 border-t border-[#eef2f8] flex items-center justify-between" style={{ background: "#f8fafc" }}>
+          <div className="px-5 py-3 border-t border-[#eef2f8] flex items-center justify-between" style={{ background: "#ffffff" }}>
             <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               {tasks.length - done} nhiệm vụ còn lại
             </span>

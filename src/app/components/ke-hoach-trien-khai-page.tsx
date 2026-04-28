@@ -1036,7 +1036,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
       {open && (
         <div className="border-t border-[#f0ece5]">
           {/* Full description */}
-          <div className="px-4 py-3" style={{ background:"#f8fafc" }}>
+          <div className="px-4 py-3" style={{ background:"#ffffff" }}>
             <p className="text-[13px] text-[#5a5040] leading-relaxed">{feature.description}</p>
           </div>
 
@@ -1197,7 +1197,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
 function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)=>void }) {
   return (
     <aside className="w-[240px] shrink-0 border-r border-[#e2e8f0] flex flex-col overflow-y-auto"
-      style={{ background:"#faf8f4" }}>
+      style={{ background:"#f4f7fb" }}>
 
       <div className="px-4 pt-5 pb-4 border-b border-[#e2e8f0]">
         <div className="flex items-center gap-2 mb-0.5">
@@ -1412,7 +1412,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
         <div className="flex-1 overflow-y-auto">
           {/* Module header */}
           <div className="px-7 py-4 border-b border-[#e2e8f0]"
-            style={{ background:"#faf8f4" }}>
+            style={{ background:"#f4f7fb" }}>
             <div className="flex items-center gap-3">
               <div className="size-9 rounded-lg flex items-center justify-center"
                 style={{ background:`${meta.color}15` }}>

@@ -371,7 +371,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
           {step === 0 && (
             <div className="space-y-4">
               <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e2e8f0" }}>
-                <div className="px-4 py-3 border-b" style={{ borderColor: "#e2e8f0", background: "#f8fafc" }}>
+                <div className="px-4 py-3 border-b" style={{ borderColor: "#e2e8f0", background: "#ffffff" }}>
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     Thông tin cơ bản hồ sơ
                   </span>
@@ -607,7 +607,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
     return (
       <div key={h.id} className="rounded-[10px] border overflow-hidden transition-all"
         style={{ borderColor: isOpen ? "#1C5FBE" : "#e2e8f0" }}>
-        <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#f8fafc] transition-colors"
+        <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#ffffff] transition-colors"
           onClick={() => setExpandId(isOpen ? null : h.id)}>
           <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0"
             style={{ background: "linear-gradient(135deg,#1C5FBE,#0b1426)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -646,7 +646,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
             </div>
 
             {h.tomTatThanhTich && (
-              <div className="mb-4 p-3 rounded-[8px]" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+              <div className="mb-4 p-3 rounded-[8px]" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                 <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
                 <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{h.tomTatThanhTich}</p>
               </div>
@@ -835,7 +835,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
           return (
             <div key={h.id} className="rounded-[10px] border overflow-hidden"
               style={{ borderColor: isOpen ? "#7c3aed" : "#e2e8f0" }}>
-              <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#f8fafc]"
+              <button className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#ffffff]"
                 onClick={() => setExpandId(isOpen ? null : h.id)}>
                 <div className="size-10 rounded-full flex items-center justify-center text-white shrink-0"
                   style={{ background: "linear-gradient(135deg,#7c3aed,#5b21b6)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>

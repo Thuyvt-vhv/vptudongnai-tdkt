@@ -448,7 +448,7 @@ function Step4({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
         <p className="text-[13px] uppercase tracking-widest text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tùy chọn (khuyến nghị)</p>
         {optional.map(m => (
           <div key={m.id} className="flex items-center gap-3 p-3.5 rounded-[10px] border transition-all"
-            style={{ borderColor: m.uploaded ? "#86efac" : "#e2e8f0", background: m.uploaded ? "#f0fdf4" : "#f8fafc" }}>
+            style={{ borderColor: m.uploaded ? "#86efac" : "#e2e8f0", background: m.uploaded ? "#f0fdf4" : "#ffffff" }}>
             <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0"
               style={{ background: m.uploaded ? "#dcfce7" : "#eef2f8" }}>
               <FileText className="size-4" style={{ color: m.uploaded ? "#166534" : "#635647" }} />
@@ -724,7 +724,7 @@ export function TaoHoSoWizard({ user, onClose, onDone }: { user: LoginUser; onCl
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto px-7 py-6" style={{ background: "#f8fafc" }}>
+        <div className="flex-1 overflow-y-auto px-7 py-6" style={{ background: "#ffffff" }}>
           <div className="mb-4">
             <h3 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               {STEPS[step - 1].label}

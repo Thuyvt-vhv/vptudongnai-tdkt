@@ -266,7 +266,7 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           </button>
         </div>
         {/* Tabs */}
-        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#f8fafc" }}>
+        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#ffffff" }}>
           {([["overview", "Tổng quan"], ["awards", `Thành tích (${cb.awards.length})`], ["work", "Quá trình"], ["docs", "Tài liệu"]] as const).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className="flex-1 py-2.5 text-[13px] border-b-2 transition-colors"
@@ -276,11 +276,11 @@ function ProfileDrawer({ cb, onClose, onAICheck }: { cb: CanBo; onClose: () => v
           ))}
         </div>
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-5" style={{ background: "#f8fafc" }}>
+        <div className="flex-1 overflow-y-auto p-5" style={{ background: "#ffffff" }}>
           {tab === "overview" && (
             <div className="space-y-4">
               <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
-                <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background: "#faf8f4" }}>
+                <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
                   <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông tin cơ bản</span>
                 </div>
                 <div className="p-4 grid grid-cols-2 gap-3 text-[13px]">
@@ -415,7 +415,7 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
   });
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {selected && <ProfileDrawer cb={selected} onClose={() => setSelected(null)} onAICheck={() => { setAiTarget(selected); }} />}
       {aiTarget && <AiEligibilityPanel cb={aiTarget} onClose={() => setAiTarget(null)} />}
 
@@ -486,11 +486,11 @@ export function HoSoCanBoPage({ user }: { user: LoginUser }) {
                   </div>
                   {/* Score + completeness */}
                   <div className="flex gap-2 mb-3">
-                    <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                    <div className="flex-1 rounded-[6px] p-2 text-center" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                       <div className="text-[18px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{cb.score}</div>
                       <div className="text-[13px] text-[#635647] uppercase tracking-wider">Điểm TĐ</div>
                     </div>
-                    <div className="flex-1 rounded-[6px] p-2" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                    <div className="flex-1 rounded-[6px] p-2" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-[13px] text-[#635647] uppercase tracking-wider">Hồ sơ</span>
                         <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: cb.completeness >= 90 ? "#166534" : cb.completeness >= 70 ? "#b45309" : "#c8102e" }}>{cb.completeness}%</span>

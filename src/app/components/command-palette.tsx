@@ -225,7 +225,7 @@ export function CommandPalette({
               </button>
             )}
             <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-[#e2e8f0] text-[13px] text-[#635647]"
-              style={{ fontFamily: "JetBrains Mono, monospace", background: "#f8fafc" }}>
+              style={{ fontFamily: "JetBrains Mono, monospace", background: "#ffffff" }}>
               ESC
             </kbd>
           </div>
@@ -299,7 +299,7 @@ export function CommandPalette({
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2.5 border-t border-[#eef2f8] flex items-center gap-4" style={{ background: "#f8fafc" }}>
+        <div className="px-4 py-2.5 border-t border-[#eef2f8] flex items-center gap-4" style={{ background: "#ffffff" }}>
           <div className="flex items-center gap-3 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             <span className="flex items-center gap-1">
               <kbd className="px-1 py-0.5 rounded border border-[#e2e8f0] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↑↓</kbd>

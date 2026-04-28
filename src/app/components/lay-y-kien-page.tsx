@@ -582,7 +582,7 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
 
         {/* Footer */}
         <div className="flex items-center justify-between gap-3 px-6 py-4 border-t"
-          style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
+          style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
           <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Sau khi tạo, hệ thống sẽ gửi thông báo tới các thành viên liên quan.
           </p>
@@ -703,7 +703,7 @@ function OpinionForm({ record, onClose, onSubmitted }: {
               </div>
 
               {/* Anonymous toggle */}
-              <div className="rounded-[6px] p-3 border" style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
+              <div className="rounded-[6px] p-3 border" style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
                 <label className="flex items-start gap-2.5 cursor-pointer">
                   <input type="checkbox" className="size-4 mt-0.5 rounded"
                     style={{ accentColor: theme.primary }}
@@ -753,7 +753,7 @@ function OpinionForm({ record, onClose, onSubmitted }: {
               </label>
             </div>
             <div className="flex items-center justify-end gap-2 px-6 py-4 border-t"
-              style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
+              style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
               <DsButton variant="secondary" size="md" onClick={onClose}>Hủy</DsButton>
               <DsButton variant="primary" size="md"
                 disabled={!form.noiDung || !form.agreed || submitting}
@@ -875,7 +875,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
             </div>
 
             {/* Thành tích */}
-            <div className="rounded-[6px] p-3 bg-[#f8fafc] border" style={{ borderColor: "var(--color-line)" }}>
+            <div className="rounded-[6px] p-3 bg-[#ffffff] border" style={{ borderColor: "var(--color-line)" }}>
               <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
@@ -974,7 +974,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
 
         {/* Footer actions */}
         <div className="px-6 py-4 border-t flex items-center gap-2"
-          style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
+          style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
           {isActive && (
             <DsButton variant="primary" size="md" onClick={onAddOpinion}>
               <MessageSquare className="size-4" />
@@ -1066,7 +1066,7 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
 
         {/* Award */}
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px]"
-          style={{ background: "#f8fafc", border: "1px solid var(--color-line)" }}>
+          style={{ background: "#ffffff", border: "1px solid var(--color-line)" }}>
           <Star className="size-3 shrink-0" style={{ color: "#8a6400" }} />
           <span className="text-[13px] text-[#0b1426] truncate"
             style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>

@@ -920,7 +920,7 @@ function OverviewTab({ c }: { c: Campaign }) {
         {/* Scoring criteria */}
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <button
-            className="w-full px-5 py-3 border-b flex items-center gap-2 hover:bg-[#f8fafc] transition-colors"
+            className="w-full px-5 py-3 border-b flex items-center gap-2 hover:bg-[#ffffff] transition-colors"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}
             onClick={() => setExpandCriteria(!expandCriteria)}>
             <Scale className="size-4" style={{ color:theme.primary }} />
@@ -1400,7 +1400,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
               const isTop3 = (p.rank ?? 99) <= 3;
               const medalColors = ["#8a6400","#4f5d6e","#cd7c3b"];
               return (
-                <tr key={p.id} className="border-b hover:bg-[#f8fafc] transition-colors"
+                <tr key={p.id} className="border-b hover:bg-[#ffffff] transition-colors"
                   style={{ borderColor:"var(--color-line)" }}>
                   <td className="px-4 py-3">
                     {p.rank ? (
@@ -1528,7 +1528,7 @@ function ScoringTab({ c }: { c: Campaign }) {
           const pct     = maxScore ? u.total / maxScore : 0;
           const isOpen  = expandId === u.unitId;
           const isTop3  = idx < 3;
-          const medalBg = idx===0?"#fdf3d9":idx===1?"#f3f4f6":idx===2?"#fff7ed":"#f8fafc";
+          const medalBg = idx===0?"#fdf3d9":idx===1?"#f3f4f6":idx===2?"#fff7ed":"#ffffff";
           const medalFg = idx===0?"#7d4a00":idx===1?"#374151":idx===2?"#92400e":"#5a5040";
           const scoreColor = pct>=0.9?"#0f7a3e":pct>=0.75?theme.primary:"#c2410c";
 
@@ -1537,7 +1537,7 @@ function ScoringTab({ c }: { c: Campaign }) {
               className="rounded-[10px] border overflow-hidden transition-shadow hover:shadow-sm"
               style={{ borderColor: u.status==="chua_cham"?"#fcd34d":isTop3?"#d9d1bd":"var(--color-line)" }}>
               <button
-                className="w-full flex items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[#f8fafc]"
+                className="w-full flex items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[#ffffff]"
                 onClick={() => setExpandId(isOpen ? null : u.unitId)}>
 
                 {/* Rank medal */}
@@ -4041,7 +4041,7 @@ function FinancialTab({ c }: { c: Campaign }) {
                 const nguon = reward?.nguonKinhPhi;
                 const nc = nguon ? nguonColors[nguon] : { color: "#6b7280", bg: "#f3f4f6", border: "#e5e7eb" };
                 return (
-                  <tr key={p.id} className="border-b hover:bg-[#f8fafc] transition-colors"
+                  <tr key={p.id} className="border-b hover:bg-[#ffffff] transition-colors"
                     style={{ borderColor: "var(--color-line)" }}>
                     <td className="px-4 py-3">
                       <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
@@ -4123,7 +4123,7 @@ function FinancialTab({ c }: { c: Campaign }) {
             );
           })}
         </div>
-        <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "var(--color-line)", background: "#f8fafc" }}>
+        <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
           <BookOpen className="size-3.5 text-[#635647]" />
           <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Căn cứ: Chương VII NĐ 152/2025/NĐ-CP · Điều 3–8 TT 28/2025/TT-BTC · Điều 7–10 TT 118/2025/TT-BTC
@@ -4874,7 +4874,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     const count = form.budget[a] ?? 0;
                     return (
                       <div key={a} className="flex items-center gap-3 px-3 py-2 rounded-[6px] border"
-                        style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
+                        style={{ borderColor:"var(--color-line)", background:"#ffffff" }}>
                         <span className="flex-1 text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</span>
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button className="size-6 rounded border text-[14px] flex items-center justify-center"
@@ -4929,7 +4929,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     ))}
                   </div>
                 )}
-                <div className="rounded-[8px] p-4 bg-[#f8fafc] border space-y-2" style={{ borderColor:"var(--color-line)" }}>
+                <div className="rounded-[8px] p-4 bg-[#ffffff] border space-y-2" style={{ borderColor:"var(--color-line)" }}>
                   {[
                     ["Tên", form.name||"(Chưa nhập)"],
                     ["Cấp", TYPE_LABELS[form.type]],
@@ -4980,7 +4980,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
           })()}
         </div>
         <div className="flex items-center justify-between gap-3 px-6 py-4 border-t"
-          style={{ borderColor:"var(--color-line)", background:"#f8fafc" }}>
+          style={{ borderColor:"var(--color-line)", background:"#ffffff" }}>
           <DsButton variant="secondary" size="md" onClick={()=>step>0?setStep(p=>p-1):onClose()}>
             <ChevronLeft className="size-4" />{step===0?"Hủy":"Quay lại"}
           </DsButton>

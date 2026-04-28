@@ -125,7 +125,7 @@ function EventDetail({ ev, onClose }: { ev: CalEvent; onClose: () => void }) {
             {ev.attendees && <div className="flex items-center gap-2"><Users className="size-3.5 text-[#635647]"/>{ev.attendees} người tham dự</div>}
           </div>
         </div>
-        <div className="px-5 py-3 border-t border-[#eef2f8] flex gap-2" style={{ background: "#f8fafc" }}>
+        <div className="px-5 py-3 border-t border-[#eef2f8] flex gap-2" style={{ background: "#ffffff" }}>
           <button className="flex-1 py-2 rounded-[7px] text-[13px] text-white" style={{ background: cfg.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
             Đặt nhắc nhở
           </button>
@@ -149,7 +149,7 @@ function UpcomingSidebar({ events, onSelect }: { events: CalEvent[]; onSelect: (
     .slice(0, 8);
 
   return (
-    <div className="w-72 shrink-0 border-l border-[#e2e8f0] flex flex-col" style={{ background: "#f8fafc" }}>
+    <div className="w-72 shrink-0 border-l border-[#e2e8f0] flex flex-col" style={{ background: "#ffffff" }}>
       <div className="px-4 py-4 border-b border-[#e2e8f0]">
         <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sự kiện sắp tới</h3>
         <p className="text-[13px] text-[#635647] mt-0.5">{upcoming.length} sự kiện</p>
@@ -219,7 +219,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
   const urgentCount = monthEvents.filter(ev => ev.urgent).length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* ── Header ── */}
       <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
@@ -230,7 +230,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
         </div>
         <div className="flex items-center gap-3">
           {/* Type filters */}
-          <div className="flex items-center gap-1.5 p-1 rounded-[10px] border border-[#e2e8f0]" style={{ background: "#f8fafc" }}>
+          <div className="flex items-center gap-1.5 p-1 rounded-[10px] border border-[#e2e8f0]" style={{ background: "#ffffff" }}>
             <button onClick={() => setFilterType("all")}
               className="px-3 py-1.5 rounded-[7px] text-[13px] transition-all"
               style={{ background: filterType === "all" ? "white" : "transparent", color: filterType === "all" ? "#0b1426" : "#635647", fontFamily: "var(--font-sans)", fontWeight: filterType === "all" ? 700 : 400, boxShadow: filterType === "all" ? "0 1px 4px rgba(0,0,0,0.08)" : "none" }}>

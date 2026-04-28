@@ -260,7 +260,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
         )}
 
         {/* Tabs */}
-        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#f8fafc" }}>
+        <div className="flex border-b border-[#e2e8f0] shrink-0" style={{ background: "#ffffff" }}>
           {([
             ["timeline", "Dòng thời gian"],
             ["docs", `Tài liệu (${docs.filter(d => d.uploaded).length}/${docs.length})`],
@@ -306,7 +306,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                         </div>
                         {ev.note && (
                           <div className="mt-2 p-2 rounded-[6px] text-[13px] text-[#5a5040]"
-                            style={{ background: "#f8fafc", fontFamily: "var(--font-sans)", border: "1px solid #e2e8f0" }}>
+                            style={{ background: "#ffffff", fontFamily: "var(--font-sans)", border: "1px solid #e2e8f0" }}>
                             {ev.note}
                           </div>
                         )}
@@ -435,7 +435,7 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
   const inProg = hoSoList.filter(h => !["hoan_thanh","tu_choi","nhap"].includes(h.status));
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#f8fafc", fontFamily: "var(--font-sans)" }}>
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {selected && <HoSoDetail hs={selected} onClose={() => setSelected(null)} />}
       {wizardOpen && (
         <TaoHoSoWizard
@@ -461,7 +461,7 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
       {/* Stats */}
       <div className="px-8 py-4 grid grid-cols-4 gap-4 border-b border-[#e2e8f0] shrink-0" style={{ background: "white" }}>
         {[
-          { l:"Tổng hồ sơ",     v:hoSoList.length, color:"#0b1426", bg:"#f8fafc" },
+          { l:"Tổng hồ sơ",     v:hoSoList.length, color:"#0b1426", bg:"#ffffff" },
           { l:"Đang xử lý",     v:inProg.length,   color:"#1C5FBE", bg:"#f0f4ff" },
           { l:"Cần bổ sung",    v:urgent.length,   color:"#b45309", bg:"#fef9ec" },
           { l:"Đã hoàn thành",  v:done.length,     color:"#166534", bg:"#dcfce7" },

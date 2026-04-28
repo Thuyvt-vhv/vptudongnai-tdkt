@@ -137,8 +137,8 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
                 return (
                   <button key={n.id} onClick={() => setNotifs(p => p.map(x => x.id === n.id ? { ...x, read: true } : x))}
                     className="w-full flex items-start gap-3 px-4 py-3 text-left transition-colors"
-                    style={{ background: n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#fafbff", borderBottom: i < notifs.length - 1 ? "1px solid #f8fafc" : "none" }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f8fafc"; }}
+                    style={{ background: n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#fafbff", borderBottom: i < notifs.length - 1 ? "1px solid #ffffff" : "none" }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#ffffff"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#fafbff"; }}>
                     <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0 mt-0.5"
                       style={{ background: `${color}12`, border: `1px solid ${color}20` }}>
@@ -207,9 +207,9 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
         <div className="w-[340px] mr-auto">
           <button onClick={onOpenCmd}
             className="w-full h-[34px] flex items-center gap-2.5 px-3 rounded-[9px] text-left transition-all"
-            style={{ background: "#f3f0ea", border: "1px solid #e0d9cd" }}
+            style={{ background: "#f3f0ea", border: "1px solid #e2e8f0" }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c4a96a"; (e.currentTarget as HTMLElement).style.background = "#ede9e0"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e0d9cd"; (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; }}>
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; }}>
             <Search className="size-3.5 shrink-0" style={{ color: "#74654a" }} strokeWidth={2} />
             <span className="flex-1 text-[13px]" style={{ color: "#74654a", fontFamily: "var(--font-sans)" }}>
               Tìm hồ sơ, cán bộ, quyết định…
@@ -248,9 +248,9 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           <div className="relative">
             <button onClick={() => setShowMenu(v => !v)}
               className="flex items-center gap-2 h-9 pl-1.5 pr-2.5 rounded-[9px] transition-all"
-              style={{ border: showMenu ? "1px solid #e0d9cd" : "1px solid transparent" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; (e.currentTarget as HTMLElement).style.borderColor = "#e0d9cd"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = showMenu ? "#e0d9cd" : "transparent"; }}>
+              style={{ border: showMenu ? "1px solid #e2e8f0" : "1px solid transparent" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = showMenu ? "#e2e8f0" : "transparent"; }}>
               {/* Avatar */}
               <div className="relative">
                 <div className="size-7 rounded-full flex items-center justify-center text-[13px] text-white shrink-0"
@@ -310,7 +310,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-2.5 flex items-center justify-end" style={{ borderTop: "1px solid #eef2f8", background: "#f8fafc" }}>
+                  <div className="px-4 py-2.5 flex items-center justify-end" style={{ borderTop: "1px solid #eef2f8", background: "#ffffff" }}>
                     <span className="text-[13px] flex items-center gap-1" style={{ color: "#22c55e", fontFamily: "var(--font-sans)" }}>
                       <span className="size-1.5 rounded-full inline-block bg-green-400 animate-pulse" />
                       Hệ thống hoạt động
@@ -332,7 +332,7 @@ function MenuRow({ icon: Icon, label, sub, onClick, danger }: {
   return (
     <button onClick={onClick}
       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[9px] text-left transition-all"
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = danger ? "#fff1f2" : "#f8fafc"; }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = danger ? "#fff1f2" : "#ffffff"; }}
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
       <div className="size-7 rounded-[7px] flex items-center justify-center shrink-0"
         style={{ background: danger ? "#fee2e2" : "#f1f5f9" }}>

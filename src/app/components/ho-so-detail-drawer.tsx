@@ -321,7 +321,7 @@ export function HoSoDetailDrawer({
                 ].map(f => {
                   const Icon = f.icon;
                   return (
-                    <div key={f.label} className="p-3 rounded-[8px]" style={{ background:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                    <div key={f.label} className="p-3 rounded-[8px]" style={{ background:"#ffffff", border:"1px solid #e2e8f0" }}>
                       <div className="flex items-center gap-1.5 mb-1">
                         <Icon className="size-3.5 text-[#635647]"/>
                         <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{f.label}</span>
@@ -366,7 +366,7 @@ export function HoSoDetailDrawer({
                         ev.type==="vote"?"bg-[#f5f3ff] border-[#ddd6fe]":
                         ev.type==="ai"?"bg-[#faf5ff] border-[#c4b5fd]":
                         ev.type==="submit"?"bg-[#f0f4ff] border-[#bfdbfe]":
-                        "bg-[#f8fafc] border-[#e2e8f0]"
+                        "bg-[#ffffff] border-[#e2e8f0]"
                       }`}>
                         {ev.type==="sign"   && <CheckCheck className="size-3.5 text-[#166534]"/>}
                         {ev.type==="vote"   && <ThumbsUp className="size-3.5 text-[#7c3aed]"/>}
@@ -441,7 +441,7 @@ export function HoSoDetailDrawer({
                         <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily:"JetBrains Mono,monospace" }}>{c.time}</span>
                       </div>
                       <div className="text-[13px] text-[#5a5040] leading-relaxed p-2.5 rounded-[8px]"
-                        style={{ background:"#f8fafc", border:"1px solid #e2e8f0", fontFamily: "var(--font-sans)" }}>
+                        style={{ background:"#ffffff", border:"1px solid #e2e8f0", fontFamily: "var(--font-sans)" }}>
                         {c.text}
                       </div>
                     </div>
