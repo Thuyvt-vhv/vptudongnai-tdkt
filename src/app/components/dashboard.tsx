@@ -617,119 +617,163 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
   const roleKey = user?.role ?? "council";
   const cfg = ROLE_CONFIG[roleKey] ?? ROLE_CONFIG["council"];
   const displayName = user?.name?.split(" ").slice(-1)[0] ?? "Bạn";
+  const todayStr = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
 
   return (
     <div className="p-6 space-y-5 max-w-[1600px]">
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <div className="relative rounded-[18px] overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #060f20 0%, #0c1d3d 45%, #132448 75%, #1a3060 100%)", minHeight: 200 }}>
+      {/* ── Hero Card — White theme ───────────────────────────── */}
+      <div className="rounded-2xl overflow-hidden border"
+        style={{
+          background: "#ffffff",
+          borderColor: "#e2e8f0",
+          boxShadow: "0 4px 32px rgba(11,20,38,0.07), 0 1px 4px rgba(11,20,38,0.04)",
+        }}>
 
-        {/* Background texture layers */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Diagonal grid */}
-          <div className="absolute inset-0 opacity-[0.04]"
-            style={{ backgroundImage: "repeating-linear-gradient(60deg, #8a6400 0, #8a6400 1px, transparent 1px, transparent 28px)" }} />
-          {/* Radial glows */}
-          <div className="absolute -right-20 -top-20 size-72 rounded-full opacity-[0.08]"
-            style={{ background: "radial-gradient(circle, #c8102e, transparent 70%)" }} />
-          <div className="absolute left-1/3 bottom-0 size-48 rounded-full opacity-[0.06]"
-            style={{ background: "radial-gradient(circle, #8a6400, transparent 70%)" }} />
-          {/* Vertical divider lines */}
-          {[35, 65].map(pct => (
-            <div key={pct} className="absolute top-0 bottom-0 w-px"
-              style={{ left: `${pct}%`, background: "linear-gradient(180deg, transparent, rgba(212,168,75,0.15), transparent)" }} />
-          ))}
-        </div>
+        {/* Top accent bar */}
+        <div className="h-[3px] w-full"
+          style={{ background: "linear-gradient(90deg, #c8102e 0%, #1C5FBE 50%, #8a6400 100%)" }} />
 
-        <div className="relative flex items-stretch gap-0">
+        <div className="flex items-stretch">
 
-          {/* LEFT: Greeting (flex-1) */}
-          <div className="flex-1 px-8 py-7 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-                  style={{ background: "rgba(212,168,75,0.15)", border: "1px solid rgba(212,168,75,0.3)" }}>
-                  <Flame className="size-3" style={{ color: "#8a6400" }} />
-                  <span className="text-[10.5px] tracking-[0.15em] uppercase"
-                    style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#8a6400" }}>
-                    Đợt thi đua Quý II / 2026
+          {/* ── LEFT: Identity panel ── */}
+          <div className="flex flex-col justify-between p-6 shrink-0 w-[256px]"
+            style={{ borderRight: "1px solid #e2e8f0", background: "linear-gradient(160deg, #f4f7fb 0%, #ffffff 60%)" }}>
+
+            <div className="flex flex-col gap-4">
+              {/* Avatar + name */}
+              <div className="flex items-center gap-3">
+                <div className="size-[54px] rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `linear-gradient(135deg, ${user?.avatarFrom ?? "#1a2744"}, ${user?.avatarTo ?? "#0b1426"})` }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 20, color: "#ffd27a", letterSpacing: -0.5 }}>
+                    {user?.initials ?? "VQ"}
                   </span>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 rounded-full"
-                  style={{ background: "rgba(15,122,62,0.2)", border: "1px solid rgba(15,122,62,0.3)" }}>
-                  <span className="size-1.5 rounded-full animate-pulse" style={{ background: "#4ade80" }} />
-                  <span className="text-[13px]" style={{ color: "#4ade80", fontFamily: "JetBrains Mono", fontWeight: 700 }}>LIVE</span>
+                <div className="min-w-0">
+                  <div className="font-bold text-[14px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>
+                    {user?.name ?? "Người dùng"}
+                  </div>
+                  <div className="text-[12px] text-[#5a6474] truncate mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+                    {user?.title ?? ""}
+                  </div>
                 </div>
               </div>
 
-              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 24, color: "white", lineHeight: 1.2 }}>
-                Xin chào, <span style={{ color: "#8a6400", fontStyle: "italic" }}>{displayName}</span>
+              {/* Unit */}
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg"
+                style={{ background: "#f4f7fb", border: "1px solid #e2e8f0" }}>
+                <Shield className="size-3.5 shrink-0" style={{ color: "#4f5d6e" }} />
+                <span className="text-[12px] truncate" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>
+                  {user?.unit ?? "VPTU Đồng Nai"}
+                </span>
+              </div>
+
+              {/* Role badge */}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg self-start"
+                style={{ background: user?.roleBg ?? "#ddeafc", border: `1px solid ${user?.roleColor ?? "#1C5FBE"}22` }}>
+                <span className="size-1.5 rounded-full" style={{ background: user?.roleColor ?? "#1C5FBE" }} />
+                <span className="text-[12px] font-semibold" style={{ color: user?.roleColor ?? "#1C5FBE", fontFamily: "var(--font-sans)" }}>
+                  {user?.roleLabel ?? user?.role ?? "Hệ thống"}
+                </span>
+              </div>
+
+              {/* Live */}
+              <div className="flex items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md"
+                  style={{ background: "#dcfce7", border: "1px solid #bbf7d0" }}>
+                  <span className="size-1.5 rounded-full animate-pulse" style={{ background: "#16a34a" }} />
+                  <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 11, color: "#16a34a" }}>LIVE</span>
+                </div>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#5a6474" }}>Đang hoạt động</span>
+              </div>
+            </div>
+
+            {/* Date */}
+            <div className="flex items-center gap-1.5 pt-4 mt-2" style={{ borderTop: "1px solid #e2e8f0" }}>
+              <Clock className="size-3.5 shrink-0" style={{ color: "#94a3b8" }} />
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#5a6474" }}>{todayStr}</span>
+            </div>
+          </div>
+
+          {/* ── CENTER: Greeting + CTA ── */}
+          <div className="flex-1 flex flex-col justify-between p-7 min-w-0">
+            <div>
+              {/* Period badge */}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-4"
+                style={{ background: "#fef3c7", border: "1px solid #fcd34d" }}>
+                <Flame className="size-3" style={{ color: "#b45309" }} />
+                <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
+                  Đợt thi đua Quý II / 2026
+                </span>
+              </div>
+
+              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 26, color: "#0b1426", lineHeight: 1.25, marginBottom: 8 }}>
+                Xin chào,{" "}
+                <span style={{ color: "#1C5FBE" }}>{displayName}</span>
+                <span className="ml-2" style={{ fontSize: 22 }}>👋</span>
               </h1>
-              <p className="mt-1.5 text-[13.5px]" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-sans)" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#5a6474", lineHeight: 1.6 }}>
                 {cfg.subtitle}
               </p>
             </div>
 
             <div className="flex items-center gap-3 mt-6">
               <button onClick={() => nav("Đề nghị khen thưởng")}
-                className="flex items-center gap-2 h-9 px-4 rounded-[9px] text-[13px] text-white transition-all active:scale-95"
-                style={{ background: "linear-gradient(135deg,#c8102e,#a60d25)", fontFamily: "var(--font-sans)", fontWeight: 600, boxShadow: "0 2px 14px rgba(200,16,46,0.45)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(200,16,46,0.6)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 14px rgba(200,16,46,0.45)"; }}>
+                className="btn btn-primary btn-md inline-flex items-center gap-2"
+                style={{ fontFamily: "var(--font-sans)" }}>
                 <Award className="size-3.5" /> Đề nghị khen thưởng
               </button>
               <button onClick={() => nav("Phong trào thi đua")}
-                className="flex items-center gap-2 h-9 px-4 rounded-[9px] text-[13px] transition-all hover:bg-white/10"
-                style={{ color: "rgba(255,255,255,0.8)", border: "1px solid rgba(255,255,255,0.18)", fontFamily: "var(--font-sans)" }}>
+                className="btn btn-secondary btn-md inline-flex items-center gap-1.5"
+                style={{ fontFamily: "var(--font-sans)" }}>
                 Phong trào <ArrowUpRight className="size-3.5" />
               </button>
             </div>
           </div>
 
-          {/* CENTER: Radial progress */}
-          <div className="flex flex-col items-center justify-center px-8 py-6"
-            style={{ borderLeft: "1px solid rgba(255,255,255,0.07)", borderRight: "1px solid rgba(255,255,255,0.07)" }}>
-            <div className="relative">
-              <RadialBarChart width={150} height={150} innerRadius="64%" outerRadius="96%"
-                data={[{ v: cfg.progress, fill: "#8a6400" }]} startAngle={90} endAngle={-270}>
-                <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                <RadialBar background={{ fill: "rgba(255,255,255,0.06)" }} dataKey="v" cornerRadius={10} />
-              </RadialBarChart>
-              <div className="absolute inset-0 grid place-items-center">
-                <div className="text-center">
-                  <div className="text-[24px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#8a6400" }}>
-                    {cfg.progress}<span className="text-[14px]">%</span>
-                  </div>
-                  <div className="text-[13px] tracking-wider uppercase mt-1" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-sans)" }}>
-                    {cfg.progressLabel}
+          {/* ── RIGHT: Progress + Stats ── */}
+          <div className="flex items-stretch shrink-0" style={{ borderLeft: "1px solid #e2e8f0" }}>
+
+            {/* Progress ring */}
+            <div className="flex flex-col items-center justify-center px-6 py-6"
+              style={{ borderRight: "1px solid #e2e8f0" }}>
+              <div className="relative">
+                <RadialBarChart width={130} height={130} innerRadius="64%" outerRadius="96%"
+                  data={[{ v: cfg.progress, fill: "#1C5FBE" }]} startAngle={90} endAngle={-270}>
+                  <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+                  <RadialBar background={{ fill: "#e2e8f0" }} dataKey="v" cornerRadius={12} />
+                </RadialBarChart>
+                <div className="absolute inset-0 grid place-items-center">
+                  <div className="text-center">
+                    <div style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 24, color: "#1C5FBE", lineHeight: 1 }}>
+                      {cfg.progress}<span style={{ fontSize: 13 }}>%</span>
+                    </div>
+                    <div style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 4 }}>
+                      {cfg.progressLabel}
+                    </div>
                   </div>
                 </div>
               </div>
+              <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#94a3b8", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 6 }}>
+                TIẾN ĐỘ
+              </div>
             </div>
-          </div>
 
-          {/* RIGHT: Stats summary */}
-          <div className="flex flex-col justify-center gap-3 px-8 py-6 min-w-[200px]">
-            <div className="text-[13px] uppercase tracking-widest mb-1" style={{ color: "rgba(212,168,75,0.6)", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-              Thống kê nhanh
-            </div>
-            {cfg.quickStats.map(s => (
-              <div key={s.label} className="flex items-center justify-between gap-4">
-                <span className="text-[11.5px]" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-sans)" }}>{s.label}</span>
-                <span className="text-[14px]" style={{ fontFamily: "JetBrains Mono", fontWeight: 700, color: s.color }}>{s.value}</span>
+            {/* Quick stats */}
+            <div className="flex flex-col justify-center gap-2 px-5 py-6 min-w-[190px]">
+              <div style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#94a3b8", marginBottom: 4 }}>
+                Thống kê nhanh
               </div>
-            ))}
-            <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-              <div className="text-[13px]" style={{ color: "rgba(212,168,75,0.5)", fontFamily: "var(--font-sans)" }}>
-                📅 Thứ Sáu, 25/04/2026
-              </div>
+              {cfg.quickStats.map(s => (
+                <div key={s.label} className="flex items-center justify-between gap-3 px-3 py-2 rounded-lg"
+                  style={{ background: "#f4f7fb" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#4f5d6e" }}>{s.label}</span>
+                  <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 15, color: s.color }}>{s.value}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Gold bottom bar */}
-        <div className="h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #c8102e 20%, #8a6400 50%, #c8102e 80%, transparent 100%)" }} />
       </div>
 
       {/* ── Task Panel ───────────────────────────────────────── */}
