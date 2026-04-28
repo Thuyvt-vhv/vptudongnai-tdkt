@@ -5,7 +5,7 @@
 import { Bell, ChevronDown, Sparkles, LogOut, Clock,
   Award, FileSignature, AlertTriangle,
   Eye, Settings, Search, Printer, Keyboard,
-  LayoutDashboard, PanelLeftOpen, PanelLeftClose } from "lucide-react";
+  LayoutDashboard, PanelLeftOpen, PanelLeftClose, HelpCircle } from "lucide-react";
 import { useState } from "react";
 import type { LoginUser } from "./login-page";
 import { AppsMenu } from "./apps-menu";
@@ -254,6 +254,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           <ActionBtn icon={Keyboard} onClick={onOpenShortcuts}  title="Phím tắt" />
 
           <AppsMenu active={active} onSelect={onSelectModule} />
+          <ActionBtn icon={HelpCircle} onClick={() => onSelectModule("Trung tâm hỗ trợ")} title="Trung tâm hỗ trợ" />
           <NotifBell user={user} onSelectModule={onSelectModule} />
 
           {/* User menu */}
