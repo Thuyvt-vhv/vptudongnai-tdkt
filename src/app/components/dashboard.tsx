@@ -552,60 +552,91 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
   );
 }
 
-/* ═══ Task Panel ══════════════════════════════════════════════ */
+/* ═══ Task Panel — white theme, vertical list ════════════════ */
 function TaskPanel({ cfg, onNavigate }: { cfg: typeof ROLE_CONFIG["user"]; onNavigate: (m: string) => void }) {
   const urgent = cfg.tasks.filter(t => t.urgent).length;
   return (
-    <div className="rounded-[14px] overflow-hidden" style={{ border: "1px solid rgba(212,168,75,0.3)", boxShadow: "0 2px 12px rgba(28,95,190,0.06)" }}>
+    <div className="bg-white rounded-[14px] overflow-hidden flex flex-col h-full"
+      style={{ border: "1px solid #dde3ec", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3"
-        style={{ background: "linear-gradient(135deg, #0a1628 0%, #0f2244 60%, #1a3560 100%)", borderBottom: "2px solid rgba(212,168,75,0.35)" }}>
+      <div className="flex items-center justify-between px-5 py-3.5 shrink-0"
+        style={{ borderBottom: "1px solid #eef2f8" }}>
         <div className="flex items-center gap-2.5">
+          <div className="size-6 rounded-md flex items-center justify-center shrink-0"
+            style={{ background: "#0b1426" }}>
+            <Zap className="size-3 text-white" />
+          </div>
+          <span style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+            Việc cần làm hôm nay
+          </span>
           {urgent > 0 && (
-            <div className="size-5 rounded-full flex items-center justify-center text-white shrink-0"
-              style={{ background: "#c8102e", fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 13 }}>
+            <div className="size-5 rounded-full flex items-center justify-center text-white leading-none"
+              style={{ background: "#c8102e", fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 11 }}>
               {urgent}
             </div>
           )}
-          <span className="text-[13px] text-white" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
-            Việc cần làm hôm nay
-          </span>
         </div>
-        <div className="flex items-center gap-2">
-          {cfg.quickStats.map(s => (
-            <span key={s.label} className="text-[13px] px-2 py-0.5 rounded-full"
-              style={{ background: `${s.color}22`, color: s.color, fontFamily: "JetBrains Mono", fontWeight: 700 }}>
-              {s.label}: {s.value}
+        <div className="flex items-center gap-1.5">
+          {cfg.quickStats.slice(0, 2).map(s => (
+            <span key={s.label} className="text-[12px] px-2 py-0.5 rounded-full"
+              style={{ background: `${s.color}12`, color: s.color, fontFamily: "JetBrains Mono", fontWeight: 700, border: `1px solid ${s.color}25` }}>
+              {s.value}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Tasks */}
-      <div style={{ background: "#f4f7fb", display: "grid", gridTemplateColumns: `repeat(${cfg.tasks.length}, 1fr)` }}>
+      {/* Task list */}
+      <div className="flex-1">
         {cfg.tasks.map((t, i) => {
           const TIcon = t.icon;
           return (
-            <div key={i} className="px-4 py-4 flex items-start gap-3"
-              style={{ borderRight: i < cfg.tasks.length - 1 ? "1px solid #e8eef5" : "none" }}>
+            <div key={i} className="flex items-start gap-3 px-5 py-4 transition-colors"
+              style={{
+                borderLeft: `3px solid ${t.urgent ? "#c8102e" : "#1C5FBE"}`,
+                borderBottom: i < cfg.tasks.length - 1 ? "1px solid #f0f4f8" : "none",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f8faff"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = ""; }}>
               <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0 mt-0.5"
-                style={{ background: t.urgent ? "rgba(200,16,46,0.1)" : "rgba(28,95,190,0.07)", border: t.urgent ? "1px solid rgba(200,16,46,0.2)" : "1px solid rgba(28,95,190,0.14)" }}>
+                style={{
+                  background: t.urgent ? "rgba(200,16,46,0.08)" : "rgba(28,95,190,0.07)",
+                  border: t.urgent ? "1px solid rgba(200,16,46,0.15)" : "1px solid rgba(28,95,190,0.12)",
+                }}>
                 <TIcon className="size-3.5" strokeWidth={1.8} style={{ color: t.urgent ? "#c8102e" : "#1C5FBE" }} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[12.5px] leading-snug"
-                  style={{ fontFamily: "var(--font-sans)", fontWeight: t.urgent ? 600 : 400, color: t.urgent ? "#0b1426" : "#5a4e3c" }}>
+                <p className="text-[13px] leading-snug"
+                  style={{ fontFamily: "var(--font-sans)", fontWeight: t.urgent ? 600 : 400, color: "#0b1426" }}>
                   {t.text}
                 </p>
                 <button onClick={() => onNavigate(t.module)}
-                  className="mt-2 text-[11.5px] transition-colors inline-flex items-center gap-1"
+                  className="mt-1.5 text-[12px] inline-flex items-center gap-1"
                   style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: t.urgent ? "#c8102e" : "#1C5FBE" }}>
                   {t.action} <ArrowUpRight className="size-3" />
                 </button>
               </div>
+              {t.urgent && (
+                <span className="shrink-0 self-start text-[10.5px] px-1.5 py-0.5 rounded-full"
+                  style={{ background: "rgba(200,16,46,0.08)", color: "#c8102e", fontFamily: "var(--font-sans)", fontWeight: 700, border: "1px solid rgba(200,16,46,0.15)" }}>
+                  Khẩn
+                </span>
+              )}
             </div>
           );
         })}
+      </div>
+
+      {/* Footer — remaining quick stat */}
+      <div className="px-5 py-3 flex items-center gap-2 shrink-0"
+        style={{ borderTop: "1px solid #eef2f8", background: "#f8faff" }}>
+        {cfg.quickStats.slice(2).map(s => (
+          <span key={s.label} className="text-[12px] px-2 py-0.5 rounded-full"
+            style={{ background: `${s.color}12`, color: s.color, fontFamily: "JetBrains Mono", fontWeight: 700, border: `1px solid ${s.color}25` }}>
+            {s.label}: {s.value}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -620,118 +651,99 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
   const todayStr = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
 
   return (
-    <div className="p-6 space-y-5 max-w-[1600px]">
+    <div className="p-6 space-y-4 max-w-[1600px]">
 
-      {/* ── Hero Card — White theme ───────────────────────────── */}
-      <div className="rounded-2xl overflow-hidden border"
-        style={{
-          background: "#ffffff",
-          borderColor: "#e2e8f0",
-          boxShadow: "0 4px 32px rgba(11,20,38,0.07), 0 1px 4px rgba(11,20,38,0.04)",
-        }}>
+      {/* ══ ROW 1: Hero (4/12) + KPI 2×2 (8/12) ══════════════ */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
 
-        {/* Top accent bar */}
-        <div className="h-[3px] w-full"
-          style={{ background: "linear-gradient(90deg, #c8102e 0%, #1C5FBE 50%, #8a6400 100%)" }} />
+        {/* Hero card */}
+        <div className="col-span-4 rounded-[14px] overflow-hidden flex flex-col"
+          style={{
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 4px 24px rgba(11,20,38,0.06), 0 1px 4px rgba(11,20,38,0.04)",
+          }}>
+          <div className="h-[3px] w-full shrink-0"
+            style={{ background: "linear-gradient(90deg, #c8102e 0%, #1C5FBE 50%, #8a6400 100%)" }} />
 
-        <div className="flex items-stretch">
-
-          {/* ── CENTER: Greeting + CTA ── */}
-          <div className="flex-1 flex flex-col justify-between p-7 min-w-0">
+          <div className="flex-1 flex flex-col p-6 gap-4">
+            {/* Greeting */}
             <div>
-              {/* Period badge */}
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-4"
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
                 style={{ background: "#fef3c7", border: "1px solid #fcd34d" }}>
                 <Flame className="size-3" style={{ color: "#b45309" }} />
-                <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
                   Đợt thi đua Quý II / 2026
                 </span>
               </div>
-
-              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 26, color: "#0b1426", lineHeight: 1.25, marginBottom: 8 }}>
-                Xin chào,{" "}
-                <span style={{ color: "#1C5FBE" }}>{displayName}</span>
-                <span className="ml-2" style={{ fontSize: 22 }}>👋</span>
+              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 22, color: "#0b1426", lineHeight: 1.25, marginBottom: 4 }}>
+                Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
               </h1>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#5a6474", lineHeight: 1.6 }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 11.5, color: "#94a3b8", marginBottom: 6 }}>{todayStr}</p>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#5a6474", lineHeight: 1.6 }}>
                 {cfg.subtitle}
               </p>
             </div>
 
-            <div className="flex items-center gap-3 mt-6">
+            {/* CTA buttons */}
+            <div className="flex flex-col gap-2">
               <button onClick={() => nav("Đề nghị khen thưởng")}
-                className="btn btn-primary btn-md inline-flex items-center gap-2"
+                className="btn btn-primary btn-md inline-flex items-center justify-center gap-2 w-full"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <Award className="size-3.5" /> Đề nghị khen thưởng
               </button>
               <button onClick={() => nav("Phong trào thi đua")}
-                className="btn btn-secondary btn-md inline-flex items-center gap-1.5"
+                className="btn btn-secondary btn-md inline-flex items-center justify-center gap-1.5 w-full"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 Phong trào <ArrowUpRight className="size-3.5" />
               </button>
             </div>
-          </div>
 
-          {/* ── RIGHT: Progress + Stats ── */}
-          <div className="flex items-stretch shrink-0" style={{ borderLeft: "1px solid #e2e8f0" }}>
-
-            {/* Progress ring */}
-            <div className="flex flex-col items-center justify-center px-6 py-6"
-              style={{ borderRight: "1px solid #e2e8f0" }}>
-              <div className="relative">
-                <RadialBarChart width={130} height={130} innerRadius="64%" outerRadius="96%"
+            {/* Progress ring + quick stats */}
+            <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid #eef2f8", marginTop: "auto" }}>
+              <div className="relative shrink-0">
+                <RadialBarChart width={90} height={90} innerRadius="62%" outerRadius="96%"
                   data={[{ v: cfg.progress, fill: "#1C5FBE" }]} startAngle={90} endAngle={-270}>
                   <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                  <RadialBar background={{ fill: "#e2e8f0" }} dataKey="v" cornerRadius={12} />
+                  <RadialBar background={{ fill: "#e2e8f0" }} dataKey="v" cornerRadius={8} />
                 </RadialBarChart>
                 <div className="absolute inset-0 grid place-items-center">
                   <div className="text-center">
-                    <div style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 24, color: "#1C5FBE", lineHeight: 1 }}>
-                      {cfg.progress}<span style={{ fontSize: 13 }}>%</span>
+                    <div style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 17, color: "#1C5FBE", lineHeight: 1 }}>
+                      {cfg.progress}<span style={{ fontSize: 10 }}>%</span>
                     </div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 4 }}>
+                    <div style={{ fontFamily: "var(--font-sans)", fontSize: 8, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 3 }}>
                       {cfg.progressLabel}
                     </div>
                   </div>
                 </div>
               </div>
-              <div style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#94a3b8", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 6 }}>
-                TIẾN ĐỘ
+              <div className="flex-1 space-y-1.5">
+                {cfg.quickStats.map(s => (
+                  <div key={s.label} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg"
+                    style={{ background: "#f4f7fb" }}>
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#4f5d6e" }}>{s.label}</span>
+                    <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 13, color: s.color }}>{s.value}</span>
+                  </div>
+                ))}
               </div>
-            </div>
-
-            {/* Quick stats */}
-            <div className="flex flex-col justify-center gap-2 px-5 py-6 min-w-[190px]">
-              <div style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#94a3b8", marginBottom: 4 }}>
-                Thống kê nhanh
-              </div>
-              {cfg.quickStats.map(s => (
-                <div key={s.label} className="flex items-center justify-between gap-3 px-3 py-2 rounded-lg"
-                  style={{ background: "#f4f7fb" }}>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#4f5d6e" }}>{s.label}</span>
-                  <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 15, color: s.color }}>{s.value}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
+
+        {/* KPI 2×2 grid */}
+        <div className="col-span-8 grid grid-cols-2 gap-4">
+          {cfg.kpis.map(k => (
+            <KpiCard key={k.label} {...k} onClick={() => nav(k.module)} />
+          ))}
+        </div>
       </div>
 
-      {/* ── Task Panel ───────────────────────────────────────── */}
-      {user && onNavigate && <TaskPanel cfg={cfg} onNavigate={nav} />}
-
-      {/* ── KPI Grid ─────────────────────────────────────────── */}
-      <div className="grid grid-cols-4 gap-4">
-        {cfg.kpis.map(k => (
-          <KpiCard key={k.label} {...k} onClick={() => nav(k.module)} />
-        ))}
-      </div>
-
-      {/* ── Main grid ────────────────────────────────────────── */}
-      <div className="grid grid-cols-12 gap-4">
+      {/* ══ ROW 2: Trend chart (7/12) + Task panel (5/12) ══════ */}
+      <div className="grid grid-cols-12 gap-4 items-stretch">
 
         {/* Trend chart */}
-        <div className="col-span-8 bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
+        <div className="col-span-7 bg-white rounded-[14px] p-5 flex flex-col" style={{ border: "1px solid #dde3ec" }}>
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -751,8 +763,6 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
             </div>
           </div>
           <TrendChart />
-
-          {/* Summary strip below chart */}
           <div className="mt-4 pt-4 grid grid-cols-3 gap-4" style={{ borderTop: "1px solid #eef2f8" }}>
             {[
               { label: "Tổng đề nghị T8", value: "118", color: "#1C5FBE", delta: "+21 so T7" },
@@ -768,38 +778,38 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
           </div>
         </div>
 
-        {/* Funnel + Deadline */}
-        <div className="col-span-4 space-y-4">
+        {/* Task panel */}
+        <div className="col-span-5">
+          <TaskPanel cfg={cfg} onNavigate={nav} />
+        </div>
+      </div>
+
+      {/* ══ ROW 3: Medal (5) + Activity (4) + Funnel+Deadline (3) ══ */}
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-5">
+          <MedalPodium onNavigate={nav} />
+        </div>
+        <div className="col-span-4">
+          <ActivityFeed onNavigate={nav} />
+        </div>
+        <div className="col-span-3 space-y-4">
           <FunnelPipeline onNavigate={nav} />
           <DeadlineCard onNavigate={nav} />
         </div>
       </div>
 
-      {/* ── Second row ───────────────────────────────────────── */}
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-6">
-          <MedalPodium onNavigate={nav} />
-        </div>
-        <div className="col-span-6">
-          <ActivityFeed onNavigate={nav} />
-        </div>
-      </div>
-
-      {/* ── AI Insight ───────────────────────────────────────── */}
+      {/* ══ ROW 4: AI Insight ═════════════════════════════════════ */}
       <div className="relative rounded-[14px] overflow-hidden"
         style={{ background: "linear-gradient(135deg, #f0f6ff, #e8f0ff)", border: "1px solid rgba(212,168,75,0.35)" }}>
-        {/* Subtle top-right decoration */}
         <div className="absolute top-0 right-0 size-32 opacity-[0.05] pointer-events-none"
           style={{ background: "radial-gradient(circle, #8a6400, transparent 70%)" }} />
 
         <div className="relative flex items-start gap-5 p-6">
-          {/* Icon */}
           <div className="size-11 rounded-[12px] flex items-center justify-center shrink-0"
             style={{ background: "linear-gradient(135deg, #0a1628, #1C5FBE)", boxShadow: "0 4px 16px rgba(28,95,190,0.3)" }}>
             <Sparkles className="size-5" style={{ color: "#8a6400" }} />
           </div>
 
-          {/* Content */}
           <div className="flex-1">
             <div className="flex items-center gap-2.5 mb-2">
               <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 18, color: "#0b1426" }}>
@@ -829,7 +839,6 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
             </div>
           </div>
 
-          {/* Star decoration */}
           <div className="shrink-0 hidden lg:flex flex-col items-center gap-2">
             <div className="size-16 rounded-full flex items-center justify-center"
               style={{ background: "rgba(212,168,75,0.12)", border: "1.5px solid rgba(212,168,75,0.3)" }}>
