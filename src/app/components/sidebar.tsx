@@ -46,7 +46,7 @@ const NAV_CONFIG: NavGroup[] = [
     group: "Tổng quan",
     items: [
       { icon: LayoutDashboard, label: "Bảng điều hành",    badge: null,   roles: "all" },
-      { icon: Trophy,          label: "Bảng xếp hạng",     badge: "Live", roles: "all" },
+      { icon: Trophy,          label: "Bảng xếp hạng",     badge: null,   roles: "all" },
       { icon: BarChart3,       label: "Phân tích thi đua",  badge: "AI",   roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
     ],
   },
