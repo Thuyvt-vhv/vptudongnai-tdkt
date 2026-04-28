@@ -1,0 +1,12 @@
+/*
+  Google Sans — available via Google Fonts (unofficial but functional endpoint).
+  Fallback chain: Google Sans → Product Sans → Roboto → Noto Sans → system sans-serif.
+  display=swap prevents invisible text during font load.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Google+Sans+Display:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Ensure Google Sans is explicitly declared with proper fallback */
+:root {
+  --font-sans: 'Google Sans', 'Product Sans', 'Roboto', 'Noto Sans', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
