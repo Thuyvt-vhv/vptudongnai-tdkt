@@ -325,12 +325,8 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
               <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 20, color: "#0b1426" }}>
                 Bảng Xếp hạng Thi đua
               </h1>
-              <div className="flex items-center gap-2 mt-0.5">
-                <div className="size-2 rounded-full"
-                  style={{ background: "#22c55e", boxShadow: pulse ? "0 0 8px #22c55e" : "none", transition: "box-shadow 0.3s" }} />
-                <span style={{ fontSize: 12, color: "#94a3b8" }}>
-                  Realtime · Cập nhật lúc {lastUpdate} · Tự động refresh 8s
-                </span>
+              <div className="mt-0.5" style={{ fontSize: 12, color: "#94a3b8" }}>
+                Cập nhật lúc {lastUpdate}
               </div>
             </div>
 
