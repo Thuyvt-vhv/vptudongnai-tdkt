@@ -651,99 +651,51 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
   const todayStr = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
 
   return (
-    <div className="p-6 space-y-4 max-w-[1600px]">
+    <div className="p-6 space-y-5 max-w-[1600px]">
 
-      {/* ══ ROW 1: Hero (4/12) + KPI 2×2 (8/12) ══════════════ */}
-      <div className="grid grid-cols-12 gap-4 items-stretch">
+      {/* ══ HEADER: Tiêu đề (7/12) + Việc cần làm (5/12) ════════ */}
+      <div className="grid grid-cols-12 gap-6 items-start">
 
-        {/* Hero card */}
-        <div className="col-span-4 rounded-[14px] overflow-hidden flex flex-col"
-          style={{
-            background: "#ffffff",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 24px rgba(11,20,38,0.06), 0 1px 4px rgba(11,20,38,0.04)",
-          }}>
-          <div className="h-[3px] w-full shrink-0"
-            style={{ background: "linear-gradient(90deg, #c8102e 0%, #1C5FBE 50%, #8a6400 100%)" }} />
-
-          <div className="flex-1 flex flex-col p-6 gap-4">
-            {/* Greeting */}
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
-                style={{ background: "#fef3c7", border: "1px solid #fcd34d" }}>
-                <Flame className="size-3" style={{ color: "#b45309" }} />
-                <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
-                  Đợt thi đua Quý II / 2026
-                </span>
-              </div>
-              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 22, color: "#0b1426", lineHeight: 1.25, marginBottom: 4 }}>
-                Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
-              </h1>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 11.5, color: "#94a3b8", marginBottom: 6 }}>{todayStr}</p>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "#5a6474", lineHeight: 1.6 }}>
-                {cfg.subtitle}
-              </p>
-            </div>
-
-            {/* CTA buttons */}
-            <div className="flex flex-col gap-2">
-              <button onClick={() => nav("Đề nghị khen thưởng")}
-                className="btn btn-primary btn-md inline-flex items-center justify-center gap-2 w-full"
-                style={{ fontFamily: "var(--font-sans)" }}>
-                <Award className="size-3.5" /> Đề nghị khen thưởng
-              </button>
-              <button onClick={() => nav("Phong trào thi đua")}
-                className="btn btn-secondary btn-md inline-flex items-center justify-center gap-1.5 w-full"
-                style={{ fontFamily: "var(--font-sans)" }}>
-                Phong trào <ArrowUpRight className="size-3.5" />
-              </button>
-            </div>
-
-            {/* Progress ring + quick stats */}
-            <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid #eef2f8", marginTop: "auto" }}>
-              <div className="relative shrink-0">
-                <RadialBarChart width={90} height={90} innerRadius="62%" outerRadius="96%"
-                  data={[{ v: cfg.progress, fill: "#1C5FBE" }]} startAngle={90} endAngle={-270}>
-                  <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                  <RadialBar background={{ fill: "#e2e8f0" }} dataKey="v" cornerRadius={8} />
-                </RadialBarChart>
-                <div className="absolute inset-0 grid place-items-center">
-                  <div className="text-center">
-                    <div style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 17, color: "#1C5FBE", lineHeight: 1 }}>
-                      {cfg.progress}<span style={{ fontSize: 10 }}>%</span>
-                    </div>
-                    <div style={{ fontFamily: "var(--font-sans)", fontSize: 8, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 3 }}>
-                      {cfg.progressLabel}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 space-y-1.5">
-                {cfg.quickStats.map(s => (
-                  <div key={s.label} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg"
-                    style={{ background: "#f4f7fb" }}>
-                    <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#4f5d6e" }}>{s.label}</span>
-                    <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 13, color: s.color }}>{s.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* Tiêu đề chính */}
+        <div className="col-span-7">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
+            style={{ background: "#fef3c7", border: "1px solid #fcd34d" }}>
+            <Flame className="size-3" style={{ color: "#b45309" }} />
+            <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#92400e" }}>
+              Đợt thi đua Quý II / 2026
+            </span>
+          </div>
+          <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 30, color: "#0b1426", lineHeight: 1.2, marginBottom: 4 }}>
+            Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
+          </h1>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#94a3b8", marginBottom: 8 }}>{todayStr}</p>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "#5a6474", lineHeight: 1.6, marginBottom: 20 }}>
+            {cfg.subtitle}
+          </p>
+          <div className="flex items-center gap-3">
+            <button onClick={() => nav("Đề nghị khen thưởng")}
+              className="btn btn-primary btn-md inline-flex items-center gap-2"
+              style={{ fontFamily: "var(--font-sans)" }}>
+              <Award className="size-3.5" /> Đề nghị khen thưởng
+            </button>
+            <button onClick={() => nav("Phong trào thi đua")}
+              className="btn btn-secondary btn-md inline-flex items-center gap-1.5"
+              style={{ fontFamily: "var(--font-sans)" }}>
+              Phong trào <ArrowUpRight className="size-3.5" />
+            </button>
           </div>
         </div>
 
-        {/* KPI 2×2 grid */}
-        <div className="col-span-8 grid grid-cols-2 gap-4">
-          {cfg.kpis.map(k => (
-            <KpiCard key={k.label} {...k} onClick={() => nav(k.module)} />
-          ))}
+        {/* Việc cần làm hôm nay — góc phải trên cùng */}
+        <div className="col-span-5">
+          <TaskPanel cfg={cfg} onNavigate={nav} />
         </div>
       </div>
 
-      {/* ══ ROW 2: Trend chart (7/12) + Task panel (5/12) ══════ */}
-      <div className="grid grid-cols-12 gap-4 items-stretch">
+      {/* ══ ROW 1: Xu hướng (7/12) + Bảng xếp hạng (5/12) ══════ */}
+      <div className="grid grid-cols-12 gap-4">
 
-        {/* Trend chart */}
-        <div className="col-span-7 bg-white rounded-[14px] p-5 flex flex-col" style={{ border: "1px solid #dde3ec" }}>
+        <div className="col-span-7 bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
@@ -765,9 +717,9 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
           <TrendChart />
           <div className="mt-4 pt-4 grid grid-cols-3 gap-4" style={{ borderTop: "1px solid #eef2f8" }}>
             {[
-              { label: "Tổng đề nghị T4/26", value: "63",  color: "#1C5FBE", delta: "−8 so T3" },
-              { label: "Tổng phê duyệt T4/26", value: "52", color: "#c8102e", delta: "−3 so T3" },
-              { label: "Tỉ lệ phê duyệt",   value: "83%", color: "#0f7a3e", delta: "−1% so T3" },
+              { label: "Tổng đề nghị T4/26",   value: "63",  color: "#1C5FBE", delta: "−8 so T3" },
+              { label: "Tổng phê duyệt T4/26", value: "52",  color: "#c8102e", delta: "−3 so T3" },
+              { label: "Tỉ lệ phê duyệt",       value: "83%", color: "#0f7a3e", delta: "−1% so T3" },
             ].map(s => (
               <div key={s.label} className="text-center">
                 <div className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: s.color }}>{s.value}</div>
@@ -778,78 +730,21 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
           </div>
         </div>
 
-        {/* Task panel */}
-        <div className="col-span-5">
-          <TaskPanel cfg={cfg} onNavigate={nav} />
-        </div>
-      </div>
-
-      {/* ══ ROW 3: Medal (5) + Activity (4) + Funnel+Deadline (3) ══ */}
-      <div className="grid grid-cols-12 gap-4">
         <div className="col-span-5">
           <MedalPodium onNavigate={nav} />
         </div>
-        <div className="col-span-4">
-          <ActivityFeed onNavigate={nav} />
-        </div>
-        <div className="col-span-3 space-y-4">
-          <FunnelPipeline onNavigate={nav} />
-          <DeadlineCard onNavigate={nav} />
-        </div>
       </div>
 
-      {/* ══ ROW 4: AI Insight ═════════════════════════════════════ */}
-      <div className="relative rounded-[14px] overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #f0f6ff, #e8f0ff)", border: "1px solid rgba(212,168,75,0.35)" }}>
-        <div className="absolute top-0 right-0 size-32 opacity-[0.05] pointer-events-none"
-          style={{ background: "radial-gradient(circle, #8a6400, transparent 70%)" }} />
-
-        <div className="relative flex items-start gap-5 p-6">
-          <div className="size-11 rounded-[12px] flex items-center justify-center shrink-0"
-            style={{ background: "linear-gradient(135deg, #0a1628, #1C5FBE)", boxShadow: "0 4px 16px rgba(28,95,190,0.3)" }}>
-            <Sparkles className="size-5" style={{ color: "#8a6400" }} />
-          </div>
-
-          <div className="flex-1">
-            <div className="flex items-center gap-2.5 mb-2">
-              <span style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 18, color: "#0b1426" }}>
-                Trợ lý AI Tố Nga gợi ý
-              </span>
-              <span className="px-2 py-0.5 rounded text-[13px] text-white tracking-wider uppercase"
-                style={{ fontFamily: "var(--font-sans)", fontWeight: 700, background: "#1C5FBE" }}>Beta</span>
-            </div>
-            <p className="text-[13.5px] leading-relaxed" style={{ fontFamily: "var(--font-sans)", color: "#4a3f2a" }}>
-              Phát hiện <strong style={{ color: "#0b1426" }}>7 cá nhân</strong> có thành tích vượt chuẩn "Chiến sĩ thi đua cơ sở" 3 năm liên tiếp — đủ điều kiện đề nghị{" "}
-              <em style={{ color: "#7a5a10" }}>Chiến sĩ thi đua cấp Tỉnh</em>.{" "}
-              Đồng thời cảnh báo <strong style={{ color: "#c8102e" }}>2 hồ sơ trùng lặp</strong> tại Sở Giáo dục (độ tương đồng 89%).
-            </p>
-            <div className="mt-3 flex items-center gap-2">
-              <button onClick={() => nav("Trợ lý AI Tố Nga")}
-                className="flex items-center gap-2 h-8 px-4 rounded-[7px] text-[12.5px] text-white transition-all hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #0a1628, #1C5FBE)", fontFamily: "var(--font-sans)", fontWeight: 600 }}>
-                <Sparkles className="size-3" style={{ color: "#8a6400" }} /> Xem phân tích
-              </button>
-              <button onClick={() => nav("Hồ sơ cán bộ")}
-                className="flex items-center gap-2 h-8 px-4 rounded-[7px] text-[12.5px] transition-all"
-                style={{ background: "rgba(212,168,75,0.12)", border: "1px solid rgba(212,168,75,0.35)", color: "#7a5a10", fontFamily: "var(--font-sans)", fontWeight: 600 }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(212,168,75,0.2)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(212,168,75,0.12)"; }}>
-                Xem hồ sơ đủ điều kiện
-              </button>
-            </div>
-          </div>
-
-          <div className="shrink-0 hidden lg:flex flex-col items-center gap-2">
-            <div className="size-16 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(212,168,75,0.12)", border: "1.5px solid rgba(212,168,75,0.3)" }}>
-              <svg viewBox="0 0 24 24" className="size-8" fill="#8a6400">
-                <path d="M12 2l2.39 6.95H22l-6.2 4.5 2.4 7.05L12 16l-6.2 4.5 2.4-7.05L2 8.95h7.61z" />
-              </svg>
-            </div>
-            <span className="text-[13px] text-center" style={{ color: "rgba(212,168,75,0.6)", fontFamily: "var(--font-sans)" }}>
-              7 đề xuất
-            </span>
-          </div>
+      {/* ══ ROW 2: Hoạt động (5/12) + Quy trình (4/12) + Hạn chót (3/12) ══ */}
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-5">
+          <ActivityFeed onNavigate={nav} />
+        </div>
+        <div className="col-span-4">
+          <FunnelPipeline onNavigate={nav} />
+        </div>
+        <div className="col-span-3">
+          <DeadlineCard onNavigate={nav} />
         </div>
       </div>
     </div>
