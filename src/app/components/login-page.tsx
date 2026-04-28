@@ -1,448 +1,456 @@
-﻿import { useState } from "react";
-import { Eye, EyeOff, LogIn, ChevronRight, CheckCircle2, Star, Sparkles,
-  Settings, Crown, Gavel, Users, User, Shield, Megaphone } from "lucide-react";
+import { useState } from "react";
+import { Eye, EyeOff, LogIn, CheckCircle2, Settings, Crown, Gavel,
+  Users, User, Shield, Megaphone, ArrowRight, Sparkles, ChevronRight } from "lucide-react";
 
 /* ─── Types ──────────────────────────────────────────────────────── */
 export interface LoginUser {
-  id: number;
-  name: string;
-  initials: string;
-  title: string;
-  unit: string;
-  email: string;
-  role: "quản trị hệ thống" | "lãnh đạo cấp cao" | "hội đồng" | "lãnh đạo đơn vị" | "cá nhân";
-  roleLabel: string;
-  roleColor: string;
-  roleBg: string;
-  avatarFrom: string;
-  avatarTo: string;
+  id: number; name: string; initials: string; title: string; unit: string;
+  email: string; role: "quản trị hệ thống"|"lãnh đạo cấp cao"|"hội đồng"|"lãnh đạo đơn vị"|"cá nhân";
+  roleLabel: string; roleColor: string; roleBg: string; avatarFrom: string; avatarTo: string;
 }
 
 interface DemoAccount extends LoginUser {
-  password: string;
-  desc: string;
-  perms: string[];
-  roleIcon: typeof User;
+  password: string; desc: string; perms: string[]; roleIcon: typeof User;
 }
 
-/* ─── Role visual config ─────────────────────────────────────────── */
 const ROLE_VISUAL = {
-  admin:                  { icon:Settings, color:"#0b1426", bg:"#e8ecf3", border:"#c5cdd9", from:"#1a2744", to:"#0b1426" },
-  leader:                 { icon:Crown,    color:"#92400e", bg:"#fef3c7", border:"#fcd34d", from:"#b45309", to:"#92400e" },
-  council:                { icon:Gavel,    color:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", from:"#8b5cf6", to:"#7c3aed" },
-  manager:                { icon:Users,    color:"#166534", bg:"#dcfce7", border:"#86efac", from:"#15803d", to:"#166534" },
-  user:                   { icon:User,     color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", from:"#2563eb", to:"#1C5FBE" },
-  "quản trị hệ thống":   { icon:Settings, color:"#0b1426", bg:"#e8ecf3", border:"#c5cdd9", from:"#1a2744", to:"#0b1426" },
-  "lãnh đạo cấp cao":    { icon:Crown,    color:"#92400e", bg:"#fef3c7", border:"#fcd34d", from:"#b45309", to:"#92400e" },
-  "hội đồng":            { icon:Gavel,    color:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", from:"#8b5cf6", to:"#7c3aed" },
-  "lãnh đạo đơn vị":     { icon:Users,    color:"#166534", bg:"#dcfce7", border:"#86efac", from:"#15803d", to:"#166534" },
-  "cá nhân":             { icon:User,     color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", from:"#2563eb", to:"#1C5FBE" },
-} as Record<string, { icon: typeof User; color: string; bg: string; border: string; from: string; to: string }>;
+  admin:   { icon:Settings, color:"#0b1426", bg:"#e8ecf3", border:"#c5cdd9", from:"#1a2744", to:"#0b1426", label:"Quản trị" },
+  leader:  { icon:Crown,    color:"#92400e", bg:"#fef3c7", border:"#fcd34d", from:"#b45309", to:"#92400e", label:"Lãnh đạo" },
+  council: { icon:Gavel,    color:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", from:"#8b5cf6", to:"#7c3aed", label:"Hội đồng" },
+  manager: { icon:Users,    color:"#166534", bg:"#dcfce7", border:"#86efac", from:"#15803d", to:"#166534", label:"Đơn vị" },
+  user:    { icon:User,     color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd", from:"#2563eb", to:"#1C5FBE", label:"Cá nhân" },
+} as const;
 
-/* ─── Demo accounts (5 vai trò chuẩn) ───────────────────────────── */
 const DEMO_ACCOUNTS: DemoAccount[] = [
   {
-    id: 14, name: "Hệ thống (Admin)", initials: "AD",
-    title: "Quản trị viên hệ thống", unit: "Trung tâm CNTT – VP UBND Tỉnh",
-    email: "admin@dongnai.gov.vn", password: "demo123",
-    role: "quản trị hệ thống", roleLabel: "Quản trị hệ thống",
-    roleColor: ROLE_VISUAL.admin.color, roleBg: ROLE_VISUAL.admin.bg,
-    avatarFrom: ROLE_VISUAL.admin.from, avatarTo: ROLE_VISUAL.admin.to,
-    roleIcon: ROLE_VISUAL.admin.icon,
-    desc: "Toàn quyền hệ thống — phân quyền, cấu hình, audit log",
-    perms: ["Phân quyền", "Danh mục", "Sao lưu", "Toàn bộ nghiệp vụ"],
+    id:14, name:"Hệ thống (Admin)", initials:"AD",
+    title:"Quản trị viên hệ thống", unit:"Trung tâm CNTT – VP UBND Tỉnh",
+    email:"admin@dongnai.gov.vn", password:"demo123",
+    role:"quản trị hệ thống", roleLabel:"Quản trị hệ thống",
+    roleColor:ROLE_VISUAL.admin.color, roleBg:ROLE_VISUAL.admin.bg,
+    avatarFrom:ROLE_VISUAL.admin.from, avatarTo:ROLE_VISUAL.admin.to,
+    roleIcon:ROLE_VISUAL.admin.icon,
+    desc:"Toàn quyền hệ thống — phân quyền, cấu hình, audit log",
+    perms:["Phân quyền","Danh mục","Sao lưu","Toàn bộ nghiệp vụ"],
   },
   {
-    id: 1, name: "Nguyễn Văn Thắng", initials: "NT",
-    title: "Phó Chánh VP UBND Tỉnh", unit: "Văn phòng UBND Tỉnh Đồng Nai",
-    email: "nvthang@dongnai.gov.vn", password: "demo123",
-    role: "lãnh đạo cấp cao", roleLabel: "Lãnh đạo cấp cao",
-    roleColor: ROLE_VISUAL.leader.color, roleBg: ROLE_VISUAL.leader.bg,
-    avatarFrom: ROLE_VISUAL.leader.from, avatarTo: ROLE_VISUAL.leader.to,
-    roleIcon: ROLE_VISUAL.leader.icon,
-    desc: "Phê duyệt phong trào, ký số CA, ban hành quyết định cấp tỉnh",
-    perms: ["Ký số CA", "Phê duyệt", "Ban hành QĐ", "Báo cáo"],
+    id:1, name:"Nguyễn Văn Thắng", initials:"NT",
+    title:"Phó Chánh VP UBND Tỉnh", unit:"Văn phòng UBND Tỉnh Đồng Nai",
+    email:"nvthang@dongnai.gov.vn", password:"demo123",
+    role:"lãnh đạo cấp cao", roleLabel:"Lãnh đạo cấp cao",
+    roleColor:ROLE_VISUAL.leader.color, roleBg:ROLE_VISUAL.leader.bg,
+    avatarFrom:ROLE_VISUAL.leader.from, avatarTo:ROLE_VISUAL.leader.to,
+    roleIcon:ROLE_VISUAL.leader.icon,
+    desc:"Phê duyệt phong trào, ký số CA, ban hành quyết định cấp tỉnh",
+    perms:["Ký số CA","Phê duyệt","Ban hành QĐ","Báo cáo"],
   },
   {
-    id: 5, name: "Võ Minh Tuấn", initials: "MT",
-    title: "Chuyên viên TĐKT (Thư ký HĐ)", unit: "Sở Nội vụ – Phòng TĐKT",
-    email: "vmtuan@dongnai.gov.vn", password: "demo123",
-    role: "hội đồng", roleLabel: "Hội đồng",
-    roleColor: ROLE_VISUAL.council.color, roleBg: ROLE_VISUAL.council.bg,
-    avatarFrom: ROLE_VISUAL.council.from, avatarTo: ROLE_VISUAL.council.to,
-    roleIcon: ROLE_VISUAL.council.icon,
-    desc: "Tạo phong trào, chấm điểm HĐ xét duyệt, kiểm tra COI tự động",
-    perms: ["Phong trào", "Chấm điểm HĐ", "Thẩm định", "Biên bản"],
+    id:5, name:"Võ Minh Tuấn", initials:"MT",
+    title:"Chuyên viên TĐKT (Thư ký HĐ)", unit:"Sở Nội vụ – Phòng TĐKT",
+    email:"vmtuan@dongnai.gov.vn", password:"demo123",
+    role:"hội đồng", roleLabel:"Hội đồng",
+    roleColor:ROLE_VISUAL.council.color, roleBg:ROLE_VISUAL.council.bg,
+    avatarFrom:ROLE_VISUAL.council.from, avatarTo:ROLE_VISUAL.council.to,
+    roleIcon:ROLE_VISUAL.council.icon,
+    desc:"Tạo phong trào, chấm điểm HĐ xét duyệt, kiểm tra COI tự động",
+    perms:["Phong trào","Chấm điểm HĐ","Thẩm định","Biên bản"],
   },
   {
-    id: 9, name: "Trần Bá Thành", initials: "BT",
-    title: "Phụ trách TĐKT", unit: "Sở Nội vụ Đồng Nai",
-    email: "tbthanh@dongnai.gov.vn", password: "demo123",
-    role: "lãnh đạo đơn vị", roleLabel: "Lãnh đạo đơn vị",
-    roleColor: ROLE_VISUAL.manager.color, roleBg: ROLE_VISUAL.manager.bg,
-    avatarFrom: ROLE_VISUAL.manager.from, avatarTo: ROLE_VISUAL.manager.to,
-    roleIcon: ROLE_VISUAL.manager.icon,
-    desc: "Tạo hồ sơ đề nghị đơn vị, tham gia lấy ý kiến, trình cấp trên",
-    perms: ["Tạo hồ sơ", "Đề nghị KT", "Lấy ý kiến", "Báo cáo đơn vị"],
+    id:9, name:"Trần Bá Thành", initials:"BT",
+    title:"Phụ trách TĐKT", unit:"Sở Nội vụ Đồng Nai",
+    email:"tbthanh@dongnai.gov.vn", password:"demo123",
+    role:"lãnh đạo đơn vị", roleLabel:"Lãnh đạo đơn vị",
+    roleColor:ROLE_VISUAL.manager.color, roleBg:ROLE_VISUAL.manager.bg,
+    avatarFrom:ROLE_VISUAL.manager.from, avatarTo:ROLE_VISUAL.manager.to,
+    roleIcon:ROLE_VISUAL.manager.icon,
+    desc:"Tạo hồ sơ đề nghị đơn vị, tham gia lấy ý kiến, trình cấp trên",
+    perms:["Tạo hồ sơ","Đề nghị KT","Lấy ý kiến","Báo cáo đơn vị"],
   },
   {
-    id: 11, name: "Lê Thị Thanh Xuân", initials: "TX",
-    title: "Phó Giám đốc Sở", unit: "Sở Giáo dục & Đào tạo Đồng Nai",
-    email: "ltxuan@soe.dongnai.gov.vn", password: "demo123",
-    role: "cá nhân", roleLabel: "Cá nhân",
-    roleColor: ROLE_VISUAL.user.color, roleBg: ROLE_VISUAL.user.bg,
-    avatarFrom: ROLE_VISUAL.user.from, avatarTo: ROLE_VISUAL.user.to,
-    roleIcon: ROLE_VISUAL.user.icon,
-    desc: "Đăng ký tham gia phong trào, nộp hồ sơ, gửi ý kiến, theo dõi kết quả",
-    perms: ["Đăng ký PT", "Nộp hồ sơ", "Gửi ý kiến", "Xem QĐ"],
+    id:11, name:"Lê Thị Thanh Xuân", initials:"TX",
+    title:"Phó Giám đốc Sở", unit:"Sở Giáo dục & Đào tạo Đồng Nai",
+    email:"ltxuan@soe.dongnai.gov.vn", password:"demo123",
+    role:"cá nhân", roleLabel:"Cá nhân",
+    roleColor:ROLE_VISUAL.user.color, roleBg:ROLE_VISUAL.user.bg,
+    avatarFrom:ROLE_VISUAL.user.from, avatarTo:ROLE_VISUAL.user.to,
+    roleIcon:ROLE_VISUAL.user.icon,
+    desc:"Đăng ký tham gia phong trào, nộp hồ sơ, gửi ý kiến, theo dõi kết quả",
+    perms:["Đăng ký PT","Nộp hồ sơ","Gửi ý kiến","Xem QĐ"],
   },
 ];
 
-/* ─── Stars decoration ───────────────────────────────────────────── */
-function StarRow({ n, opacity = 0.35 }: { n: number; opacity?: number }) {
-  return (
-    <div className="flex items-center gap-2" style={{ opacity }}>
-      {Array.from({ length: n }).map((_, i) => (
-        <Star key={i} className="fill-[#ffd27a] text-[#ffd27a]" style={{ width: i === Math.floor(n / 2) ? 18 : 13, height: i === Math.floor(n / 2) ? 18 : 13 }} />
-      ))}
-    </div>
-  );
-}
+const FEATURES = [
+  { icon:"🏆", text:"Quản lý Phong trào thi đua toàn tỉnh" },
+  { icon:"✍️", text:"Ký số CA/PKI tích hợp sẵn" },
+  { icon:"🤖", text:"Trợ lý AI Tố Nga hỗ trợ 24/7" },
+  { icon:"📊", text:"Bảng xếp hạng & Phân tích realtime" },
+];
 
-/* ─── Main Login Page ────────────────────────────────────────────── */
-export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (user: LoginUser) => void; onPublicLYK?: () => void }) {
+export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) => void; onPublicLYK?: () => void }) {
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError]       = useState("");
   const [loading, setLoading]   = useState(false);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number|null>(null);
+  const [hoveredId, setHoveredId] = useState<number|null>(null);
 
   const pickDemo = (acc: DemoAccount) => {
-    setSelected(acc.id);
-    setEmail(acc.email);
-    setPassword(acc.password);
-    setError("");
+    if (loading) return;
+    setSelected(acc.id); setEmail(acc.email); setPassword(acc.password); setError("");
     setLoading(true);
     setTimeout(() => {
-      const { password: _p, desc: _d, perms: _pr, roleIcon: _ri, ...user } = acc;
-      onLogin(user);
-      setLoading(false);
+      const { password:_p, desc:_d, perms:_pr, roleIcon:_ri, ...user } = acc;
+      onLogin(user); setLoading(false);
     }, 700);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+    e.preventDefault(); setError(""); setLoading(true);
     setTimeout(() => {
       const acc = DEMO_ACCOUNTS.find(a => a.email === email && a.password === password);
       if (acc) {
-        const { password: _p, desc: _d, perms: _pr, roleIcon: _ri, ...user } = acc;
+        const { password:_p, desc:_d, perms:_pr, roleIcon:_ri, ...user } = acc;
         onLogin(user);
       } else {
-        setError("Sai tài khoản hoặc mật khẩu. Vui lòng chọn tài khoản demo bên dưới.");
-        setSelected(null);
+        setError("Sai tài khoản hoặc mật khẩu."); setSelected(null);
       }
       setLoading(false);
     }, 800);
   };
 
+  const hovered = hoveredId ? DEMO_ACCOUNTS.find(a => a.id === hoveredId) : null;
+
   return (
-    <div className="min-h-screen flex" style={{ fontFamily: "var(--font-sans)" }}>
+    <div className="min-h-screen flex overflow-hidden" style={{ fontFamily:"var(--font-sans)", background:"#0a0f1e" }}>
 
-      {/* ── Left: Branding panel ──────────────────────────── */}
-      <div className="hidden lg:flex flex-col w-[420px] shrink-0 relative overflow-hidden"
-        style={{ background: "linear-gradient(160deg,#0d1b35 0%,#0b1426 60%,#0a1020 100%)" }}>
+      {/* ══════════════════════════════════════════
+          LEFT — Visual Brand Panel
+      ══════════════════════════════════════════ */}
+      <div className="hidden lg:flex flex-col w-[480px] shrink-0 relative overflow-hidden">
 
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-10"
-            style={{ background: "radial-gradient(circle,#c8102e,transparent 70%)" }}/>
-          <div className="absolute -bottom-32 -right-20 w-80 h-80 rounded-full opacity-8"
-            style={{ background: "radial-gradient(circle,#1C5FBE,transparent 70%)" }}/>
-          <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1.5" fill="#ffd27a"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#dots)"/>
-          </svg>
-        </div>
+        {/* Animated gradient background */}
+        <div className="absolute inset-0" style={{
+          background:"linear-gradient(135deg, #0d1b3e 0%, #0b1426 40%, #0f0a1e 100%)",
+        }}/>
 
-        <div className="relative z-10 flex flex-col h-full px-10 py-12">
+        {/* Glow blobs */}
+        <div className="absolute" style={{ top:-80, left:-80, width:400, height:400,
+          background:"radial-gradient(circle, rgba(200,16,46,0.18) 0%, transparent 70%)", borderRadius:"50%" }}/>
+        <div className="absolute" style={{ bottom:-100, right:-60, width:360, height:360,
+          background:"radial-gradient(circle, rgba(28,95,190,0.15) 0%, transparent 70%)", borderRadius:"50%" }}/>
+        <div className="absolute" style={{ top:"40%", right:40, width:200, height:200,
+          background:"radial-gradient(circle, rgba(212,168,75,0.08) 0%, transparent 70%)", borderRadius:"50%" }}/>
+
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.035]" style={{
+          backgroundImage:"linear-gradient(rgba(255,210,122,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,210,122,0.6) 1px, transparent 1px)",
+          backgroundSize:"48px 48px",
+        }}/>
+
+        {/* Top border accent */}
+        <div className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background:"linear-gradient(to right, transparent, #c8102e, #d4a84b, transparent)" }}/>
+
+        <div className="relative z-10 flex flex-col h-full px-12 py-14">
+
           {/* Emblem */}
-          <div className="flex flex-col items-center gap-3 mb-10">
-            <div className="relative flex items-center justify-center" style={{ width: 96, height: 96 }}>
-              <div className="absolute inset-0 rounded-full border-2 opacity-40" style={{ borderColor:"#ffd27a" }}/>
-              <div className="absolute inset-[6px] rounded-full border opacity-25" style={{ borderColor:"#ffd27a" }}/>
-              <div className="relative w-16 h-16 rounded-full grid place-items-center"
-                style={{ background: "linear-gradient(135deg,#c8102e,#7a0a1c)" }}>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight:700, color:"#ffd27a", letterSpacing:2 }}>VQ</span>
+          <div className="flex items-center gap-4 mb-16">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-2xl opacity-40 blur-sm"
+                style={{ background:"linear-gradient(135deg,#c8102e,#d4a84b)" }}/>
+              <div className="relative w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ background:"linear-gradient(135deg,#c8102e 0%,#7a0a1c 100%)",
+                  border:"1.5px solid rgba(255,210,122,0.3)",
+                  boxShadow:"0 8px 24px rgba(200,16,46,0.4), inset 0 1px 0 rgba(255,255,255,0.1)" }}>
+                <span style={{ fontSize:18, fontWeight:800, color:"#ffd27a", letterSpacing:2 }}>VQ</span>
               </div>
             </div>
-            <StarRow n={5} opacity={0.55}/>
-          </div>
-
-          {/* Title */}
-          <div className="text-center mb-8">
-            <p className="text-[13px] tracking-[0.25em] uppercase mb-2" style={{ color:"#8a9abc" }}>
-              Tỉnh ủy Đồng Nai
-            </p>
-            <h1 className="text-[24px] leading-tight mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:"#ffd27a" }}>
-              VPTU Đồng Nai
-            </h1>
-            <p className="text-[14px]" style={{ color:"#b0bcd4" }}>
-              Hệ thống Thi đua – Khen thưởng
-            </p>
-          </div>
-
-          {/* Divider */}
-          <div className="flex items-center gap-3 mb-7">
-            <div className="flex-1 h-px" style={{ background:"linear-gradient(to right,transparent,rgba(255,210,122,0.3))" }}/>
-            <Star className="size-3 fill-[#ffd27a] text-[#ffd27a] opacity-50"/>
-            <div className="flex-1 h-px" style={{ background:"linear-gradient(to left,transparent,rgba(255,210,122,0.3))" }}/>
-          </div>
-
-          {/* 5 role chips */}
-          <div className="mb-7">
-            <p className="text-[13px] uppercase tracking-widest mb-3 text-center" style={{ color:"#4a5878" }}>
-              5 Vai trò hệ thống
-            </p>
-            <div className="flex flex-col gap-2">
-              {DEMO_ACCOUNTS.map(acc => {
-                const Icon = acc.roleIcon;
-                return (
-                  <div key={acc.role} className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg"
-                    style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.07)" }}>
-                    <div className="size-5 rounded-full flex items-center justify-center shrink-0"
-                      style={{ background:acc.roleColor }}>
-                      <Icon className="size-2.5 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="text-[13px]" style={{ color:acc.roleBg, fontWeight:600 }}>
-                        {acc.roleLabel}
-                      </span>
-                      <span className="text-[13px] ml-1.5 opacity-50" style={{ color:"#b0bcd4" }}>
-                        {acc.title}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
+            <div>
+              <div className="text-[13px] tracking-[0.2em] uppercase mb-0.5" style={{ color:"rgba(176,188,212,0.6)" }}>
+                Tỉnh ủy Đồng Nai
+              </div>
+              <div className="text-[18px] font-bold" style={{ color:"#ffd27a" }}>VPTU Đồng Nai</div>
             </div>
           </div>
 
-          {/* Features */}
-          <div className="space-y-3 mb-8">
-            {[
-              "AI gợi ý hồ sơ đủ điều kiện",
-              "Bảng xếp hạng thi đua realtime",
-              "Ký số tích hợp CA – PKI",
-              "Phát hiện hồ sơ trùng lặp tự động",
-            ].map(f => (
-              <div key={f} className="flex items-center gap-3">
-                <span className="text-[13px]" style={{ color:"#ffd27a" }}></span>
-                <span className="text-[13px]" style={{ color:"#b0bcd4" }}>{f}</span>
+          {/* Big headline */}
+          <div className="mb-12">
+            <h1 className="leading-tight mb-4" style={{ fontSize:38, fontWeight:800, color:"#ffffff", lineHeight:1.15 }}>
+              Hệ thống<br/>
+              <span style={{ background:"linear-gradient(90deg,#ffd27a,#f59e0b)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                Thi đua
+              </span>{" "}
+              <span style={{ color:"rgba(255,255,255,0.9)" }}>Khen thưởng</span>
+            </h1>
+            <p className="text-[14px] leading-relaxed" style={{ color:"rgba(176,188,212,0.75)", maxWidth:300 }}>
+              Nền tảng số hóa toàn diện công tác thi đua khen thưởng Tỉnh Đồng Nai
+            </p>
+          </div>
+
+          {/* Feature list */}
+          <div className="space-y-4 mb-12">
+            {FEATURES.map((f, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)" }}>
+                  <span style={{ fontSize:16 }}>{f.icon}</span>
+                </div>
+                <span className="text-[14px]" style={{ color:"rgba(200,212,235,0.85)" }}>{f.text}</span>
               </div>
             ))}
           </div>
 
           {/* AI badge */}
-          <div className="mt-auto flex items-center gap-2 p-3 rounded-xl"
-            style={{ background:"rgba(200,16,46,0.12)", border:"1px solid rgba(200,16,46,0.25)" }}>
-            <Sparkles className="size-4 shrink-0" style={{ color:"#ff6b8a" }}/>
-            <div>
-              <p className="text-[13px]" style={{ color:"#ff8fa3", fontWeight:600 }}>Trợ lý AI Tố Nga</p>
-              <p className="text-[13px]" style={{ color:"#8a9abc" }}>Tư vấn hồ sơ thông minh 24/7</p>
+          <div className="rounded-2xl p-4 mb-auto" style={{
+            background:"rgba(255,255,255,0.04)",
+            border:"1px solid rgba(255,255,255,0.08)",
+            backdropFilter:"blur(8px)",
+          }}>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background:"linear-gradient(135deg,#7c3aed,#c026d3)" }}>
+                <Sparkles className="size-4 text-white"/>
+              </div>
+              <div>
+                <div className="text-[14px] font-semibold" style={{ color:"#e2d9f3" }}>Trợ lý AI Tố Nga</div>
+                <div className="text-[13px]" style={{ color:"rgba(176,160,220,0.65)" }}>Tư vấn hồ sơ thông minh 24/7</div>
+              </div>
+              <div className="ml-auto flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"/>
+                <span className="text-[12px] text-green-400">Online</span>
+              </div>
             </div>
           </div>
 
-          <p className="mt-5 text-center text-[13px]" style={{ color:"#4a5878" }}>
+          {/* Footer */}
+          <p className="mt-8 text-[13px]" style={{ color:"rgba(74,88,120,0.8)" }}>
             © 2026 VPTU Đồng Nai · Phiên bản 1.0.0
           </p>
         </div>
       </div>
 
-      {/* ── Right: Login + Demo cards ─────────────────────── */}
-      <div className="flex-1 overflow-y-auto" style={{ background:"#fbf8f2" }}>
-        <div className="max-w-[680px] mx-auto px-8 py-12">
+      {/* ══════════════════════════════════════════
+          RIGHT — Login Panel
+      ══════════════════════════════════════════ */}
+      <div className="flex-1 flex items-center justify-center overflow-y-auto py-10"
+        style={{ background:"#f8f6f1" }}>
 
-          {/* Logo mobile */}
+        <div className="w-full max-w-[480px] px-6">
+
+          {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-full grid place-items-center shrink-0"
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
               style={{ background:"linear-gradient(135deg,#c8102e,#7a0a1c)" }}>
-              <span style={{ fontFamily: "var(--font-sans)", fontSize:14, fontWeight:700, color:"#ffd27a" }}>VQ</span>
+              <span style={{ fontSize:13, fontWeight:800, color:"#ffd27a" }}>VQ</span>
             </div>
             <div>
-              <p className="text-[14px]" style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:"#0b1426" }}>VPTU Đồng Nai</p>
-              <p className="text-[13px]" style={{ color:"#635647" }}>Thi đua – Khen thưởng Tỉnh Đồng Nai</p>
+              <div className="text-[14px] font-bold text-[#0b1426]">VPTU Đồng Nai</div>
+              <div className="text-[13px] text-[#635647]">Hệ thống Thi đua – Khen thưởng</div>
             </div>
           </div>
 
-          {/* Heading */}
-          <div className="mb-7">
-            <h2 className="text-[24px]" style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:"#0b1426" }}>
-              Đăng nhập
-            </h2>
-            <p className="text-[14px] mt-1" style={{ color:"#635647" }}>
-              Nhập thông tin tài khoản hoặc chọn nhanh bên dưới để trải nghiệm hệ thống
-            </p>
+          {/* Header */}
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
+              style={{ background:"#1C5FBE14", border:"1px solid #1C5FBE22" }}>
+              <Shield className="size-3.5" style={{ color:"#1C5FBE" }}/>
+              <span className="text-[13px] font-semibold" style={{ color:"#1C5FBE" }}>Cổng đăng nhập bảo mật</span>
+            </div>
+            <h2 className="text-[24px] font-bold text-[#0b1426] mb-1">Chào mừng trở lại</h2>
+            <p className="text-[14px] text-[#635647]">Đăng nhập để truy cập hệ thống Thi đua Khen thưởng</p>
           </div>
 
-          {/* Login form */}
-          <form onSubmit={handleSubmit} className="space-y-4 mb-8">
-            <div className="ds-input-root">
-              <label className="ds-input-label">Email / Tài khoản</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                placeholder="ten@dongnai.gov.vn" className="ds-input ds-input-md w-full"
-                autoComplete="username" required />
-            </div>
-            <div className="ds-input-root">
-              <label className="ds-input-label">Mật khẩu</label>
-              <div className="relative">
-                <input type={showPass ? "text" : "password"}
-                  value={password} onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••" className="ds-input ds-input-md w-full pr-11"
-                  autoComplete="current-password" required />
-                <button type="button" onClick={() => setShowPass(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#635647] hover:text-[#0b1426] transition-colors outline-none focus-visible:text-[#1C5FBE]">
-                  {showPass ? <EyeOff className="size-4"/> : <Eye className="size-4"/>}
-                </button>
-              </div>
-            </div>
-
-            {error && (
-              <div className="flex items-start gap-2.5 p-3 rounded-lg text-[13px]"
-                style={{ background:"#fef2f2", border:"1px solid #fecaca", color:"#991b1b" }}>
-                <span className="shrink-0 mt-0.5">⚠</span><span>{error}</span>
-              </div>
-            )}
-
-            <button type="submit" disabled={loading}
-              className="btn btn-md btn-primary w-full justify-center gap-2"
-              style={{ opacity: loading ? 0.7 : 1 }}>
-              {loading
-                ? <span className="flex items-center gap-2">
-                    <span className="size-4 rounded-full border-2 border-white border-t-transparent animate-spin"/>
-                    Đang xác thực…
-                  </span>
-                : <><LogIn className="size-4"/> Đăng nhập</>}
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex-1 h-px" style={{ background:"#e8e2d4" }}/>
-            <span className="text-[13px] px-2 flex items-center gap-1.5"
-              style={{ color:"#635647", background:"#fbf8f2" }}>
-              <Shield className="size-3.5" />
-              Chọn nhanh theo vai trò (5 roles)
-            </span>
-            <div className="flex-1 h-px" style={{ background:"#e8e2d4" }}/>
-          </div>
-
-          {/* Demo accounts — 5 role cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {DEMO_ACCOUNTS.map(acc => {
-              const isSel = selected === acc.id;
-              const rv    = ROLE_VISUAL[acc.role];
-              const Icon  = acc.roleIcon;
-              return (
-                <button
-                  key={acc.id}
-                  onClick={() => !loading && pickDemo(acc)}
-                  disabled={loading}
-                  className="text-left rounded-xl border-2 transition-all outline-none focus-visible:ring-2 focus-visible:ring-[#1C5FBE] group relative overflow-hidden"
+          {/* Login form card */}
+          <div className="rounded-2xl p-6 mb-5" style={{
+            background:"#ffffff",
+            border:"1px solid #e8e2d4",
+            boxShadow:"0 4px 24px rgba(11,20,38,0.07), 0 1px 3px rgba(11,20,38,0.04)",
+          }}>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Email */}
+              <div>
+                <label className="block text-[13px] font-semibold text-[#0b1426] mb-1.5">
+                  Email / Tài khoản
+                </label>
+                <input
+                  type="email" value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="ten@dongnai.gov.vn"
+                  autoComplete="username" required
+                  className="w-full h-11 px-4 rounded-xl border text-[14px] outline-none transition-all"
                   style={{
-                    borderColor: isSel ? rv.color : rv.border,
-                    background: isSel ? rv.bg : "white",
-                    boxShadow: isSel ? `0 0 0 3px ${rv.color}18, 0 4px 12px ${rv.color}15` : "0 1px 3px rgba(0,0,0,0.06)",
-                    cursor: loading ? "not-allowed" : "pointer",
-                    transform: isSel ? "translateY(-1px)" : "none",
-                  }}>
+                    borderColor:"#e0d9cd", background:"#faf8f4",
+                    color:"#0b1426",
+                  }}
+                  onFocus={e => { e.target.style.borderColor="#1C5FBE"; e.target.style.boxShadow="0 0 0 3px rgba(28,95,190,0.12)"; }}
+                  onBlur={e => { e.target.style.borderColor="#e0d9cd"; e.target.style.boxShadow="none"; }}
+                />
+              </div>
 
-                  {/* Top color band */}
-                  <div className="h-0.5" style={{ background:`linear-gradient(to right, ${rv.from}, ${rv.to})` }} />
+              {/* Password */}
+              <div>
+                <label className="block text-[13px] font-semibold text-[#0b1426] mb-1.5">
+                  Mật khẩu
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPass ? "text" : "password"} value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    autoComplete="current-password" required
+                    className="w-full h-11 pl-4 pr-12 rounded-xl border text-[14px] outline-none transition-all"
+                    style={{ borderColor:"#e0d9cd", background:"#faf8f4", color:"#0b1426" }}
+                    onFocus={e => { e.target.style.borderColor="#1C5FBE"; e.target.style.boxShadow="0 0 0 3px rgba(28,95,190,0.12)"; }}
+                    onBlur={e => { e.target.style.borderColor="#e0d9cd"; e.target.style.boxShadow="none"; }}
+                  />
+                  <button type="button" onClick={() => setShowPass(v => !v)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors"
+                    style={{ color:"#74654a" }}>
+                    {showPass ? <EyeOff className="size-4"/> : <Eye className="size-4"/>}
+                  </button>
+                </div>
+              </div>
 
-                  <div className="p-3.5">
-                    <div className="flex items-start gap-3">
-                      {/* Avatar with role gradient */}
-                      <div className="size-10 rounded-full shrink-0 grid place-items-center text-white text-[13px] relative"
-                        style={{ background:`linear-gradient(135deg,${rv.from},${rv.to})`,
-                          fontFamily: "var(--font-sans)", fontWeight:700,
-                          boxShadow: isSel ? `0 2px 8px ${rv.color}40` : "none" }}>
-                        {isSel && loading
-                          ? <span className="size-4 rounded-full border-2 border-white border-t-transparent animate-spin"/>
-                          : acc.initials}
-                      </div>
+              {/* Error */}
+              {error && (
+                <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-[13px]"
+                  style={{ background:"#fff1f2", border:"1px solid #fecdd3", color:"#9f1239" }}>
+                  <span className="shrink-0">⚠</span><span>{error}</span>
+                </div>
+              )}
 
-                      <div className="flex-1 min-w-0">
-                        {/* Role badge + check */}
-                        <div className="flex items-center justify-between gap-1 mb-1">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[13px] border"
-                            style={{ background:rv.bg, color:rv.color, borderColor:rv.border,
-                              fontWeight:600, letterSpacing:"0.04em" }}>
-                            <Icon className="size-2.5" />
-                            {acc.roleLabel}
-                          </span>
-                          {isSel && !loading && <CheckCircle2 className="size-4 shrink-0" style={{ color:rv.color }}/>}
-                          {!isSel && <ChevronRight className="size-3.5 shrink-0 opacity-0 group-hover:opacity-60 transition-opacity" style={{ color:rv.color }}/>}
-                        </div>
+              {/* Submit */}
+              <button type="submit" disabled={loading}
+                className="w-full h-11 rounded-xl flex items-center justify-center gap-2 text-[14px] font-semibold transition-all"
+                style={{
+                  background: loading ? "#6b9fd4" : "linear-gradient(135deg,#1C5FBE,#1752a8)",
+                  color:"#ffffff",
+                  boxShadow: loading ? "none" : "0 4px 12px rgba(28,95,190,0.35)",
+                  cursor: loading ? "not-allowed" : "pointer",
+                }}>
+                {loading
+                  ? <><span className="size-4 rounded-full border-2 border-white/50 border-t-white animate-spin"/>Đang xác thực…</>
+                  : <><LogIn className="size-4"/>Đăng nhập<ArrowRight className="size-4 ml-auto"/></>}
+              </button>
+            </form>
+          </div>
 
-                        {/* Name */}
-                        <div className="text-[13px] mb-0.5" style={{ color:"#0b1426", fontWeight:isSel?600:500 }}>
-                          {acc.name}
-                        </div>
+          {/* Quick-access role section */}
+          <div className="rounded-2xl overflow-hidden" style={{
+            border:"1px solid #e8e2d4",
+            boxShadow:"0 2px 12px rgba(11,20,38,0.05)",
+          }}>
+            {/* Header */}
+            <div className="px-5 py-3.5 flex items-center gap-2"
+              style={{ background:"#ffffff", borderBottom:"1px solid #f0ebe0" }}>
+              <div className="w-5 h-5 rounded-md flex items-center justify-center"
+                style={{ background:"#0b1426" }}>
+                <User className="size-3 text-white"/>
+              </div>
+              <span className="text-[13px] font-semibold text-[#0b1426]">Đăng nhập nhanh theo vai trò</span>
+              <span className="ml-auto text-[12px] px-2 py-0.5 rounded-full font-semibold"
+                style={{ background:"#f0ece3", color:"#635647" }}>Demo</span>
+            </div>
 
-                        {/* Title + unit */}
-                        <p className="text-[13px] truncate" style={{ color:"#635647" }}>
-                          {acc.title} · {acc.unit}
-                        </p>
-                      </div>
+            {/* Role pills row */}
+            <div className="p-4 flex gap-2 flex-wrap" style={{ background:"#faf8f4" }}>
+              {DEMO_ACCOUNTS.map(acc => {
+                const rv = ROLE_VISUAL[
+                  acc.role === "quản trị hệ thống" ? "admin"
+                  : acc.role === "lãnh đạo cấp cao" ? "leader"
+                  : acc.role === "hội đồng" ? "council"
+                  : acc.role === "lãnh đạo đơn vị" ? "manager" : "user"
+                ];
+                const Icon = rv.icon;
+                const isSel = selected === acc.id;
+                const isHov = hoveredId === acc.id;
+                return (
+                  <button key={acc.id}
+                    onClick={() => pickDemo(acc)}
+                    onMouseEnter={() => setHoveredId(acc.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                    disabled={loading}
+                    className="flex items-center gap-2 px-3 h-9 rounded-full transition-all text-[13px] font-medium"
+                    style={{
+                      background: isSel ? rv.color : isHov ? rv.bg : "#ffffff",
+                      color: isSel ? "#ffffff" : rv.color,
+                      border: `1.5px solid ${isSel ? rv.color : rv.border}`,
+                      boxShadow: isSel ? `0 2px 8px ${rv.color}35` : "none",
+                      cursor: loading ? "not-allowed" : "pointer",
+                    }}>
+                    <div className="size-5 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: isSel ? "rgba(255,255,255,0.25)" : `linear-gradient(135deg,${rv.from},${rv.to})` }}>
+                      {isSel && loading
+                        ? <span className="size-3 rounded-full border border-white border-t-transparent animate-spin"/>
+                        : <Icon className="size-2.5 text-white"/>}
                     </div>
+                    {rv.label}
+                    {isSel && !loading && <CheckCircle2 className="size-3.5"/>}
+                  </button>
+                );
+              })}
+            </div>
 
-                    {/* Desc */}
-                    <p className="text-[13px] mt-2.5 leading-relaxed" style={{ color:"#5a5040" }}>
-                      {acc.desc}
-                    </p>
-
-                    {/* Permission chips */}
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {acc.perms.map(p => (
-                        <span key={p} className="text-[13px] px-1.5 py-0.5 rounded border"
-                          style={{ background:rv.bg, color:rv.color, borderColor:rv.border }}>
+            {/* Hovered account preview */}
+            <div style={{ background:"#ffffff", borderTop:"1px solid #f0ebe0", minHeight:72 }}>
+              {hovered ? (
+                <div className="px-5 py-4 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-[13px] font-bold text-white"
+                    style={{ background:`linear-gradient(135deg,${hovered.avatarFrom},${hovered.avatarTo})` }}>
+                    {hovered.initials}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[14px] font-semibold text-[#0b1426]">{hovered.name}</div>
+                    <div className="text-[13px] text-[#635647] truncate">{hovered.title} · {hovered.unit}</div>
+                  </div>
+                  <div className="flex gap-1.5 flex-wrap justify-end shrink-0">
+                    {hovered.perms.slice(0,3).map(p => {
+                      const rv = ROLE_VISUAL[
+                        hovered.role === "quản trị hệ thống" ? "admin"
+                        : hovered.role === "lãnh đạo cấp cao" ? "leader"
+                        : hovered.role === "hội đồng" ? "council"
+                        : hovered.role === "lãnh đạo đơn vị" ? "manager" : "user"
+                      ];
+                      return (
+                        <span key={p} className="text-[12px] px-2 py-0.5 rounded-full"
+                          style={{ background:rv.bg, color:rv.color, border:`1px solid ${rv.border}` }}>
                           {p}
                         </span>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
-                </button>
-              );
-            })}
+                </div>
+              ) : (
+                <div className="px-5 py-4 flex items-center gap-3 text-[13px]" style={{ color:"#74654a" }}>
+                  <ChevronRight className="size-4 opacity-40"/>
+                  <span>Di chuyển chuột lên vai trò để xem thông tin tài khoản</span>
+                  <code className="ml-auto px-2 py-0.5 rounded-lg text-[12px]"
+                    style={{ background:"#f0ece3", color:"#5a5040" }}>demo123</code>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Footer note */}
-          <p className="text-center text-[13px] mt-8" style={{ color:"#6b5e47" }}>
-            Môi trường demo — mật khẩu mặc định:{" "}
-            <code className="px-1.5 py-0.5 rounded" style={{ background:"#f0ece3", color:"#5a5040" }}>demo123</code>
-          </p>
-
-          {/* Public LYK link */}
+          {/* Public LYK */}
           {onPublicLYK && (
-            <div className="mt-5 text-center">
-              <button onClick={onPublicLYK}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] border-2 text-[13px] transition-all hover:shadow-md"
-                style={{ borderColor:"#1C5FBE", color:"#1C5FBE", background:"white", fontFamily: "var(--font-sans)", fontWeight:600 }}>
-                <Megaphone className="size-4"/>
-                Góp ý Hồ sơ Khen thưởng Công khai
-                <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#dcfce7",color:"#166534",fontFamily: "var(--font-sans)" }}>Không cần đăng nhập</span>
-              </button>
-              <p className="text-[13px] mt-1.5" style={{ color:"#635647", fontFamily: "var(--font-sans)" }}>
-                Dành cho cán bộ, nhân dân góp ý về các hồ sơ khen thưởng công khai
-              </p>
-            </div>
+            <button onClick={onPublicLYK}
+              className="w-full mt-4 h-11 rounded-xl flex items-center justify-center gap-2 text-[13px] font-medium transition-all"
+              style={{
+                background:"#ffffff", border:"1.5px solid #e0d9cd", color:"#635647",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor="#1C5FBE"; (e.currentTarget as HTMLElement).style.color="#1C5FBE"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor="#e0d9cd"; (e.currentTarget as HTMLElement).style.color="#635647"; }}>
+              <Megaphone className="size-4"/>
+              Góp ý Hồ sơ Khen thưởng Công khai
+              <span className="px-2 py-0.5 rounded-full text-[12px]"
+                style={{ background:"#dcfce7", color:"#166534" }}>Không cần đăng nhập</span>
+            </button>
           )}
+
+          <p className="text-center text-[13px] mt-5 text-[#74654a]">
+            © 2026 VPTU Đồng Nai · Hệ thống Thi đua Khen thưởng
+          </p>
         </div>
       </div>
     </div>
