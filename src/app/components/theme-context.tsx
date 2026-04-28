@@ -28,7 +28,7 @@ export const THEMES: AppTheme[] = [
     gold: "#8a6400",
     goldRgb: "212, 168, 75",
     tint: "#ddeafc",
-    paperBg: "#fbf8f2",
+    paperBg: "#f4f7fb",
     sidebarBg: "#0b1426",
   },
   {

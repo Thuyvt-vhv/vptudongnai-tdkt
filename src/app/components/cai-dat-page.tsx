@@ -99,7 +99,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
       </div>
 
       {/* Legal note */}
-      <div className="flex items-start gap-2 px-3 py-2.5 rounded-[8px]" style={{ background: "#fdf9f0", border: "1px solid #f0dba0" }}>
+      <div className="flex items-start gap-2 px-3 py-2.5 rounded-[8px]" style={{ background: "#ffffff", border: "1px solid #f0dba0" }}>
         <AlertTriangle className="size-4 text-[#b45309] shrink-0 mt-0.5" />
         <p className="text-[13px] text-[#7d4a00]" style={{ fontFamily: "var(--font-sans)" }}>
           Thông tin cá nhân được bảo vệ theo Luật An ninh mạng 2018 và NĐ 13/2023/NĐ-CP. Mọi thay đổi đều được ghi nhận vào Audit Log.

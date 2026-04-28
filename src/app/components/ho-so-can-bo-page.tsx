@@ -208,7 +208,7 @@ function AiEligibilityPanel({ cb, onClose }: { cb: CanBo; onClose: () => void })
                 </div>
               )}
               {cb.note && (
-                <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background: "#faf9f6", border: "1px solid #e2e8f0" }}>
+                <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                   <AlertCircle className="size-3.5 text-[#8a6400] shrink-0 mt-0.5" />
                   <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{cb.note}</p>
                 </div>

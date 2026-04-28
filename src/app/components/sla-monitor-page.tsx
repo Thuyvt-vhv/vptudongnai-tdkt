@@ -176,7 +176,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
           </table>
         </div>
         {/* SLA rules reminder */}
-        <div className="mt-4 p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#fdf9f0" }}>
+        <div className="mt-4 p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#ffffff" }}>
           <div className="flex items-center gap-2 mb-2">
             <Clock className="size-4 text-[#b45309]"/>
             <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quy định SLA theo TT 15/2025/TT-BNV</span>

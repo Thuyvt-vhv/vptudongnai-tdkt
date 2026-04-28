@@ -389,9 +389,9 @@ function DeadlineCard({ onNavigate }: { onNavigate: (m: string) => void }) {
           return (
             <button key={d.label} onClick={() => onNavigate("Đề nghị khen thưởng")}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-left transition-all"
-              style={{ background: "#faf9f6", border: `1px solid ${d.color}18` }}
+              style={{ background: "#ffffff", border: `1px solid ${d.color}18` }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${d.color}08`; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#faf9f6"; }}>
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#ffffff"; }}>
               <div className="size-7 rounded-[6px] flex items-center justify-center shrink-0"
                 style={{ background: `${d.color}12` }}>
                 <DIcon className="size-3.5" strokeWidth={1.8} style={{ color: d.color }} />
@@ -802,7 +802,7 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
 
       {/* ── AI Insight ───────────────────────────────────────── */}
       <div className="relative rounded-[14px] overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #faf7f0, #fdf4e0)", border: "1px solid rgba(212,168,75,0.35)" }}>
+        style={{ background: "linear-gradient(135deg, #f0f6ff, #e8f0ff)", border: "1px solid rgba(212,168,75,0.35)" }}>
         {/* Subtle top-right decoration */}
         <div className="absolute top-0 right-0 size-32 opacity-[0.05] pointer-events-none"
           style={{ background: "radial-gradient(circle, #8a6400, transparent 70%)" }} />

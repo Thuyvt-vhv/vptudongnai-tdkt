@@ -193,7 +193,7 @@ export function OnboardingPanel({
                 </div>
                 <div className="shrink-0 flex flex-col items-end gap-1">
                   <span className="text-[13px] px-1.5 py-0.5 rounded"
-                    style={{ background: isCompleted ? "#dcfce7" : "#fdf9f0", color: isCompleted ? "#166534" : "#8a6400", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
+                    style={{ background: isCompleted ? "#dcfce7" : "#ffffff", color: isCompleted ? "#166534" : "#8a6400", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
                     +{task.xp}xp
                   </span>
                   {!isCompleted && <ChevronRight className="size-3.5 text-[#d1ccc0] group-hover:text-[#1C5FBE] transition-colors" />}

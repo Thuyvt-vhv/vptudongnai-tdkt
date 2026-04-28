@@ -110,7 +110,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
             style={{ background: "white", border: "1px solid #e8ecf3", boxShadow: "0 24px 48px -12px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.05)" }}>
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3"
-              style={{ borderBottom: "1px solid #f1f5f9", background: "#fafbfc" }}>
+              style={{ borderBottom: "1px solid #f1f5f9", background: "#ffffff" }}>
               <div className="flex items-center gap-2">
                 <Bell className="size-4 text-[#6b7280]" strokeWidth={1.75} />
                 <span className="text-[13px] text-[#0f172a]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông báo</span>
@@ -137,9 +137,9 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
                 return (
                   <button key={n.id} onClick={() => setNotifs(p => p.map(x => x.id === n.id ? { ...x, read: true } : x))}
                     className="w-full flex items-start gap-3 px-4 py-3 text-left transition-colors"
-                    style={{ background: n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#fafbff", borderBottom: i < notifs.length - 1 ? "1px solid #ffffff" : "none" }}
+                    style={{ background: n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#ffffff", borderBottom: i < notifs.length - 1 ? "1px solid #ffffff" : "none" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#ffffff"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#fafbff"; }}>
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = n.urgent && !n.read ? "#fffbf0" : n.read ? "white" : "#ffffff"; }}>
                     <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0 mt-0.5"
                       style={{ background: `${color}12`, border: `1px solid ${color}20` }}>
                       <Icon className="size-4" strokeWidth={1.75} style={{ color }} />
@@ -166,7 +166,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
               })}
             </div>
             {/* Footer */}
-            <div className="px-4 py-2.5 flex justify-between items-center" style={{ borderTop: "1px solid #f1f5f9", background: "#fafbfc" }}>
+            <div className="px-4 py-2.5 flex justify-between items-center" style={{ borderTop: "1px solid #f1f5f9", background: "#ffffff" }}>
               <span className="text-[13px]" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>Cập nhật vừa xong</span>
               <button onClick={() => { setOpen(false); onSelectModule("Thông báo"); }}
                 className="flex items-center gap-1.5 text-[13px] px-2.5 py-1 rounded-[6px] transition-colors hover:bg-blue-50"
@@ -198,7 +198,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           background: "rgba(255,255,255,0.95)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(224,217,205,0.8)",
+          borderBottom: "1px solid rgba(0,0,0,0.07)",
           boxShadow: "0 1px 0 rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.03)",
         }}>
 
@@ -207,9 +207,9 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
         <div className="w-[340px] mr-auto">
           <button onClick={onOpenCmd}
             className="w-full h-[34px] flex items-center gap-2.5 px-3 rounded-[9px] text-left transition-all"
-            style={{ background: "#f3f0ea", border: "1px solid #e2e8f0" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c4a96a"; (e.currentTarget as HTMLElement).style.background = "#ede9e0"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; }}>
+            style={{ background: "#f4f7fb", border: "1px solid #e2e8f0" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c4a96a"; (e.currentTarget as HTMLElement).style.background = "#eef2f8"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; }}>
             <Search className="size-3.5 shrink-0" style={{ color: "#74654a" }} strokeWidth={2} />
             <span className="flex-1 text-[13px]" style={{ color: "#74654a", fontFamily: "var(--font-sans)" }}>
               Tìm hồ sơ, cán bộ, quyết định…
@@ -249,7 +249,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
             <button onClick={() => setShowMenu(v => !v)}
               className="flex items-center gap-2 h-9 pl-1.5 pr-2.5 rounded-[9px] transition-all"
               style={{ border: showMenu ? "1px solid #e2e8f0" : "1px solid transparent" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f3f0ea"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.borderColor = showMenu ? "#e2e8f0" : "transparent"; }}>
               {/* Avatar */}
               <div className="relative">

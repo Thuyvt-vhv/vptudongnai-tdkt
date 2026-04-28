@@ -92,7 +92,7 @@ const ACTION_CFG: Record<ActionType, { label: string; color: string; bg: string;
   login:   { label:"Đăng nhập",  color:"#166534", bg:"#dcfce7", icon:LogIn       },
   logout:  { label:"Đăng xuất",  color:"#635647", bg:"#f4f7fb", icon:LogOut      },
   view:    { label:"Xem",        color:"#1C5FBE", bg:"#ddeafc", icon:Eye         },
-  create:  { label:"Tạo mới",    color:"#8a6400", bg:"#fdf9f0", icon:FileText    },
+  create:  { label:"Tạo mới",    color:"#8a6400", bg:"#ffffff", icon:FileText    },
   edit:    { label:"Chỉnh sửa",  color:"#b45309", bg:"#fef3c7", icon:Edit3       },
   approve: { label:"Phê duyệt",  color:"#166534", bg:"#dcfce7", icon:CheckCircle2},
   sign:    { label:"Ký số",      color:"#1C5FBE", bg:"#ddeafc", icon:Award       },
@@ -251,7 +251,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
           {[
             { label: "Phiên đăng nhập", v: loginCount, c: "#166534", bg: "#dcfce7", icon: LogIn },
             { label: "Hồ sơ ký số", v: signCount, c: "#1C5FBE", bg: "#ddeafc", icon: Award },
-            { label: "Hồ sơ tạo mới", v: createCount, c: "#8a6400", bg: "#fdf9f0", icon: FileText },
+            { label: "Hồ sơ tạo mới", v: createCount, c: "#8a6400", bg: "#ffffff", icon: FileText },
             { label: "Phiên dùng AI", v: aiCount, c: "#7c3aed", bg: "#f5f3ff", icon: Zap },
             { label: "Tổng hoạt động", v: entries.length, c: "#0b1426", bg: "#f4f7fb", icon: BarChart2 },
           ].map(s => {

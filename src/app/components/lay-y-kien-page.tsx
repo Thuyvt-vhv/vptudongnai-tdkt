@@ -544,7 +544,7 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
             </div>
             <div className="ds-input-root">
               <label className="ds-input-label">Ngày kết thúc (tự động)</label>
-              <div className="h-10 flex items-center px-3 rounded-[6px] bg-[#f9f6f0] border"
+              <div className="h-10 flex items-center px-3 rounded-[6px] bg-[#f4f7fb] border"
                 style={{ borderColor: "var(--color-line)", fontFamily: "var(--font-sans)" }}>
                 <span className="text-[14px] text-[#0b1426]">{fmtDate(endStr)}</span>
                 <span className="ml-2 text-[13px] text-[#635647]">(+{form.soNgayQuyDinh} ngày)</span>

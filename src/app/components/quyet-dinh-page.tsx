@@ -289,7 +289,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
             { l:"Đã ban hành",   v:stats.published,     c:"#166534",bg:"#dcfce7" },
             { l:"Cấp Nhà nước",  v:stats.nhaduoc,        c:"#c8102e",bg:"#fee2e2" },
             { l:"Cấp Tỉnh",      v:stats.tinh,          c:"#1C5FBE",bg:"#ddeafc" },
-            { l:"Tổng lượt KT",  v:totalRecipients,     c:"#8a6400",bg:"#fdf9f0" },
+            { l:"Tổng lượt KT",  v:totalRecipients,     c:"#8a6400",bg:"#ffffff" },
           ].map(s=>(
             <div key={s.l} className="flex items-center gap-2 px-3 py-1.5 rounded-[8px]" style={{ background:s.bg }}>
               <span className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:s.c }}>{s.v}</span>
@@ -337,7 +337,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                     <div className="flex flex-wrap gap-1.5 mb-3">
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c,fontFamily: "var(--font-sans)",fontWeight:700 }}>{lc.l}</span>
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:sc.bg,color:sc.c,fontFamily: "var(--font-sans)" }}>{sc.l}</span>
-                      {qd.recipients.length>0&&<span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#fdf9f0",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{qd.recipients.length} người</span>}
+                      {qd.recipients.length>0&&<span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#ffffff",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{qd.recipients.length} người</span>}
                     </div>
                     <div className="text-[13px] text-[#635647] truncate">{qd.unit}</div>
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#eef2f8]">
@@ -369,7 +369,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                       </div>
                     </td>
                     <td className="px-3 py-3 text-[13px] text-[#635647]">{d.unit}</td>
-                    <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#fdf9f0",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{d.awardType}</span></td>
+                    <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#ffffff",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{d.awardType}</span></td>
                     <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c }}>{lc.l}</span></td>
                     <td className="px-3 py-3 text-[13px] text-[#5a5040]">{d.signedDate}</td>
                     <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:sc.bg,color:sc.c }}>{sc.l}</span></td>

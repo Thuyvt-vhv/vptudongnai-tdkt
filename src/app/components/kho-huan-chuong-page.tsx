@@ -159,7 +159,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
             { l:"Cấp Nhà nước",   v:AWARDS.filter(a=>a.level==="nha_nuoc").length,bg:"#fee2e2",c:"#c8102e" },
             { l:"Cấp Tỉnh",       v:AWARDS.filter(a=>a.level==="tinh").length,bg:"#ddeafc",c:"#1C5FBE" },
             { l:"Cơ sở",          v:AWARDS.filter(a=>a.level==="co_so").length,bg:"#dcfce7",c:"#166534" },
-            { l:"Đã trao tặng",   v:totalAwarded,bg:"#fdf9f0",c:"#8a6400" },
+            { l:"Đã trao tặng",   v:totalAwarded,bg:"#ffffff",c:"#8a6400" },
           ].map(s=>(
             <div key={s.l} className="flex items-center gap-2 px-3 py-2 rounded-[8px]" style={{ background:s.bg }}>
               <span className="text-[18px]" style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:s.c }}>{s.v}</span>

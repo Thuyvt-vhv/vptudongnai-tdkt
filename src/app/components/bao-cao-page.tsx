@@ -127,7 +127,7 @@ const REPORTS: ReportTemplate[] = [
     canCu: "Điều 18 Luật TĐKT 2022",
     icon: Star,
     color: "#8a6400",
-    bg: "#fdf9f0",
+    bg: "#ffffff",
     roles: ["quản trị hệ thống", "lãnh đạo cấp cao", "hội đồng"],
     outputs: ["pdf", "excel"],
     params: [
@@ -339,7 +339,7 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
           {[
             { l: "Báo cáo định kỳ", v: "3", c: "#1C5FBE", bg: "#ddeafc" },
             { l: "Báo cáo chuyên đề", v: "3", c: "#166534", bg: "#dcfce7" },
-            { l: "Xuất lần cuối", v: "Hôm nay", c: "#8a6400", bg: "#fdf9f0" },
+            { l: "Xuất lần cuối", v: "Hôm nay", c: "#8a6400", bg: "#ffffff" },
             { l: "Tổng lần xuất (tháng)", v: "47", c: "#7c3aed", bg: "#f5f3ff" },
           ].map(s => (
             <div key={s.l} className="flex items-center gap-2 px-3 py-1.5 rounded-[8px]" style={{ background: s.bg }}>

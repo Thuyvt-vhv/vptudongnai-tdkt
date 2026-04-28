@@ -234,7 +234,7 @@ function AwardsTab() {
               const lc=LEVEL_LABEL[a.level]; const isSel=sel?.id===a.id;
               return (
                 <tr key={a.id} onClick={()=>setSel(a)} className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
-                  style={{ background:isSel?"#fdf9f0":i%2===0?"white":"#f4f7fb" }}>
+                  style={{ background:isSel?"#ffffff":i%2===0?"white":"#f4f7fb" }}>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
                       <span className="size-2 rounded-full" style={{ background:a.color }}/>
@@ -565,7 +565,7 @@ function KinhPhiTab() {
                     key={r.id}
                     onClick={() => openEdit(r)}
                     className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
-                    style={{ background: isSel ? "#fdf9f0" : i % 2 === 0 ? "white" : "#f4f7fb" }}
+                    style={{ background: isSel ? "#ffffff" : i % 2 === 0 ? "white" : "#f4f7fb" }}
                   >
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-2">

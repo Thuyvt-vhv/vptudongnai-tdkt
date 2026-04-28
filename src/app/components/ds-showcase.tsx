@@ -314,7 +314,7 @@ export function DsShowcase() {
                   { label: "Từ chối", val: "12", badge: <DsBadge variant="error" size="sm">3 mới</DsBadge> },
                   { label: "Đang ký số", val: "8", badge: <DsBadge variant="info" size="sm" dot>Live</DsBadge> },
                 ].map((item) => (
-                  <div key={item.label} className="rounded-[6px] bg-[#fbf8f2] p-3">
+                  <div key={item.label} className="rounded-[6px] bg-[#f4f7fb] p-3">
                     <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>{item.label}</div>
                     <div className="flex items-end justify-between">
                       <span style={{ fontFamily: "JetBrains Mono", fontWeight: 500, fontSize: 18 }} className="text-[#0b1426] leading-none">{item.val}</span>
@@ -397,7 +397,7 @@ export function DsShowcase() {
                 ["Ink (Navy)", "#0b1426"],
                 ["Ink Soft", "#4a5568"],
                 ["Muted Ink", "#635647"],
-                ["Paper", "#fbf8f2"],
+                ["Paper", "#f4f7fb"],
                 ["Line", "#e2e8f0"],
                 ["Crimson", "#c8102e"],
                 ["Crimson Hover", "#a60d25"],

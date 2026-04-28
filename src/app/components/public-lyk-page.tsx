@@ -147,7 +147,7 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
                     style={{ height:40,fontFamily:"JetBrains Mono, monospace" }}/>
                 </div>
               </div>
-              <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background:"#fdf9f0",border:"1px solid #f0dba0" }}>
+              <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background:"#ffffff",border:"1px solid #f0dba0" }}>
                 <Info className="size-4 text-[#b45309] shrink-0 mt-0.5"/>
                 <p className="text-[13px] text-[#7d5a10]" style={{ fontFamily: "var(--font-sans)" }}>
                   Ý kiến của bạn sẽ được ghi nhận ẩn danh hoặc có tên tùy lựa chọn. Chỉ sử dụng để xác thực 1 lần.

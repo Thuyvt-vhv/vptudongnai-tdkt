@@ -155,7 +155,7 @@ export function AppsMenu({
           {/* Header */}
           <div
             className="flex items-center justify-between px-4 py-3 border-b"
-            style={{ borderColor: "#eef2f8", background: "#fbf8f2" }}
+            style={{ borderColor: "#eef2f8", background: "#f4f7fb" }}
           >
             <div className="flex items-center gap-2">
               <GridIcon className="size-4 text-[#635647]" />
@@ -185,7 +185,7 @@ export function AppsMenu({
                   onClick={() => handleSelect(app.id)}
                   className="flex flex-col items-start gap-2.5 p-3 rounded-xl text-left transition-all outline-none focus-visible:ring-2 focus-visible:ring-[#1C5FBE]/50"
                   style={{
-                    background: isCurrent ? app.bg : "#fbf8f2",
+                    background: isCurrent ? app.bg : "#f4f7fb",
                     border: `1.5px solid ${isCurrent ? app.color + "40" : "#eef2f8"}`,
                   }}
                 >
@@ -241,7 +241,7 @@ export function AppsMenu({
           {/* Footer */}
           <div
             className="px-4 py-2.5 border-t text-center"
-            style={{ borderColor: "#eef2f8", background: "#fbf8f2" }}
+            style={{ borderColor: "#eef2f8", background: "#f4f7fb" }}
           >
             <p className="text-[13px]" style={{ color: "#6b5e47", fontFamily: "var(--font-sans)" }}>
               Phiên bản 1.0.0 · VPTU Đồng Nai © 2026

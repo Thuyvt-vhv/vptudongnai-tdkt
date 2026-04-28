@@ -75,7 +75,7 @@ const TYPE_CFG: Record<NotifType, { label: string; color: string; bg: string; ic
   submit:   { label:"Hồ sơ",     color:"#166534", bg:"#dcfce7", icon:Award          },
   ai:       { label:"AI",         color:"#7c3aed", bg:"#f5f3ff", icon:Sparkles       },
   system:   { label:"Hệ thống",  color:"#b45309", bg:"#fef3c7", icon:AlertTriangle   },
-  result:   { label:"Kết quả",   color:"#8a6400", bg:"#fdf9f0", icon:Star            },
+  result:   { label:"Kết quả",   color:"#8a6400", bg:"#ffffff", icon:Star            },
 };
 
 const PRIORITY_CFG: Record<NotifPriority, { label: string; dot: string }> = {

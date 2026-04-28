@@ -360,7 +360,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
           })}
         </div>
         {/* Legal footer */}
-        <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background:"#fdf9f0" }}>
+        <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background:"#ffffff" }}>
           <AlertCircle className="size-5 text-[#b45309] shrink-0 mt-0.5"/>
           <div className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
             <span style={{ fontWeight:700,color:"#0b1426" }}>Lưu ý pháp lý:</span>{" "}

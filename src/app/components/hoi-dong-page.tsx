@@ -607,7 +607,7 @@ function ScoringTab({
           </div>
         )}
         {coi.level === "hard" && (
-          <div className="rounded-[8px] p-4 bg-[#f9f6f0] border border-[#e2e8f0] text-center">
+          <div className="rounded-[8px] p-4 bg-[#f4f7fb] border border-[#e2e8f0] text-center">
             <Lock className="size-8 mx-auto mb-2 text-[#e2e8f0]" />
             <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               Bạn không thể chấm điểm hồ sơ này do xung đột lợi ích.<br/>
