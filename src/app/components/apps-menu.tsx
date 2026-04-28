@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Layers, Settings, BarChart3, X, Activity, Clock, Server } from "lucide-react";
+import { ShieldCheck, Layers, Settings, BarChart3, X, Activity, Clock, Server, HelpCircle } from "lucide-react";
 
 interface AppItem {
   id: string;
@@ -70,6 +70,14 @@ const APP_ITEMS: AppItem[] = [
     icon: Server,
     color: "#0891b2",
     bg: "#e0f2fe",
+  },
+  {
+    id: "Trung tâm hỗ trợ",
+    label: "Hỗ trợ",
+    desc: "Hướng dẫn sử dụng & câu hỏi thường gặp",
+    icon: HelpCircle,
+    color: "#166534",
+    bg: "#dcfce7",
   },
 ];
 

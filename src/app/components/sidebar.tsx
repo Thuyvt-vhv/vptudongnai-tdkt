@@ -10,7 +10,7 @@ import {
   Crown, User,
   ChevronRight, Map,
   FileText, Calendar, GitCompare,
-  Kanban, HelpCircle,
+  Kanban,
   ChevronDown, GitMerge,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
@@ -76,7 +76,6 @@ const NAV_CONFIG: NavGroup[] = [
     group: "Hỗ trợ",
     items: [
       { icon: GitMerge,   label: "Luồng nghiệp vụ",    badge: null,   roles: "all" },
-      { icon: HelpCircle, label: "Trung tâm hỗ trợ",   badge: null,   roles: "all" },
       { icon: Map,        label: "Lộ trình triển khai", badge: null,   roles: "all" },
     ],
   },
