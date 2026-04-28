@@ -636,65 +636,6 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
 
         <div className="flex items-stretch">
 
-          {/* ── LEFT: Identity panel ── */}
-          <div className="flex flex-col justify-between p-6 shrink-0 w-[256px]"
-            style={{ borderRight: "1px solid #e2e8f0", background: "linear-gradient(160deg, #f4f7fb 0%, #ffffff 60%)" }}>
-
-            <div className="flex flex-col gap-4">
-              {/* Avatar + name */}
-              <div className="flex items-center gap-3">
-                <div className="size-[54px] rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${user?.avatarFrom ?? "#1a2744"}, ${user?.avatarTo ?? "#0b1426"})` }}>
-                  <span style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 20, color: "#ffd27a", letterSpacing: -0.5 }}>
-                    {user?.initials ?? "VQ"}
-                  </span>
-                </div>
-                <div className="min-w-0">
-                  <div className="font-bold text-[14px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>
-                    {user?.name ?? "Người dùng"}
-                  </div>
-                  <div className="text-[12px] text-[#5a6474] truncate mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
-                    {user?.title ?? ""}
-                  </div>
-                </div>
-              </div>
-
-              {/* Unit */}
-              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg"
-                style={{ background: "#f4f7fb", border: "1px solid #e2e8f0" }}>
-                <Shield className="size-3.5 shrink-0" style={{ color: "#4f5d6e" }} />
-                <span className="text-[12px] truncate" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>
-                  {user?.unit ?? "VPTU Đồng Nai"}
-                </span>
-              </div>
-
-              {/* Role badge */}
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg self-start"
-                style={{ background: user?.roleBg ?? "#ddeafc", border: `1px solid ${user?.roleColor ?? "#1C5FBE"}22` }}>
-                <span className="size-1.5 rounded-full" style={{ background: user?.roleColor ?? "#1C5FBE" }} />
-                <span className="text-[12px] font-semibold" style={{ color: user?.roleColor ?? "#1C5FBE", fontFamily: "var(--font-sans)" }}>
-                  {user?.roleLabel ?? user?.role ?? "Hệ thống"}
-                </span>
-              </div>
-
-              {/* Live */}
-              <div className="flex items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md"
-                  style={{ background: "#dcfce7", border: "1px solid #bbf7d0" }}>
-                  <span className="size-1.5 rounded-full animate-pulse" style={{ background: "#16a34a" }} />
-                  <span style={{ fontFamily: "JetBrains Mono", fontWeight: 700, fontSize: 11, color: "#16a34a" }}>LIVE</span>
-                </div>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#5a6474" }}>Đang hoạt động</span>
-              </div>
-            </div>
-
-            {/* Date */}
-            <div className="flex items-center gap-1.5 pt-4 mt-2" style={{ borderTop: "1px solid #e2e8f0" }}>
-              <Clock className="size-3.5 shrink-0" style={{ color: "#94a3b8" }} />
-              <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "#5a6474" }}>{todayStr}</span>
-            </div>
-          </div>
-
           {/* ── CENTER: Greeting + CTA ── */}
           <div className="flex-1 flex flex-col justify-between p-7 min-w-0">
             <div>
