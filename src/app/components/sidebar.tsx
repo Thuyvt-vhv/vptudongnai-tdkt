@@ -5,14 +5,13 @@
 import { useState } from "react";
 import {
   LayoutDashboard, Award, Trophy, FileSignature, Users,
-  ClipboardList, BarChart3, ScrollText, Sparkles, Settings,
-  ShieldCheck, Archive, Megaphone, Gavel, Building2,
-  Crown, User, Lock,
-  ChevronRight, TrendingUp, Map, BookOpen,
-  Activity, Server, Clock,
-  FileText, Bell, Calendar, GitCompare,
+  ClipboardList, ScrollText, Settings,
+  ShieldCheck, Archive, Megaphone, Gavel,
+  Crown, User,
+  ChevronRight, Map, BookOpen,
+  FileText, Calendar, GitCompare,
   Kanban, HelpCircle, Radio,
-  ChevronDown, LogOut, Zap, GitMerge,
+  ChevronDown, GitMerge,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 
@@ -45,9 +44,8 @@ const NAV_CONFIG: NavGroup[] = [
   {
     group: "Tổng quan",
     items: [
-      { icon: LayoutDashboard, label: "Bảng điều hành",    badge: null,   roles: "all" },
-      { icon: Trophy,          label: "Bảng xếp hạng",     badge: null,   roles: "all" },
-      { icon: BarChart3,       label: "Phân tích thi đua",  badge: "AI",   roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: LayoutDashboard, label: "Bảng điều hành",   badge: null, roles: "all" },
+      { icon: Trophy,          label: "Bảng xếp hạng",    badge: null, roles: "all" },
     ],
   },
   {
@@ -59,44 +57,29 @@ const NAV_CONFIG: NavGroup[] = [
       { icon: Gavel,         label: "Hội đồng xét duyệt",    badge: "1",  roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
       { icon: FileSignature, label: "Ký số & Phê duyệt",     badge: "8",  roles: ["lãnh đạo cấp cao","quản trị hệ thống"] },
       { icon: ClipboardList, label: "Chấm điểm & Bình xét",  badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: ScrollText,    label: "Quyết định khen thưởng",badge: null, roles: "all" },
+      { icon: ScrollText,    label: "Quyết định khen thưởng", badge: null, roles: "all" },
     ],
   },
   {
     group: "Dữ liệu",
     items: [
-      { icon: Users,       label: "Hồ sơ cán bộ",        badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: Archive,     label: "Kho huân – huy chương",badge: null, roles: "all" },
-      { icon: ShieldCheck, label: "Lịch sử khen thưởng",  badge: null, roles: "all" },
-      { icon: FileText,    label: "Báo cáo tổng hợp",     badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
-      { icon: Calendar,    label: "Lịch công tác",         badge: null, roles: "all" },
-      { icon: GitCompare,  label: "So sánh hồ sơ",         badge: "AI", roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
-      { icon: Kanban,      label: "Kanban hồ sơ",          badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: Users,       label: "Hồ sơ cán bộ",          badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: Archive,     label: "Kho huân – huy chương",  badge: null, roles: "all" },
+      { icon: ShieldCheck, label: "Lịch sử khen thưởng",    badge: null, roles: "all" },
+      { icon: FileText,    label: "Báo cáo tổng hợp",       badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: Calendar,    label: "Lịch công tác",           badge: null, roles: "all" },
+      { icon: GitCompare,  label: "So sánh hồ sơ",           badge: "AI", roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: Kanban,      label: "Kanban hồ sơ",            badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
     ],
   },
   {
     group: "Hỗ trợ",
     items: [
-      { icon: GitMerge,   label: "Luồng nghiệp vụ",   badge: null,   roles: "all" },
-      { icon: Radio,      label: "Dòng thời gian",   badge: "Live", roles: "all" },
-      { icon: HelpCircle, label: "Trung tâm hỗ trợ", badge: null,   roles: "all" },
-    ],
-  },
-  {
-    group: "Hệ thống",
-    items: [
-      { icon: Bell,       label: "Thông báo",          badge: "3",  roles: "all", badgeByRole:{ "quản trị hệ thống":"4", "lãnh đạo cấp cao":"3", "hội đồng":"3", "lãnh đạo đơn vị":"2", "cá nhân":"1" } },
-      { icon: Sparkles,   label: "Trợ lý AI Tố Nga",   badge: "New",roles: "all" },
-      { icon: BookOpen,   label: "Mẫu biểu TT 15/2025",badge: null, roles: "all" },
-      { icon: Activity,   label: "SLA Monitor",         badge: "2",  roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: Map,        label: "Lộ trình triển khai",  badge: null, roles: "all" },
-      { icon: BookOpen,   label: "Kế hoạch Thiết kế",   badge: null, roles: "all" },
-      { icon: Building2,  label: "Cấu hình đơn vị",     badge: null, roles: ["quản trị hệ thống"] },
-      { icon: ShieldCheck,label: "Audit Log",            badge: null, roles: ["quản trị hệ thống"] },
-      { icon: ShieldCheck,label: "Phân quyền",           badge: null, roles: ["quản trị hệ thống"] },
-      { icon: Server,     label: "Hệ thống",             badge: null, roles: ["quản trị hệ thống"] },
-      { icon: Clock,      label: "Thời gian hoạt động",  badge: null, roles: "all" },
-      { icon: Settings,   label: "Cài đặt tài khoản",    badge: null, roles: "all" },
+      { icon: GitMerge,   label: "Luồng nghiệp vụ",    badge: null,   roles: "all" },
+      { icon: Radio,      label: "Dòng thời gian",      badge: "Live", roles: "all" },
+      { icon: HelpCircle, label: "Trung tâm hỗ trợ",   badge: null,   roles: "all" },
+      { icon: Map,        label: "Lộ trình triển khai", badge: null,   roles: "all" },
+      { icon: BookOpen,   label: "Kế hoạch Thiết kế",   badge: null,   roles: "all" },
     ],
   },
 ];
