@@ -331,7 +331,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                 }}>
                 {loading
                   ? <><span className="size-4 rounded-full border-2 border-white/50 border-t-white animate-spin"/>Đang xác thực…</>
-                  : <><LogIn className="size-4"/>Đăng nhập<ArrowRight className="size-4 ml-auto"/></>}
+                  : <><LogIn className="size-4"/>Đăng nhập<ArrowRight className="size-4"/></>}
               </button>
             </form>
           </div>

@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Layers, Settings, BarChart3, X, Activity, Clock, Server, HelpCircle } from "lucide-react";
+import { ShieldCheck, Settings, X, Clock } from "lucide-react";
 
 interface AppItem {
   id: string;
@@ -21,15 +21,6 @@ const APP_ITEMS: AppItem[] = [
     bg: "#ddeafc",
   },
   {
-    id: "Design System",
-    label: "Design System",
-    desc: "Component library & design tokens",
-    icon: Layers,
-    color: "#7d5a10",
-    bg: "#fdf3d9",
-    badge: "DS",
-  },
-  {
     id: "Cấu hình đơn vị",
     label: "Cấu hình",
     desc: "Tham số hệ thống & đơn vị tổ chức",
@@ -38,46 +29,12 @@ const APP_ITEMS: AppItem[] = [
     bg: "#eef2f8",
   },
   {
-    id: "Phân tích thi đua",
-    label: "Phân tích AI",
-    desc: "Báo cáo thống kê & AI insights",
-    icon: BarChart3,
-    color: "#166534",
-    bg: "#dcfce7",
-    badge: "AI",
-  },
-  {
-    id: "SLA Monitor",
-    label: "SLA Monitor",
-    desc: "Theo dõi deadline & vi phạm SLA",
-    icon: Activity,
-    color: "#b45309",
-    bg: "#fef3c7",
-    badge: "2",
-  },
-  {
     id: "Audit Log",
     label: "Audit Log",
     desc: "Nhật ký bất biến hệ thống",
     icon: Clock,
     color: "#7c3aed",
     bg: "#f5f3ff",
-  },
-  {
-    id: "Hệ thống",
-    label: "Hệ thống",
-    desc: "System health & monitoring",
-    icon: Server,
-    color: "#0891b2",
-    bg: "#e0f2fe",
-  },
-  {
-    id: "Trung tâm hỗ trợ",
-    label: "Hỗ trợ",
-    desc: "Hướng dẫn sử dụng & câu hỏi thường gặp",
-    icon: HelpCircle,
-    color: "#166534",
-    bg: "#dcfce7",
   },
 ];
 

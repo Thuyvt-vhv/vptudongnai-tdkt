@@ -1,8 +1,8 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import {
   Award, Search, Filter, ChevronRight, Star, Clock, Users,
   CheckCircle2, Info, X, Download, Shield, Trophy, Medal,
-  BookOpen, AlertCircle, ChevronDown, BarChart2,
+  BookOpen, AlertCircle, ChevronDown, BarChart2, Plus, Trash2,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 
@@ -17,7 +17,7 @@ interface HuanChuong {
   description:string;
 }
 
-const AWARDS: HuanChuong[] = [
+const AWARDS_SEED: HuanChuong[] = [
   {
     id:"hc-ld1", name:"Huân chương Lao động Hạng Nhất", shortName:"HCLD1", emoji:"🎖️",
     level:"nha_nuoc", type:"both", category:"huan_chuong",
@@ -86,7 +86,7 @@ const AWARDS: HuanChuong[] = [
     id:"cstd-cs", name:"Chiến sĩ Thi đua Cơ sở", shortName:"CSTĐCS", emoji:"✨",
     level:"co_so", type:"individual", category:"danh_hieu",
     conditions:["Xếp loại Hoàn thành xuất sắc nhiệm vụ trong năm","Được bình xét từ cơ sở, tỷ lệ không quá 15% CBCC","Không vi phạm kỷ luật trong năm"],
-    canCu:"Điều 22 NĐ 152/2025/NĐ-CP", signingRole:"Manager hoặc Leader", signingAuth:"Lãnh đạo đơn vị cơ sở",
+    canCu:"Điều 22 NĐ 152/2025/NĐ-CP", signingAuth:"Lãnh đạo đơn vị cơ sở",
     minYears:1, minScore:90, totalAwarded:312, lastYear:98, color:"#1C5FBE",
     gradient:"linear-gradient(135deg,#0284c7,#1C5FBE)", description:"Danh hiệu thi đua cơ bản nhất, tặng cho cá nhân tiêu biểu xuất sắc tại đơn vị, cơ quan, tổ chức cơ sở.",
   },
@@ -122,18 +122,313 @@ const CAT_CFG = {
   danh_hieu:  { label:"Danh hiệu",   emoji:"⭐" },
 };
 
+const EMPTY_FORM = {
+  name:"", shortName:"", emoji:"🎖️",
+  level:"co_so" as HuanChuong["level"],
+  type:"both" as HuanChuong["type"],
+  category:"bang_khen" as HuanChuong["category"],
+  conditions:[""],
+  canCu:"", signingAuth:"",
+  minYears:1, minScore:80,
+  totalAwarded:0, lastYear:0,
+  color:"#1C5FBE",
+  gradient:"linear-gradient(135deg,#1e3a8a,#1C5FBE)",
+  description:"",
+};
+
+function AddAwardModal({
+  onClose, onSave,
+}: {
+  onClose:()=>void;
+  onSave:(a:HuanChuong)=>void;
+}) {
+  const [form, setForm] = useState({ ...EMPTY_FORM });
+  const [errors, setErrors] = useState<Record<string,string>>({});
+
+  const set = <K extends keyof typeof EMPTY_FORM>(k:K, v: typeof EMPTY_FORM[K]) =>
+    setForm(f => ({ ...f, [k]: v }));
+
+  const setCondition = (i:number, v:string) =>
+    setForm(f => { const c=[...f.conditions]; c[i]=v; return { ...f, conditions:c }; });
+  const addCondition = () =>
+    setForm(f => ({ ...f, conditions:[...f.conditions,""] }));
+  const removeCondition = (i:number) =>
+    setForm(f => ({ ...f, conditions:f.conditions.filter((_,j)=>j!==i) }));
+
+  const validate = () => {
+    const e: Record<string,string> = {};
+    if (!form.name.trim()) e.name = "Bắt buộc";
+    if (!form.shortName.trim()) e.shortName = "Bắt buộc";
+    if (!form.canCu.trim()) e.canCu = "Bắt buộc";
+    if (!form.signingAuth.trim()) e.signingAuth = "Bắt buộc";
+    if (!form.description.trim()) e.description = "Bắt buộc";
+    if (form.conditions.filter(c=>c.trim()).length === 0) e.conditions = "Cần ít nhất 1 điều kiện";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleSave = () => {
+    if (!validate()) return;
+    const id = "custom-" + Date.now();
+    onSave({
+      ...form,
+      id,
+      conditions: form.conditions.filter(c => c.trim()),
+    });
+  };
+
+  const inputCls = "w-full px-3 py-2 rounded-[6px] border text-[13px] outline-none focus:border-[#1C5FBE] transition-colors";
+  const labelCls = "block text-[12px] font-semibold text-[#5a5040] mb-1";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background:"rgba(11,20,38,0.45)" }}>
+      <div
+        className="relative bg-white rounded-[16px] shadow-2xl flex flex-col overflow-hidden"
+        style={{ width:680, maxHeight:"90vh", fontFamily:"var(--font-sans)" }}
+      >
+        {/* Modal header */}
+        <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
+          <div className="flex items-center gap-3">
+            <div className="size-9 rounded-[8px] flex items-center justify-center" style={{ background:"linear-gradient(135deg,#8a6400,#f0c040)" }}>
+              <Medal className="size-4 text-white"/>
+            </div>
+            <div>
+              <h2 className="text-[15px] font-bold text-[#0b1426]">Thêm mới Huân – Huy chương</h2>
+              <p className="text-[12px] text-[#635647]">Điền đầy đủ thông tin danh hiệu khen thưởng</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="size-8 flex items-center justify-center rounded-[6px] hover:bg-[#e2e8f0] transition-colors text-[#635647]">
+            <X className="size-4"/>
+          </button>
+        </div>
+
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+
+          {/* Row 1: Tên + Tên viết tắt */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="col-span-2">
+              <label className={labelCls}>Tên danh hiệu <span className="text-red-500">*</span></label>
+              <input
+                value={form.name}
+                onChange={e=>set("name",e.target.value)}
+                placeholder="VD: Bằng khen UBND tỉnh Đồng Nai"
+                className={inputCls}
+                style={{ borderColor: errors.name ? "#ef4444" : "#d1d5db" }}
+              />
+              {errors.name && <p className="text-[11px] text-red-500 mt-0.5">{errors.name}</p>}
+            </div>
+            <div>
+              <label className={labelCls}>Tên viết tắt <span className="text-red-500">*</span></label>
+              <input
+                value={form.shortName}
+                onChange={e=>set("shortName",e.target.value)}
+                placeholder="VD: BKT"
+                className={inputCls}
+                style={{ borderColor: errors.shortName ? "#ef4444" : "#d1d5db" }}
+              />
+              {errors.shortName && <p className="text-[11px] text-red-500 mt-0.5">{errors.shortName}</p>}
+            </div>
+          </div>
+
+          {/* Row 2: Emoji + Cấp + Loại + Danh mục */}
+          <div className="grid grid-cols-4 gap-4">
+            <div>
+              <label className={labelCls}>Biểu tượng</label>
+              <input
+                value={form.emoji}
+                onChange={e=>set("emoji",e.target.value)}
+                placeholder="🎖️"
+                className={inputCls}
+                style={{ borderColor:"#d1d5db", textAlign:"center", fontSize:20 }}
+                maxLength={4}
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Cấp xét tặng</label>
+              <select value={form.level} onChange={e=>set("level",e.target.value as HuanChuong["level"])}
+                className={inputCls} style={{ borderColor:"#d1d5db" }}>
+                <option value="nha_nuoc">Nhà nước</option>
+                <option value="tinh">Cấp Tỉnh</option>
+                <option value="huyen">Cấp Huyện</option>
+                <option value="co_so">Cơ sở</option>
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>Đối tượng</label>
+              <select value={form.type} onChange={e=>set("type",e.target.value as HuanChuong["type"])}
+                className={inputCls} style={{ borderColor:"#d1d5db" }}>
+                <option value="individual">Cá nhân</option>
+                <option value="collective">Tập thể</option>
+                <option value="both">Cả hai</option>
+              </select>
+            </div>
+            <div>
+              <label className={labelCls}>Danh mục</label>
+              <select value={form.category} onChange={e=>set("category",e.target.value as HuanChuong["category"])}
+                className={inputCls} style={{ borderColor:"#d1d5db" }}>
+                <option value="huan_chuong">Huân chương</option>
+                <option value="huy_chuong">Huy chương</option>
+                <option value="bang_khen">Bằng khen</option>
+                <option value="giay_khen">Giấy khen</option>
+                <option value="danh_hieu">Danh hiệu</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 3: Căn cứ + Thẩm quyền ký */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className={labelCls}>Căn cứ pháp lý <span className="text-red-500">*</span></label>
+              <input
+                value={form.canCu}
+                onChange={e=>set("canCu",e.target.value)}
+                placeholder="VD: Điều 29 NĐ 152/2025/NĐ-CP"
+                className={inputCls}
+                style={{ borderColor: errors.canCu ? "#ef4444" : "#d1d5db" }}
+              />
+              {errors.canCu && <p className="text-[11px] text-red-500 mt-0.5">{errors.canCu}</p>}
+            </div>
+            <div>
+              <label className={labelCls}>Thẩm quyền ký <span className="text-red-500">*</span></label>
+              <input
+                value={form.signingAuth}
+                onChange={e=>set("signingAuth",e.target.value)}
+                placeholder="VD: Chủ tịch UBND tỉnh Đồng Nai"
+                className={inputCls}
+                style={{ borderColor: errors.signingAuth ? "#ef4444" : "#d1d5db" }}
+              />
+              {errors.signingAuth && <p className="text-[11px] text-red-500 mt-0.5">{errors.signingAuth}</p>}
+            </div>
+          </div>
+
+          {/* Row 4: Số năm TD + Điểm min + Màu sắc + Gradient */}
+          <div className="grid grid-cols-4 gap-4">
+            <div>
+              <label className={labelCls}>Năm thi đua min</label>
+              <input type="number" min={1} max={30}
+                value={form.minYears} onChange={e=>set("minYears",+e.target.value)}
+                className={inputCls} style={{ borderColor:"#d1d5db" }}/>
+            </div>
+            <div>
+              <label className={labelCls}>Điểm xếp loại min</label>
+              <input type="number" min={50} max={100}
+                value={form.minScore} onChange={e=>set("minScore",+e.target.value)}
+                className={inputCls} style={{ borderColor:"#d1d5db" }}/>
+            </div>
+            <div>
+              <label className={labelCls}>Màu chủ đạo</label>
+              <div className="flex items-center gap-2">
+                <input type="color" value={form.color} onChange={e=>set("color",e.target.value)}
+                  className="h-[36px] w-10 rounded border border-[#d1d5db] cursor-pointer p-0.5"
+                  style={{ borderColor:"#d1d5db" }}/>
+                <input value={form.color} onChange={e=>set("color",e.target.value)}
+                  className={inputCls} style={{ borderColor:"#d1d5db", flex:1 }}/>
+              </div>
+            </div>
+            <div>
+              <label className={labelCls}>Gradient nền</label>
+              <input value={form.gradient} onChange={e=>set("gradient",e.target.value)}
+                placeholder="linear-gradient(135deg,#...,#...)"
+                className={inputCls} style={{ borderColor:"#d1d5db" }}/>
+            </div>
+          </div>
+
+          {/* Gradient preview */}
+          <div className="h-10 rounded-[8px] flex items-center justify-center text-white text-[12px] font-semibold"
+            style={{ background: form.gradient || form.color }}>
+            {form.emoji || "🎖️"} Xem trước nền · {form.shortName || "Tên viết tắt"}
+          </div>
+
+          {/* Điều kiện xét tặng */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className={labelCls + " mb-0"}>Điều kiện xét tặng <span className="text-red-500">*</span></label>
+              <button onClick={addCondition}
+                className="flex items-center gap-1 text-[12px] text-[#1C5FBE] hover:underline">
+                <Plus className="size-3.5"/>Thêm điều kiện
+              </button>
+            </div>
+            {errors.conditions && <p className="text-[11px] text-red-500 mb-1">{errors.conditions}</p>}
+            <div className="space-y-2">
+              {form.conditions.map((c,i)=>(
+                <div key={i} className="flex items-center gap-2">
+                  <span className="text-[12px] text-[#635647] shrink-0 w-5 text-right">{i+1}.</span>
+                  <input
+                    value={c}
+                    onChange={e=>setCondition(i,e.target.value)}
+                    placeholder={`Điều kiện ${i+1}`}
+                    className={inputCls + " flex-1"}
+                    style={{ borderColor:"#d1d5db" }}
+                  />
+                  {form.conditions.length > 1 && (
+                    <button onClick={()=>removeCondition(i)}
+                      className="size-7 flex items-center justify-center rounded-[6px] hover:bg-red-50 text-[#ef4444] shrink-0">
+                      <Trash2 className="size-3.5"/>
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mô tả */}
+          <div>
+            <label className={labelCls}>Mô tả <span className="text-red-500">*</span></label>
+            <textarea
+              value={form.description}
+              onChange={e=>set("description",e.target.value)}
+              placeholder="Mô tả chi tiết về danh hiệu khen thưởng này..."
+              rows={3}
+              className={inputCls + " resize-none"}
+              style={{ borderColor: errors.description ? "#ef4444" : "#d1d5db" }}
+            />
+            {errors.description && <p className="text-[11px] text-red-500 mt-0.5">{errors.description}</p>}
+          </div>
+
+        </div>
+
+        {/* Footer */}
+        <div className="shrink-0 flex items-center justify-end gap-2 px-6 py-4 border-t border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
+          <button onClick={onClose}
+            className="px-4 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
+            style={{ fontFamily:"var(--font-sans)" }}>
+            Hủy
+          </button>
+          <button onClick={handleSave}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[6px] text-[13px] text-white font-semibold transition-colors"
+            style={{ background:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+            <Plus className="size-3.5"/>Thêm danh hiệu
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
+  const [awards, setAwards] = useState<HuanChuong[]>(AWARDS_SEED);
   const [search,setSearch]=useState("");
   const [levelFilter,setLevelFilter]=useState("all");
   const [catFilter,setCatFilter]=useState("all");
   const [selected,setSelected]=useState<HuanChuong|null>(null);
-  const filtered=AWARDS.filter(a=>{
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  const canAdd = ["quản trị hệ thống","lãnh đạo cấp cao","lãnh đạo đơn vị"].includes(user.role);
+
+  const filtered=awards.filter(a=>{
     const ms=a.name.toLowerCase().includes(search.toLowerCase())||a.shortName.toLowerCase().includes(search.toLowerCase());
     const ml=levelFilter==="all"||a.level===levelFilter;
     const mc=catFilter==="all"||a.category===catFilter;
     return ms&&ml&&mc;
   });
-  const totalAwarded=AWARDS.reduce((s,a)=>s+a.totalAwarded,0);
+  const totalAwarded=awards.reduce((s,a)=>s+a.totalAwarded,0);
+
+  const handleSave = (a: HuanChuong) => {
+    setAwards(prev => [...prev, a]);
+    setShowAddModal(false);
+  };
+
   return (
     <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
@@ -144,21 +439,30 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
           </div>
           <div>
             <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kho Huân – Huy chương</h1>
-            <p className="text-[13px] text-[#635647]">{AWARDS.length} loại danh hiệu · {totalAwarded} lần trao tặng · Căn cứ NĐ 152/2025/NĐ-CP</p>
+            <p className="text-[13px] text-[#635647]">{awards.length} loại danh hiệu · {totalAwarded} lần trao tặng · Căn cứ NĐ 152/2025/NĐ-CP</p>
           </div>
           <div className="ml-auto flex gap-2">
             <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
               <Download className="size-3.5"/>Xuất danh mục
             </button>
+            {canAdd && (
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white font-semibold"
+                style={{ background:"#1C5FBE", fontFamily: "var(--font-sans)" }}
+              >
+                <Plus className="size-3.5"/>Thêm mới
+              </button>
+            )}
           </div>
         </div>
         {/* Stats row */}
         <div className="flex gap-3 mb-4">
           {[
-            { l:"Tổng danh hiệu", v:AWARDS.length,bg:"#f4f7fb",c:"#0b1426" },
-            { l:"Cấp Nhà nước",   v:AWARDS.filter(a=>a.level==="nha_nuoc").length,bg:"#fee2e2",c:"#c8102e" },
-            { l:"Cấp Tỉnh",       v:AWARDS.filter(a=>a.level==="tinh").length,bg:"#ddeafc",c:"#1C5FBE" },
-            { l:"Cơ sở",          v:AWARDS.filter(a=>a.level==="co_so").length,bg:"#dcfce7",c:"#166534" },
+            { l:"Tổng danh hiệu", v:awards.length,bg:"#f4f7fb",c:"#0b1426" },
+            { l:"Cấp Nhà nước",   v:awards.filter(a=>a.level==="nha_nuoc").length,bg:"#fee2e2",c:"#c8102e" },
+            { l:"Cấp Tỉnh",       v:awards.filter(a=>a.level==="tinh").length,bg:"#ddeafc",c:"#1C5FBE" },
+            { l:"Cơ sở",          v:awards.filter(a=>a.level==="co_so").length,bg:"#dcfce7",c:"#166534" },
             { l:"Đã trao tặng",   v:totalAwarded,bg:"#ffffff",c:"#8a6400" },
           ].map(s=>(
             <div key={s.l} className="flex items-center gap-2 px-3 py-2 rounded-[8px]" style={{ background:s.bg }}>
@@ -255,7 +559,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
         ) : (
           /* Grid view */
           <>
-            <p className="text-[13px] text-[#635647] mb-4" style={{ fontFamily: "var(--font-sans)" }}>Hiển thị {filtered.length}/{AWARDS.length} danh hiệu</p>
+            <p className="text-[13px] text-[#635647] mb-4" style={{ fontFamily: "var(--font-sans)" }}>Hiển thị {filtered.length}/{awards.length} danh hiệu</p>
             <div className="grid grid-cols-3 gap-4">
               {filtered.map(a=>{
                 const lc=LEVEL_CFG[a.level];
@@ -294,6 +598,10 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
           </>
         )}
       </div>
+
+      {showAddModal && (
+        <AddAwardModal onClose={() => setShowAddModal(false)} onSave={handleSave} />
+      )}
     </div>
   );
 }

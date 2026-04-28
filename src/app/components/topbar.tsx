@@ -5,10 +5,11 @@
 import { Bell, ChevronDown, Sparkles, LogOut, Clock,
   Award, FileSignature, AlertTriangle,
   Eye, Settings, Search, Printer, Keyboard,
-  LayoutDashboard, PanelLeftOpen, PanelLeftClose, HelpCircle } from "lucide-react";
+  LayoutDashboard, PanelLeftOpen, PanelLeftClose, HelpCircle, X } from "lucide-react";
 import { useState } from "react";
 import type { LoginUser } from "./login-page";
 import { AppsMenu } from "./apps-menu";
+import { HelpCenterPage } from "./help-center-page";
 
 interface TopbarProps {
   user: LoginUser; active: string; onLogout: () => void;
@@ -185,8 +186,10 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
 /* ═══ TOPBAR ══════════════════════════════════════════════════ */
 export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOpenSettings, onOpenChangelog, onOpenShortcuts, onOpenPrint, hideSidebar, onToggleSidebar }: TopbarProps) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   return (
+    <>
     <header className="shrink-0 sticky top-0 z-20" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.07))" }}>
 
       {/* ── Đỏ son accent top bar ───────────────────────────── */}
@@ -254,7 +257,13 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           <ActionBtn icon={Keyboard} onClick={onOpenShortcuts}  title="Phím tắt" />
 
           <AppsMenu active={active} onSelect={onSelectModule} />
-          <ActionBtn icon={HelpCircle} onClick={() => onSelectModule("Trung tâm hỗ trợ")} title="Trung tâm hỗ trợ" />
+          <button onClick={() => setShowHelp(v => !v)} title="Trung tâm hỗ trợ"
+            className="relative size-[34px] rounded-[8px] flex items-center justify-center transition-all"
+            style={{ background: showHelp ? "#ddeafc" : "transparent", color: showHelp ? "#1C5FBE" : "#6b7280" }}
+            onMouseEnter={e => { if (!showHelp) { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; (e.currentTarget as HTMLElement).style.color = "#1a1409"; } }}
+            onMouseLeave={e => { if (!showHelp) { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#6b7280"; } }}>
+            <HelpCircle className="size-4" strokeWidth={1.75} />
+          </button>
           <NotifBell user={user} onSelectModule={onSelectModule} />
 
           {/* User menu */}
@@ -336,6 +345,51 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
         </div>
       </div>
     </header>
+
+    {/* ── Help full-screen overlay ────────────────────────────── */}
+    {showHelp && (
+      <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "white" }}>
+        {/* Overlay topbar */}
+        <div className="shrink-0 h-[52px] flex items-center justify-between px-6"
+          style={{
+            background: "white",
+            borderBottom: "1px solid #e8ecf3",
+            boxShadow: "0 1px 0 rgba(0,0,0,0.04)",
+          }}>
+          {/* Left: brand + title */}
+          <div className="flex items-center gap-3">
+            <div className="size-8 rounded-[9px] flex items-center justify-center shrink-0"
+              style={{ background: "#ddeafc" }}>
+              <HelpCircle className="size-4" style={{ color: "#1C5FBE" }} strokeWidth={1.75} />
+            </div>
+            <div>
+              <span style={{ fontSize: 14, fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0b1426", letterSpacing: "-0.01em" }}>
+                Trung tâm Hỗ trợ
+              </span>
+              <span className="ml-2 text-[13px]" style={{ color: "#8a9ab5", fontFamily: "var(--font-sans)" }}>
+                VPTU Đồng Nai
+              </span>
+            </div>
+          </div>
+
+          {/* Right: close */}
+          <button onClick={() => setShowHelp(false)}
+            className="flex items-center gap-2 h-9 px-4 rounded-[9px] text-[13px] transition-all"
+            style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)", fontWeight: 600, background: "#f4f7fb", border: "1px solid #e2e8f0" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#d0d7e3"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}>
+            <X className="size-3.5" strokeWidth={2} />
+            Đóng
+          </button>
+        </div>
+
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto" style={{ background: "#f8fafc" }}>
+          <HelpCenterPage user={user} />
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 

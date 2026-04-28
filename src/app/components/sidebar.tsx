@@ -72,13 +72,6 @@ const NAV_CONFIG: NavGroup[] = [
       { icon: Kanban,      label: "Kanban hồ sơ",            badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
     ],
   },
-  {
-    group: "Hỗ trợ",
-    items: [
-      { icon: GitMerge,   label: "Luồng nghiệp vụ",    badge: null,   roles: "all" },
-      { icon: Map,        label: "Lộ trình triển khai", badge: null,   roles: "all" },
-    ],
-  },
 ];
 
 function filterNav(role: RoleId): NavGroup[] {
@@ -286,5 +279,12 @@ export function canAccessModule(role: RoleId, label: string): boolean {
     const item = group.items.find(it => it.label === label);
     if (item) return item.roles === "all" || item.roles.includes(role);
   }
+  // AppsMenu items not in NAV_CONFIG
+  const APPS_MENU_ACCESS: Record<string, RoleId[]> = {
+    "Phân quyền":      ["quản trị hệ thống", "lãnh đạo cấp cao"],
+    "Cấu hình đơn vị": ["quản trị hệ thống", "lãnh đạo cấp cao", "lãnh đạo đơn vị"],
+    "Audit Log":       ["quản trị hệ thống", "lãnh đạo cấp cao"],
+  };
+  if (label in APPS_MENU_ACCESS) return APPS_MENU_ACCESS[label].includes(role);
   return role === "quản trị hệ thống";
 }

@@ -28,7 +28,7 @@ import type { NguonKinhPhi } from "@/app/data/reward-catalog";
 type CampaignState =
   | "draft" | "submitted" | "approved" | "published"
   | "active" | "submission_closed"
-  | "unit_review" | "council_review" | "final_approval"
+  | "unit_review" | "public_consultation" | "council_review" | "final_approval"
   | "decision_issued" | "public" | "archived";
 
 type CampaignType = "toan_quoc" | "cap_bo" | "toan_tinh" | "cap_so" | "cap_huyen" | "co_so";
@@ -88,6 +88,7 @@ interface Campaign {
   nguonKinhPhi?: string;
   quorumRequired?: number;
   quorumActual?: number;
+  consultationStartedAt?: string;
   baoHoaThanhTich?: string;
   taiLieuTongKet?: string;
   minutes?: CouncilMinutes;
@@ -107,8 +108,9 @@ const STATE_CFG: Record<CampaignState, {
   published:         { label:"Ban hành / Công bố",   short:"Công bố",    color:"#4338ca", bg:"#e0e7ff", border:"#a5b4fc", phase:0, icon:Megaphone,      canCu:"TT 15/2025/TT-BNV" },
   active:            { label:"Đang triển khai",       short:"Triển khai", color:"#166534", bg:"#dcfce7", border:"#86efac", phase:1, icon:Flag,           canCu:"Luật TĐKT 2022" },
   submission_closed: { label:"Hết hạn nộp hồ sơ",   short:"Đóng nộp",   color:"#b45309", bg:"#fef3c7", border:"#fcd34d", phase:1, icon:Lock,           canCu:"Theo kế hoạch" },
-  unit_review:       { label:"Thẩm định cấp cơ sở", short:"Thẩm định",  color:"#c2410c", bg:"#fff7ed", border:"#fdba74", phase:2, icon:ClipboardCheck, canCu:"Khoản 2 Điều 55" },
-  council_review:    { label:"Hội đồng xét duyệt",  short:"HĐ xét",     color:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", phase:2, icon:Gavel,          canCu:"Điều 56 Luật TĐKT" },
+  unit_review:         { label:"Thẩm định cấp cơ sở",    short:"Thẩm định",  color:"#c2410c", bg:"#fff7ed", border:"#fdba74", phase:2, icon:ClipboardCheck, canCu:"Khoản 2 Điều 55 Luật TĐKT" },
+  public_consultation: { label:"Lấy ý kiến công khai",   short:"Ý kiến CK",  color:"#0e7490", bg:"#e0f2fe", border:"#67e8f9", phase:2, icon:MessageSquare,  canCu:"Điều 56 Luật TĐKT 2022" },
+  council_review:      { label:"Hội đồng xét duyệt",     short:"HĐ xét",     color:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", phase:2, icon:Gavel,          canCu:"Điều 57 Luật TĐKT 2022" },
   final_approval:    { label:"Trình lãnh đạo duyệt",short:"Trình ký",    color:"#9f1239", bg:"#fee2e2", border:"#fca5a5", phase:2, icon:CheckCheck,     canCu:"Điều 57 Luật TĐKT" },
   decision_issued:   { label:"Đã ban hành QĐ",       short:"Ban QĐ",     color:"#0f7a3e", bg:"#d1fae5", border:"#6ee7b7", phase:3, icon:FileText,       canCu:"TT 15/2025/TT-BNV" },
   public:            { label:"Công bố",               short:"Công bố",    color:"#0e7490", bg:"#cffafe", border:"#67e8f9", phase:3, icon:Globe,          canCu:"Điều 44 NĐ 152/2025/NĐ-CP" },
@@ -118,14 +120,14 @@ const STATE_CFG: Record<CampaignState, {
 const STATE_ORDER: CampaignState[] = [
   "draft","submitted","approved","published",
   "active","submission_closed",
-  "unit_review","council_review","final_approval",
+  "unit_review","public_consultation","council_review","final_approval",
   "decision_issued","public","archived",
 ];
 
 const PHASES = [
   { label:"Phát động",          color:"#1C5FBE", darkColor:"#0d3d8a", states:["draft","submitted","approved","published"] as CampaignState[] },
   { label:"Triển khai",         color:"#166534", darkColor:"#0a3d20", states:["active","submission_closed"] as CampaignState[] },
-  { label:"Xét duyệt",          color:"#7c3aed", darkColor:"#4c1d95", states:["unit_review","council_review","final_approval"] as CampaignState[] },
+  { label:"Xét duyệt",          color:"#7c3aed", darkColor:"#4c1d95", states:["unit_review","public_consultation","council_review","final_approval"] as CampaignState[] },
   { label:"Tổng kết", color:"#b45309", darkColor:"#6b2d04", states:["decision_issued","public","archived"] as CampaignState[] },
 ];
 
@@ -278,9 +280,10 @@ const MOCK_CAMPAIGNS: Campaign[] = [
 /* ═══════════════════════════════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════════════════════════════ */
-const today = new Date("2026-04-23");
+const today = new Date();
 function daysLeft(d: string) { return Math.max(0, Math.ceil((new Date(d).getTime() - today.getTime()) / 86400000)); }
 function fmtDate(s: string) { if (!s) return "–"; const [y,m,d] = s.split("-"); return `${d}/${m}/${y}`; }
+function nowFmt() { return fmtDate(new Date().toISOString().slice(0,10)); }
 function stateIndex(s: CampaignState) { return STATE_ORDER.indexOf(s); }
 function getPhaseOf(s: CampaignState) { return PHASES.find(p => p.states.includes(s))!; }
 
@@ -344,6 +347,7 @@ interface ReadinessOpts {
   sigConfirmed?: boolean;
   minutesSigned?: boolean;
   joinPct?: number;
+  consultationDaysElapsed?: number;
 }
 
 function checkTransitionReadiness(c: Campaign, opts: ReadinessOpts = {}): TransitionWarning[] {
@@ -389,6 +393,16 @@ function checkTransitionReadiness(c: Campaign, opts: ReadinessOpts = {}): Transi
       } else {
         warnings.push({ level:"info", message:`${approved}/${total} hồ sơ được duyệt — sẵn sàng chuyển Hội đồng xét duyệt`, canProceed:true });
       }
+    }
+  }
+
+  if (s === "public_consultation") {
+    const elapsed = opts.consultationDaysElapsed ?? 0;
+    const required = 30;
+    if (elapsed < required) {
+      warnings.push({ level:"error", message:`Còn ${required - elapsed} ngày nữa mới đủ thời gian lấy ý kiến công khai tối thiểu ${required} ngày (Điều 56 Luật TĐKT 2022).`, canProceed:false });
+    } else {
+      warnings.push({ level:"info", message:`Đã đủ ${elapsed} ngày lấy ý kiến công khai — sẵn sàng chuyển Hội đồng xét duyệt.`, canProceed:true });
     }
   }
 
@@ -606,7 +620,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
   const pct = units.length > 0 ? Math.round(doneTotal / units.length * 100) : 0;
 
   return (
-    <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+    <div className="rounded-[12px] border overflow-hidden flex flex-col" style={{ borderColor:"var(--color-line)", maxHeight: 520 }}>
       {/* Header */}
       <div className="px-5 py-3.5 border-b flex items-center justify-between"
         style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
@@ -670,7 +684,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
       </div>
 
       {/* Table */}
-      <div className="divide-y" style={{ divideColor:"#eef2f8" }}>
+      <div className="divide-y flex-1 overflow-y-auto" style={{ divideColor:"#eef2f8" }}>
         {paged.length === 0 ? (
           <div className="py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             Không tìm thấy đơn vị nào
@@ -2768,85 +2782,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
         {isIndividual && <PersonalStatusBanner c={c} myP={myParticipant} danh_hieu={regForm.danh_hieu} hoTen={regForm.hoTen} indivDone={indivDone} />}
         {isUnitLeader && !canMove && <UnitLeaderContextPanel c={c} user={user} unitDecisions={unitDecisions} />}
 
-        {/* ── BƯỚC 4A: LẤY Ý KIẾN CÔNG KHAI ─────────────────────── */}
-        <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "#c4b5fd" }}>
-          <div className="px-5 py-3.5 border-b flex items-center gap-3" style={{ background: "linear-gradient(to right, #faf5ff, #f5f3ff)", borderColor: "#c4b5fd" }}>
-            <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0" style={{ background: "#7c3aed" }}>
-              <MessageSquare className="size-4 text-white" />
-            </div>
-            <div>
-              <div className="text-[13px] text-[#6d28d9] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>Bước 4 — Lấy ý kiến công khai (Điều 55 Luật TĐKT 2022)</div>
-              <div className="text-[13px] text-[#8b5cf6]" style={{ fontFamily: "var(--font-sans)" }}>
-                Thời gian góp ý: 15/04/2026 – 22/04/2026 · {publicComments.length} đơn vị đã phản hồi
-              </div>
-            </div>
-            <span className="ml-auto px-2.5 py-1 rounded-full text-[13px] font-bold"
-              style={{ background: "#ede9fe", color: "#7c3aed" }}>
-              {publicComments.length}/{c.totalUnits > 0 ? Math.min(c.totalUnits, 12) : 12} đơn vị
-            </span>
-          </div>
-
-          {/* Comment feed */}
-          <div className="divide-y" style={{ borderColor: "#ede9fe" }}>
-            {publicComments.map(cm => (
-              <div key={cm.id} className="px-5 py-3.5 flex items-start gap-3" style={{ background: "white" }}>
-                <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-white text-[13px]"
-                  style={{ background: "#7c3aed", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-                  {cm.author.slice(0, 2)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{cm.author}</span>
-                    <span className="text-[13px] px-1.5 py-0.5 rounded text-[#7c3aed] bg-[#ede9fe]" style={{ fontFamily: "var(--font-sans)" }}>{cm.unit}</span>
-                    <span className="text-[13px] text-[#4f5d6e] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{cm.time}</span>
-                  </div>
-                  <p className="text-[13px] text-[#374151] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{cm.content}</p>
-                </div>
-                <button
-                  className="flex items-center gap-1 px-2 py-1 rounded-[5px] border text-[13px] shrink-0 transition-all"
-                  style={{ borderColor: thumbedUp.has(cm.id) ? "#7c3aed" : "#e5e7eb", background: thumbedUp.has(cm.id) ? "#ede9fe" : "white", color: thumbedUp.has(cm.id) ? "#7c3aed" : "#6b7280" }}
-                  onClick={() => setThumbedUp(prev => { const next = new Set(prev); if (next.has(cm.id)) { next.delete(cm.id); setPublicComments(cs => cs.map(x => x.id===cm.id ? {...x,thumbsUp:x.thumbsUp-1} : x)); } else { next.add(cm.id); setPublicComments(cs => cs.map(x => x.id===cm.id ? {...x,thumbsUp:x.thumbsUp+1} : x)); } return next; })}>
-                  <ThumbsUp className="size-3" />{cm.thumbsUp}
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Submission form for unit leaders / individuals */}
-          {(isUnitLeader || isIndividual) && (
-            <div className="px-5 py-4 border-t" style={{ borderColor: "#c4b5fd", background: "#faf5ff" }}>
-              {commentSubmitted ? (
-                <div className="flex items-center gap-2 text-[13px] text-[#6d28d9]" style={{ fontFamily: "var(--font-sans)" }}>
-                  <CheckCircle2 className="size-4" />Ý kiến của bạn đã được ghi nhận. Cảm ơn đã tham gia góp ý!
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <label className="text-[13px] font-semibold text-[#6d28d9] uppercase tracking-wider" style={{ fontFamily: "var(--font-sans)" }}>
-                    Gửi ý kiến góp ý
-                  </label>
-                  <textarea className="ds-input w-full" rows={2} style={{ padding:"8px 12px", fontSize: 13, resize:"vertical" }}
-                    placeholder="Nhập ý kiến góp ý về danh sách đề nghị khen thưởng..."
-                    value={commentInput} onChange={e => setCommentInput(e.target.value)} />
-                  <DsButton variant="secondary" size="sm"
-                    style={!commentInput.trim() ? { opacity:0.5 } : {}}
-                    onClick={() => {
-                      if (!commentInput.trim()) return;
-                      setPublicComments(prev => [...prev, {
-                        id:`pc-${Date.now()}`, author:user.name||"Người dùng",
-                        unit:user.unit||"Đơn vị", content:commentInput.trim(),
-                        time:fmtDate("2026-04-23"), thumbsUp:0,
-                      }]);
-                      setCommentInput(""); setCommentSubmitted(true);
-                    }}>
-                    <Send className="size-3" />Gửi ý kiến
-                  </DsButton>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* ── BƯỚC 4B: THẨM ĐỊNH CẤP CƠ SỞ ──────────────────────── */}
+        {/* ── THẨM ĐỊNH CẤP CƠ SỞ ────────────────────────────────── */}
         <SectionHeader icon={ClipboardCheck} title="Thẩm định cấp cơ sở" sub="Hội đồng tiếp nhận, phân loại và thẩm định từng hồ sơ theo tiêu chí" color="#c2410c" />
 
         <div className="grid grid-cols-3 gap-4">
@@ -2950,6 +2886,176 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
           {canMove && (
             <DsButton variant="primary" size="md" onClick={doTransition} disabled={!allReviewed}>
+              <MessageSquare className="size-4" />Mở lấy ý kiến công khai
+            </DsButton>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  /* ── PUBLIC_CONSULTATION ───────────────────────────────────────── */
+  if (c.state === "public_consultation") {
+    const startDate   = c.consultationStartedAt ? new Date(c.consultationStartedAt) : new Date();
+    const msPerDay    = 86400000;
+    const daysElapsed = Math.floor((today.getTime() - startDate.getTime()) / msPerDay);
+    const daysRemain  = Math.max(0, 30 - daysElapsed);
+    const timerDone   = daysElapsed >= 30;
+    const timerPct    = Math.min(100, Math.round((daysElapsed / 30) * 100));
+
+    return (
+      <div className="space-y-6">
+        {isAdmin && <AdminHealthBar c={c} />}
+
+        {/* ── TIMER 30 NGÀY ─────────────────────────────────────── */}
+        <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: timerDone ? "#67e8f9" : "#fcd34d" }}>
+          <div className="px-5 py-4 border-b flex items-center gap-4"
+            style={{ background: timerDone ? "linear-gradient(to right,#ecfeff,#e0f2fe)" : "linear-gradient(to right,#fffbeb,#fef3c7)", borderColor: timerDone ? "#67e8f9" : "#fcd34d" }}>
+            <div className="size-10 rounded-[10px] flex items-center justify-center shrink-0"
+              style={{ background: timerDone ? "#0e7490" : "#b45309" }}>
+              <Clock className="size-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[14px] font-semibold mb-0.5"
+                style={{ color: timerDone ? "#0e7490" : "#b45309", fontFamily: "var(--font-sans)" }}>
+                {timerDone ? "Đã đủ thời gian lấy ý kiến công khai" : `Còn ${daysRemain} ngày lấy ý kiến công khai`}
+              </div>
+              <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+                Bắt đầu: {fmtDate(c.consultationStartedAt ?? new Date().toISOString().slice(0,10))} · {daysElapsed}/{30} ngày đã trôi qua · Căn cứ: Điều 56 Luật TĐKT 2022
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <div className="text-[22px] font-bold" style={{ color: timerDone ? "#0e7490" : "#b45309", fontFamily: "var(--font-sans)" }}>{timerPct}%</div>
+              <div className="text-[11px] text-[#635647]">hoàn thành</div>
+            </div>
+          </div>
+          <div className="px-5 py-3" style={{ background: "white" }}>
+            <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: "#e5e7eb" }}>
+              <div className="h-full rounded-full transition-all"
+                style={{ width: `${timerPct}%`, background: timerDone ? "#0e7490" : "#f59e0b" }} />
+            </div>
+            {!timerDone && (
+              <p className="mt-2 text-[13px]" style={{ color: "#b45309", fontFamily: "var(--font-sans)" }}>
+                ⚠️ Không thể chuyển sang Hội đồng xét duyệt khi chưa đủ 30 ngày lấy ý kiến công khai.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* ── PHẢN HỒI CÔNG KHAI ────────────────────────────────── */}
+        <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "#67e8f9" }}>
+          <div className="px-5 py-3.5 border-b flex items-center gap-3"
+            style={{ background: "linear-gradient(to right,#ecfeff,#e0f2fe)", borderColor: "#67e8f9" }}>
+            <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0" style={{ background: "#0e7490" }}>
+              <MessageSquare className="size-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[13px] font-semibold text-[#0e7490]" style={{ fontFamily: "var(--font-sans)" }}>
+                Ý kiến công khai (Điều 56 Luật TĐKT 2022)
+              </div>
+              <div className="text-[13px] text-[#0c7a8a]" style={{ fontFamily: "var(--font-sans)" }}>
+                {publicComments.length} ý kiến đã gửi · Tối thiểu 30 ngày tiếp nhận
+              </div>
+            </div>
+            <span className="ml-auto px-2.5 py-1 rounded-full text-[13px] font-bold"
+              style={{ background: "#e0f2fe", color: "#0e7490" }}>
+              {publicComments.length} phản hồi
+            </span>
+          </div>
+
+          <div className="divide-y" style={{ borderColor: "#e0f2fe" }}>
+            {publicComments.length === 0 && (
+              <div className="px-5 py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                Chưa có ý kiến nào được gửi
+              </div>
+            )}
+            {publicComments.map(cm => (
+              <div key={cm.id} className="px-5 py-3.5 flex items-start gap-3" style={{ background: "white" }}>
+                <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-white text-[13px]"
+                  style={{ background: "#0e7490", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                  {cm.author.slice(0, 2)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{cm.author}</span>
+                    <span className="text-[13px] px-1.5 py-0.5 rounded text-[#0e7490] bg-[#e0f2fe]" style={{ fontFamily: "var(--font-sans)" }}>{cm.unit}</span>
+                    <span className="text-[13px] text-[#4f5d6e] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{cm.time}</span>
+                  </div>
+                  <p className="text-[13px] text-[#374151] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{cm.content}</p>
+                </div>
+                <button
+                  className="flex items-center gap-1 px-2 py-1 rounded-[5px] border text-[13px] shrink-0 transition-all"
+                  style={{ borderColor: thumbedUp.has(cm.id) ? "#0e7490" : "#e5e7eb", background: thumbedUp.has(cm.id) ? "#e0f2fe" : "white", color: thumbedUp.has(cm.id) ? "#0e7490" : "#6b7280" }}
+                  onClick={() => setThumbedUp(prev => {
+                    const next = new Set(prev);
+                    if (next.has(cm.id)) { next.delete(cm.id); setPublicComments(cs => cs.map(x => x.id===cm.id ? {...x,thumbsUp:x.thumbsUp-1} : x)); }
+                    else { next.add(cm.id); setPublicComments(cs => cs.map(x => x.id===cm.id ? {...x,thumbsUp:x.thumbsUp+1} : x)); }
+                    return next;
+                  })}>
+                  <ThumbsUp className="size-3" />{cm.thumbsUp}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Form gửi ý kiến — dành cho LĐDV và cá nhân */}
+          {(isUnitLeader || isIndividual) && (
+            <div className="px-5 py-4 border-t" style={{ borderColor: "#67e8f9", background: "#ecfeff" }}>
+              {commentSubmitted ? (
+                <div className="flex items-center gap-2 text-[13px] text-[#0e7490]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <CheckCircle2 className="size-4" />Ý kiến của bạn đã được ghi nhận. Cảm ơn đã tham gia góp ý!
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <label className="text-[13px] font-semibold text-[#0e7490] uppercase tracking-wider" style={{ fontFamily: "var(--font-sans)" }}>
+                    Gửi ý kiến góp ý công khai
+                  </label>
+                  <textarea className="ds-input w-full" rows={2} style={{ padding:"8px 12px", fontSize: 13, resize:"vertical" }}
+                    placeholder="Nhập ý kiến góp ý về danh sách đề nghị khen thưởng..."
+                    value={commentInput} onChange={e => setCommentInput(e.target.value)} />
+                  <DsButton variant="secondary" size="sm"
+                    style={!commentInput.trim() ? { opacity:0.5 } : {}}
+                    onClick={() => {
+                      if (!commentInput.trim()) return;
+                      setPublicComments(prev => [...prev, {
+                        id:`pc-${Date.now()}`, author:user.name||"Người dùng",
+                        unit:user.unit||"Đơn vị", content:commentInput.trim(),
+                        time:nowFmt(), thumbsUp:0,
+                      }]);
+                      setCommentInput(""); setCommentSubmitted(true);
+                    }}>
+                    <Send className="size-3" />Gửi ý kiến
+                  </DsButton>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Panel LĐCC xử lý phản ánh hợp lệ */}
+          {canMove && publicComments.length > 0 && (
+            <div className="px-5 py-4 border-t" style={{ borderColor: "#67e8f9", background: "#f0fdff" }}>
+              <div className="text-[13px] font-semibold text-[#0e7490] mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+                Xử lý phản ánh (Lãnh đạo cấp cao)
+              </div>
+              <p className="text-[13px] text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)" }}>
+                Nếu có phản ánh hợp lệ ảnh hưởng đến danh sách, có thể trả hồ sơ về bước thẩm định để rà soát lại.
+              </p>
+              <DsButton variant="ghost" size="sm"
+                onClick={() => onTransition(c.id, "unit_review")}
+                style={{ color:"#c2410c", borderColor:"#fdba74" }}>
+                <RotateCcw className="size-3.5" />Trả về thẩm định cấp cơ sở
+              </DsButton>
+            </div>
+          )}
+        </div>
+
+        {canMove && (
+          <ReadinessPanel warnings={checkTransitionReadiness(c, { consultationDaysElapsed: daysElapsed })} />
+        )}
+        <div className="flex items-center justify-between">
+          <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
+          {canMove && (
+            <DsButton variant="primary" size="md" onClick={doTransition} disabled={!timerDone}>
               <Gavel className="size-4" />Chuyển Hội đồng xét duyệt
             </DsButton>
           )}
@@ -3451,7 +3557,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               V/v khen thưởng kết quả {c.name}
             </h3>
             <div className="flex items-center gap-4 text-[13px] text-white/60">
-              <span>Ban hành: {qdEntry?.time ?? fmtDate("2026-04-23")}</span>
+              <span>Ban hành: {qdEntry?.time ?? nowFmt()}</span>
               <span>Ký bởi: {qdEntry?.actor ?? c.leader}</span>
               <span>Tỉnh Đồng Nai</span>
             </div>
@@ -4694,7 +4800,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
       canCuPhapLy: suggestLegalBases(form.type, form.sector),
       ghiChu:"", urgent:form.urgent, creatorId: user.id,
       rewardForms, tongKinhPhi,
-      auditLog:[{id:`al-${Date.now()}`,action:"Tạo phong trào",actor:user.name||"Người dùng",role:user.roleLabel||"Chuyên viên",time:fmtDate("2026-04-23"),detail:`Khởi tạo phong trào "${form.name}"`,state:"draft"}],
+      auditLog:[{id:`al-${Date.now()}`,action:"Tạo phong trào",actor:user.name||"Người dùng",role:user.roleLabel||"Chuyên viên",time:nowFmt(),detail:`Khởi tạo phong trào "${form.name}"`,state:"draft"}],
     };
     onCreate(newC);
   };
@@ -5047,11 +5153,14 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
         id:`al-${Date.now()}`, action:nextStateLabel(c),
         actor:user.name||"Người dùng",
         role:{"cá nhân":"Người tham gia","lãnh đạo đơn vị":"Lãnh đạo đơn vị","hội đồng":"Thành viên HĐ","lãnh đạo cấp cao":"Lãnh đạo","quản trị hệ thống":"Quản trị"}[user.role]||"Người dùng",
-        time:fmtDate("2026-04-23"),
+        time:nowFmt(),
         detail:`Chuyển trạng thái → ${STATE_CFG[newState].label}`,
         state:newState,
       };
-      return { ...c, state:newState, auditLog:[...c.auditLog, entry] };
+      return {
+      ...c, state:newState, auditLog:[...c.auditLog, entry],
+      ...(newState === "public_consultation" ? { consultationStartedAt: new Date().toISOString().slice(0,10) } : {}),
+    };
     }));
   };
 

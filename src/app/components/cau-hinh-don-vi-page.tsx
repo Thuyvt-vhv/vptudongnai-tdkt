@@ -4,6 +4,7 @@ import {
   Check, X, Save, Award, Shield, Clock, Settings2, ToggleLeft,
   ToggleRight, AlertTriangle, CheckCircle2, Info, Users, Lock,
   FileText, Calendar, Loader2, GripVertical, Copy, Wallet, DollarSign,
+  Megaphone, Zap, ArrowRight,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { REWARD_CATALOG, formatTienThuong, getNguonKinhPhiLabel } from "@/app/data/reward-catalog";
@@ -124,7 +125,7 @@ function OrgNode({ unit, depth=0, onSelect, selected }: { unit:OrgUnit; depth?:n
 /* ═══════════════════════════════════════════════════════════════
    TABS
 ═══════════════════════════════════════════════════════════════ */
-type Tab = "org"|"awards"|"signing"|"sla"|"kinh_phi"|"general";
+type Tab = "org"|"awards"|"signing"|"sla"|"kinh_phi"|"general"|"phong_trao";
 
 function OrgTab() {
   const [selected,setSelected]=useState<string|null>("1");
@@ -849,6 +850,309 @@ function GeneralTab() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   PHONG TRAO BYPASS TAB
+═══════════════════════════════════════════════════════════════ */
+const PT_PHASES = [
+  { id:0, label:"Giai đoạn 0 — Phát động",          color:"#1C5FBE", bg:"#ddeafc" },
+  { id:1, label:"Giai đoạn 1 — Triển khai",         color:"#166534", bg:"#dcfce7" },
+  { id:2, label:"Giai đoạn 2 — Xét duyệt",          color:"#7c3aed", bg:"#f5f3ff" },
+  { id:3, label:"Giai đoạn 3 — Ban hành & Lưu trữ", color:"#b45309", bg:"#fef3c7" },
+];
+
+interface PTState {
+  id:string; label:string; phase:number;
+  bypassable:boolean; reason?:string; roles?:string[]; canCu?:string;
+}
+
+const PT_STATES: PTState[] = [
+  { id:"draft",             label:"Soạn thảo",              phase:0, bypassable:false, canCu:"Quy trình nội bộ" },
+  { id:"submitted",         label:"Trình phê duyệt",        phase:0, bypassable:true,  reason:"Bỏ qua bước thẩm tra ban đầu của Hội đồng TĐKT",                      roles:["Quản trị hệ thống","Lãnh đạo cấp cao"] },
+  { id:"approved",          label:"Chờ ban hành",           phase:0, bypassable:true,  reason:"Bỏ qua bước chuẩn bị nội dung trước khi công bố",                     roles:["Quản trị hệ thống","Lãnh đạo cấp cao"] },
+  { id:"published",         label:"Ban hành / Công bố",    phase:0, bypassable:false, canCu:"Điều 18 Luật TĐKT" },
+  { id:"active",            label:"Đang triển khai",        phase:1, bypassable:false },
+  { id:"submission_closed", label:"Hết hạn nộp hồ sơ",     phase:1, bypassable:true,  reason:"Hệ thống tự động đóng nhận hồ sơ theo ngày kết thúc, không cần thao tác thủ công", roles:["Quản trị hệ thống","Lãnh đạo cấp cao","Lãnh đạo đơn vị"] },
+  { id:"unit_review",       label:"Thẩm định cấp cơ sở",   phase:2, bypassable:true,  reason:"Bỏ qua thẩm định cấp cơ sở — chỉ áp dụng cho danh hiệu cấp cơ sở",   roles:["Quản trị hệ thống","Lãnh đạo cấp cao"] },
+  { id:"council_review",    label:"Hội đồng xét duyệt",    phase:2, bypassable:false, canCu:"Điều 56–57 Luật TĐKT" },
+  { id:"final_approval",    label:"Trình lãnh đạo ký",     phase:2, bypassable:true,  reason:"Bỏ qua bước trình ký theo ủy quyền đặc biệt",                         roles:["Quản trị hệ thống"] },
+  { id:"decision_issued",   label:"Ban hành Quyết định",   phase:3, bypassable:false, canCu:"NĐ 130/2018/NĐ-CP" },
+  { id:"public",            label:"Công bố kết quả",       phase:3, bypassable:true,  reason:"Lưu trữ nội bộ, không cần công bố rộng rãi",                          roles:["Quản trị hệ thống","Lãnh đạo cấp cao"] },
+  { id:"archived",          label:"Lưu trữ hồ sơ",         phase:3, bypassable:false, canCu:"NĐ 30/2020/NĐ-CP" },
+];
+
+const PT_BYPASS_KEYS = ["submitted","approved","submission_closed","unit_review","final_approval","public"];
+
+const PT_PRESETS = [
+  {
+    id:"full",  label:"Quy trình đầy đủ",  color:"#166534",
+    desc:"Thực hiện đầy đủ 12 bước theo NĐ 152/2025/NĐ-CP",
+    bypasses:{} as Record<string,boolean>,
+  },
+  {
+    id:"quick", label:"Phát động nhanh",   color:"#1C5FBE",
+    desc:"Bỏ qua Trình phê duyệt và Chờ ban hành (Giai đoạn 0)",
+    bypasses:{ submitted:true, approved:true } as Record<string,boolean>,
+  },
+  {
+    id:"co_so", label:"Danh hiệu cơ sở",  color:"#7c3aed",
+    desc:"Bỏ qua Trình phê duyệt và Thẩm định cấp cơ sở",
+    bypasses:{ submitted:true, unit_review:true } as Record<string,boolean>,
+  },
+  {
+    id:"min",   label:"Rút gọn tối đa",   color:"#b45309",
+    desc:"Chỉ thực hiện các bước bắt buộc theo pháp lý",
+    bypasses:{ submitted:true, approved:true, submission_closed:true, unit_review:true, public:true } as Record<string,boolean>,
+  },
+];
+
+function PhongTraoBypassTab() {
+  const [bypasses, setBypasses] = useState<Record<string,boolean>>(
+    Object.fromEntries(PT_BYPASS_KEYS.map(k => [k, false]))
+  );
+  const [savedAt, setSavedAt] = useState<string|null>(null);
+
+  const toggle = (id:string) => { setBypasses(p => ({ ...p, [id]: !p[id] })); setSavedAt(null); };
+  const applyPreset = (p: typeof PT_PRESETS[0]) => {
+    setBypasses(Object.fromEntries(PT_BYPASS_KEYS.map(k => [k, p.bypasses[k] ?? false])));
+    setSavedAt(null);
+  };
+
+  const soBoQua = Object.values(bypasses).filter(Boolean).length;
+  const effective = PT_STATES.filter(s => !bypasses[s.id]);
+  const currentPresetId = PT_PRESETS.find(p =>
+    PT_BYPASS_KEYS.every(k => (bypasses[k] ?? false) === (p.bypasses[k] ?? false))
+  )?.id;
+
+  return (
+    <div className="h-full overflow-y-auto pb-6" style={{ fontFamily:"var(--font-sans)" }}>
+      <div className="space-y-5">
+
+        {/* ── Giới thiệu ──────────────────────────────────────── */}
+        <div className="flex items-start gap-3 p-4 rounded-[10px] border border-[#93c5fd]" style={{ background:"#eff6ff" }}>
+          <Zap className="size-5 text-[#1C5FBE] shrink-0 mt-0.5"/>
+          <div>
+            <p className="text-[14px] font-bold text-[#1e3a8a]">Cấu hình Bỏ qua bước — Quy trình Phát động Phong trào Thi đua</p>
+            <p className="text-[13px] text-[#3b82f6] mt-1 leading-relaxed">
+              Tính năng này cho phép bỏ qua các bước <strong>không bắt buộc</strong> theo pháp lý, giúp rút ngắn thời gian triển khai.
+              Bước có nhãn <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded mx-0.5 text-[12px] font-bold" style={{ background:"#fee2e2", color:"#c8102e" }}>
+                🔒 Bắt buộc
+              </span> không được phép bỏ qua theo Luật TĐKT 2022 và NĐ 152/2025/NĐ-CP.
+            </p>
+          </div>
+        </div>
+
+        {/* ── Mẫu cấu hình nhanh (2×2) ───────────────────────── */}
+        <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
+            <Settings2 className="size-4 text-[#1C5FBE]"/>
+            <span className="text-[13px] font-bold text-[#0b1426]">Mẫu cấu hình nhanh</span>
+            <span className="ml-auto text-[13px] font-semibold" style={{ color: soBoQua > 0 ? "#b45309" : "#166534" }}>
+              {soBoQua > 0
+                ? `Đang bỏ qua ${soBoQua} bước · Còn lại ${12 - soBoQua} bước`
+                : "Quy trình đầy đủ — 12 bước"}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 p-4">
+            {PT_PRESETS.map(p => {
+              const isActive = currentPresetId === p.id;
+              const soBoQuaMau = Object.values(p.bypasses).filter(Boolean).length;
+              return (
+                <button key={p.id} onClick={() => applyPreset(p)}
+                  className="flex items-start gap-3 p-4 rounded-[10px] text-left transition-all"
+                  style={{
+                    background: isActive ? p.color + "12" : "white",
+                    border: `${isActive ? 2 : 1}px solid ${isActive ? p.color : "#e2e8f0"}`,
+                  }}>
+                  <div className="size-10 rounded-[8px] flex items-center justify-center shrink-0" style={{ background: p.color + "18" }}>
+                    <Megaphone className="size-5" style={{ color: p.color }}/>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="text-[14px] font-bold" style={{ color: isActive ? p.color : "#0b1426" }}>
+                        {p.label}
+                      </span>
+                      {isActive && (
+                        <span className="text-[12px] px-1.5 py-0.5 rounded font-bold" style={{ background:p.color+"18", color:p.color }}>
+                          Đang áp dụng
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[13px] text-[#635647] leading-snug mb-2">{p.desc}</p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[12px] px-2 py-0.5 rounded font-semibold" style={{ background:"#dcfce7", color:"#166534" }}>
+                        Thực hiện {12 - soBoQuaMau} bước
+                      </span>
+                      {soBoQuaMau > 0 && (
+                        <span className="text-[12px] px-2 py-0.5 rounded font-semibold" style={{ background:"#fef3c7", color:"#b45309" }}>
+                          Bỏ qua {soBoQuaMau} bước
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Cấu hình chi tiết từng bước ─────────────────────── */}
+        <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
+            <Zap className="size-4 text-[#7c3aed]"/>
+            <span className="text-[13px] font-bold text-[#0b1426]">Cấu hình chi tiết từng bước</span>
+            <span className="ml-auto text-[13px] text-[#635647]">Bật/tắt để cho phép bỏ qua từng bước</span>
+          </div>
+
+          {PT_PHASES.map(phase => {
+            const states = PT_STATES.filter(s => s.phase === phase.id);
+            const soBoQuaPhase = states.filter(s => s.bypassable && bypasses[s.id]).length;
+            return (
+              <div key={phase.id} className="border-b border-[#e2e8f0] last:border-0">
+                {/* Tiêu đề giai đoạn */}
+                <div className="flex items-center gap-2.5 px-5 py-2.5" style={{ background: phase.bg + "80" }}>
+                  <span className="size-5 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
+                    style={{ background: phase.color }}>
+                    {phase.id}
+                  </span>
+                  <span className="text-[13px] font-bold" style={{ color: phase.color }}>{phase.label}</span>
+                  {soBoQuaPhase > 0 && (
+                    <span className="ml-auto text-[12px] font-bold px-2 py-0.5 rounded" style={{ background:"#fef3c7", color:"#b45309" }}>
+                      Đang bỏ qua {soBoQuaPhase} bước
+                    </span>
+                  )}
+                </div>
+
+                {/* Danh sách bước */}
+                <div className="divide-y divide-[#f1f5f9]">
+                  {states.map(s => {
+                    const dangBoQua = Boolean(s.bypassable && bypasses[s.id]);
+                    const soBuoc = PT_STATES.findIndex(x => x.id === s.id) + 1;
+                    return (
+                      <div key={s.id}
+                        className="flex items-start gap-4 px-5 py-3.5 transition-colors"
+                        style={{ background: dangBoQua ? "#fafbfc" : "white" }}>
+
+                        {/* Số bước */}
+                        <div className="flex flex-col items-center shrink-0 mt-0.5">
+                          <span className="size-7 rounded-full flex items-center justify-center text-[12px] font-bold" style={{
+                            background: dangBoQua ? "#f1f5f9" : s.bypassable ? phase.bg : "#f4f7fb",
+                            color: dangBoQua ? "#94a3b8" : s.bypassable ? phase.color : "#94a3b8",
+                          }}>
+                            {soBuoc}
+                          </span>
+                        </div>
+
+                        {/* Nội dung bước */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                            <span className="text-[14px] font-semibold" style={{
+                              color: dangBoQua ? "#94a3b8" : "#0b1426",
+                              textDecoration: dangBoQua ? "line-through" : "none",
+                            }}>
+                              {s.label}
+                            </span>
+                            {dangBoQua && (
+                              <span className="text-[12px] font-bold px-1.5 py-0.5 rounded" style={{ background:"#fef3c7", color:"#b45309" }}>
+                                Đang bỏ qua
+                              </span>
+                            )}
+                            {!s.bypassable && (
+                              <span className="text-[12px] font-bold px-1.5 py-0.5 rounded" style={{ background:"#fee2e2", color:"#c8102e" }}>
+                                🔒 Bắt buộc
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[13px] text-[#635647] leading-snug">
+                            {s.bypassable ? s.reason : (s.canCu ?? "Bắt buộc theo quy định pháp luật")}
+                          </p>
+                          {!dangBoQua && s.bypassable && s.roles && (
+                            <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                              <span className="text-[12px] text-[#635647]">Vai trò được phép bỏ qua:</span>
+                              {s.roles.map(r => (
+                                <span key={r} className="text-[12px] font-semibold px-2 py-0.5 rounded" style={{ background:"#f4f7fb", color:"#0b1426" }}>
+                                  {r}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Toggle hoặc khóa */}
+                        <div className="shrink-0 flex items-center gap-2 mt-0.5">
+                          {s.bypassable ? (
+                            <button onClick={() => toggle(s.id)} className="flex items-center gap-1.5">
+                              <span className="text-[13px] font-semibold w-16 text-right" style={{ color: bypasses[s.id] ? "#b45309" : "#94a3b8" }}>
+                                {bypasses[s.id] ? "Bỏ qua" : "Thực hiện"}
+                              </span>
+                              {bypasses[s.id]
+                                ? <ToggleRight className="size-6" style={{ color: phase.color }}/>
+                                : <ToggleLeft className="size-6 text-[#d1d5db]"/>
+                              }
+                            </button>
+                          ) : (
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[13px] text-[#d1d5db] w-16 text-right">Bắt buộc</span>
+                              <Lock className="size-5 text-[#d1d5db]"/>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ── Quy trình hiệu lực ──────────────────────────────── */}
+        <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
+            <CheckCircle2 className="size-4 text-[#166534]"/>
+            <span className="text-[13px] font-bold text-[#0b1426]">Quy trình hiệu lực sau khi áp dụng cấu hình</span>
+            <span className="ml-auto text-[13px] text-[#635647]">{effective.length} / {PT_STATES.length} bước</span>
+          </div>
+          <div className="px-5 py-4 flex items-center flex-wrap gap-y-2 gap-x-0.5">
+            {effective.map((s, idx) => {
+              const pCfg = PT_PHASES.find(p => p.id === s.phase)!;
+              return (
+                <div key={s.id} className="flex items-center gap-0.5">
+                  {idx > 0 && <ArrowRight className="size-3.5 text-[#94a3b8] shrink-0 mx-0.5"/>}
+                  <span className="text-[13px] font-semibold px-2.5 py-1 rounded-[6px]" style={{ background:pCfg.bg, color:pCfg.color }}>
+                    {s.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Nút hành động ───────────────────────────────────── */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setSavedAt(new Date().toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"}))}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-[8px] text-[13px] text-white font-semibold"
+            style={{ background:"#1C5FBE" }}>
+            <Save className="size-4"/>Áp dụng cấu hình
+          </button>
+          <button
+            onClick={() => { setBypasses(Object.fromEntries(PT_BYPASS_KEYS.map(k=>[k,false]))); setSavedAt(null); }}
+            className="px-4 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] text-[#5a5040]">
+            Đặt lại mặc định
+          </button>
+          {savedAt && (
+            <div className="flex items-center gap-2 ml-auto">
+              <CheckCircle2 className="size-4 text-[#166534]"/>
+              <span className="text-[13px] font-semibold text-[#166534]">Đã áp dụng lúc {savedAt}</span>
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════ */
 export function CauHinhDonViPage({ user }: { user: LoginUser }) {
@@ -859,14 +1163,15 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
     { id:"signing",   label:"Thẩm quyền Ký",         icon:Lock,       color:"#92400e" },
     { id:"sla",       label:"Kỳ xét & SLA",          icon:Clock,      color:"#b45309" },
     { id:"kinh_phi",  label:"Kinh phí Khen thưởng",  icon:Wallet,     color:"#1C5FBE" },
-    { id:"general",   label:"Cài đặt chung",          icon:Settings2,  color:"#7c3aed" },
+    { id:"general",    label:"Cài đặt chung",           icon:Settings2,  color:"#7c3aed" },
+    { id:"phong_trao", label:"Cấu hình phong trào thi đua", icon:Megaphone,  color:"#1C5FBE" },
   ];
-  if(user.role!=="quản trị hệ thống") {
+  if(!["quản trị hệ thống","lãnh đạo cấp cao","lãnh đạo đơn vị"].includes(user.role)) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#ffffff" }}>
         <Shield className="size-16 text-[#d1d5db]"/>
-        <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chỉ Admin mới có quyền truy cập</h2>
-        <p className="text-[14px] text-[#635647]">Trang Cấu hình hệ thống yêu cầu vai trò Admin.</p>
+        <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Không có quyền truy cập</h2>
+        <p className="text-[14px] text-[#635647]">Trang Cấu hình hệ thống yêu cầu vai trò Admin, Lãnh đạo cấp cao hoặc Lãnh đạo đơn vị.</p>
       </div>
     );
   }
@@ -902,7 +1207,8 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
         {tab==="signing"  && <SigningTab/>}
         {tab==="sla"      && <SLATab/>}
         {tab==="kinh_phi" && <KinhPhiTab/>}
-        {tab==="general"  && <GeneralTab/>}
+        {tab==="general"    && <GeneralTab/>}
+        {tab==="phong_trao" && <PhongTraoBypassTab/>}
       </div>
     </div>
   );

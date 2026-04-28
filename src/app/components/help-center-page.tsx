@@ -4,9 +4,10 @@ import {
   ChevronRight, ChevronDown, ExternalLink, MessageSquare,
   Phone, Mail, FileText, Shield, Award, Users, Settings,
   Clock, CheckCircle2, Star, ArrowRight, Bookmark,
-  Zap, PlayCircle, X,
+  PlayCircle, X, GitBranch,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
+import { LuongNghiepVuPage } from "./luong-nghiep-vu-page";
 
 /* ═══════════════════════════════════════════════════════════════
    DATA
@@ -97,7 +98,7 @@ function FAQAccordion({ items }: { items: FAQItem[] }) {
 export function HelpCenterPage({ user }: { user: LoginUser }) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
-  const [activeTab, setActiveTab] = useState<"faq" | "legal" | "videos" | "contact">("faq");
+  const [activeTab, setActiveTab] = useState<"faq" | "legal" | "videos" | "contact" | "workflow">("faq");
 
   const filteredFAQ = FAQ_ITEMS.filter(f => {
     const matchCat = activeCategory === "all" || f.category === activeCategory;
@@ -179,7 +180,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
 
         {/* Tabs */}
         <div className="flex items-center gap-1 border-b border-[#e2e8f0] mb-6">
-          {([["faq","Câu hỏi thường gặp",HelpCircle],["legal","Pháp lý & Văn bản",Scale],["videos","Video hướng dẫn",PlayCircle],["contact","Liên hệ hỗ trợ",MessageSquare]] as const).map(([id,label,Icon]) => (
+          {([["faq","Câu hỏi thường gặp",HelpCircle],["workflow","Luồng nghiệp vụ",GitBranch],["legal","Pháp lý & Văn bản",Scale],["videos","Video hướng dẫn",PlayCircle],["contact","Liên hệ hỗ trợ",MessageSquare]] as const).map(([id,label,Icon]) => (
             <button key={id} onClick={() => setActiveTab(id)}
               className="flex items-center gap-1.5 px-5 py-3 text-[13px] border-b-2 transition-all"
               style={{
@@ -199,6 +200,13 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
             {filteredFAQ.length === 0
               ? <div className="text-center py-16 text-[#635647]">Không tìm thấy kết quả phù hợp.</div>
               : <FAQAccordion items={filteredFAQ} />}
+          </div>
+        )}
+
+        {/* Workflow */}
+        {activeTab === "workflow" && (
+          <div className="-mx-8 -mb-8">
+            <LuongNghiepVuPage user={user} />
           </div>
         )}
 

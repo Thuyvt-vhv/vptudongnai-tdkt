@@ -81,8 +81,8 @@ function AccessDenied({
     "Ký số & Phê duyệt":      ["Leader", "Admin"],
     "Chấm điểm & Bình xét":   ["Council", "Leader", "Admin"],
     "Hồ sơ cán bộ":           ["Council", "Manager", "Leader", "Admin"],
-    "Cấu hình đơn vị":        ["Admin"],
-    "Phân quyền":              ["Admin"],
+    "Cấu hình đơn vị":        ["Admin", "Lãnh đạo cấp cao", "Lãnh đạo đơn vị"],
+    "Phân quyền":              ["Admin", "Lãnh đạo cấp cao"],
   };
 
   const required = REQUIRED_ROLES[moduleName] ?? ["Leader hoặc Admin"];
@@ -274,8 +274,12 @@ export default function App() {
     setPrevActive(active);
     if (label === "__cmd__") { setCmdOpen(true); return; }
     setActive(label);
-    // Sidebar ẩn khi vào bất kỳ trang nào, hiện lại ở dashboard
     setHideSidebar(label !== "Bảng điều hành");
+  };
+
+  const navigateFromSidebar = (label: string) => {
+    setPrevActive(active);
+    setActive(label);
   };
 
   const goBack = () => {
@@ -337,7 +341,7 @@ export default function App() {
     <ThemeProvider>
       <div className="size-full flex transition-colors duration-300"
         style={{ background:"var(--color-paper)", fontFamily: "var(--font-sans)" }}>
-        {!hideSidebar && <Sidebar user={currentUser} active={active} onSelect={navigate} />}
+        {!hideSidebar && <Sidebar user={currentUser} active={active} onSelect={navigateFromSidebar} />}
 
         <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ background: "var(--color-paper)" }}>
           <Topbar
