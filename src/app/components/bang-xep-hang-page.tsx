@@ -70,14 +70,16 @@ const RANK_LABELS = ["", "👑 Hạng Nhất", "🥈 Hạng Nhì", "🥉 Hạng 
 /* ═══════════════════════════════════════════════════════════════
    PODIUM
 ═══════════════════════════════════════════════════════════════ */
+const PODIUM_H: Record<number, number> = { 1: 268, 2: 224, 3: 204 };
+
 function Podium({ top3 }: { top3: RankEntry[] }) {
   if (top3.length < 3) return null;
   const [first, second, third] = [top3[0], top3[1], top3[2]];
   // order: 2nd left, 1st center, 3rd right
   const slots = [
-    { entry: second, rank: 2, lift: 20 },
-    { entry: first,  rank: 1, lift: 0  },
-    { entry: third,  rank: 3, lift: 36 },
+    { entry: second, rank: 2 },
+    { entry: first,  rank: 1 },
+    { entry: third,  rank: 3 },
   ];
 
   return (
@@ -92,7 +94,6 @@ function Podium({ top3 }: { top3: RankEntry[] }) {
           style={{ background: "radial-gradient(circle,#f59e0b,transparent 70%)" }} />
         <div className="absolute top-8 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full opacity-15"
           style={{ background: "radial-gradient(circle,#c8102e,transparent 70%)" }} />
-        {/* Stars / sparkle dots */}
         {[...Array(12)].map((_, i) => (
           <div key={i} className="absolute rounded-full"
             style={{
@@ -104,85 +105,64 @@ function Podium({ top3 }: { top3: RankEntry[] }) {
         ))}
       </div>
 
-      {/* Cards */}
+      {/* Cards — items-end → chân bằng nhau */}
       <div className="relative flex items-end justify-center gap-5">
-        {slots.map(({ entry, rank, lift }) => {
+        {slots.map(({ entry, rank }) => {
           const pal = RANK_PALETTE[rank];
           const isFirst = rank === 1;
-          return (
-            <div key={entry.id} className="flex flex-col items-center"
-              style={{ width: isFirst ? 226 : 196, transform: `translateY(${lift}px)` }}>
+          const h = PODIUM_H[rank];
 
-              {/* Crown glow for #1 */}
+          return (
+            <div key={entry.id} style={{ width: isFirst ? 220 : 192 }}>
+              {/* Crown above card for #1 only */}
               {isFirst && (
-                <div className="relative mb-2 flex justify-center">
-                  <div className="absolute size-12 rounded-full blur-xl opacity-60"
-                    style={{ background: pal.accent, top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
-                  <Crown className="relative size-8" style={{ color: pal.accent, filter: `drop-shadow(0 0 10px ${pal.accent})` }} />
+                <div className="flex justify-center mb-3">
+                  <div className="relative">
+                    <div className="absolute size-12 rounded-full blur-xl opacity-60"
+                      style={{ background: pal.accent, top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+                    <Crown className="relative size-8" style={{ color: pal.accent, filter: `drop-shadow(0 0 10px ${pal.accent})` }} />
+                  </div>
                 </div>
               )}
 
-              {/* Card */}
-              <div className="relative w-full rounded-2xl overflow-hidden"
+              {/* Card — fixed height, flex column, justify-between */}
+              <div className="relative w-full rounded-2xl overflow-hidden flex flex-col"
                 style={{
+                  height: h,
                   background: pal.grad,
                   boxShadow: `0 ${isFirst ? 28 : 16}px ${isFirst ? 72 : 44}px ${pal.glow}, 0 4px 16px rgba(0,0,0,0.12)`,
                   border: "1.5px solid rgba(255,255,255,0.3)",
                 }}>
 
-                {/* Inner decoration */}
+                {/* Inner decoration circles */}
                 <div className="absolute -top-10 -right-10 w-36 h-36 rounded-full pointer-events-none"
                   style={{ background: "rgba(255,255,255,0.12)" }} />
                 <div className="absolute -bottom-8 -left-8 w-28 h-28 rounded-full pointer-events-none"
                   style={{ background: "rgba(255,255,255,0.08)" }} />
 
-                <div className="relative p-5 flex flex-col items-center gap-3">
-                  {/* Avatar */}
-                  <div className="rounded-full flex items-center justify-center font-extrabold text-white shrink-0"
-                    style={{
-                      width: isFirst ? 68 : 58, height: isFirst ? 68 : 58,
-                      fontSize: isFirst ? 24 : 20,
-                      background: "rgba(255,255,255,0.22)",
-                      border: "3px solid rgba(255,255,255,0.55)",
-                      fontFamily: "var(--font-sans)",
-                      backdropFilter: "blur(4px)",
-                    }}>
-                    {entry.name.charAt(0)}
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center">
-                    <div className="font-bold text-white leading-tight" style={{ fontSize: isFirst ? 14 : 13, fontFamily: "var(--font-sans)" }}>
-                      {entry.name}
-                    </div>
-                    <div className="text-white/70 mt-0.5" style={{ fontSize: 12 }}>{entry.unit}</div>
-                    {entry.chucVu && (
-                      <div className="text-white/50 mt-0.5" style={{ fontSize: 11 }}>{entry.chucVu}</div>
-                    )}
-                  </div>
-
+                <div className="relative flex flex-col items-center justify-between h-full p-5">
                   {/* Score */}
                   <div className="text-center">
                     <div className="font-extrabold text-white leading-none"
-                      style={{ fontSize: isFirst ? 38 : 30, fontFamily: "JetBrains Mono, monospace", textShadow: "0 2px 16px rgba(0,0,0,0.2)" }}>
+                      style={{ fontSize: isFirst ? 42 : 32, fontFamily: "JetBrains Mono, monospace", textShadow: "0 2px 16px rgba(0,0,0,0.2)" }}>
                       {entry.score.toFixed(1)}
                     </div>
-                    <div className="text-white/55 uppercase tracking-widest mt-1" style={{ fontSize: 10 }}>Tổng điểm</div>
+                    <div className="text-white/60 uppercase tracking-widest mt-1" style={{ fontSize: 10 }}>Tổng điểm</div>
                   </div>
 
-                  {/* Rank label pill */}
-                  <div className="px-3 py-1 rounded-full font-bold text-white"
-                    style={{ fontSize: 11, background: "rgba(255,255,255,0.22)", backdropFilter: "blur(4px)" }}>
+                  {/* Name + unit */}
+                  <div className="text-center px-1">
+                    <div className="font-bold text-white leading-snug" style={{ fontSize: isFirst ? 14 : 13, fontFamily: "var(--font-sans)" }}>
+                      {entry.name}
+                    </div>
+                    <div className="text-white/70 mt-1" style={{ fontSize: 12 }}>{entry.unit}</div>
+                  </div>
+
+                  {/* Rank tag */}
+                  <div className="px-3 py-1.5 rounded-full font-bold text-white shrink-0"
+                    style={{ fontSize: 12, background: "rgba(255,255,255,0.22)", backdropFilter: "blur(4px)" }}>
                     {RANK_LABELS[rank]}
                   </div>
-
-                  {/* Awards */}
-                  {entry.awards[0] && (
-                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"
-                      style={{ background: "rgba(255,255,255,0.15)", fontSize: 11, color: "rgba(255,255,255,0.9)", fontFamily: "var(--font-sans)" }}>
-                      <Star className="size-3 fill-white text-white" />{entry.awards[0]}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
