@@ -5,7 +5,7 @@
 import { Bell, ChevronDown, Sparkles, LogOut, Clock,
   Award, FileSignature, AlertTriangle,
   Eye, Settings, Search, Printer, Keyboard,
-  LayoutDashboard } from "lucide-react";
+  LayoutDashboard, PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import { useState } from "react";
 import type { LoginUser } from "./login-page";
 import { AppsMenu } from "./apps-menu";
@@ -15,6 +15,7 @@ interface TopbarProps {
   onSelectModule: (id: string) => void; onOpenCmd?: () => void;
   onOpenSettings?: () => void; onOpenChangelog?: () => void;
   onOpenShortcuts?: () => void; onOpenPrint?: () => void;
+  hideSidebar?: boolean; onToggleSidebar?: () => void;
 }
 
 interface Notif {
@@ -182,7 +183,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
 }
 
 /* ═══ TOPBAR ══════════════════════════════════════════════════ */
-export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOpenSettings, onOpenChangelog, onOpenShortcuts, onOpenPrint }: TopbarProps) {
+export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOpenSettings, onOpenChangelog, onOpenShortcuts, onOpenPrint, hideSidebar, onToggleSidebar }: TopbarProps) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -202,6 +203,17 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           boxShadow: "0 1px 0 rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.03)",
         }}>
 
+
+        {/* ── Sidebar toggle ─────────────────────────────────────── */}
+        <button onClick={onToggleSidebar} title={hideSidebar ? "Hiện sidebar" : "Ẩn sidebar"}
+          className="size-[34px] rounded-[8px] flex items-center justify-center transition-all shrink-0"
+          style={{ color: "#6b7280" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; (e.currentTarget as HTMLElement).style.color = "#1a1409"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}>
+          {hideSidebar
+            ? <PanelLeftOpen className="size-4" strokeWidth={1.75} />
+            : <PanelLeftClose className="size-4" strokeWidth={1.75} />}
+        </button>
 
         {/* ── Search ─────────────────────────────────────────────── */}
         <div className="w-[340px] mr-auto">

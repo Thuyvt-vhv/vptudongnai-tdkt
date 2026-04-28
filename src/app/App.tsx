@@ -274,6 +274,8 @@ export default function App() {
     setPrevActive(active);
     if (label === "__cmd__") { setCmdOpen(true); return; }
     setActive(label);
+    // Sidebar ẩn khi vào bất kỳ trang nào, hiện lại ở dashboard
+    setHideSidebar(label !== "Bảng điều hành");
   };
 
   const goBack = () => {
@@ -348,6 +350,8 @@ export default function App() {
             onOpenChangelog={() => setChangelogOpen(true)}
             onOpenShortcuts={() => setShortcutsOpen(true)}
             onOpenPrint={() => setPrintOpen(true)}
+            hideSidebar={hideSidebar}
+            onToggleSidebar={() => setHideSidebar(v => !v)}
           />
           <main className="flex-1 overflow-y-auto">{renderMain()}</main>
         </div>
