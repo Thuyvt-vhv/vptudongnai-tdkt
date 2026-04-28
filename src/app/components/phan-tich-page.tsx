@@ -201,7 +201,7 @@ export function PhanTichPage({ user }: { user: LoginUser }) {
   const [year,setYear]=useState("2026");
   const [loading,setLoading]=useState(false);
   const refresh=()=>{ setLoading(true); setTimeout(()=>setLoading(false),1200); };
-  const VIEWS:[ViewMode,string,typeof BarChart3][]=[["overview","Tổng quan",BarChart3],["units","Theo đơn vị",Building2],["awards","Theo danh hiệu",Award],["sla","SLA & Tiến độ",Clock]];
+  const VIEWS:[ViewMode,string,typeof BarChart3][]=[["overview","Tổng quan",BarChart3],["units","Theo đơn vị",Building2],["awards","Theo danh hiệu",Award],["sla","Tiến độ xử lý",Clock]];
   return (
     <div className="h-full flex flex-col overflow-hidden" style={{ background:"#ffffff",fontFamily: "var(--font-sans)" }}>
       {/* Header */}
