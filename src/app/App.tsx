@@ -9,12 +9,15 @@ import type { LoginUser } from "./components/login-page";
 import { ThemeProvider } from "./components/theme-context";
 import { DeNghiKhenThuongPage } from "./components/de-nghi-khen-thuong-page";
 import { KySoPage } from "./components/ky-so-page";
-import { PhongTraoPage } from "./components/phong-trao-page";
+import { PhongTraoPage, MOCK_CAMPAIGNS } from "./components/phong-trao-page";
+import type { Campaign } from "./components/phong-trao-page";
+import { HoiDongPage, INIT_SESSIONS } from "./components/hoi-dong-page";
+import type { CouncilSession } from "./components/hoi-dong-page";
+import { usePersistedState } from "./hooks/use-persisted-state";
 import { ChamDiemPage } from "./components/cham-diem-page";
 import { QuyetDinhPage } from "./components/quyet-dinh-page";
 import { HoSoCanBoPage } from "./components/ho-so-can-bo-page";
 import { LayYKienPage } from "./components/lay-y-kien-page";
-import { HoiDongPage } from "./components/hoi-dong-page";
 import { KeHoachTrienKhaiPage } from "./components/ke-hoach-trien-khai-page";
 import { ThietKeTongThePage } from "./components/thiet-ke-tong-the-page";
 import { CauHinhDonViPage } from "./components/cau-hinh-don-vi-page";
@@ -33,7 +36,6 @@ import { ThongBaoPage } from "./components/thong-bao-page";
 import { ThoiGianPage } from "./components/thoi-gian-page";
 import { CaiDatPage } from "./components/cai-dat-page";
 import { CommandPalette } from "./components/command-palette";
-import { OnboardingBadge, OnboardingPanel } from "./components/onboarding-checklist";
 import { HoSoDetailDrawer } from "./components/ho-so-detail-drawer";
 import { ChangelogModal } from "./components/changelog-modal";
 import { ShortcutsOverlay } from "./components/shortcuts-overlay";
@@ -44,6 +46,7 @@ import { KanbanPage } from "./components/kanban-page";
 import { HelpCenterPage } from "./components/help-center-page";
 import { ActivityFeedPage } from "./components/activity-feed-page";
 import { LuongNghiepVuPage } from "./components/luong-nghiep-vu-page";
+import { BpmnPhongTraoPage } from "./components/bpmn-phong-trao-page";
 import { UserDashboard } from "./components/user-dashboard";
 import { UserHoSoTracker } from "./components/user-ho-so-tracker";
 import {
@@ -198,13 +201,13 @@ export default function App() {
   const [prevActive, setPrevActive]   = useState("Bảng điều hành");
   const [publicLYK, setPublicLYK]     = useState(false);
   const [cmdOpen, setCmdOpen]         = useState(false);
-  const [onboardOpen, setOnboardOpen] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState<string[]>([]);
   const [drawerHoSoId, setDrawerHoSoId] = useState<string | null>(null);
   const [changelogOpen, setChangelogOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [printOpen, setPrintOpen] = useState(false);
   const [hideSidebar, setHideSidebar] = useState(false);
+  const [campaigns, setCampaigns] = usePersistedState<Campaign[]>("campaigns", MOCK_CAMPAIGNS);
+  const [sessions, setSessions]   = usePersistedState<CouncilSession[]>("sessions", INIT_SESSIONS);
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -243,7 +246,7 @@ export default function App() {
         nextKey.then(ev => {
           if (!currentUser) return;
           const map: Record<string, string> = {
-            d:"Bảng điều hành", n:"Thông báo", a:"Trợ lý AI Tố Nga",
+            d:"Bảng điều hành", n:"Thông báo", a:"Trợ lý AI",
             b:"Bảng xếp hạng", h:"Hồ sơ cán bộ", s:"SLA Monitor",
           };
           if (map[ev.key]) navigate(map[ev.key]);
@@ -304,8 +307,8 @@ export default function App() {
       case "Đề nghị khen thưởng":   return <DeNghiKhenThuongPage user={currentUser} />;
       case "Ký số & Phê duyệt":     return <KySoPage user={currentUser} />;
       case "Lấy ý kiến công khai":  return <LayYKienPage user={currentUser} />;
-      case "Hội đồng xét duyệt":    return <HoiDongPage user={currentUser} />;
-      case "Phong trào thi đua":    return <PhongTraoPage user={currentUser} onDetailOpen={() => setHideSidebar(true)} onDetailClose={() => setHideSidebar(false)} />;
+      case "Hội đồng xét duyệt":    return <HoiDongPage user={currentUser} campaigns={campaigns} sessions={sessions} onSessionsChange={setSessions} />;
+      case "Phong trào thi đua":    return <PhongTraoPage user={currentUser} campaigns={campaigns} onCampaignsChange={setCampaigns} onDetailOpen={() => setHideSidebar(true)} onDetailClose={() => setHideSidebar(false)} />;
       case "Chấm điểm & Bình xét":  return <ChamDiemPage user={currentUser} />;
       case "Quyết định khen thưởng":return <QuyetDinhPage user={currentUser} />;
       case "Hồ sơ cán bộ":          return <HoSoCanBoPage user={currentUser} />;
@@ -316,7 +319,7 @@ export default function App() {
       case "Phân tích thi đua":     return <PhanTichPage user={currentUser} />;
       case "Kho huân – huy chương": return <KhoHuanChuongPage user={currentUser} />;
       case "Lịch sử khen thưởng":   return <LichSuKhenThuongPage user={currentUser} />;
-      case "Trợ lý AI Tố Nga":      return <TroLyAIPage user={currentUser} onNavigate={navigate} />;
+      case "Trợ lý AI":      return <TroLyAIPage user={currentUser} onNavigate={navigate} />;
       case "Cấu hình đơn vị":       return <CauHinhDonViPage user={currentUser} />;
       case "Mẫu biểu TT 01/2024":   return <MauBieuPage user={currentUser} />;
       case "Audit Log":             return <AuditLogPage user={currentUser} />;
@@ -332,6 +335,7 @@ export default function App() {
       case "Trung tâm hỗ trợ":      return <HelpCenterPage user={currentUser} />;
       case "Dòng thời gian":        return <ActivityFeedPage user={currentUser} />;
       case "Luồng nghiệp vụ":       return <LuongNghiepVuPage user={currentUser} />;
+      case "Sơ đồ BPMN":           return <BpmnPhongTraoPage user={currentUser} />;
       case "Cài đặt tài khoản":     return <CaiDatPage user={currentUser} />;
       default:                      return <Dashboard user={currentUser} onNavigate={navigate} />;
     }
@@ -377,22 +381,6 @@ export default function App() {
         <ChangelogModal open={changelogOpen} onClose={() => setChangelogOpen(false)} />
         <ShortcutsOverlay open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
 
-        {/* ── Onboarding floating badge + panel ── */}
-        <div className="fixed bottom-6 right-6 z-[80] flex flex-col items-end gap-2">
-          <OnboardingPanel
-            user={currentUser}
-            open={onboardOpen}
-            onClose={() => setOnboardOpen(false)}
-            onNavigate={navigate}
-            completedIds={completedTasks}
-            onComplete={(id) => setCompletedTasks(p => [...p, id])}
-          />
-          <OnboardingBadge
-            user={currentUser}
-            onOpen={() => setOnboardOpen(v => !v)}
-            completedIds={completedTasks}
-          />
-        </div>
       </div>
     </ThemeProvider>
   );

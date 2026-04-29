@@ -9,6 +9,7 @@ import {
   AlertCircle, CheckCheck,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
+import type { Campaign } from "./phong-trao-page";
 import { useTheme } from "./theme-context";
 import { DsButton } from "./ds-button";
 
@@ -58,7 +59,7 @@ interface NomDecision {
   chairNote: string;
 }
 
-interface CouncilSession {
+export interface CouncilSession {
   id: string; code: string;
   phienSo: number;
   campaignName: string; campaignId: string;
@@ -144,7 +145,7 @@ const INIT_SESSION: CouncilSession = {
   ghiChu:"Phiên họp thứ nhất. Xét duyệt 5 hồ sơ.",
 };
 
-const SESSIONS: CouncilSession[] = [INIT_SESSION];
+export const INIT_SESSIONS: CouncilSession[] = [INIT_SESSION];
 
 /* ═══════════════════════════════════════════════════════════════════
    HELPERS
@@ -354,18 +355,21 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
 ═══════════════════════════════════════════════════════════════════ */
 function ScoringTab({
   session, currentMemberId, selectedNomId, setSelectedNomId,
-  onSubmitScore,
+  onSubmitScore, onVote, onUpdateDecision,
 }: {
   session: CouncilSession;
   currentMemberId: string;
   selectedNomId: string | null;
   setSelectedNomId: (id: string | null) => void;
   onSubmitScore: (entry: MemberScoreEntry) => void;
+  onVote: (nomId: string, vote: VoteChoice) => void;
+  onUpdateDecision: (nomId: string, decision: NomDecision) => void;
 }) {
   const { theme } = useTheme();
   const [localScores, setLocalScores] = useState<Record<string, number>>({});
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [chairNotes, setChairNotes] = useState<Record<string, string>>({});
 
   const currentMember = session.members.find(m => m.id === currentMemberId)!;
   const nomination    = session.nominations.find(n => n.id === selectedNomId);
@@ -615,6 +619,204 @@ function ScoringTab({
             </p>
           </div>
         )}
+
+        {/* ── VOTING SECTION ── */}
+        {(() => {
+          const dec = session.decisions.find(d => d.nominationId === nomination.id) ?? null;
+          const myCoi = checkCOI(currentMember, nomination);
+          const eligibleVoters = session.members.filter(m => m.present && checkCOI(m, nomination).level !== "hard");
+          const passCount   = dec?.votes.pass.length   ?? 0;
+          const rejectCount = dec?.votes.reject.length ?? 0;
+          const deferCount  = dec?.votes.defer.length  ?? 0;
+          const totalCast   = passCount + rejectCount + deferCount;
+          const allVoted    = eligibleVoters.length > 0 && totalCast >= eligibleVoters.length;
+          const myVote: VoteChoice | null = !dec ? null
+            : dec.votes.pass.includes(currentMemberId) ? "pass"
+            : dec.votes.reject.includes(currentMemberId) ? "reject"
+            : dec.votes.defer.includes(currentMemberId) ? "defer"
+            : null;
+          const finalized = !!dec && dec.decision !== "pending";
+          const suggestedDecision: VoteChoice =
+            passCount > rejectCount && passCount > deferCount ? "pass"
+            : rejectCount > deferCount ? "reject" : "defer";
+          const decBadge = DEC_BADGE[finalized ? dec!.decision : "pending"];
+          const borderColor = finalized
+            ? (dec!.decision === "pass" ? "#86efac" : dec!.decision === "reject" ? "#fca5a5" : "#fcd34d")
+            : "var(--color-line)";
+
+          return (
+            <div className="rounded-[10px] border overflow-hidden" style={{ borderColor }}>
+              {/* Header */}
+              <div className="px-4 py-3 border-b flex items-center justify-between shrink-0"
+                style={{
+                  borderColor: "var(--color-line)",
+                  background: finalized
+                    ? (dec!.decision === "pass" ? "#f0fdf4" : dec!.decision === "reject" ? "#fff1f2" : "#fffbeb")
+                    : "var(--color-paper)",
+                }}>
+                <div className="flex items-center gap-2">
+                  <Gavel className="size-4" style={{ color: theme.primary }} />
+                  <span className="text-[13px] text-[#0b1426]"
+                    style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Biểu quyết</span>
+                  {myCoi.level === "hard" && (
+                    <span className="text-[12px] px-1.5 py-0.5 rounded border flex items-center gap-1"
+                      style={{ color:"#374151", background:"#f3f4f6", borderColor:"#d1d5db", fontFamily:"var(--font-sans)" }}>
+                      <ShieldAlert className="size-3" />Bạn kiêng kỵ (COI)
+                    </span>
+                  )}
+                </div>
+                {dec && (
+                  <span className="text-[12px] px-2 py-0.5 rounded-full border"
+                    style={{ color:decBadge.color, background:decBadge.bg, borderColor:decBadge.border, fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                    {decBadge.label}
+                  </span>
+                )}
+              </div>
+
+              {/* Tally bar */}
+              <div className="px-4 pt-3 pb-2">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="flex-1 h-2.5 rounded-full overflow-hidden flex gap-px" style={{ background:"#f1f5f9" }}>
+                    {passCount > 0 && <div style={{ width:`${passCount/eligibleVoters.length*100}%`, background:VOTE_CFG.pass.barColor, transition:"width 0.3s" }} />}
+                    {rejectCount > 0 && <div style={{ width:`${rejectCount/eligibleVoters.length*100}%`, background:VOTE_CFG.reject.barColor, transition:"width 0.3s" }} />}
+                    {deferCount > 0 && <div style={{ width:`${deferCount/eligibleVoters.length*100}%`, background:VOTE_CFG.defer.barColor, transition:"width 0.3s" }} />}
+                  </div>
+                  <span className="text-[12px] shrink-0"
+                    style={{ color:allVoted?"#166534":"#635647", fontFamily:"var(--font-sans)", fontWeight:allVoted?600:400 }}>
+                    {totalCast}/{eligibleVoters.length}{allVoted ? " ✓" : ""}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4 text-[12px]" style={{ fontFamily:"var(--font-sans)" }}>
+                  <span style={{ color:VOTE_CFG.pass.color   }}>✓ {passCount} tán thành</span>
+                  <span style={{ color:VOTE_CFG.reject.color }}>✗ {rejectCount} phản đối</span>
+                  <span style={{ color:VOTE_CFG.defer.color  }}>– {deferCount} hoãn</span>
+                  {eligibleVoters.length - totalCast > 0 && (
+                    <span style={{ color:"#9ca3af" }}>? {eligibleVoters.length - totalCast} chưa bỏ</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Member chips */}
+              <div className="px-4 pb-3 flex flex-wrap gap-1.5">
+                {session.members.filter(m => m.present).map(m => {
+                  const mCoi = checkCOI(m, nomination);
+                  const vote: VoteChoice | null = !dec ? null
+                    : dec.votes.pass.includes(m.id) ? "pass"
+                    : dec.votes.reject.includes(m.id) ? "reject"
+                    : dec.votes.defer.includes(m.id) ? "defer"
+                    : null;
+                  const isMe = m.id === currentMemberId;
+                  const vcfg = vote ? VOTE_CFG[vote] : null;
+                  return (
+                    <div key={m.id}
+                      className="flex items-center gap-1.5 px-2 py-1 rounded-full border text-[12px]"
+                      style={{
+                        background:   mCoi.level==="hard" ? "#f3f4f6" : vcfg ? vcfg.activeBg : "#fafafa",
+                        borderColor:  mCoi.level==="hard" ? "#d1d5db" : vcfg ? vcfg.border : "#e5e7eb",
+                        color:        mCoi.level==="hard" ? "#6b7280" : vcfg ? vcfg.color : "#374151",
+                        fontFamily:  "var(--font-sans)", fontWeight: isMe ? 600 : 400,
+                        outline:      isMe ? `2px solid ${vcfg?.color ?? "#94a3b8"}` : "none",
+                        outlineOffset:"1px",
+                      }}>
+                      <span className="size-4 rounded-full flex items-center justify-center text-white text-[10px] shrink-0"
+                        style={{ background:m.avatarColor }}>{m.name.charAt(0)}</span>
+                      <span>{m.name.split(" ").slice(-1)[0]}{isMe ? " (bạn)" : ""}</span>
+                      <span className="font-bold">
+                        {mCoi.level==="hard" ? "COI" : vote==="pass" ? "✓" : vote==="reject" ? "✗" : vote==="defer" ? "–" : "?"}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* My vote buttons */}
+              {!finalized && myCoi.level !== "hard" && (
+                <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
+                  <div className="text-[12px] text-[#635647] mb-2"
+                    style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                    Phiếu của bạn{myVote ? " — click lại để thay đổi" : ""}:
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {(Object.entries(VOTE_CFG) as [VoteChoice, typeof VOTE_CFG[VoteChoice]][]).map(([key, cfg]) => {
+                      const Icon = cfg.icon;
+                      const isActive = myVote === key;
+                      return (
+                        <button key={key}
+                          onClick={() => onVote(nomination.id, key)}
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border text-[13px] transition-all"
+                          style={{
+                            borderColor: isActive ? cfg.color : cfg.border,
+                            background:  isActive ? cfg.activeBg : cfg.bg,
+                            color:       cfg.color,
+                            fontFamily: "var(--font-sans)", fontWeight: isActive ? 600 : 500,
+                            boxShadow:   isActive ? `0 0 0 2px ${cfg.color}30` : "none",
+                          }}>
+                          <Icon className="size-3.5" />{cfg.label}
+                          {isActive && <CheckCircle2 className="size-3.5 ml-0.5" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Chair finalization */}
+              {!finalized && currentMember.isChair && allVoted && (
+                <div className="px-4 pb-4 pt-3 border-t"
+                  style={{ borderColor:"var(--color-line)", background:"linear-gradient(to right,#f8faff,#fdf4ff)" }}>
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <Gavel className="size-3.5 text-[#1C5FBE]" />
+                    <span className="text-[13px] text-[#1C5FBE]"
+                      style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>Kết luận của Chủ tịch Hội đồng</span>
+                    <span className="text-[12px] px-2 py-0.5 rounded-full"
+                      style={{ background:"#ddeafc", color:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+                      Đề xuất: {VOTE_CFG[suggestedDecision].label}
+                    </span>
+                  </div>
+                  <input className="ds-input ds-input-sm w-full mb-2.5"
+                    placeholder="Nhập kết luận / ghi chú của Chủ tịch HĐ..."
+                    value={chairNotes[nomination.id] ?? ""}
+                    onChange={e => setChairNotes(p => ({ ...p, [nomination.id]: e.target.value }))} />
+                  <div className="flex items-center gap-2">
+                    <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận:</span>
+                    {(["pass", "reject", "defer"] as VoteChoice[]).map(choice => {
+                      const cfg = VOTE_CFG[choice];
+                      const Icon = cfg.icon;
+                      const isSuggested = suggestedDecision === choice;
+                      return (
+                        <button key={choice}
+                          onClick={() => onUpdateDecision(nomination.id, { ...dec!, decision: choice, chairNote: chairNotes[nomination.id] ?? "" })}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border text-[13px] transition-all"
+                          style={{
+                            borderColor: cfg.border,
+                            background:  isSuggested ? cfg.activeBg : cfg.bg,
+                            color:       cfg.color,
+                            fontFamily: "var(--font-sans)", fontWeight: isSuggested ? 600 : 500,
+                            boxShadow:   isSuggested ? `0 0 0 2px ${cfg.color}25` : "none",
+                          }}>
+                          <Icon className="size-3.5" />
+                          {choice === "pass" ? "Thông qua" : choice === "reject" ? "Bác" : "Hoãn"}
+                          {isSuggested && <Star className="size-3 ml-0.5 opacity-70" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Finalized note */}
+              {finalized && dec!.chairNote && (
+                <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
+                  style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
+                  <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
+                  <span className="text-[13px] text-[#635647] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                    Kết luận Chủ tịch: {dec!.chairNote}
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </div>
 
       {/* RIGHT: All members' scores */}
@@ -867,6 +1069,19 @@ function CompareTab({ session }: { session: CouncilSession }) {
 /* ═══════════════════════════════════════════════════════════════════
    RESULTS & VOTING TAB
 ═══════════════════════════════════════════════════════════════════ */
+const VOTE_CFG: Record<VoteChoice, { label: string; short: string; icon: typeof ThumbsUp; color: string; bg: string; border: string; activeBg: string; barColor: string }> = {
+  pass:   { label:"Tán thành",    short:"Tán thành", icon:ThumbsUp,   color:"#166534", bg:"#f0fdf4", border:"#86efac", activeBg:"#dcfce7", barColor:"#16a34a" },
+  reject: { label:"Phản đối",     short:"Phản đối",  icon:ThumbsDown, color:"#9f1239", bg:"#fff1f2", border:"#fca5a5", activeBg:"#fee2e2", barColor:"#dc2626" },
+  defer:  { label:"Hoãn xem xét", short:"Hoãn",      icon:Minus,      color:"#92400e", bg:"#fffbeb", border:"#fcd34d", activeBg:"#fef3c7", barColor:"#b45309" },
+};
+
+const DEC_BADGE: Record<string, { label: string; color: string; bg: string; border: string }> = {
+  pass:    { label:"Đã thông qua",    color:"#166534", bg:"#dcfce7", border:"#86efac" },
+  reject:  { label:"Không thông qua", color:"#9f1239", bg:"#fee2e2", border:"#fca5a5" },
+  defer:   { label:"Hoãn",            color:"#92400e", bg:"#fef3c7", border:"#fcd34d" },
+  pending: { label:"Đang biểu quyết", color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd" },
+};
+
 function ResultsTab({
   session, currentMemberId, onVote, onUpdateDecision,
 }: {
@@ -875,153 +1090,261 @@ function ResultsTab({
   onVote: (nomId: string, vote: VoteChoice) => void;
   onUpdateDecision: (nomId: string, decision: NomDecision) => void;
 }) {
-  const { theme } = useTheme();
   const currentMember = session.members.find(m => m.id === currentMemberId)!;
   const isChair = currentMember?.isChair;
-  const [chairNote, setChairNote] = useState<Record<string, string>>({});
+  const [chairNotes, setChairNotes] = useState<Record<string, string>>({});
 
-  const results = session.nominations.map(n => {
-    const { avg, count, byMember } = calcAvgForNom(n.id, session.memberScores, session.members);
-    const dec = session.decisions.find(d => d.nominationId === n.id);
-    const myVote = dec ? Object.entries(dec.votes).find(([, ids]) => ids.includes(currentMemberId))?.[0] : undefined;
-    return { nom:n, avg, count, byMember, dec, myVote };
-  }).sort((a, b) => b.avg - a.avg);
+  const items = [...session.nominations]
+    .map(nom => {
+      const { avg } = calcAvgForNom(nom.id, session.memberScores, session.members);
+      const dec = session.decisions.find(d => d.nominationId === nom.id) ?? null;
+      const myCoi = checkCOI(currentMember, nom);
+      const eligibleVoters = session.members.filter(m => m.present && checkCOI(m, nom).level !== "hard");
+      const passCount   = dec?.votes.pass.length   ?? 0;
+      const rejectCount = dec?.votes.reject.length ?? 0;
+      const deferCount  = dec?.votes.defer.length  ?? 0;
+      const totalCast   = passCount + rejectCount + deferCount;
+      const allVoted    = eligibleVoters.length > 0 && totalCast >= eligibleVoters.length;
+      const myVote: VoteChoice | null = !dec ? null
+        : dec.votes.pass.includes(currentMemberId) ? "pass"
+        : dec.votes.reject.includes(currentMemberId) ? "reject"
+        : dec.votes.defer.includes(currentMemberId) ? "defer"
+        : null;
+      const finalized = !!dec && dec.decision !== "pending";
+      const suggestedDecision: VoteChoice =
+        passCount > rejectCount && passCount > deferCount ? "pass"
+        : rejectCount > deferCount ? "reject" : "defer";
+      return { nom, avg, dec, myCoi, eligibleVoters, passCount, rejectCount, deferCount, totalCast, allVoted, myVote, finalized, suggestedDecision };
+    })
+    .sort((a, b) => b.avg - a.avg);
 
-  const voteCfg: Record<VoteChoice,{label:string;icon:typeof ThumbsUp;color:string;bg:string;border:string}> = {
-    pass:   { label:"Thông qua",   icon:ThumbsUp,   color:"#166534", bg:"#dcfce7", border:"#86efac" },
-    reject: { label:"Không thông qua", icon:ThumbsDown, color:"#9f1239", bg:"#fee2e2", border:"#fca5a5" },
-    defer:  { label:"Hoãn xem xét",icon:Minus,      color:"#92400e", bg:"#fef3c7", border:"#fcd34d" },
-  };
-  const decisionCfg: Record<string,{label:string;color:string;bg:string}> = {
-    pass:    { label:"Đã thông qua",      color:"#166534", bg:"#dcfce7" },
-    reject:  { label:"Không thông qua",   color:"#9f1239", bg:"#fee2e2" },
-    defer:   { label:"Hoãn",              color:"#92400e", bg:"#fef3c7" },
-    pending: { label:"Chờ biểu quyết",    color:"#5a5040", bg:"#eef2f8" },
-  };
+  const passedCount   = session.decisions.filter(d => d.decision === "pass").length;
+  const rejectedCount = session.decisions.filter(d => d.decision === "reject").length;
+  const finalizedCount = passedCount + rejectedCount + session.decisions.filter(d => d.decision === "defer").length;
+  const pendingCount  = session.nominations.length - finalizedCount;
 
   return (
-    <div className="space-y-3">
-      {/* Summary */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label:"Thông qua",    v:session.decisions.filter(d=>d.decision==="pass").length,    color:"#166534", bg:"#dcfce7" },
-          { label:"Không thông qua", v:session.decisions.filter(d=>d.decision==="reject").length, color:"#9f1239", bg:"#fee2e2" },
-          { label:"Chờ biểu quyết",  v:session.nominations.length-session.decisions.length,   color:"#92400e", bg:"#fef3c7" },
-        ].map(s => (
-          <div key={s.label} className="rounded-[8px] p-3 border text-center"
-            style={{ borderColor:"var(--color-line)", background:s.bg }}>
-            <div className="text-[24px]"
-              style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:s.color }}>{s.v}</div>
-            <div className="text-[13px]" style={{ color:s.color, fontFamily: "var(--font-sans)" }}>{s.label}</div>
+    <div className="space-y-4">
+      {/* ── Summary strip ── */}
+      <div className="grid grid-cols-4 gap-3">
+        {([
+          { label:"Tổng hồ sơ",      v:session.nominations.length,  color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd" },
+          { label:"Đã thông qua",    v:passedCount,                  color:"#166534", bg:"#dcfce7", border:"#86efac" },
+          { label:"Không thông qua", v:rejectedCount,                color:"#9f1239", bg:"#fee2e2", border:"#fca5a5" },
+          { label:"Chờ biểu quyết",  v:pendingCount,                 color:"#92400e", bg:"#fef3c7", border:"#fcd34d" },
+        ] as const).map(s => (
+          <div key={s.label} className="rounded-[10px] p-3 border text-center"
+            style={{ borderColor:s.border, background:s.bg }}>
+            <div className="text-[28px] leading-tight"
+              style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:s.color }}>{s.v}</div>
+            <div className="text-[12px] mt-0.5"
+              style={{ color:s.color, fontFamily:"var(--font-sans)" }}>{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Rankings + voting */}
+      {/* ── Per-nomination cards ── */}
       <div className="space-y-3">
-        {results.map((r, idx) => {
-          const dc = decisionCfg[r.dec?.decision ?? "pending"];
-          const myCoiForNom = checkCOI(currentMember, r.nom);
+        {items.map((item, idx) => {
+          const { nom, avg, dec, myCoi, eligibleVoters, passCount, rejectCount, deferCount, totalCast, allVoted, myVote, finalized, suggestedDecision } = item;
+          const decBadge = DEC_BADGE[finalized ? dec!.decision : (totalCast > 0 ? "pending" : "pending")];
+          const coiMembers = session.members.filter(m => m.present && checkCOI(m, nom).level === "hard");
+          const borderColor = finalized
+            ? (dec!.decision === "pass" ? "#86efac" : dec!.decision === "reject" ? "#fca5a5" : "#fcd34d")
+            : "var(--color-line)";
+
           return (
-            <div key={r.nom.id} className="rounded-[10px] border overflow-hidden"
-              style={{ borderColor: r.dec?.decision==="pass" ? "#86efac" : r.dec?.decision==="reject" ? "#fca5a5" : "var(--color-line)" }}>
-              <div className="p-4 flex items-start gap-3">
-                {/* Rank */}
-                <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-[13px] shrink-0"
+            <div key={nom.id} className="rounded-[12px] border overflow-hidden"
+              style={{ borderColor }}>
+
+              {/* ── Header ── */}
+              <div className="px-4 pt-4 pb-3 flex items-start gap-3">
+                <div className="size-8 rounded-full flex items-center justify-center shrink-0 text-[13px]"
                   style={{
-                    background: idx===0?"#fdf3d9":idx===1?"#eef2f8":idx===2?"#fff7ed":"#f3f4f6",
-                    color: idx===0?"#7d4a00":idx===1?"#374151":idx===2?"#92400e":"#6b7280",
-                    fontFamily: "var(--font-sans)", fontWeight:700,
-                  }}>
-                  {idx+1}
-                </div>
+                    background: idx===0?"#fdf3d9":idx===1?"#f1f5f9":idx===2?"#fff7ed":"#f3f4f6",
+                    color:      idx===0?"#7d4a00":idx===1?"#374151":idx===2?"#92400e":"#6b7280",
+                    fontFamily:"var(--font-sans)", fontWeight:700,
+                  }}>{idx + 1}</div>
+
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className="text-[14px] text-[#0b1426]"
-                      style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{r.nom.tenDoiTuong}</span>
-                    <span className="text-[13px] px-2 py-0.5 rounded border"
-                      style={{ color:dc.color, background:dc.bg, borderColor:dc.color+"40", fontFamily: "var(--font-sans)", fontWeight:500 }}>
-                      {dc.label}
+                      style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>{nom.tenDoiTuong}</span>
+                    <span className="text-[12px] px-2 py-0.5 rounded-full border"
+                      style={{ color:decBadge.color, background:decBadge.bg, borderColor:decBadge.border, fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                      {decBadge.label}
                     </span>
+                    {myCoi.level === "hard" && (
+                      <span className="text-[12px] px-2 py-0.5 rounded-full border flex items-center gap-1"
+                        style={{ color:"#374151", background:"#f3f4f6", borderColor:"#d1d5db", fontFamily:"var(--font-sans)" }}>
+                        <ShieldAlert className="size-3" />Bạn kiêng kỵ (COI)
+                      </span>
+                    )}
                   </div>
-                  <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-                    {r.nom.hinhThuc} · {r.nom.donVi} · {r.count} thành viên chấm
+                  <div className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                    {nom.hinhThuc} · {nom.donVi}
+                    {coiMembers.length > 0 && ` · ${coiMembers.length} thành viên COI`}
                   </div>
-                  {/* Per-member votes */}
-                  <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-                    {session.members.filter(m=>m.present).map(m => {
-                      const memberCoi = checkCOI(m, r.nom);
-                      const vote = r.dec ? Object.entries(r.dec.votes).find(([,ids])=>ids.includes(m.id))?.[0] : undefined;
+                </div>
+
+                <div className="text-right shrink-0">
+                  <div className="text-[24px] leading-tight"
+                    style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:scoreColor(avg/MAX_TOTAL) }}>{avg}</div>
+                  <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>/{MAX_TOTAL} đ</div>
+                </div>
+              </div>
+
+              {/* ── Tally bar ── */}
+              <div className="px-4 pb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="flex-1 h-2.5 rounded-full overflow-hidden flex gap-px"
+                    style={{ background:"#f1f5f9" }}>
+                    {passCount > 0 && (
+                      <div style={{ width:`${passCount/eligibleVoters.length*100}%`, background:VOTE_CFG.pass.barColor, transition:"width 0.3s" }} />
+                    )}
+                    {rejectCount > 0 && (
+                      <div style={{ width:`${rejectCount/eligibleVoters.length*100}%`, background:VOTE_CFG.reject.barColor, transition:"width 0.3s" }} />
+                    )}
+                    {deferCount > 0 && (
+                      <div style={{ width:`${deferCount/eligibleVoters.length*100}%`, background:VOTE_CFG.defer.barColor, transition:"width 0.3s" }} />
+                    )}
+                  </div>
+                  <span className="text-[12px] shrink-0"
+                    style={{ color: allVoted ? "#166534" : "#635647", fontFamily:"var(--font-sans)", fontWeight: allVoted ? 600 : 400 }}>
+                    {totalCast}/{eligibleVoters.length} phiếu{allVoted ? " ✓" : ""}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4 text-[12px]" style={{ fontFamily:"var(--font-sans)" }}>
+                  <span style={{ color:VOTE_CFG.pass.color }}>✓ {passCount} tán thành</span>
+                  <span style={{ color:VOTE_CFG.reject.color }}>✗ {rejectCount} phản đối</span>
+                  <span style={{ color:VOTE_CFG.defer.color }}>– {deferCount} hoãn</span>
+                  {eligibleVoters.length - totalCast > 0 && (
+                    <span style={{ color:"#9ca3af" }}>? {eligibleVoters.length - totalCast} chưa bỏ phiếu</span>
+                  )}
+                </div>
+              </div>
+
+              {/* ── Member vote chips ── */}
+              <div className="px-4 pb-3 flex flex-wrap gap-1.5">
+                {session.members.filter(m => m.present).map(m => {
+                  const mCoi = checkCOI(m, nom);
+                  const vote: VoteChoice | null = !dec ? null
+                    : dec.votes.pass.includes(m.id) ? "pass"
+                    : dec.votes.reject.includes(m.id) ? "reject"
+                    : dec.votes.defer.includes(m.id) ? "defer"
+                    : null;
+                  const isMe = m.id === currentMemberId;
+                  const vcfg = vote ? VOTE_CFG[vote] : null;
+                  const lastName = m.name.split(" ").slice(-1)[0];
+                  return (
+                    <div key={m.id}
+                      className="flex items-center gap-1.5 px-2 py-1 rounded-full border text-[12px]"
+                      style={{
+                        background:   mCoi.level==="hard" ? "#f3f4f6" : vcfg ? vcfg.activeBg : "#fafafa",
+                        borderColor:  mCoi.level==="hard" ? "#d1d5db" : vcfg ? vcfg.border : "#e5e7eb",
+                        color:        mCoi.level==="hard" ? "#6b7280" : vcfg ? vcfg.color : "#374151",
+                        fontFamily:  "var(--font-sans)",
+                        fontWeight:   isMe ? 600 : 400,
+                        outline:      isMe ? `2px solid ${vcfg?.color ?? "#94a3b8"}` : "none",
+                        outlineOffset: "1px",
+                      }}>
+                      <span className="size-4 rounded-full flex items-center justify-center text-white text-[10px] shrink-0"
+                        style={{ background:m.avatarColor }}>
+                        {m.name.charAt(0)}
+                      </span>
+                      <span>{lastName}{isMe ? " (bạn)" : ""}</span>
+                      <span className="font-bold">
+                        {mCoi.level==="hard" ? "COI" : vote==="pass" ? "✓" : vote==="reject" ? "✗" : vote==="defer" ? "–" : "?"}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* ── My vote panel ── */}
+              {!finalized && myCoi.level !== "hard" && (
+                <div className="px-4 pb-4 pt-3 border-t" style={{ borderColor:"var(--color-line)" }}>
+                  <div className="text-[12px] text-[#635647] mb-2" style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                    Phiếu của bạn{myVote ? " — click lại để thay đổi" : ""}:
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {(Object.entries(VOTE_CFG) as [VoteChoice, typeof VOTE_CFG[VoteChoice]][]).map(([key, cfg]) => {
+                      const Icon = cfg.icon;
+                      const isActive = myVote === key;
                       return (
-                        <div key={m.id}
-                          title={memberCoi.level==="hard"?`${m.name}: Kiêng kỵ (COI)`:vote?`${m.name}: ${vote}`:`${m.name}: Chờ`}
-                          className="size-6 rounded-full border-2 flex items-center justify-center text-[13px] text-white"
+                        <button key={key}
+                          onClick={() => onVote(nom.id, key)}
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border text-[13px] transition-all"
                           style={{
-                            background: memberCoi.level==="hard"?"#4f5d6e":
-                              vote==="pass"?"#16a34a":vote==="reject"?"#dc2626":vote==="defer"?"#b45309":"#e5e7eb",
-                            borderColor:"#fff",
-                            color: (memberCoi.level==="hard"||!vote)?"#6b7280":"#fff",
-                            fontFamily: "var(--font-sans)",
+                            borderColor:  isActive ? cfg.color : cfg.border,
+                            background:   isActive ? cfg.activeBg : cfg.bg,
+                            color:        cfg.color,
+                            fontFamily:  "var(--font-sans)", fontWeight: isActive ? 600 : 500,
+                            boxShadow:    isActive ? `0 0 0 2px ${cfg.color}30` : "none",
                           }}>
-                          {memberCoi.level==="hard" ? "×" : vote ? (vote==="pass"?"✓":vote==="reject"?"✗":"–") : "?"}
-                        </div>
+                          <Icon className="size-3.5" />
+                          {cfg.label}
+                          {isActive && <CheckCircle2 className="size-3.5 ml-0.5" />}
+                        </button>
                       );
                     })}
                   </div>
                 </div>
-                {/* Score */}
-                <div className="text-right shrink-0">
-                  <div className="text-[24px]"
-                    style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:scoreColor(r.avg/MAX_TOTAL) }}>
-                    {r.avg}
-                  </div>
-                  <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>/ {MAX_TOTAL}</div>
-                </div>
-              </div>
+              )}
 
-              {/* Voting panel */}
-              {!r.dec && !myCoiForNom.level && (
-                <div className="px-4 pb-4 pt-0 border-t" style={{ borderColor:"var(--color-line)" }}>
-                  <div className="flex items-center gap-2 pt-3">
-                    <span className="text-[13px] text-[#0b1426]"
-                      style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
-                      {isChair ? "Biểu quyết (Chủ tịch):" : "Ý kiến của bạn:"}
+              {/* ── Chair finalization panel ── */}
+              {!finalized && isChair && allVoted && (
+                <div className="px-4 pb-4 pt-3 border-t"
+                  style={{ borderColor:"var(--color-line)", background:"linear-gradient(to right,#f8faff,#fdf4ff)" }}>
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <Gavel className="size-3.5 text-[#1C5FBE]" />
+                    <span className="text-[13px] text-[#1C5FBE]"
+                      style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>Kết luận của Chủ tịch Hội đồng</span>
+                    <span className="text-[12px] px-2 py-0.5 rounded-full"
+                      style={{ background:"#ddeafc", color:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+                      Đề xuất: {VOTE_CFG[suggestedDecision].label}
                     </span>
-                    <div className="flex items-center gap-1.5">
-                      {(Object.entries(voteCfg) as [VoteChoice, typeof voteCfg[VoteChoice]][]).map(([key, cfg]) => {
-                        const Icon = cfg.icon;
-                        return (
-                          <button key={key}
-                            onClick={() => onVote(r.nom.id, key)}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border text-[13px] transition-all hover:shadow-sm"
-                            style={{
-                              borderColor:cfg.border, background:cfg.bg, color:cfg.color,
-                              fontFamily: "var(--font-sans)", fontWeight:500,
-                            }}>
-                            <Icon className="size-3.5" />{cfg.label}
-                          </button>
-                        );
-                      })}
-                    </div>
                   </div>
-                  {isChair && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <input className="ds-input ds-input-sm flex-1"
-                        placeholder="Ghi chú của Chủ tịch HĐ..."
-                        value={chairNote[r.nom.id]||""}
-                        onChange={e=>setChairNote(p=>({...p,[r.nom.id]:e.target.value}))} />
-                    </div>
-                  )}
+                  <input className="ds-input ds-input-sm w-full mb-2.5"
+                    placeholder="Nhập kết luận / ghi chú của Chủ tịch HĐ..."
+                    value={chairNotes[nom.id] ?? ""}
+                    onChange={e => setChairNotes(p => ({ ...p, [nom.id]: e.target.value }))} />
+                  <div className="flex items-center gap-2">
+                    <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận quyết định:</span>
+                    {(["pass", "reject", "defer"] as VoteChoice[]).map(choice => {
+                      const cfg = VOTE_CFG[choice];
+                      const Icon = cfg.icon;
+                      const isSuggested = suggestedDecision === choice;
+                      return (
+                        <button key={choice}
+                          onClick={() => onUpdateDecision(nom.id, { ...dec!, decision: choice, chairNote: chairNotes[nom.id] ?? "" })}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border text-[13px] transition-all"
+                          style={{
+                            borderColor: cfg.border,
+                            background:  isSuggested ? cfg.activeBg : cfg.bg,
+                            color:       cfg.color,
+                            fontFamily: "var(--font-sans)", fontWeight: isSuggested ? 600 : 500,
+                            boxShadow:   isSuggested ? `0 0 0 2px ${cfg.color}25` : "none",
+                          }}>
+                          <Icon className="size-3.5" />
+                          {choice === "pass" ? "Thông qua" : choice === "reject" ? "Bác" : "Hoãn"}
+                          {isSuggested && <Star className="size-3 ml-0.5 opacity-70" />}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
-              {r.dec && r.dec.chairNote && (
-                <div className="px-4 pb-3 border-t" style={{ borderColor:"var(--color-line)" }}>
-                  <div className="flex items-center gap-1.5 pt-2">
-                    <Gavel className="size-3.5 text-[#635647]" />
-                    <span className="text-[13px] text-[#635647] italic" style={{ fontFamily: "var(--font-sans)" }}>
-                      Kết luận Chủ tịch: {r.dec.chairNote}
-                    </span>
-                  </div>
+
+              {/* ── Chair note (finalized) ── */}
+              {finalized && dec!.chairNote && (
+                <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
+                  style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
+                  <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
+                  <span className="text-[13px] text-[#635647] italic"
+                    style={{ fontFamily:"var(--font-sans)" }}>
+                    Kết luận Chủ tịch: {dec!.chairNote}
+                  </span>
                 </div>
               )}
             </div>
@@ -1201,7 +1524,7 @@ function Workspace({ session: initSession, user, onBack }: {
   const { theme } = useTheme();
   const [session, setSession] = useState<CouncilSession>(initSession);
   const [selectedNomId, setSelectedNomId] = useState<string | null>(session.nominations[0]?.id ?? null);
-  const [tab, setTab] = useState<"scoring" | "compare" | "results" | "minutes">("scoring");
+  const [tab, setTab] = useState<"scoring" | "compare" | "minutes">("scoring");
 
   // Derive current member (match by name or default to secretary)
   const currentMember = useMemo(() => {
@@ -1221,10 +1544,24 @@ function Workspace({ session: initSession, user, onBack }: {
   const handleVote = (nomId: string, vote: VoteChoice) => {
     setSession(prev => {
       const existing = prev.decisions.find(d => d.nominationId === nomId);
-      const updated: NomDecision = existing
-        ? { ...existing, votes:{ ...existing.votes, [vote]:[...existing.votes[vote], currentMember.id] } }
-        : { nominationId:nomId, votes:{ pass:vote==="pass"?[currentMember.id]:[], reject:vote==="reject"?[currentMember.id]:[], defer:vote==="defer"?[currentMember.id]:[] }, decision:vote, chairNote:"" };
-      return { ...prev, decisions:[...prev.decisions.filter(d=>d.nominationId!==nomId), updated] };
+      // Don't allow re-voting on finalized decisions
+      if (existing && existing.decision !== "pending") return prev;
+      const baseVotes = existing?.votes ?? { pass: [], reject: [], defer: [] };
+      // Remove member from all arrays (handle re-vote / toggle)
+      const cleaned = {
+        pass:   baseVotes.pass.filter(id => id !== currentMember.id),
+        reject: baseVotes.reject.filter(id => id !== currentMember.id),
+        defer:  baseVotes.defer.filter(id => id !== currentMember.id),
+      };
+      const wasVoting = baseVotes[vote].includes(currentMember.id);
+      const newVotes = wasVoting ? cleaned : { ...cleaned, [vote]: [...cleaned[vote], currentMember.id] };
+      const updated: NomDecision = {
+        nominationId: nomId,
+        votes: newVotes,
+        decision: "pending",
+        chairNote: existing?.chairNote ?? "",
+      };
+      return { ...prev, decisions: [...prev.decisions.filter(d => d.nominationId !== nomId), updated] };
     });
   };
 
@@ -1233,12 +1570,12 @@ function Workspace({ session: initSession, user, onBack }: {
     if (coi.level === "hard") return true;
     return session.memberScores.some(e => e.memberId === currentMember.id && e.nominationId === n.id && !e.abstained && Object.keys(e.scores).length > 0);
   }).length;
+  const finalizedCount = session.decisions.filter(d => d.decision !== "pending").length;
 
   const TABS = [
-    { key:"scoring" as const,  label:"Chấm điểm",    icon:PenLine,    badge:`${scoredCount}/${session.nominations.length}` },
-    { key:"compare" as const,  label:"So sánh",       icon:Columns,    badge:null },
-    { key:"results" as const,  label:"Biểu quyết",   icon:Gavel,      badge:`${session.decisions.length}/${session.nominations.length}` },
-    { key:"minutes" as const,  label:"Biên bản",      icon:FileText,   badge:null },
+    { key:"scoring" as const, label:"Chấm điểm & Biểu quyết", icon:PenLine,   badge:`${scoredCount}/${session.nominations.length} · ${finalizedCount} BQ` },
+    { key:"compare" as const, label:"So sánh",                  icon:Columns,   badge:null },
+    { key:"minutes" as const, label:"Biên bản",                  icon:FileText,  badge:null },
   ];
 
   return (
@@ -1383,39 +1720,56 @@ function Workspace({ session: initSession, user, onBack }: {
               const { avg } = calcAvgForNom(n.id, session.memberScores, session.members);
               const myScore = session.memberScores.find(e=>e.memberId===currentMember.id && e.nominationId===n.id);
               const myDone  = myScore && !myScore.abstained && Object.keys(myScore.scores).length > 0;
+              const dec = session.decisions.find(d => d.nominationId === n.id);
+              const finalized = !!dec && dec.decision !== "pending";
+              const voteDecCfg = finalized ? DEC_BADGE[dec!.decision] : null;
 
               return (
                 <button key={n.id}
                   onClick={() => setSelectedNomId(n.id)}
                   className="w-full text-left rounded-[8px] px-3 py-2.5 border transition-all"
                   style={{
-                    borderColor: isSelected ? theme.primary : "var(--color-line)",
+                    borderColor: isSelected ? theme.primary : finalized ? (voteDecCfg!.border) : "var(--color-line)",
                     background: isSelected ? theme.tint : "#fff",
                     boxShadow: isSelected ? `0 0 0 2px ${theme.primary}20` : "none",
                   }}>
                   <div className="flex items-center gap-2 mb-1">
-                    {/* COI or done indicator */}
                     {coi.level === "hard"
                       ? <ShieldAlert className="size-3 text-[#c8102e] shrink-0" />
                       : myDone
                       ? <CheckCircle2 className="size-3 text-[#0f7a3e] shrink-0" />
                       : <Clock className="size-3 text-[#635647] shrink-0" />}
                     <span className="text-[13px] text-[#0b1426] flex-1 truncate"
-                      style={{ fontFamily: "var(--font-sans)", fontWeight:isSelected?600:500 }}>
+                      style={{ fontFamily:"var(--font-sans)", fontWeight:isSelected?600:500 }}>
                       {n.tenDoiTuong}
                     </span>
                     {avg > 0 && (
                       <span className="text-[13px] shrink-0"
-                        style={{ color:scoreColor(avg/MAX_TOTAL), fontFamily: "var(--font-sans)", fontWeight:700 }}>
+                        style={{ color:scoreColor(avg/MAX_TOTAL), fontFamily:"var(--font-sans)", fontWeight:700 }}>
                         {avg}
                       </span>
                     )}
                   </div>
-                  <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>
-                    {n.hinhThuc} · {n.code}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[13px] text-[#635647] truncate flex-1" style={{ fontFamily:"var(--font-sans)" }}>
+                      {n.hinhThuc} · {n.code}
+                    </span>
+                    {voteDecCfg && (
+                      <span className="text-[11px] px-1.5 py-0.5 rounded-full shrink-0"
+                        style={{ background:voteDecCfg.bg, color:voteDecCfg.color, fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                        {dec!.decision === "pass" ? "✓ TQ" : dec!.decision === "reject" ? "✗ Bác" : "– Hoãn"}
+                      </span>
+                    )}
+                    {!finalized && dec && (
+                      <span className="text-[11px] px-1.5 py-0.5 rounded-full shrink-0"
+                        style={{ background:"#ddeafc", color:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+                        {dec.votes.pass.length + dec.votes.reject.length + dec.votes.defer.length}/{
+                          session.members.filter(m => m.present && checkCOI(m, n).level !== "hard").length} phiếu
+                      </span>
+                    )}
                   </div>
                   {coi.level === "hard" && (
-                    <div className="mt-1 text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <div className="mt-1 text-[13px] text-[#c8102e]" style={{ fontFamily:"var(--font-sans)" }}>
                       COI — Không thể chấm
                     </div>
                   )}
@@ -1465,22 +1819,16 @@ function Workspace({ session: initSession, user, onBack }: {
                 selectedNomId={selectedNomId}
                 setSelectedNomId={setSelectedNomId}
                 onSubmitScore={handleSubmitScore}
-              />
-            )}
-            {tab === "compare" && <CompareTab session={session} />}
-            {tab === "results" && (
-              <ResultsTab
-                session={session}
-                currentMemberId={currentMember.id}
                 onVote={handleVote}
-                onUpdateDecision={(id,dec) => {
+                onUpdateDecision={(id, dec) => {
                   setSession(prev => ({
                     ...prev,
-                    decisions:[...prev.decisions.filter(d=>d.nominationId!==id), dec],
+                    decisions: [...prev.decisions.filter(d => d.nominationId !== id), dec],
                   }));
                 }}
               />
             )}
+            {tab === "compare" && <CompareTab session={session} />}
             {tab === "minutes" && <MinutesTab session={session} />}
           </div>
         </div>
@@ -1492,9 +1840,272 @@ function Workspace({ session: initSession, user, onBack }: {
 /* ═══════════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════════ */
-export function HoiDongPage({ user }: { user: LoginUser }) {
+function CreateSessionModal({ sessions, campaigns, onClose, onCreate }: {
+  sessions: CouncilSession[];
+  campaigns: Campaign[];
+  onClose: () => void;
+  onCreate: (s: CouncilSession) => void;
+}) {
+  const councilCampaigns = campaigns.filter(c => c.state === "council_review");
+  const today = new Date().toISOString().slice(0, 10);
+  const [form, setForm] = useState({
+    campaignId: "",
+    campaignName: "",
+    date: today,
+    time: "08:30",
+    location: "Hội trường UBND Tỉnh Đồng Nai – Phòng họp số 2",
+    ghiChu: "",
+  });
+  const [memberPresence, setMemberPresence] = useState<Record<string, boolean>>(
+    Object.fromEntries(MEMBERS.map(m => [m.id, m.present]))
+  );
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const touch = (k: string) => setTouched(t => ({ ...t, [k]: true }));
+
+  const errs = {
+    campaignId: !form.campaignId ? "Chọn phong trào đang ở giai đoạn Họp hội đồng" : null,
+    date: !form.date ? "Chọn ngày họp" : null,
+    location: form.location.trim().length < 5 ? "Nhập địa điểm họp" : null,
+  };
+  const valid = !errs.campaignId && !errs.date && !errs.location;
+  const presentCount = Object.values(memberPresence).filter(Boolean).length;
+  const quorum = Math.ceil(MEMBERS.length * 2 / 3);
+
+  const selectedCampaign = campaigns.find(c => c.id === form.campaignId) ?? null;
+  const eligibleParticipants = selectedCampaign
+    ? selectedCampaign.participants.filter(p => p.hoSoStatus === "da_duyet")
+    : [];
+
+  const handleSubmit = () => {
+    setTouched({ campaignId: true, date: true, location: true });
+    if (!valid) return;
+    const newId = `HD-${new Date().getFullYear()}-${String(sessions.length + 1).padStart(3, "0")}`;
+    const nominations: Nomination[] = eligibleParticipants.map((p, idx) => ({
+      id: p.id,
+      code: `HS-${String(idx + 1).padStart(3, "0")}`,
+      tenDoiTuong: p.name,
+      loai: p.type,
+      donVi: p.donVi,
+      chucVu: p.position,
+      hinhThuc: p.hinhThucDeNghi ?? "Chưa xác định",
+      capKT: selectedCampaign!.level,
+      tomTatThanhTich: p.baoHoaThanhTich ?? "",
+      documents: (p.minhChung ?? []).filter(m => m.daNop).map(m => m.ten),
+      status: "in_review",
+    }));
+    const newSession: CouncilSession = {
+      id: newId, code: newId,
+      phienSo: sessions.length + 1,
+      campaignName: form.campaignName,
+      campaignId: form.campaignId,
+      date: form.date, time: form.time,
+      location: form.location.trim(),
+      status: "upcoming",
+      members: MEMBERS.map(m => ({ ...m, present: memberPresence[m.id] ?? m.present })),
+      nominations,
+      memberScores: [],
+      decisions: [],
+      canCuPhapLy: ["Điều 56 Luật TĐKT 2022", "Điều 38 NĐ 152/2025/NĐ-CP", "TT 03/2018/TT-BNV"],
+      ghiChu: form.ghiChu.trim(),
+    };
+    onCreate(newSession);
+  };
+
+  return (
+    <div className="fixed inset-0 z-[300] flex items-center justify-center" style={{ background: "rgba(0,0,0,0.45)" }}>
+      <div className="w-[560px] max-h-[90vh] rounded-[16px] border shadow-2xl bg-white flex flex-col overflow-hidden"
+        style={{ borderColor: "var(--color-line)", fontFamily: "var(--font-sans)" }}>
+        {/* Header */}
+        <div className="px-6 py-4 border-b flex items-center gap-3 shrink-0"
+          style={{ borderColor: "var(--color-line)", background: "linear-gradient(to right,#eff6ff,#f5f3ff)" }}>
+          <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background: "#1C5FBE" }}>
+            <Gavel className="size-5 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[14px] font-semibold text-[#0b1426]">Tạo phiên họp Hội đồng mới</p>
+            <p className="text-[13px] text-[#635647]">Phiên số {sessions.length + 1} · Điều 56 Luật TĐKT 2022</p>
+          </div>
+          <button type="button" onClick={onClose} className="size-8 rounded-full flex items-center justify-center hover:bg-[#f1f5f9] transition-colors">
+            <X className="size-4 text-[#635647]" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+          {/* Campaign select */}
+          <div className="ds-input-root">
+            <label className="ds-input-label ds-input-label-required">Tên phong trào / chiến dịch</label>
+            {councilCampaigns.length === 0 ? (
+              <div className="rounded-[8px] border px-4 py-3 flex items-center gap-2 text-[13px]"
+                style={{ borderColor: "#fca5a5", background: "#fff1f2", color: "#c8102e" }}>
+                <AlertCircle className="size-4 shrink-0" />
+                Không có phong trào nào đang ở giai đoạn Họp hội đồng xét duyệt.
+              </div>
+            ) : (
+              <>
+                <select className="ds-input ds-input-md"
+                  value={form.campaignId}
+                  onChange={e => {
+                    const c = councilCampaigns.find(x => x.id === e.target.value);
+                    setForm(f => ({ ...f, campaignId: e.target.value, campaignName: c?.name ?? "" }));
+                  }}
+                  onBlur={() => touch("campaignId")}
+                  style={touched.campaignId && errs.campaignId ? { borderColor: "#f87171" } : {}}>
+                  <option value="">-- Chọn phong trào --</option>
+                  {councilCampaigns.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+                {touched.campaignId && errs.campaignId && (
+                  <p className="text-[13px] text-[#c8102e] mt-1">{errs.campaignId}</p>
+                )}
+                {form.campaignId && (
+                  <div className="mt-2 rounded-[8px] border overflow-hidden" style={{ borderColor: "#86efac" }}>
+                    <div className="px-3 py-2 flex items-center gap-2 text-[13px]"
+                      style={{ background: "#f0fdf4", color: "#166534" }}>
+                      <CheckCircle2 className="size-3.5 shrink-0" />
+                      Phong trào đang ở giai đoạn <strong className="ml-1">Họp hội đồng xét duyệt</strong>
+                    </div>
+                    <div className="px-3 py-2.5 border-t flex items-center gap-6"
+                      style={{ borderColor: "#86efac", background: "#fff" }}>
+                      <div className="flex items-center gap-1.5">
+                        <FileText className="size-3.5 text-[#1C5FBE]" />
+                        <span className="text-[13px] text-[#0b1426]">
+                          <strong>{eligibleParticipants.length}</strong> hồ sơ đủ điều kiện
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <User className="size-3.5 text-[#7c3aed]" />
+                        <span className="text-[13px] text-[#0b1426]">
+                          <strong>{eligibleParticipants.filter(p => p.type === "ca_nhan").length}</strong> cá nhân
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Building2 className="size-3.5 text-[#b45309]" />
+                        <span className="text-[13px] text-[#0b1426]">
+                          <strong>{eligibleParticipants.filter(p => p.type === "tap_the").length}</strong> tập thể
+                        </span>
+                      </div>
+                    </div>
+                    {eligibleParticipants.length === 0 && (
+                      <div className="px-3 py-2 border-t text-[13px] flex items-center gap-2"
+                        style={{ borderColor: "#86efac", background: "#fffbeb", color: "#92400e" }}>
+                        <AlertCircle className="size-3.5 shrink-0" />
+                        Chưa có hồ sơ nào được duyệt ở giai đoạn thẩm định cơ sở.
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Date + Time */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="ds-input-root">
+              <label className="ds-input-label ds-input-label-required">
+                <Calendar className="size-3.5 inline mr-1" />Ngày họp
+              </label>
+              <input type="date" className="ds-input ds-input-md" value={form.date}
+                onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+                onBlur={() => touch("date")}
+                style={touched.date && errs.date ? { borderColor: "#f87171" } : {}} />
+            </div>
+            <div className="ds-input-root">
+              <label className="ds-input-label">
+                <Clock className="size-3.5 inline mr-1" />Giờ họp
+              </label>
+              <input type="time" className="ds-input ds-input-md" value={form.time}
+                onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
+            </div>
+          </div>
+
+          {/* Location */}
+          <div className="ds-input-root">
+            <label className="ds-input-label ds-input-label-required">
+              <MapPin className="size-3.5 inline mr-1" />Địa điểm
+            </label>
+            <input className="ds-input ds-input-md" value={form.location}
+              onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+              onBlur={() => touch("location")}
+              style={touched.location && errs.location ? { borderColor: "#f87171" } : {}} />
+            {touched.location && errs.location && (
+              <p className="text-[13px] text-[#c8102e] mt-1">{errs.location}</p>
+            )}
+          </div>
+
+          {/* Member attendance */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="ds-input-label mb-0">
+                <Users className="size-3.5 inline mr-1" />Thành viên tham dự
+              </label>
+              <span className="text-[13px]" style={{ color: presentCount >= quorum ? "#166534" : "#c8102e" }}>
+                {presentCount}/{MEMBERS.length} · {presentCount >= quorum ? "✅ Đủ túc số" : `❌ Cần thêm ${quorum - presentCount}`}
+              </span>
+            </div>
+            <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
+              {MEMBERS.map((m, i) => (
+                <div key={m.id}
+                  className="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-[#f8fafc] transition-colors"
+                  style={{ borderTop: i > 0 ? "1px solid var(--color-line)" : undefined }}
+                  onClick={() => setMemberPresence(p => ({ ...p, [m.id]: !p[m.id] }))}>
+                  <input type="checkbox" readOnly checked={memberPresence[m.id] ?? false}
+                    className="size-4 rounded accent-[#1C5FBE] cursor-pointer" />
+                  <div className="size-7 rounded-full flex items-center justify-center shrink-0 text-white text-[11px] font-bold"
+                    style={{ background: memberPresence[m.id] ? m.avatarColor : "#d1d5db" }}>
+                    {m.name.split(" ").pop()?.slice(0, 2)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-semibold truncate" style={{ color: memberPresence[m.id] ? "#0b1426" : "#9ca3af" }}>{m.name}</div>
+                    <div className="text-[12px] truncate" style={{ color: memberPresence[m.id] ? "#635647" : "#d1d5db" }}>{m.title}</div>
+                  </div>
+                  {m.isChair && <span className="text-[11px] px-1.5 py-0.5 rounded" style={{ background: "#ddeafc", color: "#1a4fa0" }}>Chủ tịch</span>}
+                  {m.isSecretary && <span className="text-[11px] px-1.5 py-0.5 rounded" style={{ background: "#f5f3ff", color: "#7c3aed" }}>Thư ký</span>}
+                </div>
+              ))}
+            </div>
+            <p className="text-[12px] text-[#9ca3af] mt-1">Túc số tối thiểu: ≥ {quorum}/{MEMBERS.length} thành viên (2/3) · Điều 56 Luật TĐKT 2022</p>
+          </div>
+
+          {/* Notes */}
+          <div className="ds-input-root">
+            <label className="ds-input-label">Ghi chú</label>
+            <textarea className="ds-input" rows={2} style={{ padding: "8px 12px", resize: "vertical" }}
+              placeholder="Nội dung dự kiến xét duyệt, lưu ý đặc biệt..."
+              value={form.ghiChu}
+              onChange={e => setForm(f => ({ ...f, ghiChu: e.target.value }))} />
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-6 py-4 border-t flex items-center justify-between shrink-0" style={{ borderColor: "var(--color-line)" }}>
+          <p className="text-[13px] text-[#635647]">
+            {presentCount < quorum && <span className="text-[#c8102e] font-semibold">Chưa đủ túc số · </span>}
+            Phiên số {sessions.length + 1}
+          </p>
+          <div className="flex gap-2">
+            <DsButton variant="secondary" size="md" onClick={onClose}>Hủy</DsButton>
+            <DsButton variant="primary" size="md" onClick={handleSubmit} style={!valid ? { opacity: 0.65 } : {}}>
+              <CheckCircle2 className="size-4" />Tạo phiên họp
+            </DsButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
+  user: LoginUser;
+  campaigns: Campaign[];
+  sessions: CouncilSession[];
+  onSessionsChange: React.Dispatch<React.SetStateAction<CouncilSession[]>>;
+}) {
   const { theme } = useTheme();
   const [openSession, setOpenSession] = useState<CouncilSession | null>(null);
+  const setSessions = onSessionsChange;
+  const [showCreate, setShowCreate] = useState(false);
 
   if (openSession) {
     return (
@@ -1529,7 +2140,7 @@ export function HoiDongPage({ user }: { user: LoginUser }) {
               Chấm điểm theo tiêu chí, kiểm tra xung đột lợi ích tự động — Điều 56 Luật TĐKT 2022
             </p>
           </div>
-          <DsButton variant="primary" size="md">
+          <DsButton variant="primary" size="md" onClick={() => setShowCreate(true)}>
             <Plus className="size-4" />Tạo phiên họp mới
           </DsButton>
         </div>
@@ -1563,12 +2174,13 @@ export function HoiDongPage({ user }: { user: LoginUser }) {
       {/* Sessions grid */}
       <div className="flex-1 overflow-y-auto px-8 py-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {SESSIONS.map(s => (
+          {sessions.map(s => (
             <SessionCard key={s.id} s={s} onOpen={() => setOpenSession(s)} />
           ))}
           {/* Empty placeholder */}
           <div className="ds-card ds-card-flat rounded-[10px] border-2 border-dashed flex flex-col items-center justify-center gap-3 p-8 cursor-pointer hover:border-[#1C5FBE60] transition-colors"
-            style={{ borderColor:"var(--color-line)", minHeight:200 }}>
+            style={{ borderColor:"var(--color-line)", minHeight:200 }}
+            onClick={() => setShowCreate(true)}>
             <div className="size-12 rounded-full flex items-center justify-center" style={{ background:theme.tint }}>
               <Plus className="size-5" style={{ color:theme.primary }} />
             </div>
@@ -1582,6 +2194,15 @@ export function HoiDongPage({ user }: { user: LoginUser }) {
           </div>
         </div>
       </div>
+
+      {showCreate && (
+        <CreateSessionModal
+          sessions={sessions}
+          campaigns={campaigns}
+          onClose={() => setShowCreate(false)}
+          onCreate={s => { setSessions(prev => [...prev, s]); setShowCreate(false); }}
+        />
+      )}
     </div>
   );
 }

@@ -69,7 +69,7 @@ const VERSIONS: Version[] = [
       { type:"new",      text:"Phân tích thi đua — biểu đồ AI-powered: xu hướng, phân bổ đơn vị, KPI tổng hợp" },
       { type:"new",      text:"SLA Monitor — bảng theo dõi vi phạm, cảnh báo email/SMS, escalation path" },
       { type:"new",      text:"Audit Log — nhật ký an ninh đầy đủ theo NIST CSF, xuất CSV/PDF" },
-      { type:"new",      text:"Trợ lý AI Tố Nga v2 — chat theo context hồ sơ, gợi ý tự động điều khoản pháp lý" },
+      { type:"new",      text:"Trợ lý AI v2 — chat theo context hồ sơ, gợi ý tự động điều khoản pháp lý" },
       { type:"security", text:"Mã hóa AES-256 cho tài liệu đính kèm" },
     ],
   },

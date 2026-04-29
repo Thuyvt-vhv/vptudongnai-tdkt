@@ -214,7 +214,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
               <div className="p-3 rounded-[8px] flex items-start gap-2" style={{ background: "#f0f4ff", border: "1px solid #bfdbfe" }}>
                 <Sparkles className="size-4 text-[#1C5FBE] shrink-0 mt-0.5" />
                 <p className="text-[13px] text-[#1a4fa0]" style={{ fontFamily: "var(--font-sans)" }}>
-                  AI Tố Nga sẽ kiểm tra điều kiện sau khi đăng ký. Vui lòng chọn đúng danh hiệu phù hợp với thành tích thực tế.
+                  Trợ lý AI sẽ kiểm tra điều kiện sau khi đăng ký. Vui lòng chọn đúng danh hiệu phù hợp với thành tích thực tế.
                 </p>
               </div>
               <div>
@@ -469,7 +469,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                 <div className="p-6 text-center">
                   <Sparkles className="size-10 text-[#8a6400] mx-auto mb-3" />
                   <h3 className="text-[14px] text-white mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-                    AI Tố Nga kiểm tra điều kiện
+                    Trợ lý AI kiểm tra điều kiện
                   </h3>
                   <p className="text-[13px] text-white/60" style={{ fontFamily: "var(--font-sans)" }}>
                     Đối chiếu với Luật TĐKT 2022, NĐ 152/2025/NĐ-CP, TT 15/2025/TT-BNV

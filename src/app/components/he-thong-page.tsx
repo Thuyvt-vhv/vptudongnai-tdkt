@@ -3,9 +3,10 @@ import {
   Activity, Server, Database, Wifi, Clock, Users,
   CheckCircle2, AlertTriangle, XCircle, RefreshCw,
   Cpu, HardDrive, BarChart2, Zap, Globe, Shield,
-  ArrowUp, ArrowDown, TrendingUp,
+  ArrowUp, ArrowDown, TrendingUp, Trash2,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
+import { clearPersistedData } from "@/app/hooks/use-persisted-state";
 
 /* ═══════════════════════════════════════════════════════════════
    TYPES
@@ -262,6 +263,31 @@ export function HeThongPage({ user }: { user: LoginUser }) {
               );})}
             </div>
           </div>
+        </div>
+
+        {/* Demo data management */}
+        <div className="mt-4 mx-6 mb-6 rounded-xl p-4 flex items-center gap-4"
+          style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(239,68,68,0.25)" }}>
+          <Trash2 className="size-5 shrink-0" style={{ color:"#f87171" }}/>
+          <div className="flex-1">
+            <div className="text-[13px] font-semibold text-white">Reset dữ liệu Demo</div>
+            <div className="text-[12px] mt-0.5" style={{ color:"rgba(255,255,255,0.45)" }}>
+              Xóa toàn bộ dữ liệu lưu trong trình duyệt và khôi phục về dữ liệu gốc.
+              Tải lại trang sau khi reset.
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              if (window.confirm("Reset toàn bộ dữ liệu demo về trạng thái ban đầu?")) {
+                clearPersistedData();
+                window.location.reload();
+              }
+            }}
+            className="shrink-0 px-4 py-2 rounded-lg text-[13px] font-semibold transition-colors"
+            style={{ background:"rgba(239,68,68,0.2)", color:"#f87171", border:"1px solid rgba(239,68,68,0.3)" }}
+          >
+            Reset
+          </button>
         </div>
       </div>
     </div>

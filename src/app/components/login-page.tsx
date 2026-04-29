@@ -30,8 +30,8 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
     roleColor:ROLE_VISUAL.admin.color, roleBg:ROLE_VISUAL.admin.bg,
     avatarFrom:ROLE_VISUAL.admin.from, avatarTo:ROLE_VISUAL.admin.to,
     roleIcon:ROLE_VISUAL.admin.icon,
-    desc:"Toàn quyền hệ thống — phân quyền, cấu hình, audit log",
-    perms:["Phân quyền","Danh mục","Sao lưu","Toàn bộ nghiệp vụ"],
+    desc:"Quản lý user / role / permission, cấu hình workflow, cấu hình danh mục, toàn quyền hệ thống",
+    perms:["User/Role","Cấu hình workflow","Danh mục","Toàn quyền"],
   },
   {
     id:1, name:"Nguyễn Văn Thắng", initials:"NT",
@@ -41,8 +41,8 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
     roleColor:ROLE_VISUAL.leader.color, roleBg:ROLE_VISUAL.leader.bg,
     avatarFrom:ROLE_VISUAL.leader.from, avatarTo:ROLE_VISUAL.leader.to,
     roleIcon:ROLE_VISUAL.leader.icon,
-    desc:"Phê duyệt phong trào, ký số CA, ban hành quyết định cấp tỉnh",
-    perms:["Ký số CA","Phê duyệt","Ban hành QĐ","Báo cáo"],
+    desc:"Phát động phong trào (bỏ qua bước phê duyệt), phê duyệt phong trào, ký số CA, phê duyệt kết quả cuối, ban hành quyết định khen thưởng",
+    perms:["Phát động PT","Phê duyệt","Ký số CA","Ban hành QĐ"],
   },
   {
     id:5, name:"Võ Minh Tuấn", initials:"MT",
@@ -52,8 +52,8 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
     roleColor:ROLE_VISUAL.council.color, roleBg:ROLE_VISUAL.council.bg,
     avatarFrom:ROLE_VISUAL.council.from, avatarTo:ROLE_VISUAL.council.to,
     roleIcon:ROLE_VISUAL.council.icon,
-    desc:"Tạo phong trào, chấm điểm HĐ xét duyệt, kiểm tra COI tự động",
-    perms:["Phong trào","Chấm điểm HĐ","Thẩm định","Biên bản"],
+    desc:"Xem danh sách hồ sơ, xem phản hồi công khai, chấm điểm, đề xuất đạt / không đạt",
+    perms:["Xem hồ sơ","Phản hồi CK","Chấm điểm","Đề xuất KQ"],
   },
   {
     id:9, name:"Trần Bá Thành", initials:"BT",
@@ -63,8 +63,8 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
     roleColor:ROLE_VISUAL.manager.color, roleBg:ROLE_VISUAL.manager.bg,
     avatarFrom:ROLE_VISUAL.manager.from, avatarTo:ROLE_VISUAL.manager.to,
     roleIcon:ROLE_VISUAL.manager.icon,
-    desc:"Tạo hồ sơ đề nghị đơn vị, tham gia lấy ý kiến, trình cấp trên",
-    perms:["Tạo hồ sơ","Đề nghị KT","Lấy ý kiến","Báo cáo đơn vị"],
+    desc:"Phát động phong trào (nếu được phân quyền), duyệt hồ sơ cấp đơn vị, trình cấp trên, theo dõi tiến độ đơn vị",
+    perms:["Phát động PT","Duyệt hồ sơ","Trình cấp trên","Theo dõi TD"],
   },
   {
     id:11, name:"Lê Thị Thanh Xuân", initials:"TX",
@@ -74,15 +74,15 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
     roleColor:ROLE_VISUAL.user.color, roleBg:ROLE_VISUAL.user.bg,
     avatarFrom:ROLE_VISUAL.user.from, avatarTo:ROLE_VISUAL.user.to,
     roleIcon:ROLE_VISUAL.user.icon,
-    desc:"Đăng ký tham gia phong trào, nộp hồ sơ, gửi ý kiến, theo dõi kết quả",
-    perms:["Đăng ký PT","Nộp hồ sơ","Gửi ý kiến","Xem QĐ"],
+    desc:"Đăng ký tham gia phong trào, nộp hồ sơ, theo dõi trạng thái, gửi ý kiến công khai",
+    perms:["Đăng ký PT","Nộp hồ sơ","Theo dõi TT","Ý kiến CK"],
   },
 ];
 
 const FEATURES = [
   { icon:"🏆", text:"Quản lý Phong trào thi đua toàn tỉnh" },
   { icon:"✍️", text:"Ký số CA/PKI tích hợp sẵn" },
-  { icon:"🤖", text:"Trợ lý AI Tố Nga hỗ trợ 24/7" },
+  { icon:"🤖", text:"Trợ lý AI hỗ trợ 24/7" },
   { icon:"📊", text:"Bảng xếp hạng & Phân tích realtime" },
 ];
 
@@ -93,7 +93,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
   const [error, setError]       = useState("");
   const [loading, setLoading]   = useState(false);
   const [selected, setSelected] = useState<number|null>(null);
-  const [hoveredId, setHoveredId] = useState<number|null>(null);
+  const [activeRoleId, setActiveRoleId] = useState<number>(14);
 
   const pickDemo = (acc: DemoAccount) => {
     if (loading) return;
@@ -119,7 +119,14 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
     }, 800);
   };
 
-  const hovered = hoveredId ? DEMO_ACCOUNTS.find(a => a.id === hoveredId) : null;
+  const activeAccount = DEMO_ACCOUNTS.find(a => a.id === activeRoleId)!;
+
+  const getRv = (role: LoginUser["role"]) => ROLE_VISUAL[
+    role === "quản trị hệ thống" ? "admin"
+    : role === "lãnh đạo cấp cao" ? "leader"
+    : role === "hội đồng" ? "council"
+    : role === "lãnh đạo đơn vị" ? "manager" : "user"
+  ];
 
   return (
     <div className="min-h-screen flex overflow-hidden" style={{ fontFamily:"var(--font-sans)", background:"#0a0f1e" }}>
@@ -213,7 +220,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                 <Sparkles className="size-4 text-white"/>
               </div>
               <div>
-                <div className="text-[14px] font-semibold" style={{ color:"#e2d9f3" }}>Trợ lý AI Tố Nga</div>
+                <div className="text-[14px] font-semibold" style={{ color:"#e2d9f3" }}>Trợ lý AI</div>
                 <div className="text-[13px]" style={{ color:"rgba(176,160,220,0.65)" }}>Tư vấn hồ sơ thông minh 24/7</div>
               </div>
               <div className="ml-auto flex items-center gap-1.5">
@@ -342,7 +349,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
             boxShadow:"0 2px 12px rgba(11,20,38,0.05)",
           }}>
             {/* Header */}
-            <div className="px-5 py-3.5 flex items-center gap-2"
+            <div className="px-5 py-3 flex items-center gap-2"
               style={{ background:"#ffffff", borderBottom:"1px solid #e2e8f0" }}>
               <div className="w-5 h-5 rounded-md flex items-center justify-center"
                 style={{ background:"#0b1426" }}>
@@ -353,83 +360,103 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                 style={{ background:"#eef2f8", color:"#635647" }}>Demo</span>
             </div>
 
-            {/* Role pills row */}
-            <div className="p-4 flex gap-2 flex-wrap" style={{ background:"#f4f7fb" }}>
+            {/* Role tabs */}
+            <div className="flex" style={{ background:"#f4f7fb", borderBottom:"1px solid #e2e8f0" }}>
               {DEMO_ACCOUNTS.map(acc => {
-                const rv = ROLE_VISUAL[
-                  acc.role === "quản trị hệ thống" ? "admin"
-                  : acc.role === "lãnh đạo cấp cao" ? "leader"
-                  : acc.role === "hội đồng" ? "council"
-                  : acc.role === "lãnh đạo đơn vị" ? "manager" : "user"
-                ];
+                const rv = getRv(acc.role);
                 const Icon = rv.icon;
-                const isSel = selected === acc.id;
-                const isHov = hoveredId === acc.id;
+                const isActive = activeRoleId === acc.id;
                 return (
                   <button key={acc.id}
-                    onClick={() => pickDemo(acc)}
-                    onMouseEnter={() => setHoveredId(acc.id)}
-                    onMouseLeave={() => setHoveredId(null)}
+                    onClick={() => setActiveRoleId(acc.id)}
                     disabled={loading}
-                    className="flex items-center gap-2 px-3 h-9 rounded-full transition-all text-[13px] font-medium"
+                    className="flex-1 flex flex-col items-center gap-1.5 py-3 px-1 text-[12px] font-medium transition-all"
                     style={{
-                      background: isSel ? rv.color : isHov ? rv.bg : "#ffffff",
-                      color: isSel ? "#ffffff" : rv.color,
-                      border: `1.5px solid ${isSel ? rv.color : rv.border}`,
-                      boxShadow: isSel ? `0 2px 8px ${rv.color}35` : "none",
+                      background: isActive ? "#ffffff" : "transparent",
+                      color: isActive ? rv.color : "#74654a",
+                      borderBottom: `2px solid ${isActive ? rv.color : "transparent"}`,
                       cursor: loading ? "not-allowed" : "pointer",
                     }}>
-                    <div className="size-5 rounded-full flex items-center justify-center shrink-0"
-                      style={{ background: isSel ? "rgba(255,255,255,0.25)" : `linear-gradient(135deg,${rv.from},${rv.to})` }}>
-                      {isSel && loading
-                        ? <span className="size-3 rounded-full border border-white border-t-transparent animate-spin"/>
-                        : <Icon className="size-2.5 text-white"/>}
+                    <div className="size-7 rounded-full flex items-center justify-center transition-all"
+                      style={{
+                        background: isActive
+                          ? `linear-gradient(135deg,${rv.from},${rv.to})`
+                          : rv.bg,
+                      }}>
+                      <Icon className="size-3.5" style={{ color: isActive ? "#fff" : rv.color }} />
                     </div>
-                    {rv.label}
-                    {isSel && !loading && <CheckCircle2 className="size-3.5"/>}
+                    <span>{rv.label}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Hovered account preview */}
-            <div style={{ background:"#ffffff", borderTop:"1px solid #e2e8f0", minHeight:72 }}>
-              {hovered ? (
-                <div className="px-5 py-4 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center text-[13px] font-bold text-white"
-                    style={{ background:`linear-gradient(135deg,${hovered.avatarFrom},${hovered.avatarTo})` }}>
-                    {hovered.initials}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[14px] font-semibold text-[#0b1426]">{hovered.name}</div>
-                    <div className="text-[13px] text-[#635647] truncate">{hovered.title} · {hovered.unit}</div>
-                  </div>
-                  <div className="flex gap-1.5 flex-wrap justify-end shrink-0">
-                    {hovered.perms.slice(0,3).map(p => {
-                      const rv = ROLE_VISUAL[
-                        hovered.role === "quản trị hệ thống" ? "admin"
-                        : hovered.role === "lãnh đạo cấp cao" ? "leader"
-                        : hovered.role === "hội đồng" ? "council"
-                        : hovered.role === "lãnh đạo đơn vị" ? "manager" : "user"
-                      ];
-                      return (
-                        <span key={p} className="text-[12px] px-2 py-0.5 rounded-full"
+            {/* Description panel */}
+            {(() => {
+              const rv = getRv(activeAccount.role);
+              const isLoggingIn = loading && selected === activeAccount.id;
+              return (
+                <div style={{ background:"#ffffff" }}>
+                  {/* Role info */}
+                  <div className="px-5 pt-4 pb-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[13px] font-bold text-[#0b1426]">{activeAccount.roleLabel}</span>
+                      <span className="text-[12px] px-2 py-0.5 rounded-full"
+                        style={{ background:rv.bg, color:rv.color, border:`1px solid ${rv.border}` }}>
+                        {activeAccount.title}
+                      </span>
+                    </div>
+                    <p className="text-[13px] leading-relaxed" style={{ color:"#4a5568" }}>
+                      {activeAccount.desc}
+                    </p>
+                    {/* Perms */}
+                    <div className="flex gap-1.5 flex-wrap mt-2.5">
+                      {activeAccount.perms.map(p => (
+                        <span key={p} className="flex items-center gap-1 text-[12px] px-2 py-0.5 rounded-full"
                           style={{ background:rv.bg, color:rv.color, border:`1px solid ${rv.border}` }}>
-                          {p}
+                          <CheckCircle2 className="size-2.5" />{p}
                         </span>
-                      );
-                    })}
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Account card */}
+                  <div className="px-5 pb-4">
+                    <div className="flex items-center gap-3 p-3 rounded-xl"
+                      style={{ background:"#f8fafc", border:`1px solid ${rv.border}` }}>
+                      <div className="size-10 rounded-xl shrink-0 flex items-center justify-center text-[13px] font-bold text-white"
+                        style={{ background:`linear-gradient(135deg,${activeAccount.avatarFrom},${activeAccount.avatarTo})` }}>
+                        {activeAccount.initials}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[13px] font-semibold text-[#0b1426]">{activeAccount.name}</div>
+                        <div className="text-[12px] truncate" style={{ color:"#635647" }}>{activeAccount.unit}</div>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <code className="text-[11px] px-1.5 py-px rounded"
+                            style={{ background:"#eef2f8", color:"#5a5040" }}>{activeAccount.email}</code>
+                          <code className="text-[11px] px-1.5 py-px rounded"
+                            style={{ background:"#eef2f8", color:"#5a5040" }}>demo123</code>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => pickDemo(activeAccount)}
+                        disabled={loading}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-semibold text-white shrink-0 transition-opacity"
+                        style={{
+                          background: `linear-gradient(135deg,${rv.from},${rv.to})`,
+                          opacity: loading ? 0.7 : 1,
+                          cursor: loading ? "not-allowed" : "pointer",
+                        }}>
+                        {isLoggingIn
+                          ? <span className="size-3.5 rounded-full border border-white border-t-transparent animate-spin"/>
+                          : <ArrowRight className="size-3.5"/>}
+                        {isLoggingIn ? "Đang vào…" : "Đăng nhập"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <div className="px-5 py-4 flex items-center gap-3 text-[13px]" style={{ color:"#74654a" }}>
-                  <ChevronRight className="size-4 opacity-40"/>
-                  <span>Di chuyển chuột lên vai trò để xem thông tin tài khoản</span>
-                  <code className="ml-auto px-2 py-0.5 rounded-lg text-[12px]"
-                    style={{ background:"#eef2f8", color:"#5a5040" }}>demo123</code>
-                </div>
-              )}
-            </div>
+              );
+            })()}
           </div>
 
           {/* Public LYK */}

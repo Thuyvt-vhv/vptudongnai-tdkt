@@ -453,7 +453,7 @@ export function DsShowcase() {
               <div className="rounded-[6px] border border-[#ffd27a]/40 bg-[#fffbf0] p-3 flex items-start gap-2.5">
                 <Info className="size-4 text-[#8a6400] mt-0.5 shrink-0" />
                 <p className="text-[13px] text-[#7d5a10] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
-                  AI Tố Nga đã xác minh cán bộ này đủ điều kiện đề nghị <strong>Chiến sĩ thi đua cấp Tỉnh</strong> dựa trên 3 năm đạt danh hiệu cơ sở liên tiếp.
+                  Trợ lý AI đã xác minh cán bộ này đủ điều kiện đề nghị <strong>Chiến sĩ thi đua cấp Tỉnh</strong> dựa trên 3 năm đạt danh hiệu cơ sở liên tiếp.
                 </p>
               </div>
             </div>

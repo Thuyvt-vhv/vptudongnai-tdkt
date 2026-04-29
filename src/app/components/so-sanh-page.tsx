@@ -109,7 +109,7 @@ const CRITERIA: { group: string; items: Criterion[] }[] = [
   {
     group: "Đánh giá AI & Điểm số",
     items: [
-      { key:"aiScore",           label:"Điểm AI Tố Nga",        render: h => `${h.aiScore}/100`,          compare: (a,b) => a.aiScore > b.aiScore ? "better" : a.aiScore < b.aiScore ? "worse" : "equal" },
+      { key:"aiScore",           label:"Điểm Trợ lý AI",        render: h => `${h.aiScore}/100`,          compare: (a,b) => a.aiScore > b.aiScore ? "better" : a.aiScore < b.aiScore ? "worse" : "equal" },
       { key:"tongDiem",          label:"Tổng điểm chấm",        render: h => `${h.tongDiem}/100`,         compare: (a,b) => a.tongDiem > b.tongDiem ? "better" : a.tongDiem < b.tongDiem ? "worse" : "equal" },
       { key:"eligibleLabel",     label:"Đủ điều kiện",          render: h => h.aiEligible ? "✅ Đủ điều kiện" : "❌ Chưa đủ" },
     ],
@@ -219,7 +219,7 @@ function AIRecommendation({ cols }: { cols: (HoSoFull | null)[] }) {
     <div className="mt-6 rounded-[12px] p-5" style={{ background: "linear-gradient(135deg,#f5f0ff,#ede9fe)", border: "1px solid #ddd6fe" }}>
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="size-5 text-[#7c3aed]"/>
-        <span className="text-[14px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI Tố Nga Khuyến nghị</span>
+        <span className="text-[14px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Trợ lý AI Khuyến nghị</span>
       </div>
       <p className="text-[13px] text-[#0b1426] leading-relaxed mb-3" style={{ fontFamily: "var(--font-sans)" }}>
         Dựa trên đánh giá tổng hợp {filled.length} hồ sơ, AI nhận thấy:{" "}
@@ -284,7 +284,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
               <GitCompare className="size-5 text-[#1C5FBE]"/>
               <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>So sánh & Đối chiếu Hồ sơ</h1>
             </div>
-            <p className="text-[13px] text-[#635647]">So sánh tối đa 3 hồ sơ đồng thời · AI Tố Nga khuyến nghị ưu tiên</p>
+            <p className="text-[13px] text-[#635647]">So sánh tối đa 3 hồ sơ đồng thời · Trợ lý AI khuyến nghị ưu tiên</p>
           </div>
           <div className="flex items-center gap-2 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
             <Shield className="size-4"/>
@@ -467,7 +467,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
               Chọn ít nhất 2 hồ sơ để bắt đầu so sánh
             </h3>
             <p className="text-[13px] text-[#635647] text-center max-w-sm" style={{ fontFamily: "var(--font-sans)" }}>
-              AI Tố Nga sẽ phân tích và khuyến nghị hồ sơ nào nên được ưu tiên dựa trên tiêu chí Luật TĐKT 2022.
+              Trợ lý AI sẽ phân tích và khuyến nghị hồ sơ nào nên được ưu tiên dựa trên tiêu chí Luật TĐKT 2022.
             </p>
           </div>
         )}

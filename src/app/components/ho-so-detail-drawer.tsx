@@ -76,7 +76,7 @@ const STATUS_CFG = {
 const HISTORY_EVENTS = [
   { time:"23/04/2026 · 14:35", actor:"Nguyễn Thị Mai (Hội đồng)", action:"Ký số điện tử CA",          type:"sign"    },
   { time:"22/04/2026 · 10:20", actor:"Trần Văn Bình (Hội đồng)",  action:"Bỏ phiếu: Thông qua",       type:"vote"    },
-  { time:"21/04/2026 · 09:15", actor:"AI Tố Nga",                 action:"Xác nhận đủ điều kiện · AI Score 94",type:"ai" },
+  { time:"21/04/2026 · 09:15", actor:"Trợ lý AI",                 action:"Xác nhận đủ điều kiện · AI Score 94",type:"ai" },
   { time:"18/04/2026 · 16:50", actor:"Lê Hồng Vân (Cán bộ ĐV)",  action:"Nộp hồ sơ lên Hội đồng",   type:"submit"  },
   { time:"15/04/2026 · 08:30", actor:"Nguyễn Văn An",             action:"Tạo hồ sơ đề nghị",         type:"create"  },
 ];
@@ -150,7 +150,7 @@ function AIPanel({ hs }: { hs: HoSoMeta }) {
     <div className="rounded-[10px] border p-4" style={{ background:"#faf5ff", borderColor:"#ddd6fe" }}>
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="size-4 text-[#7c3aed]" />
-        <span className="text-[13px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phân tích AI Tố Nga</span>
+        <span className="text-[13px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phân tích Trợ lý AI</span>
       </div>
       {/* Score ring */}
       <div className="flex items-center gap-4 mb-3">
@@ -493,7 +493,7 @@ export function HoSoDetailDrawer({
               </button>
             </>
           )}
-          <button onClick={()=>{onNavigate?.("Trợ lý AI Tố Nga"); onClose();}}
+          <button onClick={()=>{onNavigate?.("Trợ lý AI"); onClose();}}
             className="flex items-center gap-1.5 px-3 py-2.5 rounded-[8px] text-[13px] border border-[#ddd6fe] hover:bg-[#faf5ff] transition-colors"
             style={{ color:"#7c3aed", fontFamily: "var(--font-sans)", fontWeight:600 }}>
             <Sparkles className="size-4"/>Hỏi AI

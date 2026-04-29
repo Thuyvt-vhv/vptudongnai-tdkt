@@ -22,7 +22,7 @@ const SHORTCUTS: ShortcutGroup[] = [
       { keys:["Esc"],         desc:"Đóng modal / drawer đang mở" },
       { keys:["G","D"],       desc:"Đến Bảng điều hành" },
       { keys:["G","N"],       desc:"Đến Thông báo" },
-      { keys:["G","A"],       desc:"Đến Trợ lý AI Tố Nga" },
+      { keys:["G","A"],       desc:"Đến Trợ lý AI" },
       { keys:["G","B"],       desc:"Đến Bảng xếp hạng" },
       { keys:["G","H"],       desc:"Đến Hồ sơ cán bộ" },
       { keys:["G","S"],       desc:"Đến SLA Monitor" },
@@ -49,9 +49,9 @@ const SHORTCUTS: ShortcutGroup[] = [
     ],
   },
   {
-    group: "Trợ lý AI Tố Nga",
+    group: "Trợ lý AI",
     items: [
-      { keys:["⌘","⇧","A"],   desc:"Mở AI Tố Nga từ bất kỳ đâu" },
+      { keys:["⌘","⇧","A"],   desc:"Mở Trợ lý AI từ bất kỳ đâu" },
       { keys:["⌘","⇧","C"],   desc:"Sao chép nội dung AI cuối cùng" },
       { keys:["Tab"],         desc:"Chấp nhận gợi ý tự động điền" },
     ],

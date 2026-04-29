@@ -190,7 +190,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
 
   return (
     <>
-    <header className="shrink-0 sticky top-0 z-20" style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.07))" }}>
+    <header className="shrink-0 sticky top-0 z-[70]" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.07)" }}>
 
       {/* ── Đỏ son accent top bar ───────────────────────────── */}
       <div className="h-[3px] w-full" style={{
@@ -240,7 +240,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
         <div className="flex items-center gap-0.5 shrink-0">
 
           {/* AI Button — navy + gold brand */}
-          <button onClick={() => onSelectModule("Trợ lý AI Tố Nga")}
+          <button onClick={() => onSelectModule("Trợ lý AI")}
             className="flex items-center gap-1.5 h-[30px] px-3 mr-1 rounded-[8px] text-[11.5px] text-white transition-all hover:opacity-95 active:scale-95"
             style={{
               background: "linear-gradient(135deg, #0f2244 0%, #1C5FBE 70%, #2470d8 100%)",
@@ -250,7 +250,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
               border: "1px solid rgba(212,168,75,0.25)",
             }}>
             <Sparkles className="size-3" style={{ color: "#8a6400" }} />
-            <span>Tố Nga AI</span>
+            <span>Trợ lý AI</span>
           </button>
 
           <ActionBtn icon={Printer}  onClick={onOpenPrint}      title="In tài liệu" />
@@ -297,8 +297,8 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
 
             {showMenu && (
               <>
-                <div className="fixed inset-0 z-30" onClick={() => setShowMenu(false)} />
-                <div className="absolute right-0 top-[calc(100%+6px)] w-[264px] rounded-[14px] overflow-hidden z-40"
+                <div className="fixed inset-0 z-[65]" onClick={() => setShowMenu(false)} />
+                <div className="absolute right-0 top-[calc(100%+6px)] w-[264px] rounded-[14px] overflow-hidden z-[66]"
                   style={{ background: "white", border: "1px solid #e2ddd3", boxShadow: "0 20px 48px -12px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.06)" }}>
 
                   {/* User header — navy gradient */}

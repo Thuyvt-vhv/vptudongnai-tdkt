@@ -632,7 +632,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
 function Toast({ msg, onDone }: { msg: string; onDone: () => void }) {
   useState(() => { setTimeout(onDone, 2600); });
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-3 px-5 py-3 rounded-xl shadow-xl text-white text-[13px] font-medium"
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 px-5 py-3 rounded-xl shadow-xl text-white text-[13px] font-medium"
       style={{ background: "var(--color-primary-btn)" }}>
       <CheckCircle2 className="size-4" /> {msg}
     </div>

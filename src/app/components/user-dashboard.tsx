@@ -381,7 +381,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                 { icon:Plus,        label:"Tạo hồ sơ mới",        action:() => setWizardOpen(true), color:"#1C5FBE", bg:"#f0f4ff" },
                 { icon:FileText,    label:"Theo dõi hồ sơ",        action:() => onNavigate("Đề nghị khen thưởng"), color:"#7c3aed", bg:"#f5f3ff" },
                 { icon:Megaphone,   label:"Đăng ký phong trào",    action:() => onNavigate("Phong trào thi đua"), color:"#8a6400", bg:"#fef9ec" },
-                { icon:Sparkles,    label:"Hỏi AI Tố Nga",         action:() => onNavigate("Trợ lý AI Tố Nga"), color:"#7c3aed", bg:"#f5f3ff" },
+                { icon:Sparkles,    label:"Hỏi Trợ lý AI",         action:() => onNavigate("Trợ lý AI"), color:"#7c3aed", bg:"#f5f3ff" },
                 { icon:Trophy,      label:"Bảng xếp hạng",         action:() => onNavigate("Bảng xếp hạng"), color:"#c8102e", bg:"#fff1f0" },
                 { icon:BookOpen,    label:"Trung tâm hỗ trợ",      action:() => onNavigate("Trung tâm hỗ trợ"), color:"#166534", bg:"#f0fdf4" },
               ].map((qa) => {

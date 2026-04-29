@@ -245,7 +245,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
       </div>
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl shadow-xl text-white text-[13px] font-medium flex items-center gap-2"
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-xl shadow-xl text-white text-[13px] font-medium flex items-center gap-2"
           style={{ background: theme.primary }}>
           <CheckCircle2 className="size-4" /> {toast}
         </div>

@@ -25,7 +25,7 @@ const TASKS_BY_ROLE: Record<string, CheckItem[]> = {
   "cá nhân": [
     { id:"t1", icon:FileText,  label:"Tạo hồ sơ đề nghị đầu tiên",   desc:"Gửi đề nghị khen thưởng cho bản thân hoặc đồng nghiệp",         target:"Đề nghị khen thưởng", xp:50 },
     { id:"t2", icon:Trophy,    label:"Xem bảng xếp hạng thi đua",     desc:"Theo dõi thứ hạng của bạn trong phong trào",                    target:"Bảng xếp hạng",       xp:10 },
-    { id:"t3", icon:Sparkles,  label:"Hỏi Trợ lý AI Tố Nga",          desc:"Đặt câu hỏi về điều kiện khen thưởng",                          target:"Trợ lý AI Tố Nga",    xp:20 },
+    { id:"t3", icon:Sparkles,  label:"Hỏi Trợ lý AI",          desc:"Đặt câu hỏi về điều kiện khen thưởng",                          target:"Trợ lý AI",    xp:20 },
     { id:"t4", icon:BookOpen,  label:"Xem mẫu biểu TT 15/2025",       desc:"Tải về các biểu mẫu chính thức",                                target:"Mẫu biểu TT 15/2025", xp:10 },
     { id:"t5", icon:Award,     label:"Tra cứu lịch sử khen thưởng",   desc:"Xem các khen thưởng đã nhận trong quá khứ",                     target:"Lịch sử khen thưởng", xp:10 },
   ],
@@ -46,16 +46,16 @@ const TASKS_BY_ROLE: Record<string, CheckItem[]> = {
   "lãnh đạo cấp cao": [
     { id:"t1", icon:Award,     label:"Ký số hồ sơ đầu tiên",          desc:"Phê duyệt quyết định khen thưởng bằng chữ ký số CA",             target:"Ký số & Phê duyệt",   xp:50 },
     { id:"t2", icon:Trophy,    label:"Xem Bảng xếp hạng toàn tỉnh",   desc:"Theo dõi kết quả thi đua tổng hợp",                             target:"Bảng xếp hạng",       xp:10 },
-    { id:"t3", icon:BarChart2, label:"Xem Phân tích AI thi đua",      desc:"Báo cáo thông minh từ AI Tố Nga",                                target:"Phân tích thi đua",   xp:30 },
+    { id:"t3", icon:BarChart2, label:"Xem Phân tích AI thi đua",      desc:"Báo cáo thông minh từ Trợ lý AI",                                target:"Phân tích thi đua",   xp:30 },
     { id:"t4", icon:FileText,  label:"Phê duyệt phong trào mới",      desc:"Phê duyệt phát động phong trào thi đua",                        target:"Phong trào thi đua",  xp:30 },
-    { id:"t5", icon:Sparkles,  label:"Hỏi Trợ lý AI Tố Nga",          desc:"Tư vấn chính sách khen thưởng",                                 target:"Trợ lý AI Tố Nga",    xp:20 },
+    { id:"t5", icon:Sparkles,  label:"Hỏi Trợ lý AI",          desc:"Tư vấn chính sách khen thưởng",                                 target:"Trợ lý AI",    xp:20 },
   ],
   "quản trị hệ thống": [
     { id:"t1", icon:Users,     label:"Phân quyền tài khoản đầu tiên", desc:"Tạo và phân quyền người dùng mới",                               target:"Phân quyền",          xp:40 },
     { id:"t2", icon:Zap,       label:"Cấu hình SLA cho đơn vị",       desc:"Thiết lập thời hạn xử lý theo nghiệp vụ",                       target:"Cấu hình đơn vị",     xp:50 },
     { id:"t3", icon:BarChart2, label:"Xem Audit Log hệ thống",        desc:"Kiểm tra nhật ký an toàn thông tin",                            target:"Audit Log",           xp:20 },
     { id:"t4", icon:Award,     label:"Kiểm tra SLA Monitor",          desc:"Theo dõi vi phạm SLA toàn hệ thống",                            target:"SLA Monitor",         xp:20 },
-    { id:"t5", icon:Sparkles,  label:"Cấu hình AI Tố Nga",            desc:"Tuỳ chỉnh ngưỡng gợi ý và phát hiện trùng lặp",                 target:"Hệ thống",            xp:30 },
+    { id:"t5", icon:Sparkles,  label:"Cấu hình Trợ lý AI",            desc:"Tuỳ chỉnh ngưỡng gợi ý và phát hiện trùng lặp",                 target:"Hệ thống",            xp:30 },
   ],
 };
 

@@ -42,7 +42,7 @@ const MODULE_ITEMS: PaletteItem[] = [
   { id:"m12", type:"module", label:"Kho huân – huy chương",sublabel:"Danh mục danh hiệu",          icon:Archive,         color:"#8a6400", target:"Kho huân – huy chương", keywords:["huan chuong","huy chuong","medal","kho"] },
   { id:"m13", type:"module", label:"Lịch sử khen thưởng",  sublabel:"Tra cứu lịch sử",             icon:ShieldCheck,     color:"#166534", target:"Lịch sử khen thưởng",  keywords:["lich su","history"] },
   { id:"m14", type:"module", label:"Báo cáo tổng hợp",     sublabel:"Xuất PDF/Excel/Word",         icon:FileText,        color:"#0b1426", target:"Báo cáo tổng hợp",     keywords:["bao cao","report","xuat"] },
-  { id:"m15", type:"module", label:"Trợ lý AI Tố Nga",     sublabel:"Hỏi đáp & Gợi ý AI",         icon:Sparkles,        color:"#7c3aed", target:"Trợ lý AI Tố Nga",     keywords:["ai","tro ly","to nga","chatbot"] },
+  { id:"m15", type:"module", label:"Trợ lý AI",     sublabel:"Hỏi đáp & Gợi ý AI",         icon:Sparkles,        color:"#7c3aed", target:"Trợ lý AI",     keywords:["ai","tro ly","to nga","chatbot"] },
   { id:"m16", type:"module", label:"Mẫu biểu TT 15/2025",  sublabel:"23 biểu mẫu chính thức",     icon:BookOpen,        color:"#0b1426", target:"Mẫu biểu TT 15/2025",  keywords:["mau bieu","form","thong tu"] },
   { id:"m17", type:"module", label:"SLA Monitor",          sublabel:"2 vi phạm đang xử lý",        icon:Activity,        color:"#c8102e", target:"SLA Monitor",           keywords:["sla","monitor","deadline"] },
   { id:"m18", type:"module", label:"Thông báo",            sublabel:"3 chưa đọc",                  icon:Bell,            color:"#1C5FBE", target:"Thông báo",             keywords:["thong bao","notification"] },
@@ -74,7 +74,7 @@ const QUYETDINH_ITEMS: PaletteItem[] = [
 const ACTION_ITEMS: PaletteItem[] = [
   { id:"ac1", type:"action", label:"Tạo hồ sơ khen thưởng mới",   sublabel:"Mở form đề nghị",        icon:Zap, color:"#1C5FBE", target:"Đề nghị khen thưởng", keywords:["tao ho so","new","moi"] },
   { id:"ac2", type:"action", label:"Kiểm tra SLA vi phạm",         sublabel:"Mở SLA Monitor",         icon:Activity, color:"#c8102e", target:"SLA Monitor", keywords:["sla","vi pham"] },
-  { id:"ac3", type:"action", label:"Hỏi Trợ lý AI Tố Nga",        sublabel:"Chat AI",                icon:Sparkles, color:"#7c3aed", target:"Trợ lý AI Tố Nga", keywords:["hoi ai","chat"] },
+  { id:"ac3", type:"action", label:"Hỏi Trợ lý AI",        sublabel:"Chat AI",                icon:Sparkles, color:"#7c3aed", target:"Trợ lý AI", keywords:["hoi ai","chat"] },
   { id:"ac4", type:"action", label:"Xem thông báo chưa đọc",      sublabel:"3 thông báo mới",        icon:Bell, color:"#b45309", target:"Thông báo", keywords:["thong bao","unread"] },
   { id:"ac5", type:"action", label:"Xuất báo cáo tháng",          sublabel:"PDF / Excel / Word",     icon:FileText, color:"#166534", target:"Báo cáo tổng hợp", keywords:["xuat bao cao","export"] },
 ];
@@ -239,10 +239,10 @@ export function CommandPalette({
               <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
                 Không tìm thấy "{query}"
               </p>
-              <button onClick={() => { onNavigate("Trợ lý AI Tố Nga"); onClose(); }}
+              <button onClick={() => { onNavigate("Trợ lý AI"); onClose(); }}
                 className="mt-2 flex items-center gap-1.5 text-[13px] text-[#7c3aed] hover:underline"
                 style={{ fontFamily: "var(--font-sans)" }}>
-                <Sparkles className="size-3.5" />Hỏi AI Tố Nga về "{query}"
+                <Sparkles className="size-3.5" />Hỏi Trợ lý AI về "{query}"
               </button>
             </div>
           ) : (

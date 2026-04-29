@@ -4,7 +4,7 @@ import {
   ChevronRight, ChevronDown, ExternalLink, MessageSquare,
   Phone, Mail, FileText, Shield, Award, Users, Settings,
   Clock, CheckCircle2, Star, ArrowRight, Bookmark,
-  PlayCircle, X, GitBranch,
+  PlayCircle, X, GitBranch, Zap,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { LuongNghiepVuPage } from "./luong-nghiep-vu-page";
@@ -21,7 +21,7 @@ const CATEGORIES: HelpCategory[] = [
   { id:"start",  icon:Zap,         label:"Bắt đầu nhanh",        desc:"Hướng dẫn cho người dùng mới",      count:8,  color:"#8a6400", bg:"#fdf9ec" },
   { id:"nghiep", icon:Award,       label:"Nghiệp vụ TĐKT",       desc:"Quy trình thi đua, khen thưởng",    count:24, color:"#1C5FBE", bg:"#f0f4ff" },
   { id:"law",    icon:Scale,       label:"Pháp lý & Căn cứ",     desc:"Luật TĐKT 2022, NĐ 98, TT 01",     count:16, color:"#7c3aed", bg:"#faf5ff" },
-  { id:"ai",     icon:Sparkles,    label:"AI Tố Nga",             desc:"Hướng dẫn sử dụng trợ lý AI",      count:10, color:"#7c3aed", bg:"#f5f3ff" },
+  { id:"ai",     icon:Sparkles,    label:"Trợ lý AI",             desc:"Hướng dẫn sử dụng trợ lý AI",      count:10, color:"#7c3aed", bg:"#f5f3ff" },
   { id:"kyso",   icon:Shield,      label:"Ký số & Bảo mật",      desc:"Chữ ký CA, bảo mật hệ thống",      count:12, color:"#166534", bg:"#dcfce7" },
   { id:"system", icon:Settings,    label:"Quản trị hệ thống",     desc:"Cấu hình, phân quyền, audit",      count:9,  color:"#5a5040", bg:"#ffffff" },
 ];
@@ -30,9 +30,9 @@ interface FAQItem { q: string; a: string; category: string; }
 const FAQ_ITEMS: FAQItem[] = [
   { category:"nghiep", q:"Hồ sơ CSTĐT cần bao nhiêu năm CSTĐCS liên tiếp?", a:"Theo Điều 23 Luật TĐKT 2022 và Điều 11 NĐ 152/2025/NĐ-CP: Cá nhân phải đạt danh hiệu Chiến sĩ thi đua cơ sở 5 năm liên tiếp, có công trình sáng kiến, đề tài NCKH được xét công nhận ở cấp tỉnh trở lên, hoặc có nhân tố mới, điển hình tiên tiến được cấp có thẩm quyền công nhận." },
   { category:"nghiep", q:"Thời hạn xử lý hồ sơ khen thưởng là bao lâu?", a:"Theo TT 15/2025/TT-BNV: Hồ sơ khen thưởng thường xuyên: 30 ngày làm việc kể từ ngày nhận đủ hồ sơ. Hồ sơ khen thưởng đột xuất: 15 ngày làm việc. Hồ sơ khen thưởng cấp Nhà nước: 45 ngày làm việc. Hệ thống SLA Monitor sẽ cảnh báo tự động khi sắp đến hạn." },
-  { category:"ai",     q:"AI Tố Nga phân tích hồ sơ dựa trên tiêu chí nào?", a:"AI Tố Nga đối chiếu hồ sơ với 3 văn bản pháp lý: (1) Luật TĐKT 2022 — điều kiện từng danh hiệu; (2) NĐ 152/2025/NĐ-CP — hướng dẫn chi tiết; (3) TT 15/2025/TT-BNV — mẫu biểu và quy trình. AI cho điểm từ 0–100 và gắn flag cảnh báo khi phát hiện thiếu sót hoặc trùng lặp với hồ sơ đã xét." },
+  { category:"ai",     q:"Trợ lý AI phân tích hồ sơ dựa trên tiêu chí nào?", a:"Trợ lý AI đối chiếu hồ sơ với 3 văn bản pháp lý: (1) Luật TĐKT 2022 — điều kiện từng danh hiệu; (2) NĐ 152/2025/NĐ-CP — hướng dẫn chi tiết; (3) TT 15/2025/TT-BNV — mẫu biểu và quy trình. AI cho điểm từ 0–100 và gắn flag cảnh báo khi phát hiện thiếu sót hoặc trùng lặp với hồ sơ đã xét." },
   { category:"kyso",   q:"Chữ ký số CA có giá trị pháp lý không?", a:"Có. Theo Nghị định 130/2018/NĐ-CP và Luật Giao dịch điện tử 2023, chữ ký số CA do tổ chức cung cấp dịch vụ chứng thực chữ ký số cấp có giá trị pháp lý tương đương chữ ký tay và con dấu. Hệ thống VPTU Đồng Nai tích hợp với nhà cung cấp CA được Bộ TT&TT cấp phép." },
-  { category:"start",  q:"Làm thế nào để tạo hồ sơ đề nghị khen thưởng?", a:"Bước 1: Đăng nhập và vào mục 'Đề nghị khen thưởng'. Bước 2: Click 'Tạo hồ sơ mới' và chọn loại danh hiệu. Bước 3: AI Tố Nga sẽ kiểm tra điều kiện tự động. Bước 4: Điền đầy đủ thông tin theo mẫu TT 15/2025. Bước 5: Đính kèm minh chứng. Bước 6: Nộp hồ sơ lên Hội đồng." },
+  { category:"start",  q:"Làm thế nào để tạo hồ sơ đề nghị khen thưởng?", a:"Bước 1: Đăng nhập và vào mục 'Đề nghị khen thưởng'. Bước 2: Click 'Tạo hồ sơ mới' và chọn loại danh hiệu. Bước 3: Trợ lý AI sẽ kiểm tra điều kiện tự động. Bước 4: Điền đầy đủ thông tin theo mẫu TT 15/2025. Bước 5: Đính kèm minh chứng. Bước 6: Nộp hồ sơ lên Hội đồng." },
   { category:"nghiep", q:"Quy trình bỏ phiếu của Hội đồng diễn ra như thế nào?", a:"Hội đồng TĐKT họp theo phiên (số hóa hoàn toàn trên VPTU Đồng Nai). Mỗi thành viên bỏ phiếu kín điện tử. Kết quả được thống kê tự động. Hồ sơ đạt khi tỷ lệ đồng ý ≥ 2/3 tổng số thành viên HĐ. Biên bản họp được tạo tự động và ký số tập thể." },
   { category:"law",    q:"Danh hiệu LĐTT cấp tỉnh và cấp cơ sở khác nhau như thế nào?", a:"LĐTT cấp cơ sở (Điều 22): do Thủ trưởng đơn vị tặng, yêu cầu hoàn thành xuất sắc nhiệm vụ năm. LĐTT cấp tỉnh (Điều 22): do UBND tỉnh tặng, yêu cầu LĐTT cơ sở 3 năm liên tiếp, có sáng kiến được ứng dụng rộng. Hệ thống tự động đề xuất danh hiệu phù hợp dựa trên lịch sử khen thưởng của cá nhân." },
   { category:"system", q:"Cách phân quyền cho người dùng mới?", a:"Admin vào 'Phân quyền' > 'Thêm người dùng'. Chọn vai trò phù hợp: user (cá nhân nộp hồ sơ), manager (lãnh đạo đơn vị duyệt), council (thành viên HĐ xét duyệt), leader (lãnh đạo ký quyết định), admin (quản trị toàn hệ thống). Mỗi vai trò có bộ quyền truy cập riêng theo NĐ 13/2023/NĐ-CP Điều 8." },
@@ -54,7 +54,7 @@ interface VideoItem { title: string; duration: string; level: string; views: num
 const VIDEOS: VideoItem[] = [
   { title:"Tổng quan hệ thống VPTU Đồng Nai (dành cho Admin)",  duration:"12:30", level:"Cơ bản",   views:1240 },
   { title:"Hướng dẫn tạo hồ sơ đề nghị khen thưởng",       duration:"08:15", level:"Cơ bản",   views:3412 },
-  { title:"AI Tố Nga – Kiểm tra điều kiện tự động",          duration:"06:45", level:"Trung cấp",views:892  },
+  { title:"Trợ lý AI – Kiểm tra điều kiện tự động",          duration:"06:45", level:"Trung cấp",views:892  },
   { title:"Quy trình Hội đồng số – Bỏ phiếu & Biên bản",    duration:"15:20", level:"Trung cấp",views:654  },
 ];
 
@@ -81,7 +81,7 @@ function FAQAccordion({ items }: { items: FAQItem[] }) {
                   <BookOpen className="size-3.5" />Xem điều khoản liên quan
                 </button>
                 <button className="flex items-center gap-1.5 text-[13px] text-[#7c3aed] hover:text-[#5b21b6]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
-                  <Sparkles className="size-3.5" />Hỏi AI Tố Nga
+                  <Sparkles className="size-3.5" />Hỏi Trợ lý AI
                 </button>
               </div>
             </div>
@@ -142,7 +142,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
           </div>
           {/* Quick links */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            {["Tạo hồ sơ", "Quy trình HĐ", "AI Tố Nga", "Ký số CA", "Luật TĐKT 2022"].map(t => (
+            {["Tạo hồ sơ", "Quy trình HĐ", "Trợ lý AI", "Ký số CA", "Luật TĐKT 2022"].map(t => (
               <button key={t} onClick={() => setSearch(t)}
                 className="px-3 py-1.5 rounded-full text-[13px] text-white/80 hover:text-white hover:bg-white/20 transition-colors"
                 style={{ border: "1px solid rgba(255,255,255,0.25)", fontFamily: "var(--font-sans)" }}>
@@ -299,7 +299,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
               <div className="flex items-center gap-3">
                 <Sparkles className="size-6 text-[#8a6400]" />
                 <div className="flex-1">
-                  <h3 className="text-[14px] text-white" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI Tố Nga hỗ trợ 24/7</h3>
+                  <h3 className="text-[14px] text-white" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Trợ lý AI hỗ trợ 24/7</h3>
                   <p className="text-[13px] text-white/60" style={{ fontFamily: "var(--font-sans)" }}>Trả lời tức thì mọi câu hỏi về nghiệp vụ TĐKT, pháp lý, quy trình</p>
                 </div>
                 <button className="px-5 py-2.5 rounded-[8px] text-[13px]" style={{ background: "#8a6400", color: "white", fontFamily: "var(--font-sans)", fontWeight: 700 }}>

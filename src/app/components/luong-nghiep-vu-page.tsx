@@ -4,15 +4,16 @@ import {
   ClipboardCheck, Search, Globe, Gavel, FileSignature,
   Trophy, Star, Archive, ArrowRight, ChevronRight,
   ChevronUp, Flag, AlertCircle, BookOpen, GitMerge, Layers,
-  RotateCcw, Play, CheckCheck, X,
+  RotateCcw, Play, CheckCheck, X, Network,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { useTheme } from "./theme-context";
+import { BpmnPhongTraoPage } from "./bpmn-phong-trao-page";
 
 /* ─── Types ─────────────────────────────────────────────────── */
 type RoleKey = "lãnh đạo cấp cao" | "quản trị hệ thống" | "hội đồng" | "lãnh đạo đơn vị" | "cá nhân";
 type PhaseId = 0 | 1 | 2 | 3;
-type ViewMode = "flow" | "swimlane";
+type ViewMode = "flow" | "sequence" | "bpmn";
 
 interface Step {
   id: number;
@@ -484,6 +485,7 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
             {([
               { key: "flow",     label: "Sơ đồ làn",  icon: Layers },
               { key: "sequence", label: "Tuần tự",    icon: Play },
+              { key: "bpmn",     label: "BPMN",       icon: Network },
             ] as const).map(({ key, label, icon: Icon }) => (
               <button key={key}
                 onClick={() => setViewMode(key as ViewMode)}
@@ -537,24 +539,28 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
       </div>
 
       <div className="px-6 pb-8">
-        {/* ── Main flow view ── */}
-        <div className="rounded-[14px] border p-5 mb-4" style={{ background: "white", borderColor: "#e2e8f0" }}>
-          {viewMode === "flow"
-            ? <FlowView selectedStep={selectedStep} onSelect={toggleStep} />
-            : <SequenceView selectedStep={selectedStep} onSelect={toggleStep} />
-          }
-        </div>
+        {viewMode === "bpmn" ? (
+          <BpmnPhongTraoPage user={user} />
+        ) : (
+          <>
+            {/* ── Main flow view ── */}
+            <div className="rounded-[14px] border p-5 mb-4" style={{ background: "white", borderColor: "#e2e8f0" }}>
+              {viewMode === "flow"
+                ? <FlowView selectedStep={selectedStep} onSelect={toggleStep} />
+                : <SequenceView selectedStep={selectedStep} onSelect={toggleStep} />
+              }
+            </div>
 
-        {/* ── Detail panel (click any step) ── */}
-        {selectedStep && (
-          <DetailPanel
-            step={selectedStep}
-            onClose={() => setSelectedStep(null)}
-            onNavigate={setSelectedStep}
-          />
-        )}
+            {/* ── Detail panel (click any step) ── */}
+            {selectedStep && (
+              <DetailPanel
+                step={selectedStep}
+                onClose={() => setSelectedStep(null)}
+                onNavigate={setSelectedStep}
+              />
+            )}
 
-        {/* ── Gaps & Recommendations ── */}
+            {/* ── Gaps & Recommendations ── */}
         <div className="mt-6 rounded-[14px] border overflow-hidden" style={{ borderColor: "#fcd34d" }}>
           <div className="px-5 py-4 border-b flex items-center gap-3" style={{ background: "#fef9ec", borderColor: "#fcd34d" }}>
             <AlertCircle className="size-5 text-[#b45309]" />
@@ -596,6 +602,8 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
             ))}
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );

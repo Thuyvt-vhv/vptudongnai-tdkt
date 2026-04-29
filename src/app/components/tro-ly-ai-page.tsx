@@ -78,7 +78,7 @@ const CONTEXT_ACTIONS = [
 ];
 
 const AI_RESPONSES: Record<string,{text:string;cards?:CheckCard[]}> = {
-  default: { text:`Xin chào! Tôi là **Tố Nga** — trợ lý AI của hệ thống VPTU Đồng Nai.\n\nTôi có thể giúp bạn:\n• **Kiểm tra điều kiện** đủ chuẩn theo NĐ 152/2025/NĐ-CP\n• **Tra cứu quy định** từ TT 15/2025, Luật TĐKT 2022\n• **Soạn thảo nội dung** thành tích cho hồ sơ\n• **Gợi ý danh hiệu** phù hợp với hồ sơ của bạn\n• **Giải đáp nghiệp vụ** thi đua khen thưởng\n\nHãy đặt câu hỏi hoặc chọn một chủ đề bên trái!` },
+  default: { text:`Xin chào! Tôi là **Trợ lý AI** — trợ lý AI của hệ thống VPTU Đồng Nai.\n\nTôi có thể giúp bạn:\n• **Kiểm tra điều kiện** đủ chuẩn theo NĐ 152/2025/NĐ-CP\n• **Tra cứu quy định** từ TT 15/2025, Luật TĐKT 2022\n• **Soạn thảo nội dung** thành tích cho hồ sơ\n• **Gợi ý danh hiệu** phù hợp với hồ sơ của bạn\n• **Giải đáp nghiệp vụ** thi đua khen thưởng\n\nHãy đặt câu hỏi hoặc chọn một chủ đề bên trái!` },
   cstd_check: { text:`**Kiểm tra điều kiện CSTĐCS (Điều 22 NĐ 152/2025/NĐ-CP)**\n\nDưới đây là các điều kiện bắt buộc:`, cards:[
     { label:"Hoàn thành xuất sắc nhiệm vụ",     status:"pass", detail:"Xếp loại HTXSNV trong năm xét tặng",            legal:"Điều 22.1a" },
     { label:"Tỷ lệ không quá 15% CBCC",          status:"warn", detail:"Cần xác nhận tổng số CBCC đơn vị để tính tỷ lệ", legal:"Điều 22.1b" },
@@ -112,7 +112,7 @@ const AI_RESPONSES: Record<string,{text:string;cards?:CheckCard[]}> = {
   nd152: { text:`**NĐ 152/2025/NĐ-CP — Các điểm chính**\n\nBan hành ngày 14/6/2025, thay thế NĐ 98/2023/NĐ-CP.\n\n**Thay đổi quan trọng:**\n\n• **Điều 22-24:** Tiêu chuẩn CSTĐCS/T/TQ nâng cao, yêu cầu sáng kiến bắt buộc với CSTĐT trở lên\n• **Điều 27:** Tập thể LĐXS: 100% thành viên HT, ≥70% HTXS (tăng từ 50%)\n• **Điều 30:** Giấy khen không cần Hội đồng TĐ-KT (đơn giản hóa)\n• **Điều 42-44:** Huân chương LĐ bắt buộc có CSTĐ bậc tương ứng\n• **Điều 79:** LYK công khai bắt buộc với tất cả danh hiệu từ cấp tỉnh trở lên\n\n**Lưu ý:** NĐ này thay thế NĐ 98/2023 từ tháng 6/2025, cần cập nhật mẫu biểu.` },
   luat2022: { text:`**Luật Thi đua Khen thưởng 2022 — Điểm mới**\n\nLuật số 06/2022/QH15, có hiệu lực từ 01/01/2024.\n\n**Những thay đổi nổi bật:**\n\n• **Điều 5:** Bổ sung nguyên tắc "thực chất, hiệu quả" — không khen thưởng theo tiêu chí hình thức\n• **Điều 18:** Phong trào thi đua phải có mục tiêu, chỉ tiêu rõ ràng và đánh giá kết quả\n• **Điều 44:** Công khai danh sách đề nghị khen thưởng trên cổng thông tin điện tử tối thiểu 5 ngày\n• **Điều 55:** Hội đồng TĐKT các cấp được quy định chặt chẽ hơn về thành phần, quy chế\n\nSo với Luật 2003/2004: Đơn giản hóa thủ tục GK, tăng cường vai trò giám sát xã hội.` },
   tt15: { text:`**TT 15/2025/TT-BNV — Quy định mẫu biểu và hồ sơ**\n\nThông tư 15/2025/TT-BNV ban hành 11 mẫu biểu chính thức:\n\n| Mẫu | Tên | Đối tượng |\n|---|---|---|\n| Mẫu 01 | Tờ khai thành tích cá nhân | Cá nhân |\n| Mẫu 02 | Tờ khai thành tích tập thể | Tập thể |\n| Mẫu 03 | Danh sách đề nghị | Manager |\n| Mẫu 04 | Biên bản họp HĐ | Hội đồng |\n| Mẫu 05 | Quyết định khen thưởng | Lãnh đạo |\n\n⚠️ Các mẫu cũ theo TT 12/2019 không còn hiệu lực từ 01/07/2025.` },
-  goi_y: { text:`**Gợi ý Danh hiệu phù hợp**\n\nDựa trên thông tin bạn cung cấp:\n• ✅ Đã có **2 lần CSTĐCS liên tiếp**\n• ✅ Điểm TB **91/100** (đủ tiêu chuẩn)\n\n**Khuyến nghị của Tố Nga:**\n\n🥇 **Đề nghị ngay: CSTĐ cấp Tỉnh (Điều 23 NĐ 152/2025)**\n→ Đủ điều kiện 2 lần CSTĐCS. Cần bổ sung: Sáng kiến được Hội đồng cấp tỉnh công nhận.\n\n📋 **Chuẩn bị song song: Bằng khen UBND tỉnh**\n→ Điều kiện thấp hơn, có thể nộp cùng đợt.\n\n⏳ **5 năm tới:** Với đà này, có thể đủ điều kiện CSTĐ Toàn quốc (cần ≥3 lần CSTĐT).` },
+  goi_y: { text:`**Gợi ý Danh hiệu phù hợp**\n\nDựa trên thông tin bạn cung cấp:\n• ✅ Đã có **2 lần CSTĐCS liên tiếp**\n• ✅ Điểm TB **91/100** (đủ tiêu chuẩn)\n\n**Khuyến nghị của Trợ lý AI:**\n\n🥇 **Đề nghị ngay: CSTĐ cấp Tỉnh (Điều 23 NĐ 152/2025)**\n→ Đủ điều kiện 2 lần CSTĐCS. Cần bổ sung: Sáng kiến được Hội đồng cấp tỉnh công nhận.\n\n📋 **Chuẩn bị song song: Bằng khen UBND tỉnh**\n→ Điều kiện thấp hơn, có thể nộp cùng đợt.\n\n⏳ **5 năm tới:** Với đà này, có thể đủ điều kiện CSTĐ Toàn quốc (cần ≥3 lần CSTĐT).` },
   kinhphi: { text:`**Mức tiền thưởng theo NĐ 152/2025/NĐ-CP**\n\n| Danh hiệu/Hình thức | Mức thưởng | Nguồn KP |\n|---|---|---|\n| Huân chương LĐ hạng Nhất | 8.000.000 đ | NSNN |\n| Huân chương LĐ hạng Nhì | 5.000.000 đ | NSNN |\n| Huân chương LĐ hạng Ba | 3.500.000 đ | NSNN |\n| CSTĐ Toàn quốc | 3.000.000 đ | NSNN |\n| Bằng khen Thủ tướng | 2.000.000 đ | NSNN |\n| CSTĐ cấp Tỉnh | 1.500.000 đ | Quỹ TĐ |\n| Bằng khen UBND Tỉnh | 1.000.000 đ | Quỹ TĐ |\n| CSTĐ Cơ sở | 800.000 đ | Đơn vị |\n| Giấy khen | 300.000 đ | Đơn vị |\n\n💡 Mức thưởng trên là tối thiểu theo NĐ 152/2025. Đơn vị có thể chi thêm từ quỹ thi đua nội bộ.` },
 };
 
@@ -225,7 +225,7 @@ export function TroLyAIPage({ user, onNavigate }: { user: LoginUser; onNavigate?
               style={{ background:"linear-gradient(135deg,#7c3aed,#8a6400)" }}>
               <Sparkles className="size-4 text-white"/>
             </div>
-            <span className="text-[13px] text-white" style={{ fontWeight:700 }}>Tố Nga AI</span>
+            <span className="text-[13px] text-white" style={{ fontWeight:700 }}>Trợ lý AI</span>
             <button onClick={()=>setShowSidebar(false)} className="ml-auto text-white/30 hover:text-white/60 transition-colors">
               <LayoutPanelLeft className="size-4"/>
             </button>
@@ -361,7 +361,7 @@ export function TroLyAIPage({ user, onNavigate }: { user: LoginUser; onNavigate?
                     <div className="text-[13px] mb-2.5 flex items-center gap-2"
                       style={{ color:"#8a6400", fontFamily: "var(--font-sans)", fontWeight:700 }}>
                       <Sparkles className="size-3"/>
-                      Tố Nga · {msg.timestamp.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}
+                      Trợ lý AI · {msg.timestamp.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}
                     </div>
                     <div className="space-y-0.5">{renderMarkdown(msg.content)}</div>
                     {msg.cards && (
@@ -431,7 +431,7 @@ export function TroLyAIPage({ user, onNavigate }: { user: LoginUser; onNavigate?
                       style={{ animationDelay:`${i*0.15}s` }}/>
                   ))}
                 </div>
-                <span className="text-[13px] text-white/40">Tố Nga đang phân tích...</span>
+                <span className="text-[13px] text-white/40">Trợ lý AI đang phân tích...</span>
               </div>
             </div>
           )}
@@ -459,7 +459,7 @@ export function TroLyAIPage({ user, onNavigate }: { user: LoginUser; onNavigate?
             </button>
           </div>
           <p className="text-[13px] text-center mt-1.5" style={{ color:"rgba(255,255,255,0.2)" }}>
-            Tố Nga có thể mắc sai sót · Luôn đối chiếu với NĐ 152/2025/NĐ-CP và TT 15/2025/TT-BNV
+            Trợ lý AI có thể mắc sai sót · Luôn đối chiếu với NĐ 152/2025/NĐ-CP và TT 15/2025/TT-BNV
           </p>
         </div>
       </div>

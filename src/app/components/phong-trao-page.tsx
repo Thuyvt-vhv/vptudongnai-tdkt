@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from "react";
+﻿import React, { useState, useRef, useMemo } from "react";
 import {
   Trophy, Calendar, Users, Plus, ChevronRight, CheckCircle2, Clock,
   AlertCircle, Star, BarChart2, FileText, Shield, ChevronDown,
@@ -9,7 +9,8 @@ import {
   ThumbsUp, ThumbsDown, Clipboard, Award, Printer,
   MessageSquare, Eye, FileCheck, Vote, Pen, RotateCcw,
   ListChecks, Sparkles, CircleDot, Stamp, X, Check,
-  ClipboardList, BarChart3,
+  ClipboardList, BarChart3, Filter, Paperclip, UploadCloud,
+  ShieldAlert, Columns, Minus,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { useTheme } from "./theme-context";
@@ -25,7 +26,7 @@ import type { NguonKinhPhi } from "@/app/data/reward-catalog";
 /* ═══════════════════════════════════════════════════════════════════
    TYPES
 ═══════════════════════════════════════════════════════════════════ */
-type CampaignState =
+export type CampaignState =
   | "draft" | "submitted" | "approved" | "published"
   | "active" | "submission_closed"
   | "unit_review" | "public_consultation" | "council_review" | "final_approval"
@@ -68,7 +69,7 @@ interface TransitionWarning {
 
 interface AuditEntry    { id: string; action: string; actor: string; role: string; time: string; detail: string; state: CampaignState; }
 
-interface Campaign {
+export interface Campaign {
   id: string; code: string; name: string;
   type: CampaignType; subjectType: SubjectType;
   state: CampaignState; level: string;
@@ -147,10 +148,26 @@ const DEFAULT_CRITERIA: ScoreCriteria[] = [
   { id:"c5", name:"Công tác Đảng & đoàn thể",         maxScore:10, canCu:"Quy định TW Đảng",    mota:"Tham gia tích cực công tác Đảng, đoàn thanh niên, công đoàn." },
 ];
 
+const today = new Date();
+function relFmt(daysAgo: number): string {
+  const d = new Date(today); d.setDate(d.getDate() - daysAgo);
+  return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+}
+
+const MOCK_COUNCIL_MEMBERS = [
+  { id:"cm1", name:"Nguyễn Văn Minh",  role:"Chủ tịch HĐ",        donVi:"VP UBND Tỉnh",  isChair:true,  isSecretary:false, avatarColor:"#1C5FBE", present:true  },
+  { id:"cm2", name:"Trần Thị Hoa",     role:"Phó Chủ tịch HĐ",    donVi:"Sở Nội vụ",     isChair:false, isSecretary:false, avatarColor:"#0f7a3e", present:true  },
+  { id:"cm3", name:"Lê Hoàng Nam",     role:"Ủy viên thường trực", donVi:"Sở Nội vụ",     isChair:false, isSecretary:true,  avatarColor:"#7c3aed", present:true  },
+  { id:"cm4", name:"Phạm Quốc Bình",   role:"Ủy viên",             donVi:"Sở GD&ĐT",      isChair:false, isSecretary:false, avatarColor:"#b45309", present:true  },
+  { id:"cm5", name:"Võ Thị Lan",       role:"Ủy viên",             donVi:"Sở GD&ĐT",      isChair:false, isSecretary:false, avatarColor:"#9f1239", present:true  },
+  { id:"cm6", name:"Đặng Hữu Thắng",   role:"Ủy viên",             donVi:"Công an Tỉnh",  isChair:false, isSecretary:false, avatarColor:"#0e7490", present:false },
+  { id:"cm7", name:"Nguyễn Thị Thu",   role:"Thư ký HĐ",           donVi:"Liên đoàn LĐ",  isChair:false, isSecretary:false, avatarColor:"#6b7280", present:false },
+];
+
 /* ═════════════════════════════���═════════════════════════════════════
    MOCK DATA
 ═══════════════════════════════════════════════════════════════════ */
-const MOCK_CAMPAIGNS: Campaign[] = [
+export const MOCK_CAMPAIGNS: Campaign[] = [
   {
     id:"PT-001", code:"PT-2026-001", urgent:true,
     name:"Thi đua Chào mừng 50 năm Giải phóng miền Nam",
@@ -181,11 +198,11 @@ const MOCK_CAMPAIGNS: Campaign[] = [
       {unitId:"u6",unitName:"Ban QLKCN",scores:{c1:0,c2:0,c3:0,c4:0,c5:0},total:0,rank:0,status:"chua_cham",ghiChu:"Đơn vị chưa nộp hồ sơ"},
     ],
     auditLog:[
-      {id:"a1",action:"Tạo phong trào",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:"05/12/2025",detail:"Khởi tạo kế hoạch phong trào thi đua chào mừng 50 năm 30/4",state:"draft"},
-      {id:"a2",action:"Trình phê duyệt",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:"10/12/2025",detail:"Trình Trưởng phòng TĐKT phê duyệt nội dung kế hoạch phát động",state:"submitted"},
-      {id:"a3",action:"Phê duyệt phát động",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:"15/12/2025",detail:"Đồng ý phát động. Nội dung đúng quy định, đủ căn cứ pháp lý.",state:"approved"},
-      {id:"a4",action:"Ban hành Quyết định",actor:"Nguyễn Văn Thắng",role:"Lãnh đạo VP",time:"01/01/2026",detail:"Ký ban hành Quyết định số 01/QĐ-UBND phát động phong trào thi đua",state:"published"},
-      {id:"a5",action:"Khởi động triển khai",actor:"Hệ thống",role:"Auto",time:"01/01/2026",detail:"Phong trào chính thức bắt đầu, mở cổng tiếp nhận hồ sơ tham gia",state:"active"},
+      {id:"a1",action:"Tạo phong trào",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:relFmt(145),detail:"Khởi tạo kế hoạch phong trào thi đua chào mừng 50 năm 30/4",state:"draft"},
+      {id:"a2",action:"Trình phê duyệt",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:relFmt(140),detail:"Trình Trưởng phòng TĐKT phê duyệt nội dung kế hoạch phát động",state:"submitted"},
+      {id:"a3",action:"Phê duyệt phát động",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:relFmt(135),detail:"Đồng ý phát động. Nội dung đúng quy định, đủ căn cứ pháp lý.",state:"approved"},
+      {id:"a4",action:"Ban hành Quyết định",actor:"Nguyễn Văn Thắng",role:"Lãnh đạo VP",time:relFmt(118),detail:"Ký ban hành Quyết định số 01/QĐ-UBND phát động phong trào thi đua",state:"published"},
+      {id:"a5",action:"Khởi động triển khai",actor:"Hệ thống",role:"Auto",time:relFmt(118),detail:"Phong trào chính thức bắt đầu, mở cổng tiếp nhận hồ sơ tham gia",state:"active"},
     ],
   },
   {
@@ -211,11 +228,11 @@ const MOCK_CAMPAIGNS: Campaign[] = [
       {unitId:"u9",unitName:"THCS Nguyễn Du",scores:{c1:34,c2:16,c3:15,c4:9,c5:9},total:83,rank:3,status:"da_cham",ghiChu:""},
     ],
     auditLog:[
-      {id:"b1",action:"Tạo phong trào",actor:"Phòng TĐKT Sở GD",role:"Chuyên viên",time:"15/08/2025",detail:"Khởi tạo kế hoạch phong trào năm học 2025–2026",state:"draft"},
-      {id:"b2",action:"Ban hành QĐ phát động",actor:"Giám đốc Sở GD",role:"Lãnh đạo",time:"01/09/2025",detail:"Ký QĐ 42/QĐ-SGDĐT phát động phong trào",state:"published"},
-      {id:"b3",action:"Đóng nhận hồ sơ",actor:"Hệ thống",role:"Auto",time:"15/05/2026",detail:"Hết hạn nộp hồ sơ tham gia phong trào",state:"submission_closed"},
-      {id:"b4",action:"Bắt đầu thẩm định cơ sở",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:"16/05/2026",detail:"Mở vòng thẩm định cấp cơ sở, giao chuyên viên phụ trách",state:"unit_review"},
-      {id:"b5",action:"Họp Hội đồng xét duyệt",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:"20/05/2026",detail:"Hội đồng TĐKT họp phiên xét duyệt kết quả cuối",state:"council_review"},
+      {id:"b1",action:"Tạo phong trào",actor:"Phòng TĐKT Sở GD",role:"Chuyên viên",time:relFmt(257),detail:"Khởi tạo kế hoạch phong trào năm học 2025–2026",state:"draft"},
+      {id:"b2",action:"Ban hành QĐ phát động",actor:"Giám đốc Sở GD",role:"Lãnh đạo",time:relFmt(240),detail:"Ký QĐ 42/QĐ-SGDĐT phát động phong trào",state:"published"},
+      {id:"b3",action:"Đóng nhận hồ sơ",actor:"Hệ thống",role:"Auto",time:relFmt(14),detail:"Hết hạn nộp hồ sơ tham gia phong trào",state:"submission_closed"},
+      {id:"b4",action:"Bắt đầu thẩm định cơ sở",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:relFmt(12),detail:"Mở vòng thẩm định cấp cơ sở, giao chuyên viên phụ trách",state:"unit_review"},
+      {id:"b5",action:"Họp Hội đồng xét duyệt",actor:"Lê Hoàng Nam",role:"Trưởng phòng",time:relFmt(9),detail:"Hội đồng TĐKT họp phiên xét duyệt kết quả cuối",state:"council_review"},
     ],
   },
   {
@@ -240,7 +257,7 @@ const MOCK_CAMPAIGNS: Campaign[] = [
       {unitId:"u11",unitName:"CA TP. Biên Hòa",scores:{c1:37,c2:18,c3:18,c4:10,c5:10},total:93,rank:2,status:"da_cham",ghiChu:""},
     ],
     auditLog:[
-      {id:"c1",action:"Ban hành QĐ khen thưởng",actor:"Chủ tịch UBND Tỉnh",role:"Lãnh đạo VP",time:"20/04/2026",detail:"Ký Quyết định 15/QĐ-UBND khen thưởng các tập thể xuất sắc",state:"decision_issued"},
+      {id:"c1",action:"Ban hành QĐ khen thưởng",actor:"Chủ tịch UBND Tỉnh",role:"Lãnh đạo VP",time:relFmt(9),detail:"Ký Quyết định 15/QĐ-UBND khen thưởng các tập thể xuất sắc",state:"decision_issued"},
     ],
   },
   {
@@ -257,7 +274,7 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     canCuPhapLy:["Nghị quyết 52-NQ/TW","Điều 18 Luật TĐKT 2022","NĐ 152/2025/NĐ-CP","TT 15/2025/TT-BNV"],
     ghiChu:"Đang hoàn thiện tiêu chí, chờ trình lãnh đạo duyệt.", creatorId: 5,
     participants:[], unitScores:[],
-    auditLog:[{id:"d1",action:"Tạo phong trào",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:"22/04/2026",detail:"Khởi tạo kế hoạch phong trào CĐS 2026",state:"draft"}],
+    auditLog:[{id:"d1",action:"Tạo phong trào",actor:"Võ Minh Tuấn",role:"Chuyên viên",time:relFmt(7),detail:"Khởi tạo kế hoạch phong trào CĐS 2026",state:"draft"}],
   },
   {
     id:"PT-005", code:"PT-2025-005", urgent:false,
@@ -273,14 +290,13 @@ const MOCK_CAMPAIGNS: Campaign[] = [
     canCuPhapLy:["Luật TĐKT 2022","NĐ 30/2020/NĐ-CP"],
     ghiChu:"Đã lưu trữ. Hồ sơ đầy đủ.", creatorId: 5,
     participants:[], unitScores:[],
-    auditLog:[{id:"e1",action:"Tổng kết phong trào",actor:"Hệ thống",role:"Auto",time:"31/01/2026",detail:"Hoàn tất tổng kết và lưu trữ toàn bộ hồ sơ phong trào năm 2025",state:"archived"}],
+    auditLog:[{id:"e1",action:"Tổng kết phong trào",actor:"Hệ thống",role:"Auto",time:relFmt(88),detail:"Hoàn tất tổng kết và lưu trữ toàn bộ hồ sơ phong trào năm 2025",state:"archived"}],
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════════════════════════════ */
-const today = new Date();
 function daysLeft(d: string) { return Math.max(0, Math.ceil((new Date(d).getTime() - today.getTime()) / 86400000)); }
 function fmtDate(s: string) { if (!s) return "–"; const [y,m,d] = s.split("-"); return `${d}/${m}/${y}`; }
 function nowFmt() { return fmtDate(new Date().toISOString().slice(0,10)); }
@@ -289,9 +305,11 @@ function getPhaseOf(s: CampaignState) { return PHASES.find(p => p.states.include
 
 function canTransition(user: LoginUser, c: Campaign): boolean {
   if (c.state === "archived") return false;
-  // Lãnh đạo cấp cao luôn có quyền chuyển bước
+  // council_review: chỉ Hội đồng TĐKT được toàn quyền thao tác và chuyển bước
+  if (c.state === "council_review") return user.role === "hội đồng";
+  // Lãnh đạo cấp cao luôn có quyền chuyển bước (trừ council_review)
   if (user.role === "lãnh đạo cấp cao") return true;
-  // Quản trị hệ thống có quyền chuyển bước (thay thế khi LĐCC gặp sự cố)
+  // Quản trị hệ thống có quyền chuyển bước (trừ council_review)
   if (user.role === "quản trị hệ thống") return true;
   // Hội đồng TĐKT có quyền chuyển bước ở các giai đoạn thẩm định/xét duyệt
   if (user.role === "hội đồng") {
@@ -308,7 +326,8 @@ function canTransition(user: LoginUser, c: Campaign): boolean {
 
 function canReviewUnit(user: LoginUser, c: Campaign): boolean {
   if (c.state !== "unit_review") return false;
-  return canTransition(user, c) || user.role === "lãnh đạo đơn vị";
+  // Bước 8: chỉ LĐDV duyệt sơ bộ từng hồ sơ — HĐ Thư ký tiếp nhận ở Bước 9-10 riêng
+  return user.role === "lãnh đạo đơn vị";
 }
 
 // Các role chỉ được xem lịch sử, không chuyển bước
@@ -319,7 +338,8 @@ function nextStateLabel(c: Campaign): string {
   const map: Partial<Record<CampaignState,string>> = {
     draft:"Trình phê duyệt", submitted:"Phê duyệt phát động", approved:"Ban hành & Công bố",
     published:"Bắt đầu triển khai", active:"Đóng nhận hồ sơ", submission_closed:"Mở thẩm định cơ sở",
-    unit_review:"Chuyển Hội đồng xét", council_review:"Trình lãnh đạo duyệt",
+    unit_review:"Mở lấy ý kiến công khai", public_consultation:"Chuyển Hội đồng xét duyệt",
+    council_review:"Trình lãnh đạo duyệt",
     final_approval:"Ban hành Quyết định", decision_issued:"Công bố", public:"Tổng kết",
   };
   return map[c.state] ?? "";
@@ -348,6 +368,7 @@ interface ReadinessOpts {
   minutesSigned?: boolean;
   joinPct?: number;
   consultationDaysElapsed?: number;
+  hdAllDone?: boolean;
 }
 
 function checkTransitionReadiness(c: Campaign, opts: ReadinessOpts = {}): TransitionWarning[] {
@@ -384,15 +405,20 @@ function checkTransitionReadiness(c: Campaign, opts: ReadinessOpts = {}): Transi
 
   if (s === "unit_review") {
     if (!opts.allReviewed) {
-      warnings.push({ level:"error", message:`Còn ${opts.pendingCount ?? "?"} hồ sơ chưa thẩm định. Phải xét hết trước khi chuyển Hội đồng.`, canProceed:false });
+      warnings.push({ level:"error", message:`Còn ${opts.pendingCount ?? "?"} hồ sơ chưa thẩm định. Lãnh đạo đơn vị phải xét hết trước (Bước 8).`, canProceed:false });
     } else {
       const approved = opts.approvedCount ?? 0;
       const total    = (opts.approvedCount ?? 0) + (opts.pendingCount ?? 0);
       if (approved === 0) {
-        warnings.push({ level:"warning", message:"Tất cả hồ sơ đều bị trả lại. Xác nhận chuyển Hội đồng mà không có hồ sơ nào được duyệt?", canProceed:true });
+        warnings.push({ level:"warning", message:"Tất cả hồ sơ đều bị trả lại. Xác nhận mở lấy ý kiến mà không có hồ sơ nào được duyệt?", canProceed:true });
       } else {
-        warnings.push({ level:"info", message:`${approved}/${total} hồ sơ được duyệt — sẵn sàng chuyển Hội đồng xét duyệt`, canProceed:true });
+        warnings.push({ level:"info", message:`Lãnh đạo đơn vị đã duyệt ${approved}/${total} hồ sơ (Bước 8 ✓)`, canProceed:true });
       }
+    }
+    if (!opts.hdAllDone) {
+      warnings.push({ level:"error", message:"Hội đồng Thư ký chưa hoàn tất tiếp nhận & phân loại hồ sơ (Bước 9-10). Phải tick đủ 3 mục.", canProceed:false });
+    } else {
+      warnings.push({ level:"info", message:"Hội đồng Thư ký đã tiếp nhận và phân loại xong (Bước 9-10 ✓) — sẵn sàng mở lấy ý kiến công khai.", canProceed:true });
     }
   }
 
@@ -400,7 +426,7 @@ function checkTransitionReadiness(c: Campaign, opts: ReadinessOpts = {}): Transi
     const elapsed = opts.consultationDaysElapsed ?? 0;
     const required = 30;
     if (elapsed < required) {
-      warnings.push({ level:"error", message:`Còn ${required - elapsed} ngày nữa mới đủ thời gian lấy ý kiến công khai tối thiểu ${required} ngày (Điều 56 Luật TĐKT 2022).`, canProceed:false });
+      warnings.push({ level:"warning", message:`Còn ${required - elapsed} ngày nữa mới đủ ${required} ngày tối thiểu (Điều 56 Luật TĐKT 2022). Có thể chuyển sớm nếu đã thu thập đủ ý kiến.`, canProceed:true });
     } else {
       warnings.push({ level:"info", message:`Đã đủ ${elapsed} ngày lấy ý kiến công khai — sẵn sàng chuyển Hội đồng xét duyệt.`, canProceed:true });
     }
@@ -2003,7 +2029,7 @@ function AdminHealthBar({ c }: { c: Campaign }) {
 
 function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }: {
   c: Campaign; user: LoginUser;
-  onTransition: (id: string, ns: CampaignState) => void;
+  onTransition: (id: string, ns: CampaignState, reason?: string) => void;
   onBack: () => void;
   onAddParticipant: (campaignId: string, p: Participant) => void;
 }) {
@@ -2014,13 +2040,60 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
   const isHighLeader = user.role === "lãnh đạo cấp cao";
   const isAdmin      = user.role === "quản trị hệ thống";
   const [note, setNote] = useState("");
-  const [votes, setVotes] = useState<Record<string, "yes" | "no" | null>>({});
+  const [councilTab, setCouncilTab] = useState<"scoring"|"compare"|"minutes">("scoring");
+  const [candidateScores, setCandidateScores] = useState<Record<string, {
+    scores: Record<string, number>; comment: string; submitted: boolean;
+  }>>({});
+  const [hdDecisions, setHdDecisions] = useState<Array<{
+    candId: string;
+    votes: {pass:string[]; reject:string[]; defer:string[]};
+    decision: "pass"|"reject"|"defer"|"pending";
+    chairNote: string;
+  }>>([]);
+  const [hdChairNotes, setHdChairNotes] = useState<Record<string, string>>({});
+  const [hdMemberScores] = useState<Array<{
+    memberId:string; candId:string;
+    scores:Record<string,number>; comment:string;
+    submittedAt:string; abstained:boolean; coiReason?:string;
+  }>>(() => {
+    if (c.state !== "council_review") return [];
+    const cands = c.participants.filter(p => p.hoSoStatus === "da_duyet");
+    const otherMembers = MOCK_COUNCIL_MEMBERS.filter(m => m.present && m.id !== "cm3");
+    const seeds: Array<{memberId:string;candId:string;scores:Record<string,number>;comment:string;submittedAt:string;abstained:boolean;coiReason?:string}> = [];
+    const times    = ["09:15","09:22","09:31","09:38"];
+    const comments = [
+      "Hồ sơ đầy đủ, thành tích rõ ràng, xứng đáng.",
+      "Nhất trí tán thành. Thành tích được xác nhận nhiều nguồn.",
+      "Đồng ý. Có thể cân nhắc thêm một số điểm sáng kiến.",
+      "Tán thành.",
+    ];
+    otherMembers.forEach((m, mi) => {
+      cands.forEach(cand => {
+        if (m.donVi === cand.donVi) {
+          seeds.push({ memberId:m.id, candId:cand.id, scores:{}, comment:"", submittedAt:"", abstained:true, coiReason:`Thành viên thuộc ${m.donVi}` });
+          return;
+        }
+        const base = cand.score ?? 80;
+        const adj  = Math.min(Math.max(base + (mi-1)*3, 60), 100);
+        const sc: Record<string,number> = {};
+        c.tieuChi.forEach(tc => { sc[tc.id] = Math.min(tc.maxScore, Math.round(adj/100*tc.maxScore)); });
+        seeds.push({ memberId:m.id, candId:cand.id, scores:sc, comment:comments[mi%comments.length], submittedAt:times[mi%times.length], abstained:false });
+      });
+    });
+    return seeds;
+  });
+  const [votes, setVotes] = useState<Record<string, "yes" | "no" | "abstain">>({});
+  const [councilMembers, setCouncilMembers] = useState(MOCK_COUNCIL_MEMBERS.map(m => ({...m})));
+  const [expandedCandidate, setExpandedCandidate] = useState<string|null>(null);
+  const [compareSelected, setCompareSelected] = useState<string[]>([]);
   const [unitDecisions, setUnitDecisions] = useState<Record<string, "approved" | "rejected">>({});
   const [registering, setRegistering] = useState(false);
   const [regDone, setRegDone] = useState(false);
   const [indivDone, setIndivDone] = useState(false);
   const [notifChannels, setNotifChannels] = useState([true, true, true, false]);
   const [regForm, setRegForm] = useState({ hoTen: user.name || "", donVi: user.unit || "", danh_hieu: "CSTĐCS", ly_do: "" });
+  const [regFiles, setRegFiles] = useState<File[]>([]);
+  const regFileRef = useRef<HTMLInputElement>(null);
   const [regTouched, setRegTouched] = useState<Record<string, boolean>>({});
   const regTouch = (k: string) => setRegTouched(t => ({ ...t, [k]: true }));
   const regErrs = {
@@ -2053,6 +2126,16 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
   });
   const [sigPin, setSigPin] = useState("");
   const [sigConfirmed, setSigConfirmed] = useState(false);
+  const [hdChecks, setHdChecks] = useState<Set<string>>(new Set());
+  const [receiptConfirmed, setReceiptConfirmed] = useState(false);
+  const [receiptMap, setReceiptMap] = useState<Set<string>>(new Set());
+  const [rejectModalOpen, setRejectModalOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  const [planPreviewExpanded, setPlanPreviewExpanded] = useState(false);
+  const [indivReviewing, setIndivReviewing] = useState(false);
+  const [cnAcknowledged, setCnAcknowledged] = useState(false);
+  const [commentReviewing, setCommentReviewing] = useState(false);
+  const [vanBanExpanded, setVanBanExpanded] = useState(false);
 
   /* ── helper: participant record for current individual user ── */
   const myParticipant: Participant | null = isIndividual
@@ -2069,75 +2152,281 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
   const submittedCount = c.participants.filter(p => p.hoSoStatus === "da_nop" || p.hoSoStatus === "da_duyet").length;
   const yesVotes = Object.values(votes).filter(v => v === "yes").length;
   const noVotes = Object.values(votes).filter(v => v === "no").length;
+  const abstainVotes = Object.values(votes).filter(v => v === "abstain").length;
 
   /* ── DRAFT ─────────────────────────────────────────────────────── */
   if (c.state === "draft") {
     const checks = [
-      { done: !!c.name && c.name.length > 5, text: "Tên phong trào đã điền đầy đủ" },
-      { done: !!c.mucTieu && c.mucTieu.length > 20, text: "Mục tiêu phong trào đã mô tả rõ ràng" },
-      { done: !!c.doiTuong && c.doiTuong.length > 10, text: "Đối tượng tham gia đã xác định" },
-      { done: c.tieuChi.length >= 3, text: `Bộ tiêu chí chấm điểm (${c.tieuChi.length} tiêu chí)` },
-      { done: !!c.ngayBatDau && !!c.ngayKetThuc, text: "Thời gian bắt đầu và kết thúc đã thiết lập" },
-      { done: !!c.ngayNopHoSo, text: "Hạn nộp hồ sơ đã xác định" },
-      { done: c.awards.length >= 1, text: `Hình thức khen thưởng (${c.awards.length} loại)` },
-      { done: c.canCuPhapLy.length >= 2, text: `Căn cứ pháp lý (${c.canCuPhapLy.length} văn bản)` },
+      { done: !!c.name && c.name.length > 5,         text: "Tên phong trào",          detail: c.name || "Chưa điền",          icon: Flag },
+      { done: !!c.mucTieu && c.mucTieu.length > 20,  text: "Mục tiêu phong trào",     detail: c.mucTieu ? c.mucTieu.slice(0, 48) + (c.mucTieu.length > 48 ? "…" : "") : "Chưa mô tả", icon: Target },
+      { done: !!c.doiTuong && c.doiTuong.length > 10,text: "Đối tượng tham gia",      detail: c.doiTuong || "Chưa xác định",  icon: Users },
+      { done: c.tieuChi.length >= 3,                  text: "Tiêu chí chấm điểm",     detail: c.tieuChi.length ? `${c.tieuChi.length} tiêu chí` : "Cần ít nhất 3",  icon: Scale },
+      { done: !!c.ngayBatDau && !!c.ngayKetThuc,     text: "Thời gian tổ chức",       detail: c.ngayBatDau ? `${c.ngayBatDau} → ${c.ngayKetThuc}` : "Chưa thiết lập", icon: Calendar },
+      { done: !!c.ngayNopHoSo,                        text: "Hạn nộp hồ sơ",          detail: c.ngayNopHoSo || "Chưa xác định", icon: Clock },
+      { done: c.awards.length >= 1,                   text: "Hình thức khen thưởng",  detail: c.awards.length ? c.awards.slice(0, 2).join(", ") + (c.awards.length > 2 ? "…" : "") : "Chưa có", icon: Award },
+      { done: c.canCuPhapLy.length >= 2,              text: "Căn cứ pháp lý",         detail: c.canCuPhapLy.length ? `${c.canCuPhapLy.length} văn bản` : "Cần ít nhất 2", icon: BookOpen },
     ];
-    const doneCount = checks.filter(c => c.done).length;
+    const doneCount = checks.filter(ck => ck.done).length;
     const ready = doneCount === checks.length;
+    const pct = Math.round(doneCount / checks.length * 100);
+
+    // SVG progress ring params
+    const R = 32; const CIRC = 2 * Math.PI * R;
+    const dash = (pct / 100) * CIRC;
+
+    const returnEntry = [...c.auditLog].reverse().find(a =>
+      a.state === "draft" && a.detail.startsWith("Trả về chỉnh sửa")
+    );
+    const returnReason = returnEntry?.detail.replace(/^Trả về chỉnh sửa — Lý do: /, "");
 
     return (
-      <div className="space-y-6">
-        <SectionHeader icon={PenLine} title="Soạn thảo Kế hoạch Phong trào" sub="Hoàn thiện nội dung trước khi trình phê duyệt lên Hội đồng TĐKT" color="#5a5040" />
+      <div className="space-y-5">
 
-        <div className="grid grid-cols-3 gap-4">
-          <InfoCard label="Hoàn thiện" value={`${doneCount}/${checks.length}`} icon={ListChecks} color={ready ? "#166534" : "#b45309"} />
-          <InfoCard label="Tiêu chí" value={`${c.tieuChi.length} tiêu chí`} icon={Scale} color="#7c3aed" />
-          <InfoCard label="Khen thưởng" value={`${c.awards.length} hình thức`} icon={Award} color="#8a6400" />
+        {/* ── HERO BANNER ── */}
+        <div className="rounded-[14px] border overflow-hidden"
+          style={{ borderColor: ready ? "#86efac" : "var(--color-line)", background:"var(--color-paper)" }}>
+          <div className="px-6 py-5 flex items-center gap-5"
+            style={{ background: ready ? "linear-gradient(135deg,#f0fdf4,#dcfce7)" : "linear-gradient(135deg,#fafaf9,#f5f3f0)" }}>
+            {/* Progress ring */}
+            <div className="relative shrink-0">
+              <svg width={80} height={80}>
+                <circle cx={40} cy={40} r={R} fill="none" strokeWidth={6}
+                  stroke={ready ? "#86efac" : "#e5e7eb"} />
+                <circle cx={40} cy={40} r={R} fill="none" strokeWidth={6}
+                  stroke={ready ? "#16a34a" : pct >= 50 ? "#f59e0b" : "#e5e7eb"}
+                  strokeDasharray={`${dash} ${CIRC - dash}`}
+                  strokeDashoffset={CIRC / 4}
+                  strokeLinecap="round"
+                  style={{ transition:"stroke-dasharray 0.5s ease" }} />
+                <text x={40} y={40} textAnchor="middle" dominantBaseline="central"
+                  style={{ fontFamily:"var(--font-sans)", fontSize:16, fontWeight:700,
+                    fill: ready ? "#166534" : pct >= 50 ? "#b45309" : "#9ca3af" }}>
+                  {pct}%
+                </text>
+              </svg>
+              {ready && (
+                <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-[#16a34a] flex items-center justify-center">
+                  <CheckCircle2 className="size-3.5 text-white" />
+                </div>
+              )}
+            </div>
+            {/* Title & meta */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <PenLine className="size-4 shrink-0" style={{ color: ready ? "#166534" : "#5a5040" }} />
+                <h2 className="text-[15px]" style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:"#0b1426" }}>
+                  Soạn thảo Kế hoạch Phong trào
+                </h2>
+              </div>
+              <p className="text-[13px] mb-2" style={{ color:"#635647", fontFamily:"var(--font-sans)" }}>
+                Hoàn thiện {checks.length - doneCount > 0 ? `${checks.length - doneCount} mục còn lại` : "tất cả nội dung"} trước khi trình Hội đồng TĐKT
+              </p>
+              {/* Progress bar */}
+              <div className="flex items-center gap-2">
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#e5e7eb" }}>
+                  <div className="h-full rounded-full transition-all duration-500"
+                    style={{ width:`${pct}%`, background: ready ? "#16a34a" : pct >= 50 ? "#f59e0b" : "#e5e7eb" }} />
+                </div>
+                <span className="text-[13px] shrink-0" style={{ fontFamily:"var(--font-sans)", fontWeight:600,
+                  color: ready ? "#166534" : pct >= 50 ? "#b45309" : "#9ca3af" }}>
+                  {doneCount}/{checks.length}
+                </span>
+              </div>
+            </div>
+            {/* Status badge */}
+            <div className="shrink-0">
+              {ready ? (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] border"
+                  style={{ background:"#dcfce7", borderColor:"#86efac", color:"#166534", fontWeight:600, fontFamily:"var(--font-sans)" }}>
+                  <CheckCircle2 className="size-3.5" />Sẵn sàng trình duyệt
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] border"
+                  style={{ background:"#fef3c7", borderColor:"#fcd34d", color:"#b45309", fontWeight:600, fontFamily:"var(--font-sans)" }}>
+                  <AlertCircle className="size-3.5" />{checks.length - doneCount} mục còn thiếu
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
+        {/* ── RETURN REASON BANNER ── */}
+        {returnEntry && (
+          <div className="flex items-start gap-3 px-4 py-4 rounded-[12px] border"
+            style={{ background:"#fff7ed", borderColor:"#fdba74", fontFamily:"var(--font-sans)" }}>
+            <div className="size-8 rounded-full flex items-center justify-center shrink-0" style={{ background:"#fed7aa" }}>
+              <RotateCcw className="size-4 text-[#c2410c]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-[#c2410c] mb-0.5">Phong trào đã được trả về chỉnh sửa</p>
+              <p className="text-[13px] text-[#92400e]">
+                <strong>{returnEntry.actor}</strong> (Hội đồng TĐKT) · {returnEntry.time}
+              </p>
+              {returnReason && returnReason !== returnEntry.detail && (
+                <div className="mt-2.5 px-3 py-2 rounded-[8px] border text-[13px]"
+                  style={{ background:"#fffbf5", borderColor:"#fbbf24", color:"#78350f" }}>
+                  <span className="font-semibold">Lý do: </span>{returnReason}
+                </div>
+              )}
+              <p className="text-[13px] text-[#92400e] mt-1.5 opacity-80">Vui lòng cập nhật các mục cần thiết và trình lại.</p>
+            </div>
+          </div>
+        )}
+
+        {/* ── BODY: 2 COLUMNS ── */}
         <div className="grid grid-cols-2 gap-5">
-          <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
-            <div className="px-4 py-3 border-b flex items-center justify-between" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Checklist soạn thảo</span>
-              <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: ready ? "#dcfce7" : "#fef3c7", color: ready ? "#166534" : "#b45309", fontWeight: 600 }}>
-                {ready ? "✅ Sẵn sàng trình duyệt" : `${checks.length - doneCount} mục còn thiếu`}
+
+          {/* LEFT: Checklist */}
+          <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+            <div className="px-5 py-3.5 border-b flex items-center justify-between"
+              style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
+              <div className="flex items-center gap-2">
+                <ListChecks className="size-4" style={{ color: ready ? "#166534" : "#b45309" }} />
+                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                  Checklist soạn thảo
+                </span>
+              </div>
+              <span className="text-[12px] px-2 py-0.5 rounded-full"
+                style={{ background: ready ? "#dcfce7" : "#fef3c7", color: ready ? "#166534" : "#b45309", fontWeight:600, fontFamily:"var(--font-sans)" }}>
+                {doneCount}/{checks.length}
               </span>
             </div>
-            <div className="px-4 py-2">
-              {checks.map((ck, i) => <CheckRow key={i} done={ck.done} text={ck.text} />)}
+            <div className="divide-y" style={{ borderColor:"var(--color-line)" }}>
+              {checks.map((ck, i) => {
+                const Icon = ck.icon;
+                return (
+                  <div key={i} className="px-4 py-3 flex items-center gap-3 transition-colors"
+                    style={{ background: ck.done ? "#fafffe" : "#fffcfa" }}>
+                    <div className="size-7 rounded-full flex items-center justify-center shrink-0"
+                      style={{ background: ck.done ? "#dcfce7" : "#f3f4f6" }}>
+                      <Icon className="size-3.5" style={{ color: ck.done ? "#166534" : "#9ca3af" }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[13px]" style={{ fontFamily:"var(--font-sans)", fontWeight:500,
+                        color: ck.done ? "#0b1426" : "#6b7280" }}>{ck.text}</div>
+                      <div className="text-[12px] truncate" style={{ color: ck.done ? "#635647" : "#9ca3af", fontFamily:"var(--font-sans)" }}>
+                        {ck.detail}
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      {ck.done
+                        ? <CheckCircle2 className="size-4 text-[#16a34a]" />
+                        : <div className="size-4 rounded-full border-2" style={{ borderColor:"#d1d5db" }} />}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
+          {/* RIGHT: Campaign preview + actions */}
           <div className="space-y-4">
-            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
-              <div className="px-4 py-3 border-b" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Ghi chú trình duyệt</span>
+
+            {/* Campaign snapshot */}
+            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+              <div className="px-5 py-3.5 border-b" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
+                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                  Thông tin phong trào
+                </span>
               </div>
-              <div className="p-4">
-                <textarea
-                  className="ds-input w-full" rows={4}
-                  style={{ padding: "10px 12px", resize: "vertical", fontSize: 13 }}
-                  placeholder="Ghi chú thêm khi trình phê duyệt (không bắt buộc)..."
-                  value={note} onChange={e => setNote(e.target.value)}
-                  disabled={!canMove}
-                />
+              <div className="p-4 space-y-3">
+                {[
+                  { label:"Tên phong trào", value:c.name || "—", color:"#0b1426", bold:true },
+                  { label:"Thời gian", value:c.ngayBatDau ? `${c.ngayBatDau} → ${c.ngayKetThuc}` : "—", color:"#4a5568" },
+                  { label:"Hạn nộp hồ sơ", value:c.ngayNopHoSo || "—", color:"#4a5568" },
+                  { label:"Đối tượng", value:c.doiTuong || "—", color:"#4a5568" },
+                ].map(row => (
+                  <div key={row.label} className="flex items-start gap-2">
+                    <span className="text-[12px] text-[#9ca3af] shrink-0 w-28 pt-0.5" style={{ fontFamily:"var(--font-sans)" }}>
+                      {row.label}
+                    </span>
+                    <span className="text-[13px] flex-1" style={{ color:row.color, fontFamily:"var(--font-sans)", fontWeight:row.bold?600:400 }}>
+                      {row.value}
+                    </span>
+                  </div>
+                ))}
+                {c.tieuChi.length > 0 && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[12px] text-[#9ca3af] shrink-0 w-28 pt-1" style={{ fontFamily:"var(--font-sans)" }}>
+                      Tiêu chí
+                    </span>
+                    <div className="flex flex-wrap gap-1 flex-1">
+                      {c.tieuChi.slice(0, 4).map((tc, i) => (
+                        <span key={i} className="text-[11px] px-1.5 py-0.5 rounded"
+                          style={{ background:"#f0f0ff", color:"#7c3aed", fontFamily:"var(--font-sans)" }}>
+                          {tc.name.length > 14 ? tc.name.slice(0, 14) + "…" : tc.name}
+                        </span>
+                      ))}
+                      {c.tieuChi.length > 4 && (
+                        <span className="text-[11px] px-1.5 py-0.5 rounded" style={{ background:"#f3f4f6", color:"#6b7280" }}>
+                          +{c.tieuChi.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {c.awards.length > 0 && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[12px] text-[#9ca3af] shrink-0 w-28 pt-1" style={{ fontFamily:"var(--font-sans)" }}>
+                      Khen thưởng
+                    </span>
+                    <div className="flex flex-wrap gap-1 flex-1">
+                      {c.awards.slice(0, 2).map((a, i) => (
+                        <span key={i} className="text-[11px] px-1.5 py-0.5 rounded border"
+                          style={{ background:"#fef9ec", borderColor:"#fcd34d", color:"#92400e", fontFamily:"var(--font-sans)" }}>
+                          {a}
+                        </span>
+                      ))}
+                      {c.awards.length > 2 && (
+                        <span className="text-[11px] px-1.5 py-0.5 rounded" style={{ background:"#f3f4f6", color:"#6b7280" }}>
+                          +{c.awards.length - 2}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="rounded-[12px] border p-4" style={{ borderColor: "#1C5FBE30", background: "#f0f6ff" }}>
-              <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="size-4 text-[#1C5FBE]" />
-                <span className="text-[13px] text-[#1a4fa0] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>Quy trình tiếp theo</span>
+            {/* Note textarea */}
+            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+              <div className="px-5 py-3.5 border-b" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
+                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                  Ghi chú khi trình duyệt
+                </span>
               </div>
-              <div className="space-y-2">
+              <div className="p-4">
+                <textarea className="ds-input w-full" rows={3}
+                  style={{ padding:"10px 12px", resize:"vertical", fontSize:13 }}
+                  placeholder="Thêm ghi chú hoặc giải thích cho Hội đồng (không bắt buộc)…"
+                  value={note} onChange={e => setNote(e.target.value)}
+                  disabled={!canMove} />
+              </div>
+            </div>
+
+            {/* Next steps */}
+            <div className="rounded-[12px] border p-4" style={{ borderColor:"#1C5FBE20", background:"#f5f8ff" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <ArrowRight className="size-3.5 text-[#1C5FBE]" />
+                <span className="text-[13px] text-[#1a4fa0]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                  Quy trình sau khi trình duyệt
+                </span>
+              </div>
+              <div className="space-y-2.5">
                 {[
-                  { step: "Hội đồng thẩm tra", desc: "Thư ký HĐ TĐKT kiểm tra tính hợp lệ" },
-                  { step: "Phê duyệt kế hoạch", desc: "Hội đồng phê duyệt hoặc yêu cầu chỉnh sửa" },
-                  { step: "Lãnh đạo ban hành", desc: "LĐCC ký ban hành và công bố phong trào" },
+                  { step:"Hội đồng thẩm tra", desc:"Thư ký HĐ TĐKT kiểm tra tính hợp lệ", color:"#1C5FBE" },
+                  { step:"Phê duyệt kế hoạch", desc:"Hội đồng phê duyệt hoặc trả về chỉnh sửa", color:"#7c3aed" },
+                  { step:"Lãnh đạo ban hành",  desc:"Lãnh đạo cấp cao ký ban hành & công bố", color:"#166534" },
                 ].map((s, i) => (
-                  <div key={i} className="flex items-start gap-2 text-[13px]">
-                    <span className="size-4 rounded-full bg-[#1C5FBE] text-white flex items-center justify-center shrink-0 mt-0.5 text-[13px] font-bold">{i + 1}</span>
-                    <div><span className="font-semibold text-[#1a4fa0]">{s.step}</span><span className="text-[#5a5040]"> — {s.desc}</span></div>
+                  <div key={i} className="flex items-start gap-2.5">
+                    <span className="size-5 rounded-full text-white flex items-center justify-center shrink-0 mt-0.5 text-[11px]"
+                      style={{ background:s.color, fontFamily:"var(--font-sans)", fontWeight:700 }}>{i + 1}</span>
+                    <div>
+                      <span className="text-[13px]" style={{ fontWeight:600, color:s.color, fontFamily:"var(--font-sans)" }}>
+                        {s.step}
+                      </span>
+                      <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}> — {s.desc}</span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -2202,6 +2491,80 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           </div>
         </div>
 
+        {/* ── FULL PLAN PREVIEW (collapsible) ── */}
+        {(() => {
+          return (
+            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
+              <button
+                className="w-full px-5 py-3.5 border-b flex items-center gap-2 text-left transition-colors hover:bg-[#f8f9fc]"
+                style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}
+                onClick={() => setPlanPreviewExpanded(v => !v)}>
+                <Eye className="size-4 text-[#635647]" />
+                <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily:"var(--font-sans)" }}>
+                  Xem toàn văn kế hoạch phong trào
+                </span>
+                <span className="ml-auto text-[13px] text-[#635647]">{planPreviewExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
+              </button>
+              {planPreviewExpanded && (
+                <div className="p-5 space-y-5" style={{ fontFamily:"var(--font-sans)" }}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Tên phong trào</p><p className="text-[13px] text-[#0b1426] font-semibold">{c.name}</p></div>
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Cấp độ</p><p className="text-[13px] text-[#0b1426]">{c.level}</p></div>
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Thời gian</p><p className="text-[13px] text-[#0b1426]">{c.ngayBatDau} → {c.ngayKetThuc}</p></div>
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Hạn nộp hồ sơ</p><p className="text-[13px] text-[#0b1426]">{c.ngayNopHoSo || "—"}</p></div>
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Người phụ trách</p><p className="text-[13px] text-[#0b1426]">{c.leader}</p></div>
+                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Đơn vị phụ trách</p><p className="text-[13px] text-[#0b1426]">{c.donViPhuTrach || "—"}</p></div>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Mục tiêu</p>
+                    <p className="text-[13px] text-[#0b1426] leading-relaxed">{c.mucTieu || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Đối tượng tham gia</p>
+                    <p className="text-[13px] text-[#0b1426]">{c.doiTuong || "—"}</p>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Tiêu chí chấm điểm ({c.tieuChi.length} tiêu chí)</p>
+                    <div className="space-y-1.5">
+                      {c.tieuChi.map((tc, i) => (
+                        <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-[8px] border text-[13px]"
+                          style={{ borderColor:"var(--color-line)", background:"#fafaf9" }}>
+                          <span className="size-5 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0"
+                            style={{ background:theme.primary }}>{i+1}</span>
+                          <span className="flex-1 text-[#0b1426]">{tc.name}</span>
+                          <span className="font-semibold" style={{ color:theme.primary }}>{tc.maxScore} điểm</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Hình thức khen thưởng</p>
+                    <div className="flex flex-wrap gap-2">
+                      {c.awards.map(a => (
+                        <span key={a} className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[13px] border"
+                          style={{ background:"#fef9ec", borderColor:"#fcd34d", color:"#92400e" }}>
+                          <Award className="size-3" />{a}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Căn cứ pháp lý</p>
+                    <div className="flex flex-wrap gap-2">
+                      {c.canCuPhapLy.map(p => (
+                        <span key={p} className="flex items-center gap-1 px-2 py-1 rounded-[6px] text-[13px]"
+                          style={{ background:"#ddeafc", color:"#1a4fa0", border:"1px solid #1C5FBE30" }}>
+                          <BookOpen className="size-3" />{p}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
         {isReviewer && (
           <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "#7c3aed30" }}>
             <div className="px-5 py-3 border-b flex items-center gap-2" style={{ background: "#f5f3ff", borderColor: "#7c3aed20" }}>
@@ -2228,8 +2591,57 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 <DsButton variant="primary" size="md" className="flex-1" onClick={doTransition}>
                   <ThumbsUp className="size-4" />Phê duyệt kế hoạch
                 </DsButton>
-                <DsButton variant="secondary" size="md" className="flex-1" onClick={() => onTransition(c.id, "draft")}>
+                <DsButton variant="secondary" size="md" className="flex-1" onClick={() => setRejectModalOpen(true)}>
                   <RotateCcw className="size-4" />Trả về chỉnh sửa
+                </DsButton>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── REJECTION REASON MODAL ── */}
+        {rejectModalOpen && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center"
+            style={{ background:"rgba(0,0,0,0.45)" }}>
+            <div className="w-[480px] rounded-[16px] border shadow-2xl bg-white overflow-hidden"
+              style={{ borderColor:"var(--color-line)", fontFamily:"var(--font-sans)" }}>
+              <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor:"var(--color-line)", background:"#fff7ed" }}>
+                <RotateCcw className="size-5 text-[#c2410c]" />
+                <div>
+                  <p className="text-[14px] font-semibold text-[#c2410c]">Trả về chỉnh sửa</p>
+                  <p className="text-[13px] text-[#92400e]">Lý do sẽ được lưu vào hồ sơ và thông báo đến người tạo</p>
+                </div>
+              </div>
+              <div className="px-6 py-5 space-y-3">
+                <label className="block text-[13px] font-semibold text-[#0b1426]">
+                  Lý do trả về <span className="text-[#c2410c]">*</span>
+                </label>
+                <textarea
+                  className="ds-input w-full"
+                  rows={4}
+                  style={{ padding:"10px 12px", fontSize:13, resize:"vertical",
+                    borderColor: rejectReason.length > 0 && rejectReason.length < 20 ? "#fca5a5" : undefined }}
+                  placeholder="Mô tả cụ thể nội dung cần chỉnh sửa để người tạo phong trào hiểu rõ yêu cầu..."
+                  value={rejectReason}
+                  onChange={e => setRejectReason(e.target.value)}
+                />
+                <div className="flex items-center justify-between text-[13px]">
+                  {rejectReason.length < 20 ? (
+                    <span style={{ color:"#ef4444" }}>Cần ít nhất 20 ký tự ({rejectReason.length}/20)</span>
+                  ) : (
+                    <span style={{ color:"#166534" }}>✓ Đủ độ dài ({rejectReason.length} ký tự)</span>
+                  )}
+                </div>
+              </div>
+              <div className="px-6 py-4 border-t flex gap-3 justify-end" style={{ borderColor:"var(--color-line)" }}>
+                <DsButton variant="secondary" size="md" onClick={() => { setRejectModalOpen(false); setRejectReason(""); }}>
+                  Hủy
+                </DsButton>
+                <DsButton variant="primary" size="md"
+                  disabled={rejectReason.trim().length < 20}
+                  onClick={() => { onTransition(c.id, "draft", rejectReason.trim()); setRejectModalOpen(false); setRejectReason(""); }}
+                  style={{ background:"#c2410c", borderColor:"#b91c1c" }}>
+                  <RotateCcw className="size-3.5" />Xác nhận trả về
                 </DsButton>
               </div>
             </div>
@@ -2396,8 +2808,24 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             </div>
 
             <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
+            {canMove && !budgetApproved && (
+              <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-[10px] border text-[13px]"
+                style={{ background:"#fef2f2", borderColor:"#fca5a5", fontFamily:"var(--font-sans)" }}>
+                <span className="text-[14px] shrink-0">🚫</span>
+                <div>
+                  <p className="font-semibold text-[#991b1b]">Chưa thể ban hành</p>
+                  <p className="text-[#7f1d1d] mt-0.5">
+                    Nguồn kinh phí khen thưởng chưa được phê duyệt. Vui lòng hoàn tất mục
+                    <strong> "Phê duyệt nguồn kinh phí"</strong> ở trên trước khi ban hành.
+                    <br />
+                    <span className="text-[13px] text-[#9f2020]">(Căn cứ: Điều 4 TT 28/2025/TT-BTC)</span>
+                  </p>
+                </div>
+              </div>
+            )}
             {canMove && (
-              <DsButton variant="primary" size="lg" onClick={doTransition} className="w-full">
+              <DsButton variant="primary" size="lg" onClick={doTransition} disabled={!budgetApproved} className="w-full"
+                title={!budgetApproved ? "Cần phê duyệt nguồn kinh phí trước khi ban hành" : undefined}>
                 <Megaphone className="size-4" />Ban hành & Công bố phong trào
               </DsButton>
             )}
@@ -2455,6 +2883,61 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           ))}
         </div>
 
+        {/* ── VĂN BẢN PHÁT ĐỘNG (collapsible preview) ── */}
+        <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+          <button
+            className="w-full px-5 py-3.5 flex items-center gap-2 text-left transition-colors hover:bg-[#f8f9fc]"
+            style={{ background:"var(--color-paper)", fontFamily:"var(--font-sans)" }}
+            onClick={() => setVanBanExpanded(v => !v)}>
+            <FileText className="size-4 text-[#4338ca]" />
+            <span className="text-[13px] font-semibold text-[#0b1426]">Dự thảo Văn bản Phát động</span>
+            <span className="ml-2 text-[13px] px-2 py-0.5 rounded-full"
+              style={{ background:"#e0e7ff", color:"#3730a3", fontWeight:600 }}>DRAFT</span>
+            <span className="ml-auto text-[13px] text-[#635647]">{vanBanExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
+          </button>
+          {vanBanExpanded && (
+            <div className="px-6 py-5 border-t space-y-4" style={{ borderColor:"var(--color-line)", fontFamily:"var(--font-sans)" }}>
+              {/* Document header */}
+              <div className="text-center space-y-1 pb-4 border-b" style={{ borderColor:"var(--color-line)" }}>
+                <p className="text-[13px] font-semibold text-[#0b1426] uppercase tracking-wide">ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI</p>
+                <p className="text-[13px] text-[#635647]">VĂN PHÒNG</p>
+                <div className="mt-3">
+                  <p className="text-[13px] text-[#635647]">Số: {c.code?.replace("PT-","") ?? "—"}/KH-VPTU</p>
+                  <p className="text-[13px] text-[#635647]">Đồng Nai, ngày {new Date().toLocaleDateString("vi-VN")}</p>
+                </div>
+                <p className="text-[15px] font-bold text-[#0b1426] mt-3 uppercase">KẾ HOẠCH</p>
+                <p className="text-[13px] font-semibold text-[#0b1426]">Phát động phong trào thi đua</p>
+                <p className="text-[14px] font-bold text-[#4338ca] mt-1">"{c.name}"</p>
+              </div>
+              {/* Body */}
+              <div className="space-y-3 text-[13px] text-[#374151] leading-relaxed">
+                <p><strong>I. MỤC ĐÍCH — YÊU CẦU</strong></p>
+                <p>{c.mucTieu}</p>
+                <p><strong>II. ĐỐI TƯỢNG THAM GIA</strong></p>
+                <p>{c.doiTuong}</p>
+                <p><strong>III. THỜI GIAN THỰC HIỆN</strong></p>
+                <p>Từ {fmtDate(c.ngayBatDau)} đến {fmtDate(c.ngayKetThuc)}. Hạn nộp hồ sơ: {fmtDate(c.ngayNopHoSo)}.</p>
+                <p><strong>IV. HÌNH THỨC KHEN THƯỞNG</strong></p>
+                <p>{c.awards.join(", ")}.</p>
+                <p><strong>V. CĂN CỨ PHÁP LÝ</strong></p>
+                <p>{c.canCuPhapLy.join("; ")}.</p>
+              </div>
+              {/* Signature block */}
+              <div className="flex justify-end pt-4 border-t" style={{ borderColor:"var(--color-line)" }}>
+                <div className="text-center text-[13px] space-y-1">
+                  <p className="text-[#635647]">TL. CHỦ TỊCH UBND TỈNH</p>
+                  <p className="font-semibold text-[#0b1426]">CHÁNH VĂN PHÒNG</p>
+                  <p className="text-[#635647] mt-4">{c.leader}</p>
+                </div>
+              </div>
+              <div className="flex gap-2 pt-1">
+                <DsButton variant="secondary" size="sm"><Download className="size-3.5" />Tải PDF</DsButton>
+                <DsButton variant="secondary" size="sm"><Printer className="size-3.5" />In văn bản</DsButton>
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="flex items-center justify-between">
           <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
           {canMove && (
@@ -2476,6 +2959,14 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
     return (
       <div className="space-y-6">
+        {/* Input ẩn dùng chung cho cả form đơn vị và cá nhân */}
+        <input ref={regFileRef} type="file" multiple className="hidden"
+          accept=".pdf,.doc,.docx,.xlsx,.xls,.jpg,.jpeg,.png"
+          onChange={e => {
+            const files = Array.from(e.target.files ?? []);
+            setRegFiles(prev => [...prev, ...files.filter(f => !prev.some(p => p.name === f.name))]);
+            e.target.value = "";
+          }} />
         <SectionHeader icon={Flag} title="Đang triển khai — Nhận đăng ký & Hồ sơ" sub={`Hạn nộp hồ sơ: ${fmtDate(c.ngayNopHoSo)} · Còn ${left} ngày`} color="#166534" />
 
         {/* Manager dashboard */}
@@ -2513,6 +3004,11 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 <p className="text-[13px] text-[#14532d]" style={{ fontFamily: "var(--font-sans)" }}>
                   Đơn vị <strong>{regForm.donVi}</strong> đã đăng ký tham gia. Hệ thống sẽ ghi nhận và thông báo kết quả.
                 </p>
+                {regFiles.length > 0 && (
+                  <p className="text-[13px] text-[#166534] flex items-center justify-center gap-1.5" style={{ fontFamily: "var(--font-sans)" }}>
+                    <Paperclip className="size-3.5" />{regFiles.length} tài liệu đã đính kèm
+                  </p>
+                )}
               </div>
             ) : !registering ? (
               <div className="rounded-[12px] border p-6 text-center space-y-4" style={{ borderColor: "#86efac", background: "#f0fdf4" }}>
@@ -2564,6 +3060,37 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         : <span />}
                       <span className="text-[13px] text-[#635647] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
                     </div>
+                  </div>
+                  {/* Đính kèm tài liệu — đơn vị */}
+                  <div className="space-y-2">
+                    <label className="ds-input-label flex items-center gap-1.5">
+                      <Paperclip className="size-3.5 text-[#635647]" />Đính kèm tài liệu
+                      <span className="text-[12px] text-[#9ca3af] font-normal">(tùy chọn)</span>
+                    </label>
+                    <button type="button"
+                      className="w-full rounded-[10px] px-4 py-3 flex items-center justify-center gap-2 transition-colors hover:bg-[#f0fdf4]"
+                      style={{ border: "2px dashed #86efac", color: "#166534", fontFamily: "var(--font-sans)" }}
+                      onClick={() => regFileRef.current?.click()}>
+                      <UploadCloud className="size-4" />
+                      <span className="text-[13px]">Chọn file hoặc kéo thả vào đây</span>
+                    </button>
+                    {regFiles.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {regFiles.map((f, i) => (
+                          <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[13px]"
+                            style={{ background: "#f0fdf4", borderColor: "#86efac", color: "#166534", fontFamily: "var(--font-sans)" }}>
+                            <FileText className="size-3 shrink-0" />
+                            <span className="max-w-[160px] truncate">{f.name}</span>
+                            <button type="button" onClick={() => setRegFiles(p => p.filter((_,j) => j !== i))}>
+                              <X className="size-3 text-[#635647] hover:text-[#c8102e]" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-[12px] text-[#9ca3af]" style={{ fontFamily: "var(--font-sans)" }}>
+                      Định dạng: PDF, Word, Excel, ảnh · Tối đa 10 MB/file
+                    </p>
                   </div>
                   <div className="flex gap-3">
                     <DsButton variant="secondary" size="md" onClick={() => setRegistering(false)}>Hủy</DsButton>
@@ -2635,24 +3162,119 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <span className="text-[13px] text-[#635647] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
                     </div>
                   </div>
+                  {/* Đính kèm tài liệu — cá nhân */}
+                  <div className="space-y-2">
+                    <label className="ds-input-label flex items-center gap-1.5">
+                      <Paperclip className="size-3.5 text-[#635647]" />Đính kèm tài liệu
+                      <span className="text-[12px] text-[#9ca3af] font-normal">(tùy chọn)</span>
+                    </label>
+                    <button type="button"
+                      className="w-full rounded-[10px] px-4 py-3 flex items-center justify-center gap-2 transition-colors hover:bg-[#fef9ec]"
+                      style={{ border: "2px dashed #fcd34d", color: "#92400e", fontFamily: "var(--font-sans)" }}
+                      onClick={() => regFileRef.current?.click()}>
+                      <UploadCloud className="size-4" />
+                      <span className="text-[13px]">Chọn file hoặc kéo thả vào đây</span>
+                    </button>
+                    {regFiles.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {regFiles.map((f, i) => (
+                          <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[13px]"
+                            style={{ background: "#fef9ec", borderColor: "#fcd34d", color: "#92400e", fontFamily: "var(--font-sans)" }}>
+                            <FileText className="size-3 shrink-0" />
+                            <span className="max-w-[160px] truncate">{f.name}</span>
+                            <button type="button" onClick={() => setRegFiles(p => p.filter((_,j) => j !== i))}>
+                              <X className="size-3 text-[#635647] hover:text-[#c8102e]" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-[12px] text-[#9ca3af]" style={{ fontFamily: "var(--font-sans)" }}>
+                      Định dạng: PDF, Word, Excel, ảnh · Tối đa 10 MB/file
+                    </p>
+                  </div>
                   <DsButton variant="primary" size="md" className="w-full"
-                    style={!(regForm.hoTen.trim().length >= 2 && regForm.ly_do.trim().length >= 20) ? { opacity: 0.65 } : {}}
                     onClick={() => {
-                      setRegTouched({ hoTen: true, ly_do: true });
-                      if (regForm.hoTen.trim().length < 2 || regForm.ly_do.trim().length < 20) return;
-                      onAddParticipant(c.id, {
-                        id: `p-${Date.now()}`, name: regForm.hoTen, type: "ca_nhan",
-                        donVi: user.unit || regForm.donVi || "",
-                        hoSoStatus: "da_nop", nopLuc: new Date().toISOString().slice(0, 10),
-                        hinhThucDeNghi: regForm.danh_hieu,
-                      });
-                      setIndivDone(true);
+                      setRegTouched({ hoTen: true, donVi: true, ly_do: true });
+                      if (!regValid) return;
+                      setIndivReviewing(true);
                     }}>
-                    <Send className="size-4" />Gửi đăng ký tham gia
+                    <Eye className="size-4" />Xem lại trước khi gửi
                   </DsButton>
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── CN REVIEW MODAL ── */}
+        {indivReviewing && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center"
+            style={{ background:"rgba(0,0,0,0.45)" }}>
+            <div className="w-[480px] rounded-[16px] border shadow-2xl bg-white overflow-hidden"
+              style={{ borderColor:"var(--color-line)", fontFamily:"var(--font-sans)" }}>
+              <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor:"var(--color-line)", background:"#fef9ec" }}>
+                <CheckCircle2 className="size-5 text-[#b45309]" />
+                <div>
+                  <p className="text-[14px] font-semibold text-[#92400e]">Xác nhận thông tin đăng ký</p>
+                  <p className="text-[13px] text-[#b45309]">Vui lòng kiểm tra lại trước khi gửi</p>
+                </div>
+              </div>
+              <div className="px-6 py-5 space-y-3">
+                {[
+                  { label:"Họ và tên", value: regForm.hoTen },
+                  { label:"Danh hiệu đề nghị", value: regForm.danh_hieu },
+                  { label:"Đơn vị", value: user.unit || regForm.donVi || "—" },
+                  { label:"Phong trào", value: c.name },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex items-start gap-3 py-2 border-b" style={{ borderColor:"var(--color-line)" }}>
+                    <span className="text-[13px] text-[#635647] w-36 shrink-0">{label}</span>
+                    <span className="text-[13px] text-[#0b1426] font-semibold flex-1">{value}</span>
+                  </div>
+                ))}
+                <div className="pt-1">
+                  <p className="text-[13px] text-[#635647] mb-1">Lý do đề nghị / Thành tích</p>
+                  <p className="text-[13px] text-[#0b1426] leading-relaxed px-3 py-2 rounded-[8px]"
+                    style={{ background:"#fafaf9", border:"1px solid var(--color-line)" }}>
+                    {regForm.ly_do}
+                  </p>
+                </div>
+                {regFiles.length > 0 && (
+                  <div className="pt-1">
+                    <p className="text-[13px] text-[#635647] mb-2 flex items-center gap-1.5">
+                      <Paperclip className="size-3.5" />Tài liệu đính kèm ({regFiles.length} file)
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {regFiles.map((f, i) => (
+                        <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[13px]"
+                          style={{ background:"#fef9ec", borderColor:"#fcd34d", color:"#92400e", fontFamily:"var(--font-sans)" }}>
+                          <FileText className="size-3 shrink-0" />
+                          <span className="max-w-[160px] truncate">{f.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="px-6 py-4 border-t flex gap-3 justify-end" style={{ borderColor:"var(--color-line)" }}>
+                <DsButton variant="secondary" size="md" onClick={() => setIndivReviewing(false)}>
+                  ← Chỉnh sửa
+                </DsButton>
+                <DsButton variant="primary" size="md"
+                  onClick={() => {
+                    onAddParticipant(c.id, {
+                      id:`p-${Date.now()}`, name:regForm.hoTen, type:"ca_nhan",
+                      donVi: user.unit || regForm.donVi || "",
+                      hoSoStatus:"da_nop", nopLuc:new Date().toISOString().slice(0,10),
+                      hinhThucDeNghi:regForm.danh_hieu,
+                    });
+                    setIndivReviewing(false);
+                    setIndivDone(true);
+                  }}>
+                  <Send className="size-3.5" />Xác nhận gửi đăng ký
+                </DsButton>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -2753,7 +3375,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
   /* ── UNIT_REVIEW ───────────────────────────────────────────────── */
   if (c.state === "unit_review") {
     const displayList = c.participants.slice(0, 4);
-    const canReview = canReviewUnit(user, c); // lãnh đạo đơn vị + tất cả role canMove
+    const canReview = canReviewUnit(user, c); // chỉ lãnh đạo đơn vị — Bước 8
 
     /* Resolve effective status: local decision overrides raw hoSoStatus */
     const effectiveStatus = (p: Participant): Participant["hoSoStatus"] => {
@@ -2782,8 +3404,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
         {isIndividual && <PersonalStatusBanner c={c} myP={myParticipant} danh_hieu={regForm.danh_hieu} hoTen={regForm.hoTen} indivDone={indivDone} />}
         {isUnitLeader && !canMove && <UnitLeaderContextPanel c={c} user={user} unitDecisions={unitDecisions} />}
 
-        {/* ── THẨM ĐỊNH CẤP CƠ SỞ ────────────────────────────────── */}
-        <SectionHeader icon={ClipboardCheck} title="Thẩm định cấp cơ sở" sub="Hội đồng tiếp nhận, phân loại và thẩm định từng hồ sơ theo tiêu chí" color="#c2410c" />
+        {/* ── BƯỚC 8: LĐDV DUYỆT SƠ BỘ ───────────────────────────── */}
+        <SectionHeader icon={ClipboardCheck} title="Bước 8 — Thẩm định cấp cơ sở" sub="Lãnh đạo đơn vị duyệt sơ bộ từng hồ sơ trước khi nộp lên Hội đồng (Khoản 2 Điều 55 Luật TĐKT)" color="#c2410c" />
 
         <div className="grid grid-cols-3 gap-4">
           <InfoCard label="Cần thẩm định" value={`${pendingCount}`} icon={FileText} color="#c2410c" />
@@ -2875,21 +3497,80 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           )}
         </div>
 
-        {canMove && (
-          <ReadinessPanel warnings={checkTransitionReadiness(c, {
-            allReviewed,
-            pendingCount,
-            approvedCount: localApproved,
-          })} />
+        {/* ── BƯỚC 9-10: HĐ THƯ KÝ TIẾP NHẬN & PHÂN LOẠI ─────────── */}
+        {canMove && (() => {
+          const HD_CHECKS = [
+            { id:"recv", label:"Đã tiếp nhận danh sách hồ sơ từ đơn vị cơ sở",  sub:"Bước 9 — Điều 55 Luật TĐKT" },
+            { id:"sort", label:"Đã phân loại hồ sơ theo nhóm danh hiệu thi đua", sub:"Bước 9 — Điều 55 Luật TĐKT" },
+            { id:"list", label:"Đã lập danh sách đủ điều kiện chuyển thẩm định", sub:"Bước 10 — Khoản 3 Điều 55"  },
+          ];
+          const hdAllDone = hdChecks.size === HD_CHECKS.length;
+          return (
+            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: hdAllDone ? "#86efac" : "#fcd34d" }}>
+              <div className="px-5 py-3.5 border-b flex items-center gap-3"
+                style={{ background: hdAllDone ? "linear-gradient(to right,#f0fdf4,#dcfce7)" : "linear-gradient(to right,#fffbeb,#fef3c7)", borderColor: hdAllDone ? "#86efac" : "#fcd34d" }}>
+                <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0"
+                  style={{ background: hdAllDone ? "#166534" : "#b45309" }}>
+                  <ListChecks className="size-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-[13px] font-semibold" style={{ color: hdAllDone ? "#166534" : "#b45309", fontFamily: "var(--font-sans)" }}>
+                    Bước 9-10 — Hội đồng Thư ký tiếp nhận & phân loại
+                  </div>
+                  <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+                    {hdAllDone ? "Hoàn tất — sẵn sàng mở lấy ý kiến công khai" : `${hdChecks.size}/${HD_CHECKS.length} mục đã xác nhận`}
+                  </div>
+                </div>
+              </div>
+              <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
+                {HD_CHECKS.map(item => {
+                  const checked = hdChecks.has(item.id);
+                  return (
+                    <button key={item.id}
+                      onClick={() => setHdChecks(prev => {
+                        const next = new Set(prev);
+                        if (next.has(item.id)) next.delete(item.id); else next.add(item.id);
+                        return next;
+                      })}
+                      className="w-full px-5 py-3.5 flex items-center gap-3 text-left transition-colors"
+                      style={{ background: checked ? "#f0fdf4" : "white" }}>
+                      <div className="size-5 rounded flex items-center justify-center shrink-0 transition-all"
+                        style={{ background: checked ? "#166534" : "white", border: `2px solid ${checked ? "#166534" : "#d1d5db"}` }}>
+                        {checked && <Check className="size-3 text-white" strokeWidth={3} />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[13px] font-medium" style={{ color: checked ? "#166534" : "#0b1426", fontFamily: "var(--font-sans)" }}>{item.label}</div>
+                        <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>{item.sub}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
+        {canMove && (() => {
+          const hdAllDone = hdChecks.size === 3;
+          return (
+            <>
+              <ReadinessPanel warnings={checkTransitionReadiness(c, {
+                allReviewed, pendingCount, approvedCount: localApproved, hdAllDone,
+              })} />
+              <div className="flex items-center justify-between">
+                <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
+                <DsButton variant="primary" size="md" onClick={doTransition} disabled={!allReviewed || !hdAllDone}>
+                  <MessageSquare className="size-4" />Mở lấy ý kiến công khai
+                </DsButton>
+              </div>
+            </>
+          );
+        })()}
+        {!canMove && (
+          <div className="flex items-center justify-between">
+            <RoleBadge role={user.roleLabel || user.role} canAct={false} />
+          </div>
         )}
-        <div className="flex items-center justify-between">
-          <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
-          {canMove && (
-            <DsButton variant="primary" size="md" onClick={doTransition} disabled={!allReviewed}>
-              <MessageSquare className="size-4" />Mở lấy ý kiến công khai
-            </DsButton>
-          )}
-        </div>
       </div>
     );
   }
@@ -2929,14 +3610,29 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               <div className="text-[11px] text-[#635647]">hoàn thành</div>
             </div>
           </div>
-          <div className="px-5 py-3" style={{ background: "white" }}>
-            <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: "#e5e7eb" }}>
-              <div className="h-full rounded-full transition-all"
-                style={{ width: `${timerPct}%`, background: timerDone ? "#0e7490" : "#f59e0b" }} />
+          <div className="px-5 pt-3 pb-4" style={{ background: "white" }}>
+            {/* Progress bar with milestone ticks */}
+            <div className="relative mb-4">
+              <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: "#e5e7eb" }}>
+                <div className="h-full rounded-full transition-all"
+                  style={{ width: `${timerPct}%`, background: timerDone ? "#0e7490" : "#f59e0b" }} />
+              </div>
+              {/* Milestone tick marks at days 7 (25%), 15 (50%), 22 (75%) */}
+              {[{day:7,label:"7 ngày",pct:25},{day:15,label:"15 ngày",pct:50},{day:22,label:"22 ngày",pct:75}].map(m => {
+                const passed = daysElapsed >= m.day;
+                return (
+                  <div key={m.day} className="absolute top-0 flex flex-col items-center" style={{ left:`${m.pct}%`, transform:"translateX(-50%)" }}>
+                    <div className="w-px h-2.5" style={{ background: passed ? (timerDone ? "#0e7490" : "#b45309") : "#9ca3af" }} />
+                    <div className="mt-1 text-[11px] whitespace-nowrap" style={{ color: passed ? (timerDone ? "#0e7490" : "#b45309") : "#9ca3af", fontFamily:"var(--font-sans)" }}>
+                      {m.label}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             {!timerDone && (
-              <p className="mt-2 text-[13px]" style={{ color: "#b45309", fontFamily: "var(--font-sans)" }}>
-                ⚠️ Không thể chuyển sang Hội đồng xét duyệt khi chưa đủ 30 ngày lấy ý kiến công khai.
+              <p className="text-[13px]" style={{ color: "#b45309", fontFamily: "var(--font-sans)" }}>
+                ⚠️ Khuyến cáo đủ 30 ngày theo Điều 56 Luật TĐKT 2022 — vẫn có thể chuyển sớm nếu đã thu thập đủ ý kiến.
               </p>
             )}
           </div>
@@ -3013,21 +3709,72 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <textarea className="ds-input w-full" rows={2} style={{ padding:"8px 12px", fontSize: 13, resize:"vertical" }}
                     placeholder="Nhập ý kiến góp ý về danh sách đề nghị khen thưởng..."
                     value={commentInput} onChange={e => setCommentInput(e.target.value)} />
-                  <DsButton variant="secondary" size="sm"
-                    style={!commentInput.trim() ? { opacity:0.5 } : {}}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px]" style={{ fontFamily:"var(--font-sans)", color: commentInput.trim().length > 0 && commentInput.trim().length < 10 ? "#ef4444" : "#6b7280" }}>
+                      {commentInput.trim().length}/10 ký tự tối thiểu
+                    </span>
+                    <DsButton variant="secondary" size="sm"
+                      style={commentInput.trim().length < 10 ? { opacity:0.5 } : {}}
+                      onClick={() => {
+                        if (commentInput.trim().length < 10) return;
+                        setCommentReviewing(true);
+                      }}>
+                      <Eye className="size-3" />Xem lại trước khi gửi
+                    </DsButton>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Comment review modal */}
+          {commentReviewing && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center"
+              style={{ background:"rgba(0,0,0,0.45)" }}>
+              <div className="w-[440px] rounded-[16px] border shadow-2xl bg-white overflow-hidden"
+                style={{ borderColor:"var(--color-line)", fontFamily:"var(--font-sans)" }}>
+                <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor:"var(--color-line)", background:"#ecfeff" }}>
+                  <MessageSquare className="size-5 text-[#0e7490]" />
+                  <div>
+                    <p className="text-[14px] font-semibold text-[#0e7490]">Xác nhận gửi ý kiến</p>
+                    <p className="text-[13px] text-[#0c7a8a]">Ý kiến sẽ được công khai sau khi gửi</p>
+                  </div>
+                </div>
+                <div className="px-6 py-5 space-y-4">
+                  <div>
+                    <p className="text-[13px] text-[#635647] mb-1">Người gửi</p>
+                    <p className="text-[13px] font-semibold text-[#0b1426]">{user.name || "Người dùng"} · {user.unit || "Đơn vị"}</p>
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-[#635647] mb-1">Nội dung ý kiến</p>
+                    <div className="px-3 py-2.5 rounded-[8px] border text-[13px] leading-relaxed text-[#0b1426]"
+                      style={{ background:"#f0fdfe", borderColor:"#67e8f9" }}>
+                      {commentInput}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2 px-3 py-2 rounded-[8px] border text-[13px]"
+                    style={{ background:"#fffbeb", borderColor:"#fcd34d", color:"#92400e" }}>
+                    <AlertCircle className="size-3.5 shrink-0 mt-0.5 text-[#b45309]" />
+                    Sau khi gửi, ý kiến sẽ hiển thị công khai và không thể chỉnh sửa.
+                  </div>
+                </div>
+                <div className="px-6 py-4 border-t flex gap-3 justify-end" style={{ borderColor:"var(--color-line)" }}>
+                  <DsButton variant="secondary" size="md" onClick={() => setCommentReviewing(false)}>
+                    ← Chỉnh sửa
+                  </DsButton>
+                  <DsButton variant="primary" size="md"
                     onClick={() => {
-                      if (!commentInput.trim()) return;
                       setPublicComments(prev => [...prev, {
                         id:`pc-${Date.now()}`, author:user.name||"Người dùng",
                         unit:user.unit||"Đơn vị", content:commentInput.trim(),
                         time:nowFmt(), thumbsUp:0,
                       }]);
-                      setCommentInput(""); setCommentSubmitted(true);
+                      setCommentInput(""); setCommentSubmitted(true); setCommentReviewing(false);
                     }}>
-                    <Send className="size-3" />Gửi ý kiến
+                    <Send className="size-3.5" />Xác nhận gửi ý kiến
                   </DsButton>
                 </div>
-              )}
+              </div>
             </div>
           )}
 
@@ -3066,298 +3813,1256 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
   /* ── COUNCIL_REVIEW ────────────────────────────────────────────── */
   if (c.state === "council_review") {
-    const candidates = c.participants.filter(p => p.hoSoStatus === "da_duyet").slice(0, 4);
-    const totalVoters = totalVotersConst;
-    const passThreshold = Math.ceil(totalVoters * 2 / 3);
-    const quorumThreshold = Math.ceil(totalVoters * 2 / 3);
-    const quorumMet = quorumPresent >= quorumThreshold;
-    const allVoted = candidates.length > 0 && Object.keys(votes).length === candidates.length;
-    const canSign = allVoted && minutesForm.chuToa.trim() && minutesForm.thuKy.trim();
+    // ── Config
+    type HdVC = "pass" | "reject" | "defer";
+    const HD_VC = {
+      pass:   { label:"Tán thành",    icon:ThumbsUp,   color:"#166534", bg:"#f0fdf4", border:"#86efac", activeBg:"#dcfce7", barColor:"#16a34a" },
+      reject: { label:"Phản đối",     icon:ThumbsDown, color:"#9f1239", bg:"#fff1f2", border:"#fca5a5", activeBg:"#fee2e2", barColor:"#dc2626" },
+      defer:  { label:"Hoãn xem xét", icon:Minus,      color:"#92400e", bg:"#fffbeb", border:"#fcd34d", activeBg:"#fef3c7", barColor:"#b45309" },
+    } as const;
+    const DEC_MAP: Record<string, { label:string; color:string; bg:string; border:string }> = {
+      pass:    { label:"Đã thông qua",    color:"#166534", bg:"#dcfce7", border:"#86efac" },
+      reject:  { label:"Không thông qua", color:"#9f1239", bg:"#fee2e2", border:"#fca5a5" },
+      defer:   { label:"Hoãn",            color:"#92400e", bg:"#fef3c7", border:"#fcd34d" },
+      pending: { label:"Đang biểu quyết", color:"#1C5FBE", bg:"#ddeafc", border:"#93c5fd" },
+    };
+
+    // ── Pure helpers (no hooks)
+    const checkCoiFn = (m: typeof MOCK_COUNCIL_MEMBERS[0], p: Participant) =>
+      m.donVi === p.donVi
+        ? { level:"hard" as const, reason:`Thành viên thuộc ${m.donVi} — đơn vị của người/tập thể được đề nghị` }
+        : { level:"none" as const, reason:"" };
+
+    const calcTotalFn = (scores: Record<string, number>) =>
+      c.tieuChi.reduce((s, tc) => s + (scores[tc.id] ?? 0), 0);
+    const maxTotalFn = c.tieuChi.reduce((s, tc) => s + tc.maxScore, 0);
+    const hdScoreColor = (pct: number) =>
+      pct >= 0.85 ? "#0f7a3e" : pct >= 0.70 ? "#b45309" : "#c8102e";
+
+    // ── Derived values
+    const candidates = c.participants.filter(p => p.hoSoStatus === "da_duyet");
+    const currentMember = councilMembers.find(m => m.name === user.name)
+      ?? councilMembers.find(m => m.isSecretary)
+      ?? councilMembers[0];
+    const selectedCandId = expandedCandidate ?? (candidates[0]?.id ?? null);
+    const selectedCand   = candidates.find(p => p.id === selectedCandId) ?? null;
+
+    // ── Utility functions
+    const allScoresForCand = (candId: string) => {
+      const others = hdMemberScores.filter(e => e.candId === candId);
+      const mine   = candidateScores[candId];
+      if (mine?.submitted) {
+        return [...others, { memberId:currentMember.id, candId, scores:mine.scores, comment:mine.comment, submittedAt:"Vừa xong", abstained:false }];
+      }
+      return others;
+    };
+    const avgForCand = (candId: string) => {
+      const all   = allScoresForCand(candId);
+      const valid = all.filter(e => !e.abstained && Object.keys(e.scores).length > 0);
+      return valid.length ? Math.round(valid.reduce((s, e) => s + calcTotalFn(e.scores), 0) / valid.length) : 0;
+    };
+    const getDecision = (candId: string) =>
+      hdDecisions.find(d => d.candId === candId) ?? null;
+    const myVoteForCand = (candId: string): HdVC | null => {
+      const dec = getDecision(candId);
+      if (!dec) return null;
+      if (dec.votes.pass.includes(currentMember.id))   return "pass";
+      if (dec.votes.reject.includes(currentMember.id)) return "reject";
+      if (dec.votes.defer.includes(currentMember.id))  return "defer";
+      return null;
+    };
+    const handleVoteLocal = (candId: string, vote: HdVC) => {
+      setHdDecisions(prev => {
+        const existing   = prev.find(d => d.candId === candId);
+        if (existing && existing.decision !== "pending") return prev;
+        const baseVotes  = existing?.votes ?? { pass:[], reject:[], defer:[] };
+        const cleaned    = {
+          pass:   baseVotes.pass.filter(id => id !== currentMember.id),
+          reject: baseVotes.reject.filter(id => id !== currentMember.id),
+          defer:  baseVotes.defer.filter(id => id !== currentMember.id),
+        };
+        const wasVoting  = baseVotes[vote].includes(currentMember.id);
+        const newVotes   = wasVoting ? cleaned : { ...cleaned, [vote]: [...cleaned[vote], currentMember.id] };
+        const updated    = { candId, votes:newVotes, decision:"pending" as const, chairNote:existing?.chairNote ?? "" };
+        return [...prev.filter(d => d.candId !== candId), updated];
+      });
+    };
+    const eligVotersForCand = (cand: Participant) =>
+      councilMembers.filter(m => m.present && checkCoiFn(m, cand).level !== "hard");
+
+    // ── Tab counts
+    const scoredCount = candidates.filter(p =>
+      checkCoiFn(currentMember, p).level === "hard" || !!candidateScores[p.id]?.submitted
+    ).length;
+    const finalizedCount = hdDecisions.filter(d => d.decision !== "pending").length;
+    const allVotedNew    = candidates.length > 0 && candidates.every(cand => {
+      const ev        = eligVotersForCand(cand);
+      const dec       = getDecision(cand.id);
+      const totalCast = (dec?.votes.pass.length ?? 0) + (dec?.votes.reject.length ?? 0) + (dec?.votes.defer.length ?? 0);
+      return ev.length > 0 && totalCast >= ev.length;
+    });
+
+    const TABS_HD = [
+      { key:"scoring" as const, label:"Chấm điểm & Biểu quyết", icon:PenLine, badge:`${scoredCount}/${candidates.length} · ${finalizedCount} BQ` },
+      { key:"compare" as const, label:"So sánh",                  icon:Columns, badge:null },
+      { key:"minutes" as const, label:"Biên bản",                  icon:FileText, badge:null },
+    ];
+
+    // ── Scoring state for selected candidate
+    const myScore      = selectedCandId ? (candidateScores[selectedCandId] ?? { scores:{}, comment:"", submitted:false }) : null;
+    const localScores  = myScore?.scores ?? {};
+    const localComment = myScore?.comment ?? "";
+    const alreadyScored = myScore?.submitted ?? false;
+    const localTotal   = calcTotalFn(localScores);
+    const localPct     = maxTotalFn > 0 ? localTotal / maxTotalFn : 0;
+    const coiForSelected = selectedCand ? checkCoiFn(currentMember, selectedCand) : { level:"none" as const, reason:"" };
+    const scoreReady   = coiForSelected.level === "none"
+      && c.tieuChi.every(tc => localScores[tc.id] !== undefined)
+      && localComment.trim().length > 0;
+
+    // ── Chair / secretary info for minutes
+    const hdChair = councilMembers.find(m => m.isChair);
+    const hdSecy  = councilMembers.find(m => m.isSecretary) ?? councilMembers.find(m => !m.isChair);
 
     return (
-      <div className="space-y-6">
-        {isAdmin && <AdminHealthBar c={c} />}
-        {isIndividual && <PersonalStatusBanner c={c} myP={myParticipant} danh_hieu={regForm.danh_hieu} hoTen={regForm.hoTen} indivDone={indivDone} />}
-        {isUnitLeader && !canMove && <UnitLeaderContextPanel c={c} user={user} unitDecisions={unitDecisions} />}
+      <div className="flex flex-col overflow-hidden rounded-[12px] border"
+        style={{ borderColor:"#e9d5ff", minHeight:580 }}>
 
-        {/* ── TÓM TẮT Ý KIẾN CÔNG KHAI (từ bước 4) ─────────────── */}
-        <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#c4b5fd" }}>
-          <div className="px-5 py-3 border-b flex items-center gap-2" style={{ background: "#faf5ff", borderColor: "#c4b5fd" }}>
-            <MessageSquare className="size-4 text-[#7c3aed]" />
-            <span className="text-[13px] font-semibold text-[#6d28d9]" style={{ fontFamily: "var(--font-sans)" }}>Tóm tắt ý kiến công khai (Bước 4)</span>
-            <span className="ml-auto text-[13px] px-2 py-0.5 rounded-full" style={{ background: "#ede9fe", color: "#7c3aed", fontFamily: "var(--font-sans)" }}>
-              {publicComments.length} lượt góp ý
+        {/* ── TOP BAR ── */}
+        <div className="px-5 py-3.5 border-b flex items-center gap-3 shrink-0"
+          style={{ borderColor:"#e9d5ff", background:"#faf5ff" }}>
+          <Gavel className="size-4 text-[#7c3aed]" />
+          <div>
+            <span className="text-[14px] font-semibold" style={{ color:"#4c1d95", fontFamily:"var(--font-sans)" }}>
+              {c.name}
+            </span>
+            <span className="text-[13px] ml-2" style={{ color:"#7c3aed", fontFamily:"var(--font-sans)" }}>
+              · Phiên Hội đồng xét duyệt
             </span>
           </div>
-          <div className="px-5 py-3 grid grid-cols-3 gap-4">
-            {[
-              { label:"Đơn vị đã góp ý", val:`${publicComments.length}`, color:"#7c3aed" },
-              { label:"Nhất trí (lượt +1)", val:`${publicComments.reduce((s,c)=>s+c.thumbsUp,0)}`, color:"#166534" },
-              { label:"Điểm trung bình", val:`${publicComments.length>0?Math.round(publicComments.reduce((s,c)=>s+c.thumbsUp,0)/publicComments.length*10)/10:0}/5`, color:"#1C5FBE" },
-            ].map(k=>(
-              <div key={k.label} className="text-center py-2 rounded-[8px]" style={{ background:"#f5f3ff" }}>
-                <div className="text-[18px] font-bold" style={{ color:k.color, fontFamily: "var(--font-sans)" }}>{k.val}</div>
-                <div className="text-[13px]" style={{ color:k.color, fontFamily: "var(--font-sans)" }}>{k.label}</div>
+          <div className="ml-auto flex items-center gap-2">
+            <div className="size-2 rounded-full bg-[#16a34a] animate-pulse" />
+            <span className="text-[13px] text-[#166534]" style={{ fontFamily:"var(--font-sans)" }}>Đang họp</span>
+            <span className="text-[13px] px-2 py-0.5 rounded bg-[#ddeafc] text-[#1a4fa0] border border-[#1C5FBE30]"
+              style={{ fontFamily:"var(--font-sans)" }}>Điều 56 Luật TĐKT 2022</span>
+          </div>
+        </div>
+
+        {/* ── BODY ── */}
+        <div className="flex-1 overflow-hidden flex" style={{ minHeight:0 }}>
+
+          {/* LEFT SIDEBAR */}
+          <div className="w-[240px] shrink-0 border-r flex flex-col overflow-hidden"
+            style={{ borderColor:"#e9d5ff" }}>
+
+            {/* Members */}
+            <div className="px-3 pt-3 pb-2">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] uppercase tracking-wide text-[#635647]"
+                  style={{ fontFamily:"var(--font-sans)" }}>
+                  Thành viên HĐ ({councilMembers.filter(m => m.present).length}/{councilMembers.length})
+                </span>
+                <Shield className="size-3.5 text-[#1C5FBE]" />
               </div>
-            ))}
-          </div>
-          <div className="px-5 pb-3">
-            <p className="text-[13px] text-[#635647] italic" style={{ fontFamily: "var(--font-sans)" }}>
-              Ý kiến nổi bật: "{publicComments[0]?.content?.slice(0,100)}…"
-            </p>
-          </div>
-        </div>
-
-        <SectionHeader icon={Gavel} title="Bước 5 — Hội đồng xét duyệt" sub="Phiên họp Hội đồng TĐKT — Bỏ phiếu kín & lập biên bản (Điều 56–57 Luật TĐKT 2022)" color="#7c3aed" />
-
-        <div className="grid grid-cols-3 gap-4">
-          <InfoCard label="Hồ sơ xét duyệt" value={`${candidates.length}`} icon={FileCheck} color="#7c3aed" />
-          <InfoCard label="Tổng thành viên HĐ" value={`${totalVoters} thành viên`} icon={Users} color="#1C5FBE" />
-          <InfoCard label="Ngưỡng thông qua" value={`≥ ${passThreshold} phiếu`} icon={Vote} color="#166534" />
-        </div>
-
-        {/* ── QUORUM CHECK ──────────────────────────────────────────── */}
-        <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: quorumMet ? "#86efac" : "#fca5a5" }}>
-          <div className="px-5 py-3.5 border-b flex items-center gap-2"
-            style={{ background: quorumMet ? "#f0fdf4" : "#fff1f2", borderColor: quorumMet ? "#86efac" : "#fca5a5" }}>
-            <Users className={`size-4 ${quorumMet ? "text-[#166534]" : "text-[#c8102e]"}`} />
-            <span className={`text-[13px] font-semibold ${quorumMet ? "text-[#166534]" : "text-[#c8102e]"}`}
-              style={{ fontFamily: "var(--font-sans)" }}>
-              Kiểm tra đủ số (Quorum) — Điều 56 Luật TĐKT 2022
-            </span>
-            <span className="ml-auto text-[13px]" style={{ color: quorumMet ? "#166534" : "#c8102e", fontFamily: "var(--font-sans)" }}>
-              {quorumMet ? "✅ Đủ số họp" : "❌ Chưa đủ số họp"}
-            </span>
-          </div>
-          <div className="px-5 py-4 grid grid-cols-3 gap-4 items-center">
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-[#1C5FBE]" style={{ fontFamily: "var(--font-sans)" }}>{totalVoters}</div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tổng thành viên</div>
+              <div className="space-y-1">
+                {councilMembers.map(m => {
+                  const isMe = m.id === currentMember.id;
+                  const coiForSel = selectedCand ? checkCoiFn(m, selectedCand) : { level:"none" as const };
+                  const scoredThisNom = !!(selectedCandId && (
+                    hdMemberScores.some(e => e.memberId === m.id && e.candId === selectedCandId && !e.abstained && Object.keys(e.scores).length > 0)
+                    || (isMe && candidateScores[selectedCandId]?.submitted)
+                  ));
+                  return (
+                    <div key={m.id} className="flex items-center gap-1.5 px-2 py-1.5 rounded-[6px]"
+                      style={{
+                        background: isMe ? "#f5f3ff" : "#fff",
+                        border: `1px solid ${isMe ? "#c4b5fd" : "#e5e7eb"}`,
+                        opacity: m.present ? 1 : 0.5,
+                      }}>
+                      <div className="size-6 rounded-full flex items-center justify-center text-white text-[11px] shrink-0"
+                        style={{ background:m.avatarColor }}>{m.name.charAt(0)}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[12px] text-[#0b1426] truncate"
+                          style={{ fontFamily:"var(--font-sans)", fontWeight:isMe?600:400 }}>
+                          {m.name.split(" ").slice(-1)[0]}{isMe ? " (bạn)" : ""}
+                          {m.isChair && <span className="text-[10px] text-[#b45309] ml-1">Chủ tịch</span>}
+                        </div>
+                        <div className="text-[11px] truncate text-[#9ca3af]" style={{ fontFamily:"var(--font-sans)" }}>
+                          {m.donVi}
+                        </div>
+                      </div>
+                      {selectedCandId && (
+                        coiForSel.level === "hard"
+                          ? <ShieldAlert className="size-3 shrink-0 text-[#c8102e]" />
+                          : scoredThisNom
+                          ? <CheckCircle2 className="size-3 shrink-0 text-[#0f7a3e]" />
+                          : m.present ? <Clock className="size-3 shrink-0 text-[#9ca3af]" /> : null
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="text-center">
-              {canMove ? (
-                <div className="flex items-center justify-center gap-2">
-                  <button className="size-7 rounded-full border text-[14px] font-bold flex items-center justify-center"
-                    style={{ borderColor: "#e5e7eb", color: "#6b7280" }}
-                    onClick={() => setQuorumPresent(p => Math.max(0, p - 1))}>−</button>
-                  <div className="text-[24px] font-bold" style={{ fontFamily: "var(--font-sans)", color: quorumMet ? "#166534" : "#c8102e" }}>{quorumPresent}</div>
-                  <button className="size-7 rounded-full border text-[14px] font-bold flex items-center justify-center"
-                    style={{ borderColor: "#e5e7eb", color: "#6b7280" }}
-                    onClick={() => setQuorumPresent(p => Math.min(totalVoters, p + 1))}>+</button>
+
+            {/* COI legend */}
+            <div className="px-3 pb-2">
+              <div className="rounded-[6px] p-2 bg-white border" style={{ borderColor:"#e5e7eb" }}>
+                <div className="text-[11px] uppercase tracking-wide text-[#635647] mb-1.5"
+                  style={{ fontFamily:"var(--font-sans)" }}>Chú thích</div>
+                {[
+                  { icon:CheckCircle2, color:"#0f7a3e", label:"Đã chấm" },
+                  { icon:Clock,        color:"#635647", label:"Chờ chấm" },
+                  { icon:ShieldAlert,  color:"#c8102e", label:"Xung đột lợi ích (COI)" },
+                ].map(it => {
+                  const Icon = it.icon;
+                  return (
+                    <div key={it.label} className="flex items-center gap-1.5 mb-1">
+                      <Icon className="size-3" style={{ color:it.color }} />
+                      <span className="text-[11px]" style={{ color:it.color, fontFamily:"var(--font-sans)" }}>{it.label}</span>
+                    </div>
+                  );
+                })}
+                <div className="mt-1 pt-1 border-t text-[11px] text-[#635647]"
+                  style={{ borderColor:"#e5e7eb", fontFamily:"var(--font-sans)" }}>
+                  Khoản 4 Điều 56 Luật TĐKT 2022
                 </div>
-              ) : (
-                <div className="text-[24px] font-bold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{quorumPresent}</div>
-              )}
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Có mặt</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-[#b45309]" style={{ fontFamily: "var(--font-sans)" }}>{totalVoters - quorumPresent}</div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Vắng mặt</div>
-            </div>
-          </div>
-          <div className="px-5 pb-3 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-            Yêu cầu tối thiểu: <strong>{quorumThreshold}/{totalVoters} thành viên có mặt</strong> mới hợp lệ để bỏ phiếu · Căn cứ: Điều 56 Luật TĐKT 2022, Điều 73 NĐ 152/2025/NĐ-CP
-          </div>
-        </div>
 
-        {/* ── VOTING PANEL ──────────────────────────────────────────── */}
-        {canMove && (
-          <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: quorumMet ? "#c4b5fd" : "#e5e7eb", opacity: quorumMet ? 1 : 0.5 }}>
-            <div className="px-5 py-4 border-b flex items-center gap-2" style={{ background: quorumMet ? "#f5f3ff" : "#f9fafb", borderColor: quorumMet ? "#c4b5fd" : "#e5e7eb" }}>
-              <Vote className="size-4 text-[#7c3aed]" />
-              <span className="text-[13px] text-[#7c3aed] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>
-                Bỏ phiếu kín — {quorumMet ? "Đủ điều kiện bỏ phiếu" : "Chưa đủ số họp"}
+            <div className="h-px mx-3" style={{ background:"#e9d5ff" }} />
+
+            {/* Nomination queue */}
+            <div className="px-3 pt-2 pb-1">
+              <span className="text-[11px] uppercase tracking-wide text-[#635647]"
+                style={{ fontFamily:"var(--font-sans)" }}>
+                Hồ sơ xét duyệt ({candidates.length})
               </span>
-              <span className="ml-auto text-[13px] text-[#7c3aed]">{Object.keys(votes).length}/{candidates.length} hồ sơ đã xét</span>
             </div>
-            <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
-              {candidates.map(p => (
-                <div key={p.id} className="px-5 py-4 flex items-center gap-4">
-                  <div className="flex-1">
-                    <div className="text-[13px] text-[#0b1426] font-semibold">{p.name}</div>
-                    <div className="text-[13px] text-[#635647]">{p.donVi} · Điểm: {p.score ?? "—"}</div>
+            <div className="flex-1 overflow-y-auto px-2 pb-3 space-y-1.5">
+              {candidates.map(cand => {
+                const isSel = cand.id === selectedCandId;
+                const coi   = checkCoiFn(currentMember, cand);
+                const avg   = avgForCand(cand.id);
+                const myDone = coi.level === "hard" ? true : !!candidateScores[cand.id]?.submitted;
+                const dec    = getDecision(cand.id);
+                const finalized = !!dec && dec.decision !== "pending";
+                const voteDecCfg = finalized ? DEC_MAP[dec!.decision] : null;
+                const eligV  = eligVotersForCand(cand);
+                const totalCast = (dec?.votes.pass.length ?? 0) + (dec?.votes.reject.length ?? 0) + (dec?.votes.defer.length ?? 0);
+                return (
+                  <button key={cand.id}
+                    onClick={() => setExpandedCandidate(cand.id)}
+                    className="w-full text-left rounded-[8px] px-2.5 py-2 border transition-all"
+                    style={{
+                      borderColor: isSel ? "#7c3aed" : finalized && voteDecCfg ? voteDecCfg.border : "#e5e7eb",
+                      background:  isSel ? "#f5f3ff" : "#fff",
+                      boxShadow:   isSel ? "0 0 0 2px #7c3aed20" : "none",
+                    }}>
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      {coi.level === "hard"
+                        ? <ShieldAlert className="size-3 text-[#c8102e] shrink-0" />
+                        : myDone
+                        ? <CheckCircle2 className="size-3 text-[#0f7a3e] shrink-0" />
+                        : <Clock className="size-3 text-[#9ca3af] shrink-0" />}
+                      <span className="text-[12px] text-[#0b1426] flex-1 truncate"
+                        style={{ fontFamily:"var(--font-sans)", fontWeight:isSel?600:500 }}>
+                        {cand.name}
+                      </span>
+                      {avg > 0 && (
+                        <span className="text-[12px] shrink-0"
+                          style={{ color:hdScoreColor(avg/maxTotalFn), fontFamily:"var(--font-sans)", fontWeight:700 }}>
+                          {avg}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-[11px] text-[#635647] flex-1 truncate" style={{ fontFamily:"var(--font-sans)" }}>
+                        {cand.donVi}
+                      </span>
+                      {voteDecCfg && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full shrink-0"
+                          style={{ background:voteDecCfg.bg, color:voteDecCfg.color, fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                          {dec!.decision === "pass" ? "✓ TQ" : dec!.decision === "reject" ? "✗ Bác" : "– Hoãn"}
+                        </span>
+                      )}
+                      {!finalized && dec && totalCast > 0 && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full shrink-0"
+                          style={{ background:"#ddeafc", color:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+                          {totalCast}/{eligV.length}
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>{/* end LEFT SIDEBAR */}
+
+          {/* MAIN PANEL */}
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+
+            {/* Tabs */}
+            <div className="flex items-center gap-0 border-b px-5 shrink-0"
+              style={{ borderColor:"#e9d5ff" }}>
+              {TABS_HD.map(t => {
+                const Icon = t.icon;
+                return (
+                  <button key={t.key} onClick={() => setCouncilTab(t.key)}
+                    className="flex items-center gap-1.5 px-4 py-3 text-[13px] border-b-2 transition-colors"
+                    style={{
+                      fontFamily:"var(--font-sans)",
+                      borderBottomColor: councilTab === t.key ? "#7c3aed" : "transparent",
+                      color:             councilTab === t.key ? "#7c3aed" : "#635647",
+                      fontWeight:        councilTab === t.key ? 600 : 400,
+                      background:"transparent",
+                    }}>
+                    <Icon className="size-3.5" />
+                    {t.label}
+                    {t.badge && (
+                      <span className="px-1.5 py-0.5 rounded text-[12px]"
+                        style={{
+                          background: councilTab === t.key ? "#f5f3ff" : "#eef2f8",
+                          color:      councilTab === t.key ? "#7c3aed" : "#635647",
+                        }}>{t.badge}</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Tab content */}
+            <div className="flex-1 overflow-y-auto p-4" style={{ minHeight:0 }}>
+
+              {/* ══ SCORING TAB ══ */}
+              {councilTab === "scoring" && (
+                <div className="flex gap-4 min-h-full">
+                  {/* LEFT: candidate detail + scoring + voting */}
+                  <div className="flex-1 min-w-0 space-y-4">
+                    {!selectedCand ? (
+                      <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
+                        <div className="size-16 rounded-full flex items-center justify-center" style={{ background:"#f5f3ff" }}>
+                          <Gavel className="size-7 text-[#7c3aed]" />
+                        </div>
+                        <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                          Chọn hồ sơ ở cột bên trái để bắt đầu chấm điểm
+                        </p>
+                      </div>
+                    ) : (<>
+
+                      {/* Candidate info */}
+                      <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+                        <div className="p-4 border-b" style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
+                          <div className="flex items-start gap-3">
+                            <div className="size-9 rounded-[6px] flex items-center justify-center shrink-0"
+                              style={{ background:selectedCand.type==="ca_nhan"?"#ddeafc":"#fde8cc" }}>
+                              {selectedCand.type === "ca_nhan"
+                                ? <User className="size-4 text-[#1a4fa0]" />
+                                : <Users className="size-4 text-[#92400e]" />}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-[14px] text-[#0b1426]"
+                                style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>{selectedCand.name}</h3>
+                              <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                {selectedCand.donVi}
+                                {selectedCand.hinhThucDeNghi ? ` · ${selectedCand.hinhThucDeNghi}` : ""}
+                              </p>
+                            </div>
+                            {avgForCand(selectedCand.id) > 0 && (
+                              <div className="text-right shrink-0">
+                                <div className="text-[20px]"
+                                  style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(avgForCand(selectedCand.id)/maxTotalFn) }}>
+                                  {avgForCand(selectedCand.id)}
+                                </div>
+                                <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Điểm TB</div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        {selectedCand.baoHoaThanhTich && (
+                          <div className="p-4">
+                            <div className="rounded-[6px] p-3 bg-white border" style={{ borderColor:"var(--color-line)" }}>
+                              <div className="text-[12px] uppercase tracking-wide text-[#635647] mb-1"
+                                style={{ fontFamily:"var(--font-sans)" }}>Tóm tắt thành tích</div>
+                              <p className="text-[13px] text-[#0b1426] leading-relaxed"
+                                style={{ fontFamily:"var(--font-sans)" }}>{selectedCand.baoHoaThanhTich}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* COI Warning */}
+                      {coiForSelected.level !== "none" && (
+                        <div className="rounded-[8px] border-l-4 p-4 flex items-start gap-3"
+                          style={{ background:"#fee2e2", borderLeftColor:"#c8102e" }}>
+                          <ShieldAlert className="size-5 shrink-0 mt-0.5 text-[#c8102e]" />
+                          <div>
+                            <div className="text-[13px]"
+                              style={{ color:"#9f1239", fontFamily:"var(--font-sans)", fontWeight:700 }}>
+                              ⛔ XUNG ĐỘT LỢI ÍCH — Không thể chấm điểm
+                            </div>
+                            <p className="text-[13px] mt-0.5 text-[#9f1239]" style={{ fontFamily:"var(--font-sans)" }}>
+                              {coiForSelected.reason}
+                            </p>
+                            <p className="text-[13px] mt-1.5 opacity-80 text-[#9f1239]" style={{ fontFamily:"var(--font-sans)" }}>
+                              Căn cứ: Khoản 4 Điều 56 Luật TĐKT 2022
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Scoring Form */}
+                      {coiForSelected.level === "none" && (
+                        <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+                          <div className="px-4 py-3 border-b flex items-center justify-between"
+                            style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
+                            <div className="flex items-center gap-2">
+                              <Gavel className="size-4 text-[#7c3aed]" />
+                              <span className="text-[13px] text-[#0b1426]"
+                                style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                                {alreadyScored ? "Điểm đã nộp" : "Phiếu chấm điểm"}
+                              </span>
+                              <span className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                {currentMember.name}
+                              </span>
+                            </div>
+                            {alreadyScored && (
+                              <span className="flex items-center gap-1 text-[13px] text-[#0f7a3e]"
+                                style={{ fontFamily:"var(--font-sans)" }}>
+                                <CheckCircle2 className="size-3.5" />Đã nộp
+                              </span>
+                            )}
+                          </div>
+                          <div className="p-4 space-y-2">
+                            {c.tieuChi.map(tc => {
+                              const val  = alreadyScored
+                                ? (candidateScores[selectedCand.id]?.scores[tc.id] ?? 0)
+                                : (localScores[tc.id] ?? 0);
+                              const pct2 = tc.maxScore > 0 ? val / tc.maxScore : 0;
+                              const sc2  = hdScoreColor(pct2);
+                              const updateScore = (v: number) => {
+                                const clamped = Math.min(tc.maxScore, Math.max(0, v));
+                                setCandidateScores(prev => ({
+                                  ...prev,
+                                  [selectedCand.id]: {
+                                    ...(prev[selectedCand.id] ?? { scores:{}, comment:"", submitted:false }),
+                                    scores: { ...(prev[selectedCand.id]?.scores ?? {}), [tc.id]: clamped },
+                                  },
+                                }));
+                              };
+                              return (
+                                <div key={tc.id}
+                                  className={`rounded-[8px] border p-3 transition-all ${alreadyScored ? "opacity-60" : ""}`}
+                                  style={{ borderColor: val > 0 ? "#a78bfa40" : "var(--color-line)", background:"#fff" }}>
+                                  <div className="flex items-center justify-between mb-2">
+                                    <div>
+                                      <div className="text-[13px] text-[#0b1426]"
+                                        style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>{tc.name}</div>
+                                      <div className="text-[12px] text-[#635647]"
+                                        style={{ fontFamily:"var(--font-sans)" }}>Tối đa: {tc.maxScore} điểm</div>
+                                    </div>
+                                    <div className="text-[16px]"
+                                      style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:sc2 }}>{val}</div>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background:"#e5e7eb" }}>
+                                      <div className="h-full rounded-full transition-all"
+                                        style={{ width:`${pct2*100}%`, background:sc2 }} />
+                                    </div>
+                                    {!alreadyScored && (
+                                      <>
+                                        <button onClick={() => updateScore(val - 1)}
+                                          className="size-6 rounded border flex items-center justify-center text-[13px]"
+                                          style={{ borderColor:"#e5e7eb", color:"#374151", background:"#f9fafb" }}>−</button>
+                                        <input type="number" min={0} max={tc.maxScore}
+                                          className="w-12 text-center text-[13px] rounded border ds-input"
+                                          style={{ padding:"2px 4px" }}
+                                          value={localScores[tc.id] ?? 0}
+                                          onChange={e => updateScore(Number(e.target.value))} />
+                                        <button onClick={() => updateScore(val + 1)}
+                                          className="size-6 rounded border flex items-center justify-center text-[13px]"
+                                          style={{ borderColor:"#e5e7eb", color:"#374151", background:"#f9fafb" }}>+</button>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+                            {/* Total */}
+                            <div className="rounded-[8px] p-4 border-2 flex items-center justify-between"
+                              style={{ borderColor:hdScoreColor(localPct) + "60", background:"#ffffff" }}>
+                              <div>
+                                <div className="text-[13px] uppercase tracking-wide text-[#635647]"
+                                  style={{ fontFamily:"var(--font-sans)" }}>Tổng điểm</div>
+                                <div className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                  Tối đa: {maxTotalFn} điểm
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-[24px] leading-none"
+                                  style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(localPct) }}>
+                                  {alreadyScored
+                                    ? calcTotalFn(candidateScores[selectedCand.id]?.scores ?? {})
+                                    : localTotal}
+                                </div>
+                                <div className="text-[13px]"
+                                  style={{ color:hdScoreColor(localPct), fontFamily:"var(--font-sans)" }}>
+                                  {Math.round(localPct * 100)}%
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Comment */}
+                            {!alreadyScored ? (
+                              <div className="space-y-1.5">
+                                <label className="text-[13px] text-[#0b1426]"
+                                  style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                                  Ý kiến nhận xét <span className="text-[#c8102e]">*</span>
+                                </label>
+                                <textarea className="ds-input w-full" rows={3}
+                                  style={{ padding:"10px 12px", resize:"vertical" }}
+                                  placeholder="Nêu nhận xét tổng quát về hồ sơ, thành tích và đề xuất..."
+                                  value={localComment}
+                                  onChange={e => setCandidateScores(prev => ({
+                                    ...prev,
+                                    [selectedCand.id]: {
+                                      ...(prev[selectedCand.id] ?? { scores:{}, comment:"", submitted:false }),
+                                      comment: e.target.value,
+                                    },
+                                  }))} />
+                              </div>
+                            ) : (
+                              <div className="rounded-[6px] p-3 bg-white border" style={{ borderColor:"var(--color-line)" }}>
+                                <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                                  Nhận xét đã nộp
+                                </div>
+                                <p className="text-[13px] text-[#0b1426] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                                  "{candidateScores[selectedCand.id]?.comment}"
+                                </p>
+                              </div>
+                            )}
+
+                            {!alreadyScored && (
+                              <div className="flex items-center gap-3 pt-1">
+                                <div className="flex-1">
+                                  {!scoreReady && (
+                                    <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+                                      style={{ fontFamily:"var(--font-sans)" }}>
+                                      <AlertCircle className="size-3.5" />
+                                      {c.tieuChi.some(tc => localScores[tc.id] === undefined)
+                                        ? "Vui lòng chấm điểm tất cả tiêu chí"
+                                        : "Vui lòng nhập nhận xét"}
+                                    </div>
+                                  )}
+                                </div>
+                                <DsButton variant="primary" size="md" disabled={!scoreReady}
+                                  onClick={() => {
+                                    if (!scoreReady) return;
+                                    setCandidateScores(prev => ({
+                                      ...prev,
+                                      [selectedCand.id]: { ...(prev[selectedCand.id] ?? { scores:{}, comment:"", submitted:false }), submitted:true },
+                                    }));
+                                  }}>
+                                  <Send className="size-4" />Nộp điểm
+                                </DsButton>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {coiForSelected.level === "hard" && (
+                        <div className="rounded-[8px] p-4 text-center"
+                          style={{ background:"#f4f7fb", border:"1px solid #e2e8f0" }}>
+                          <Lock className="size-8 mx-auto mb-2 text-[#e2e8f0]" />
+                          <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                            Bạn không thể chấm điểm hồ sơ này do xung đột lợi ích.
+                          </p>
+                        </div>
+                      )}
+
+                      {/* ── VOTING SECTION ── */}
+                      {(() => {
+                        const vDec      = getDecision(selectedCand.id);
+                        const myCoi2    = coiForSelected;
+                        const eligV     = eligVotersForCand(selectedCand);
+                        const passCount   = vDec?.votes.pass.length   ?? 0;
+                        const rejectCount = vDec?.votes.reject.length ?? 0;
+                        const deferCount  = vDec?.votes.defer.length  ?? 0;
+                        const totalCast   = passCount + rejectCount + deferCount;
+                        const allVotedSel = eligV.length > 0 && totalCast >= eligV.length;
+                        const myVote2     = myVoteForCand(selectedCand.id);
+                        const finalized   = !!vDec && vDec.decision !== "pending";
+                        const decBadge    = DEC_MAP[finalized ? vDec!.decision : "pending"];
+                        const borderColor2 = finalized
+                          ? (vDec!.decision === "pass" ? "#86efac" : vDec!.decision === "reject" ? "#fca5a5" : "#fcd34d")
+                          : "var(--color-line)";
+                        const suggestedDec: HdVC = passCount > rejectCount && passCount > deferCount ? "pass"
+                          : rejectCount > deferCount ? "reject" : "defer";
+                        const isChairMember = currentMember.isChair;
+                        return (
+                          <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:borderColor2 }}>
+                            <div className="px-4 py-3 border-b flex items-center justify-between shrink-0"
+                              style={{
+                                borderColor:"var(--color-line)",
+                                background: finalized
+                                  ? (vDec!.decision === "pass" ? "#f0fdf4" : vDec!.decision === "reject" ? "#fff1f2" : "#fffbeb")
+                                  : "var(--color-paper)",
+                              }}>
+                              <div className="flex items-center gap-2">
+                                <Gavel className="size-4 text-[#7c3aed]" />
+                                <span className="text-[13px] text-[#0b1426]"
+                                  style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>Biểu quyết</span>
+                                {myCoi2.level === "hard" && (
+                                  <span className="text-[12px] px-1.5 py-0.5 rounded border flex items-center gap-1"
+                                    style={{ color:"#374151", background:"#f3f4f6", borderColor:"#d1d5db", fontFamily:"var(--font-sans)" }}>
+                                    <ShieldAlert className="size-3" />Bạn kiêng kỵ (COI)
+                                  </span>
+                                )}
+                              </div>
+                              {vDec && (
+                                <span className="text-[12px] px-2 py-0.5 rounded-full border"
+                                  style={{ color:decBadge.color, background:decBadge.bg, borderColor:decBadge.border, fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                                  {decBadge.label}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Tally bar */}
+                            <div className="px-4 pt-3 pb-2">
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <div className="flex-1 h-2.5 rounded-full overflow-hidden flex gap-px"
+                                  style={{ background:"#f1f5f9" }}>
+                                  {passCount > 0 && (
+                                    <div style={{ width:`${passCount/eligV.length*100}%`, background:HD_VC.pass.barColor, transition:"width 0.3s" }} />
+                                  )}
+                                  {rejectCount > 0 && (
+                                    <div style={{ width:`${rejectCount/eligV.length*100}%`, background:HD_VC.reject.barColor, transition:"width 0.3s" }} />
+                                  )}
+                                  {deferCount > 0 && (
+                                    <div style={{ width:`${deferCount/eligV.length*100}%`, background:HD_VC.defer.barColor, transition:"width 0.3s" }} />
+                                  )}
+                                </div>
+                                <span className="text-[12px] shrink-0"
+                                  style={{ color:allVotedSel?"#166534":"#635647", fontFamily:"var(--font-sans)", fontWeight:allVotedSel?600:400 }}>
+                                  {totalCast}/{eligV.length}{allVotedSel ? " ✓" : ""}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-4 text-[12px]" style={{ fontFamily:"var(--font-sans)" }}>
+                                <span style={{ color:HD_VC.pass.color   }}>✓ {passCount} tán thành</span>
+                                <span style={{ color:HD_VC.reject.color }}>✗ {rejectCount} phản đối</span>
+                                <span style={{ color:HD_VC.defer.color  }}>– {deferCount} hoãn</span>
+                                {eligV.length - totalCast > 0 && (
+                                  <span className="text-[#9ca3af]">? {eligV.length - totalCast} chưa bỏ</span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Member chips */}
+                            <div className="px-4 pb-3 flex flex-wrap gap-1.5">
+                              {councilMembers.filter(m => m.present).map(m => {
+                                const mCoi2  = checkCoiFn(m, selectedCand);
+                                const vote2: HdVC | null = !vDec ? null
+                                  : vDec.votes.pass.includes(m.id)   ? "pass"
+                                  : vDec.votes.reject.includes(m.id) ? "reject"
+                                  : vDec.votes.defer.includes(m.id)  ? "defer"
+                                  : null;
+                                const isMe2  = m.id === currentMember.id;
+                                const vcfg2  = vote2 ? HD_VC[vote2] : null;
+                                return (
+                                  <div key={m.id}
+                                    className="flex items-center gap-1.5 px-2 py-1 rounded-full border text-[12px]"
+                                    style={{
+                                      background:   mCoi2.level==="hard" ? "#f3f4f6" : vcfg2 ? vcfg2.activeBg : "#fafafa",
+                                      borderColor:  mCoi2.level==="hard" ? "#d1d5db" : vcfg2 ? vcfg2.border : "#e5e7eb",
+                                      color:        mCoi2.level==="hard" ? "#6b7280" : vcfg2 ? vcfg2.color : "#374151",
+                                      fontFamily:   "var(--font-sans)", fontWeight: isMe2 ? 600 : 400,
+                                      outline:      isMe2 ? `2px solid ${vcfg2?.color ?? "#94a3b8"}` : "none",
+                                      outlineOffset:"1px",
+                                    }}>
+                                    <span className="size-4 rounded-full flex items-center justify-center text-white text-[10px] shrink-0"
+                                      style={{ background:m.avatarColor }}>{m.name.charAt(0)}</span>
+                                    <span>{m.name.split(" ").slice(-1)[0]}{isMe2 ? " (bạn)" : ""}</span>
+                                    <span className="font-bold">
+                                      {mCoi2.level==="hard" ? "COI" : vote2==="pass" ? "✓" : vote2==="reject" ? "✗" : vote2==="defer" ? "–" : "?"}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* My vote buttons */}
+                            {!finalized && myCoi2.level !== "hard" && (
+                              <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
+                                <div className="text-[12px] text-[#635647] mb-2"
+                                  style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                                  Phiếu của bạn{myVote2 ? " — click lại để thay đổi" : ""}:
+                                </div>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  {(Object.entries(HD_VC) as [HdVC, typeof HD_VC[HdVC]][]).map(([key, cfg]) => {
+                                    const Icon = cfg.icon;
+                                    const isActive = myVote2 === key;
+                                    return (
+                                      <button key={key} onClick={() => handleVoteLocal(selectedCand.id, key)}
+                                        className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border text-[13px] transition-all"
+                                        style={{
+                                          borderColor: isActive ? cfg.color : cfg.border,
+                                          background:  isActive ? cfg.activeBg : cfg.bg,
+                                          color:       cfg.color,
+                                          fontFamily:  "var(--font-sans)", fontWeight: isActive ? 600 : 500,
+                                          boxShadow:   isActive ? `0 0 0 2px ${cfg.color}30` : "none",
+                                        }}>
+                                        <Icon className="size-3.5" />{cfg.label}
+                                        {isActive && <CheckCircle2 className="size-3.5 ml-0.5" />}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Chair finalization */}
+                            {!finalized && isChairMember && allVotedSel && (
+                              <div className="px-4 pb-4 pt-3 border-t"
+                                style={{ borderColor:"var(--color-line)", background:"linear-gradient(to right,#f8faff,#fdf4ff)" }}>
+                                <div className="flex items-center gap-2 mb-2.5">
+                                  <Gavel className="size-3.5 text-[#1C5FBE]" />
+                                  <span className="text-[13px] text-[#1C5FBE]"
+                                    style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                                    Kết luận của Chủ tịch Hội đồng
+                                  </span>
+                                  <span className="text-[12px] px-2 py-0.5 rounded-full"
+                                    style={{ background:"#ddeafc", color:"#1C5FBE", fontFamily:"var(--font-sans)" }}>
+                                    Đề xuất: {HD_VC[suggestedDec].label}
+                                  </span>
+                                </div>
+                                <input className="ds-input ds-input-sm w-full mb-2.5"
+                                  placeholder="Nhập kết luận / ghi chú của Chủ tịch HĐ..."
+                                  value={hdChairNotes[selectedCand.id] ?? ""}
+                                  onChange={e => setHdChairNotes(prev => ({ ...prev, [selectedCand.id]: e.target.value }))} />
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[12px] text-[#635647]"
+                                    style={{ fontFamily:"var(--font-sans)" }}>Xác nhận:</span>
+                                  {(["pass", "reject", "defer"] as HdVC[]).map(choice => {
+                                    const cfg = HD_VC[choice];
+                                    const Icon = cfg.icon;
+                                    const isSuggested = suggestedDec === choice;
+                                    return (
+                                      <button key={choice}
+                                        onClick={() => {
+                                          setHdDecisions(prev => {
+                                            const ex2 = prev.find(d => d.candId === selectedCand.id);
+                                            const upd = {
+                                              candId:    selectedCand.id,
+                                              votes:     ex2?.votes ?? { pass:[], reject:[], defer:[] },
+                                              decision:  choice,
+                                              chairNote: hdChairNotes[selectedCand.id] ?? "",
+                                            };
+                                            return [...prev.filter(d => d.candId !== selectedCand.id), upd];
+                                          });
+                                        }}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border text-[13px] transition-all"
+                                        style={{
+                                          borderColor: cfg.border,
+                                          background:  isSuggested ? cfg.activeBg : cfg.bg,
+                                          color:       cfg.color,
+                                          fontFamily:  "var(--font-sans)", fontWeight: isSuggested ? 600 : 500,
+                                          boxShadow:   isSuggested ? `0 0 0 2px ${cfg.color}25` : "none",
+                                        }}>
+                                        <Icon className="size-3.5" />
+                                        {choice === "pass" ? "Thông qua" : choice === "reject" ? "Bác" : "Hoãn"}
+                                        {isSuggested && <Star className="size-3 ml-0.5 opacity-70" />}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
+                            {finalized && vDec!.chairNote && (
+                              <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
+                                style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
+                                <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
+                                <span className="text-[13px] text-[#635647] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                                  Kết luận Chủ tịch: {vDec!.chairNote}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
+
+                    </>)}
+                  </div>{/* end LEFT scoring column */}
+
+                  {/* RIGHT: Member scores panel */}
+                  <div className="w-[260px] shrink-0 space-y-3">
+                    <div className="text-[12px] uppercase tracking-wide text-[#635647]"
+                      style={{ fontFamily:"var(--font-sans)" }}>
+                      Điểm các thành viên HĐ
+                    </div>
+                    {selectedCand && (() => {
+                      const avgVal    = avgForCand(selectedCand.id);
+                      const allScs    = allScoresForCand(selectedCand.id);
+                      const validCount = allScs.filter(e => !e.abstained && Object.keys(e.scores).length > 0).length;
+                      return (
+                        <>
+                          <div className="rounded-[8px] p-4 border-2 text-center"
+                            style={{ borderColor:"#a78bfa40", background:"#f5f3ff" }}>
+                            <div className="text-[12px] text-[#635647] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                              Điểm trung bình ({validCount} thành viên)
+                            </div>
+                            <div className="text-[36px]"
+                              style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(maxTotalFn > 0 ? avgVal/maxTotalFn : 0), lineHeight:1 }}>
+                              {avgVal}
+                            </div>
+                            <div className="text-[13px] mt-1"
+                              style={{ color:hdScoreColor(maxTotalFn > 0 ? avgVal/maxTotalFn : 0), fontFamily:"var(--font-sans)" }}>
+                              / {maxTotalFn} điểm · {maxTotalFn > 0 ? Math.round(avgVal/maxTotalFn*100) : 0}%
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            {councilMembers.filter(m => m.present).map(m => {
+                              const entry    = allScs.find(e => e.memberId === m.id);
+                              const nomCoi2  = checkCoiFn(m, selectedCand);
+                              const isMe3    = m.id === currentMember.id;
+                              const total2   = entry && !entry.abstained ? calcTotalFn(entry.scores) : null;
+                              return (
+                                <div key={m.id} className="rounded-[8px] p-3 border"
+                                  style={{
+                                    borderColor: isMe3 ? "#a78bfa40" : "var(--color-line)",
+                                    background:  isMe3 ? "#f5f3ff" : "#fff",
+                                  }}>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <div className="size-7 rounded-full flex items-center justify-center text-white text-[11px] shrink-0"
+                                      style={{ background:m.avatarColor }}>{m.name.charAt(0)}</div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-[13px] text-[#0b1426] truncate"
+                                        style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                                        {m.name}
+                                        {isMe3 && <span className="text-[12px] ml-1 opacity-70">(bạn)</span>}
+                                        {m.isChair && <span className="text-[12px] ml-1 text-[#b45309]">Chủ tịch</span>}
+                                      </div>
+                                      <div className="text-[12px] text-[#635647] truncate" style={{ fontFamily:"var(--font-sans)" }}>
+                                        {m.donVi}
+                                      </div>
+                                    </div>
+                                    {nomCoi2.level === "hard" ? (
+                                      <span className="flex items-center gap-0.5 text-[12px] px-1.5 py-0.5 rounded bg-[#fee2e2] text-[#9f1239] border border-[#fca5a5]"
+                                        style={{ fontFamily:"var(--font-sans)" }}>
+                                        <ShieldAlert className="size-2.5" />COI
+                                      </span>
+                                    ) : total2 !== null ? (
+                                      <div className="text-[14px]"
+                                        style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(maxTotalFn>0?total2/maxTotalFn:0) }}>
+                                        {total2}
+                                      </div>
+                                    ) : (
+                                      <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Chờ...</span>
+                                    )}
+                                  </div>
+                                  {total2 !== null && (
+                                    <div className="flex gap-0.5 h-1.5 rounded-full overflow-hidden">
+                                      {c.tieuChi.map(tc => {
+                                        const v = entry?.scores[tc.id] ?? 0;
+                                        return (
+                                          <div key={tc.id} className="h-full"
+                                            title={`${tc.name}: ${v}/${tc.maxScore}`}
+                                            style={{ width:`${(tc.maxScore/maxTotalFn)*100}%`, background:"#7c3aed", opacity: tc.maxScore>0 ? v/tc.maxScore*0.7+0.3 : 1 }} />
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  {entry?.comment && (
+                                    <p className="text-[13px] text-[#635647] mt-1.5 italic leading-relaxed line-clamp-2"
+                                      style={{ fontFamily:"var(--font-sans)" }}>"{entry.comment}"</p>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>{/* end RIGHT member scores */}
+                </div>
+              )}
+
+              {/* ══ COMPARE TAB ══ */}
+              {councilTab === "compare" && (() => {
+                const toggleCompare = (id: string) => {
+                  if (compareSelected.includes(id))
+                    setCompareSelected(prev => prev.filter(x => x !== id));
+                  else if (compareSelected.length < 3)
+                    setCompareSelected(prev => [...prev, id]);
+                };
+                const compared = candidates.filter(p => compareSelected.includes(p.id));
+                const compAvgs = compared.map(p => ({
+                  cand: p,
+                  avg:  avgForCand(p.id),
+                  byCriteria: c.tieuChi.map(tc => {
+                    const all2 = allScoresForCand(p.id).filter(e => !e.abstained && e.scores[tc.id] !== undefined);
+                    const avgTc = all2.length
+                      ? Math.round(all2.reduce((s, e) => s + e.scores[tc.id], 0) / all2.length)
+                      : 0;
+                    return { id:tc.id, avg:avgTc, maxScore:tc.maxScore, name:tc.name };
+                  }),
+                }));
+                return (
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-[13px] text-[#635647] mb-2 flex items-center gap-1.5"
+                        style={{ fontFamily:"var(--font-sans)" }}>
+                        <Columns className="size-3.5" />Chọn tối đa 3 hồ sơ để so sánh
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {candidates.map(p => (
+                          <button key={p.id} onClick={() => toggleCompare(p.id)}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border text-[13px] transition-all"
+                            style={{
+                              borderColor: compareSelected.includes(p.id) ? "#7c3aed" : "var(--color-line)",
+                              background:  compareSelected.includes(p.id) ? "#f5f3ff" : "#fff",
+                              color:       compareSelected.includes(p.id) ? "#7c3aed" : "#4a5568",
+                              fontFamily:  "var(--font-sans)", fontWeight: compareSelected.includes(p.id) ? 600 : 400,
+                            }}>
+                            {compareSelected.includes(p.id) && <Check className="size-3" />}
+                            {p.name}
+                            <span className="text-[12px] opacity-70">{p.donVi}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {compared.length < 2 ? (
+                      <div className="flex flex-col items-center gap-3 py-16 text-center">
+                        <Columns className="size-10 text-[#e2e8f0]" />
+                        <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                          Chọn ít nhất 2 hồ sơ để so sánh
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+                        <div className="grid border-b"
+                          style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`, borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
+                          <div className="px-4 py-3 text-[12px] text-[#635647] uppercase tracking-wide"
+                            style={{ fontFamily:"var(--font-sans)" }}>Tiêu chí</div>
+                          {compAvgs.map(a => (
+                            <div key={a.cand.id} className="px-4 py-3 border-l" style={{ borderColor:"var(--color-line)" }}>
+                              <div className="text-[13px] text-[#0b1426]"
+                                style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>{a.cand.name}</div>
+                              <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                {a.cand.donVi}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {c.tieuChi.map(tc => {
+                          const maxVal = Math.max(...compAvgs.map(a => a.byCriteria.find(x => x.id === tc.id)?.avg ?? 0));
+                          return (
+                            <div key={tc.id} className="grid border-b hover:bg-[#fafafa]"
+                              style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`, borderColor:"var(--color-line)" }}>
+                              <div className="px-4 py-3 flex items-center gap-1.5">
+                                <div className="size-2 rounded-full shrink-0" style={{ background:"#7c3aed" }} />
+                                <div>
+                                  <div className="text-[13px] text-[#0b1426]"
+                                    style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>{tc.name}</div>
+                                  <div className="text-[12px] text-[#635647]"
+                                    style={{ fontFamily:"var(--font-sans)" }}>/{tc.maxScore}đ</div>
+                                </div>
+                              </div>
+                              {compAvgs.map(a => {
+                                const val   = a.byCriteria.find(x => x.id === tc.id)?.avg ?? 0;
+                                const isMax = val === maxVal && maxVal > 0;
+                                return (
+                                  <div key={a.cand.id} className="px-4 py-3 border-l flex items-center gap-2"
+                                    style={{ borderColor:"var(--color-line)", background:isMax?"rgba(22,163,74,0.06)":"transparent" }}>
+                                    <div className="text-[18px]"
+                                      style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(tc.maxScore>0?val/tc.maxScore:0) }}>
+                                      {val}
+                                    </div>
+                                    {isMax && <Trophy className="size-3.5 text-[#8a6400]" />}
+                                    <div className="flex-1 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
+                                      <div className="h-full rounded-full"
+                                        style={{ width:`${tc.maxScore>0?(val/tc.maxScore)*100:0}%`, background:"#7c3aed" }} />
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                        <div className="grid"
+                          style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)` }}>
+                          <div className="px-4 py-3">
+                            <div className="text-[13px] text-[#0b1426]"
+                              style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>TỔNG ĐIỂM</div>
+                          </div>
+                          {compAvgs.map(a => {
+                            const bestAvg = Math.max(...compAvgs.map(x => x.avg));
+                            const isBest = a.avg === bestAvg && bestAvg > 0;
+                            return (
+                              <div key={a.cand.id} className="px-4 py-3 border-l"
+                                style={{ borderColor:"var(--color-line)", background:isBest?"rgba(22,163,74,0.06)":"transparent" }}>
+                                <div className="flex items-center gap-1.5">
+                                  <div className="text-[24px]"
+                                    style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(maxTotalFn>0?a.avg/maxTotalFn:0) }}>
+                                    {a.avg}
+                                  </div>
+                                  {isBest && <Trophy className="size-4 text-[#8a6400]" />}
+                                </div>
+                                <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                  / {maxTotalFn} · {maxTotalFn>0?Math.round(a.avg/maxTotalFn*100):0}%
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button disabled={!quorumMet}
-                      onClick={() => setVotes(v => ({ ...v, [p.id]: "yes" }))}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border text-[13px] font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{
-                        background: votes[p.id] === "yes" ? "#dcfce7" : "white",
-                        borderColor: votes[p.id] === "yes" ? "#86efac" : "#e5e7eb",
-                        color: votes[p.id] === "yes" ? "#166534" : "#6b7280",
-                      }}>
-                      <ThumbsUp className="size-3.5" />Tán thành
-                    </button>
-                    <button disabled={!quorumMet}
-                      onClick={() => setVotes(v => ({ ...v, [p.id]: "no" }))}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border text-[13px] font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{
-                        background: votes[p.id] === "no" ? "#fee2e2" : "white",
-                        borderColor: votes[p.id] === "no" ? "#fca5a5" : "#e5e7eb",
-                        color: votes[p.id] === "no" ? "#c8102e" : "#6b7280",
-                      }}>
-                      <ThumbsDown className="size-3.5" />Không tán thành
-                    </button>
+                );
+              })()}
+
+              {/* ══ MINUTES TAB ══ */}
+              {councilTab === "minutes" && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FileText className="size-4 text-[#7c3aed]" />
+                      <span className="text-[13px] text-[#0b1426]"
+                        style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                        Dự thảo Biên bản họp Hội đồng TĐKT
+                      </span>
+                    </div>
+                    <DsButton variant="secondary" size="sm">
+                      <Download className="size-3.5" />Xuất PDF
+                    </DsButton>
                   </div>
-                  {votes[p.id] && (
-                    <span className="text-[13px] px-2 py-0.5 rounded-full shrink-0"
-                      style={{ background: votes[p.id] === "yes" ? "#dcfce7" : "#fee2e2", color: votes[p.id] === "yes" ? "#166534" : "#c8102e", fontFamily: "var(--font-sans)" }}>
-                      {yesVotes >= passThreshold && votes[p.id] === "yes" ? "Thông qua" : votes[p.id] === "yes" ? "Tán thành" : "Không tán thành"}
-                    </span>
+
+                  {/* Form fields */}
+                  {!minutesForm.signed && (
+                    <div className="rounded-[10px] border p-4 space-y-3" style={{ borderColor:"var(--color-line)" }}>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[12px] text-[#635647] mb-1 block"
+                            style={{ fontFamily:"var(--font-sans)" }}>Chủ tọa</label>
+                          <input className="ds-input w-full" value={minutesForm.chuToa}
+                            onChange={e => setMinutesForm(f => ({ ...f, chuToa:e.target.value }))}
+                            placeholder={hdChair?.name ?? "Họ tên chủ tọa..."} />
+                        </div>
+                        <div>
+                          <label className="text-[12px] text-[#635647] mb-1 block"
+                            style={{ fontFamily:"var(--font-sans)" }}>Thư ký</label>
+                          <input className="ds-input w-full" value={minutesForm.thuKy}
+                            onChange={e => setMinutesForm(f => ({ ...f, thuKy:e.target.value }))}
+                            placeholder={hdSecy?.name ?? "Họ tên thư ký..."} />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[12px] text-[#635647] mb-1 block"
+                          style={{ fontFamily:"var(--font-sans)" }}>Địa điểm</label>
+                        <input className="ds-input w-full" value={minutesForm.diaDiem}
+                          onChange={e => setMinutesForm(f => ({ ...f, diaDiem:e.target.value }))} />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Minutes document */}
+                  <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
+                    <div className="px-8 py-6 space-y-5 bg-white" style={{ fontFamily:"var(--font-sans)" }}>
+                      <div className="text-center space-y-1 border-b pb-5" style={{ borderColor:"var(--color-line)" }}>
+                        <div className="text-[12px] uppercase tracking-widest text-[#635647]">
+                          ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI
+                        </div>
+                        <div className="text-[12px] uppercase tracking-widest text-[#635647]">
+                          HỘI ĐỒNG THI ĐUA – KHEN THƯỞNG
+                        </div>
+                        <div className="h-px bg-[#e2e8f0] my-2" />
+                        <h2 className="text-[18px] text-[#0b1426]"
+                          style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>
+                          BIÊN BẢN HỌP HỘI ĐỒNG XÉT DUYỆT
+                        </h2>
+                        <p className="text-[14px] text-[#0b1426]">
+                          Phong trào: <strong>{c.name}</strong>
+                        </p>
+                        <p className="text-[13px] text-[#635647]">
+                          {minutesForm.ngayHop ? `Ngày ${minutesForm.ngayHop.split("-").reverse().join("/")}` : ""}
+                          {minutesForm.diaDiem ? ` · ${minutesForm.diaDiem}` : ""}
+                        </p>
+                      </div>
+
+                      <div>
+                        <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontWeight:700 }}>
+                          I. THÀNH PHẦN THAM DỰ
+                        </div>
+                        <table className="w-full text-[13px] border-collapse">
+                          <thead>
+                            <tr style={{ background:"var(--color-paper)" }}>
+                              {["STT","Họ và tên","Chức danh","Đơn vị","Có mặt"].map(h => (
+                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-[#635647] uppercase tracking-wide"
+                                  style={{ borderColor:"var(--color-line)" }}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {councilMembers.map((m, i) => (
+                              <tr key={m.id} className="hover:bg-[#fafafa]">
+                                <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
+                                <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:m.isChair||m.isSecretary?600:400 }}>
+                                  {m.name}</td>
+                                <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>
+                                  {m.isChair ? "Chủ tịch" : m.isSecretary ? "Thư ký" : "Ủy viên"}</td>
+                                <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>{m.donVi}</td>
+                                <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>
+                                  {m.present
+                                    ? <CheckCircle2 className="size-3.5 inline text-[#0f7a3e]" />
+                                    : <X className="size-3.5 inline text-[#c8102e]" />}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <p className="text-[13px] text-[#635647] mt-2">
+                          Có mặt: <strong>{councilMembers.filter(m=>m.present).length}</strong> thành viên.
+                          Vắng mặt: <strong>{councilMembers.filter(m=>!m.present).length}</strong>
+                          {councilMembers.filter(m=>!m.present).length > 0
+                            ? ` (${councilMembers.filter(m=>!m.present).map(m=>m.name).join(", ")})`
+                            : " (Không có)"}.
+                        </p>
+                      </div>
+
+                      <div>
+                        <div className="text-[13px] text-[#0b1426] mb-3" style={{ fontWeight:700 }}>
+                          II. KẾT QUẢ CHẤM ĐIỂM VÀ BIỂU QUYẾT
+                        </div>
+                        <table className="w-full text-[13px] border-collapse">
+                          <thead>
+                            <tr style={{ background:"var(--color-paper)" }}>
+                              {["STT","Tên cá nhân/tập thể","Đơn vị","Hình thức KT","Điểm TB","Kết quả"].map(h => (
+                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-[#635647] uppercase tracking-wide"
+                                  style={{ borderColor:"var(--color-line)" }}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {candidates.map((p, i) => {
+                              const avgP  = avgForCand(p.id);
+                              const decP  = getDecision(p.id);
+                              const decLabel = decP?.decision==="pass" ? "✓ Thông qua"
+                                : decP?.decision==="reject" ? "✗ Không thông qua"
+                                : decP?.decision==="defer"  ? "Hoãn"
+                                : "Chờ biểu quyết";
+                              const decColor = decP?.decision==="pass" ? "#166534"
+                                : decP?.decision==="reject" ? "#9f1239" : "#92400e";
+                              return (
+                                <tr key={p.id} className="hover:bg-[#fafafa]">
+                                  <td className="px-3 py-2 border text-center" style={{ borderColor:"var(--color-line)" }}>{i+1}</td>
+                                  <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)", fontWeight:600 }}>{p.name}</td>
+                                  <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>{p.donVi}</td>
+                                  <td className="px-3 py-2 border" style={{ borderColor:"var(--color-line)" }}>{p.hinhThucDeNghi ?? "—"}</td>
+                                  <td className="px-3 py-2 border text-center"
+                                    style={{ borderColor:"var(--color-line)", fontWeight:700, color:hdScoreColor(maxTotalFn>0?avgP/maxTotalFn:0) }}>
+                                    {avgP}/{maxTotalFn}
+                                  </td>
+                                  <td className="px-3 py-2 border"
+                                    style={{ borderColor:"var(--color-line)", color:decColor, fontWeight:600 }}>
+                                    {decLabel}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div>
+                        <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontWeight:700 }}>
+                          III. KẾT LUẬN VÀ KIẾN NGHỊ
+                        </div>
+                        <p className="text-[13px] text-[#4a5568] leading-relaxed">
+                          Hội đồng TĐKT nhất trí đề nghị tặng khen thưởng cho{" "}
+                          <strong>{hdDecisions.filter(d => d.decision === "pass").length}</strong> cá nhân/tập thể
+                          có thành tích xuất sắc. Hồ sơ được chuyển trình cấp có thẩm quyền ký ban hành Quyết định.
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-8 pt-4 border-t" style={{ borderColor:"var(--color-line)" }}>
+                        <div className="text-center space-y-12">
+                          <div>
+                            <div className="text-[12px] text-[#635647] uppercase tracking-wide">Thư ký Hội đồng</div>
+                            <div className="text-[13px] text-[#0b1426] mt-8"
+                              style={{ fontWeight:600 }}>{minutesForm.thuKy || hdSecy?.name}</div>
+                          </div>
+                        </div>
+                        <div className="text-center space-y-12">
+                          <div>
+                            <div className="text-[12px] text-[#635647] uppercase tracking-wide">Chủ tịch Hội đồng</div>
+                            <div className="text-[13px] text-[#0b1426] mt-8"
+                              style={{ fontWeight:600 }}>{minutesForm.chuToa || hdChair?.name}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sign button */}
+                  {!minutesForm.signed && (
+                    <div className="flex items-center justify-end gap-3">
+                      <DsButton variant="primary" size="md"
+                        disabled={!minutesForm.chuToa.trim() || !minutesForm.thuKy.trim()}
+                        onClick={() => setMinutesForm(f => ({ ...f, signed:true }))}>
+                        <PenLine className="size-4" />Ký xác nhận biên bản
+                      </DsButton>
+                    </div>
+                  )}
+                  {minutesForm.signed && (
+                    <div className="flex items-center gap-2 p-3 rounded-[8px]"
+                      style={{ background:"#f0fdf4", border:"1px solid #86efac" }}>
+                      <CheckCircle2 className="size-4 text-[#0f7a3e] shrink-0" />
+                      <span className="text-[13px] text-[#166534]"
+                        style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                        Biên bản đã được ký xác nhận
+                      </span>
+                    </div>
                   )}
                 </div>
-              ))}
-            </div>
-            {allVoted && (
-              <div className="px-5 py-4 border-t" style={{ background: "#fef9ec", borderColor: "#fcd34d" }}>
-                <div className="text-[13px] text-[#92400e] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>
-                  Kết quả: {yesVotes} tán thành / {noVotes} không tán thành / {totalVoters - quorumPresent} vắng
-                  {yesVotes >= passThreshold
-                    ? <span className="ml-2 text-[#166534]">✅ Đủ 2/3 — Thông qua</span>
-                    : <span className="ml-2 text-[#c8102e]">❌ Chưa đủ {passThreshold} phiếu</span>}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── BIÊN BẢN HỌP HỘI ĐỒNG ─────────────────────────────────── */}
-        {canMove && allVoted && (
-          <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "#93c5fd" }}>
-            <div className="px-5 py-3.5 border-b flex items-center gap-2"
-              style={{ background: "#eff6ff", borderColor: "#93c5fd" }}>
-              <Clipboard className="size-4 text-[#1a4fa0]" />
-              <span className="text-[13px] text-[#1a4fa0] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>
-                Biên bản họp Hội đồng TĐKT
-              </span>
-              {minutesForm.signed && (
-                <span className="ml-auto flex items-center gap-1 text-[13px] px-2 py-0.5 rounded-full"
-                  style={{ background: "#dcfce7", color: "#166534", fontFamily: "var(--font-sans)" }}>
-                  <CheckCircle2 className="size-3" />Đã ký xác nhận
-                </span>
               )}
-              <span className="ml-auto text-[13px] text-[#6b7280]" style={{ fontFamily: "var(--font-sans)" }}>
-                Căn cứ: Điều 56–57 Luật TĐKT 2022 · Điều 73–75 NĐ 152/2025/NĐ-CP
-              </span>
-            </div>
 
-            {minutesForm.signed ? (
-              /* Biên bản đã ký — hiển thị tóm tắt */
-              <div className="px-5 py-4 space-y-3">
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                  {[
-                    ["Số hiệu", minutesForm.soHieu],
-                    ["Ngày họp", fmtDate(minutesForm.ngayHop)],
-                    ["Địa điểm", minutesForm.diaDiem],
-                    ["Chủ tọa", minutesForm.chuToa],
-                    ["Thư ký", minutesForm.thuKy],
-                    ["Có mặt", `${quorumPresent}/${totalVoters} thành viên`],
-                  ].map(([k, v]) => (
-                    <div key={k} className="flex gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-                      <span className="text-[#635647] w-20 shrink-0">{k}:</span>
-                      <span className="text-[#0b1426] font-semibold">{v}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-3 rounded-[6px] border" style={{ borderColor: "#dcfce7", background: "#f0fdf4" }}>
-                  <div className="text-[13px] text-[#166534] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>
-                    Kết quả biểu quyết: {yesVotes} tán thành / {noVotes} không tán thành / {totalVoters - quorumPresent} vắng
-                    — {candidates.filter(p => votes[p.id] === "yes").length}/{candidates.length} hồ sơ được thông qua
-                  </div>
-                </div>
-                <button className="text-[13px] text-[#1a4fa0] underline" onClick={() => setMinutesForm(f => ({ ...f, signed: false }))}
-                  style={{ fontFamily: "var(--font-sans)" }}>Sửa biên bản</button>
-              </div>
-            ) : (
-              /* Form nhập biên bản */
-              <div className="px-5 py-4 space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="ds-input-root">
-                    <label className="ds-input-label">Số hiệu biên bản</label>
-                    <input className="ds-input ds-input-sm" value={minutesForm.soHieu}
-                      onChange={e => setMinutesForm(f => ({ ...f, soHieu: e.target.value }))} />
-                  </div>
-                  <div className="ds-input-root">
-                    <label className="ds-input-label">Ngày họp</label>
-                    <input type="date" className="ds-input ds-input-sm" value={minutesForm.ngayHop}
-                      onChange={e => setMinutesForm(f => ({ ...f, ngayHop: e.target.value }))} />
-                  </div>
-                </div>
-                <div className="ds-input-root">
-                  <label className="ds-input-label">Địa điểm họp</label>
-                  <input className="ds-input ds-input-sm" value={minutesForm.diaDiem}
-                    onChange={e => setMinutesForm(f => ({ ...f, diaDiem: e.target.value }))} />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="ds-input-root">
-                    <label className="ds-input-label ds-input-label-required">Chủ tọa</label>
-                    <input className="ds-input ds-input-sm" placeholder="Họ tên chủ tọa..." value={minutesForm.chuToa}
-                      onChange={e => setMinutesForm(f => ({ ...f, chuToa: e.target.value }))} />
-                  </div>
-                  <div className="ds-input-root">
-                    <label className="ds-input-label ds-input-label-required">Thư ký</label>
-                    <input className="ds-input ds-input-sm" placeholder="Họ tên thư ký..." value={minutesForm.thuKy}
-                      onChange={e => setMinutesForm(f => ({ ...f, thuKy: e.target.value }))} />
-                  </div>
-                </div>
-                <div className="p-3 rounded-[6px] border" style={{ borderColor: "#e9d5ff", background: "#faf5ff" }}>
-                  <div className="text-[13px] text-[#7c3aed] font-semibold mb-1" style={{ fontFamily: "var(--font-sans)" }}>
-                    Kết quả biểu quyết (tự động):
-                  </div>
-                  <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
-                    Tán thành: <strong>{yesVotes}</strong> · Không tán thành: <strong>{noVotes}</strong> · Vắng: <strong>{totalVoters - quorumPresent}</strong>
-                    &nbsp;— Ngưỡng thông qua: ≥ {passThreshold} phiếu
-                  </div>
-                </div>
-                <div className="ds-input-root">
-                  <label className="ds-input-label">Nội dung ban hành</label>
-                  <textarea className="ds-input" rows={2} style={{ padding: "8px 12px" }} value={minutesForm.noiDung}
-                    placeholder="Tóm tắt nội dung kết luận của Hội đồng..."
-                    onChange={e => setMinutesForm(f => ({ ...f, noiDung: e.target.value }))} />
-                </div>
-                <div className="ds-input-root">
-                  <label className="ds-input-label">Ghi chú</label>
-                  <input className="ds-input ds-input-sm" value={minutesForm.ghiChu}
-                    onChange={e => setMinutesForm(f => ({ ...f, ghiChu: e.target.value }))} />
-                </div>
-                <button
-                  disabled={!canSign}
-                  onClick={() => setMinutesForm(f => ({ ...f, signed: true }))}
-                  className="flex items-center gap-2 px-4 h-9 rounded-[6px] border text-[13px] font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ borderColor: "#1a4fa0", background: "#eff6ff", color: "#1a4fa0", fontFamily: "var(--font-sans)" }}>
-                  <Stamp className="size-4" />Ký xác nhận biên bản
-                </button>
-                {!canSign && (
-                  <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-                    Điền đầy đủ họ tên Chủ tọa và Thư ký để ký xác nhận
-                  </p>
-                )}
-              </div>
+            </div>{/* end tab content */}
+          </div>{/* end MAIN PANEL */}
+        </div>{/* end BODY */}
+
+        {/* ── FOOTER ── */}
+        <div className="px-5 py-4 border-t shrink-0"
+          style={{ borderColor:"#e9d5ff", background:"var(--color-paper)" }}>
+          {canMove && (
+            <div className="mb-3">
+              <ReadinessPanel warnings={checkTransitionReadiness(c, {
+                allVoted: allVotedNew,
+                quorumMet: true,
+                yesVotes: hdDecisions.filter(d => d.decision === "pass").length,
+                noVotes: 0,
+                passThreshold: 0,
+                minutesSigned: minutesForm.signed,
+              })} />
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
+            {canMove && (
+              <DsButton variant="primary" size="md" onClick={doTransition}
+                disabled={!allVotedNew || !minutesForm.signed}>
+                <CheckCheck className="size-4" />Trình lãnh đạo duyệt
+              </DsButton>
             )}
           </div>
-        )}
-
-        {canMove && (
-          <ReadinessPanel warnings={checkTransitionReadiness(c, {
-            allVoted,
-            quorumMet,
-            yesVotes,
-            noVotes,
-            passThreshold,
-            minutesSigned: minutesForm.signed,
-          })} />
-        )}
-        <div className="flex items-center justify-between">
-          <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
-          {canMove && (
-            <DsButton variant="primary" size="md" onClick={doTransition} disabled={!allVoted || !minutesForm.signed}>
-              <CheckCheck className="size-4" />Trình lãnh đạo duyệt
-            </DsButton>
-          )}
         </div>
+
       </div>
     );
   }
+
 
   /* ── FINAL_APPROVAL ────────────────────────────────────────────── */
   if (c.state === "final_approval") {
@@ -3442,11 +5147,19 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <span className="text-[13px] text-[#6d28d9] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>
                     Ký số điện tử — CA Token
                   </span>
+                  <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: "#fef9c3", color: "#854d0e", fontWeight: 700, border: "1px solid #fde047" }}>
+                    DEMO
+                  </span>
                   <span className="ml-auto text-[13px] px-2 py-0.5 rounded-full" style={{ background: "#ede9fe", color: "#7c3aed", fontWeight: 600 }}>
                     Bắt buộc xác thực
                   </span>
                 </div>
                 <div className="p-5 space-y-3" style={{ background: "#faf5ff" }}>
+                  <div className="flex items-start gap-2 px-3 py-2.5 rounded-[8px] text-[13px]"
+                    style={{ background: "#fef9c3", border: "1px solid #fde047", color: "#713f12", fontFamily: "var(--font-sans)" }}>
+                    <AlertCircle className="size-4 shrink-0 mt-px" style={{ color: "#854d0e" }} />
+                    <span>Đây là <strong>mô phỏng (mock)</strong> — chưa tích hợp API ký số thực. Nhập bất kỳ 4+ số để xác thực trong môi trường demo. Khi triển khai thực tế cần kết nối CA Token hardware/service.</span>
+                  </div>
                   <div className="grid grid-cols-2 gap-3 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                     {[
                       { label: "Người ký", val: user.name ?? "Lãnh đạo cấp cao" },
@@ -3504,6 +5217,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <div className="text-right">
                     <div className="text-[13px] text-white/60">Mã xác thực</div>
                     <div className="text-[13px] text-white font-mono font-bold">SIG-{Date.now().toString(36).toUpperCase().slice(-8)}</div>
+                    <div className="mt-1 text-[11px] px-1.5 py-0.5 rounded inline-block" style={{ background: "#fef9c3", color: "#713f12", fontWeight: 700 }}>DEMO · Chưa ký thực</div>
                   </div>
                 </div>
               </div>
@@ -3585,6 +5299,67 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             <DsButton variant="secondary" size="sm"><Printer className="size-3.5" />In quyết định</DsButton>
           </div>
         </div>
+
+        {/* ── CN: TẢI QĐ & XÁC NHẬN NHẬN KHEN THƯỞNG ─────────── */}
+        {isIndividual && (() => {
+          const myWin = c.participants.find(p =>
+            p.hoSoStatus === "da_duyet" && (p.name === user.name || p.name === regForm.hoTen)
+          ) ?? (c.participants.filter(p => p.hoSoStatus === "da_duyet")[0] ?? null);
+          if (!myWin) return (
+            <div className="rounded-[12px] border p-5 flex items-center gap-4"
+              style={{ borderColor:"#e5e7eb", background:"#f9fafb", fontFamily:"var(--font-sans)" }}>
+              <AlertCircle className="size-6 text-[#9ca3af] shrink-0" />
+              <div>
+                <p className="text-[13px] font-semibold text-[#374151]">Hồ sơ của bạn không có trong danh sách khen thưởng</p>
+                <p className="text-[13px] text-[#6b7280] mt-0.5">Quyết định khen thưởng không bao gồm hồ sơ của bạn trong đợt này.</p>
+              </div>
+            </div>
+          );
+          return cnAcknowledged ? (
+            <div className="rounded-[12px] border-2 p-5 flex items-center gap-4"
+              style={{ borderColor:"#6ee7b7", background:"#f0fdf4", fontFamily:"var(--font-sans)" }}>
+              <CheckCircle2 className="size-8 text-[#16a34a] shrink-0" />
+              <div>
+                <p className="text-[14px] font-bold text-[#166534]">Đã xác nhận nhận khen thưởng</p>
+                <p className="text-[13px] text-[#14532d] mt-0.5">
+                  Bạn đã xác nhận nhận danh hiệu <strong>{myWin.hinhThucDeNghi ?? c.awards[0]}</strong>. Chúc mừng!
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-[12px] border-2 overflow-hidden" style={{ borderColor:"#fcd34d" }}>
+              <div className="px-5 py-4 border-b flex items-center gap-3"
+                style={{ background:"#fffbeb", borderColor:"#fcd34d" }}>
+                <Award className="size-5 text-[#b45309]" />
+                <div className="flex-1">
+                  <p className="text-[14px] font-bold text-[#92400e]">Bạn được khen thưởng trong đợt này!</p>
+                  <p className="text-[13px] text-[#b45309] mt-0.5">
+                    Danh hiệu: <strong>{myWin.hinhThucDeNghi ?? c.awards[0]}</strong> · Đơn vị: {myWin.donVi}
+                  </p>
+                </div>
+              </div>
+              <div className="p-5 space-y-3">
+                <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                  Vui lòng tải Quyết định khen thưởng và xác nhận đã nhận để hoàn tất thủ tục.
+                </p>
+                <div className="flex gap-3">
+                  <DsButton variant="secondary" size="md" className="flex-1">
+                    <Download className="size-4" />Tải Quyết định (PDF)
+                  </DsButton>
+                  <DsButton variant="secondary" size="md" className="flex-1">
+                    <Printer className="size-4" />In Quyết định
+                  </DsButton>
+                </div>
+                <DsButton variant="primary" size="lg" className="w-full" onClick={() => setCnAcknowledged(true)}>
+                  <CheckCircle2 className="size-4" />Xác nhận đã nhận khen thưởng
+                </DsButton>
+                <p className="text-[13px] text-[#9ca3af] text-center" style={{ fontFamily:"var(--font-sans)" }}>
+                  Căn cứ: Điều 44 NĐ 152/2025/NĐ-CP · TT 01/2024/TT-BNV
+                </p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ── THANH TOÁN TIỀN THƯỞNG ─────────────────────────── */}
         {(() => {
@@ -3808,6 +5583,116 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             </div>
           </div>
         </div>
+
+        {/* ── TRACKING XÁC NHẬN NHẬN QĐ (Bước 17) ─────────────────── */}
+        {(() => {
+          const myWinner = winners.find(p => p.name === user.name || p.id === String(user.id));
+          const confirmedCount = receiptMap.size + (receiptConfirmed && myWinner ? 1 : 0);
+          const pendingCount   = winners.length - confirmedCount;
+
+          return (
+            <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: confirmedCount === winners.length && winners.length > 0 ? "#86efac" : "#fcd34d" }}>
+              <div className="px-5 py-3.5 border-b flex items-center gap-3"
+                style={{ background: confirmedCount === winners.length && winners.length > 0 ? "linear-gradient(to right,#f0fdf4,#dcfce7)" : "linear-gradient(to right,#fffbeb,#fef3c7)", borderColor: confirmedCount === winners.length && winners.length > 0 ? "#86efac" : "#fcd34d" }}>
+                <div className="size-8 rounded-[8px] flex items-center justify-center shrink-0"
+                  style={{ background: confirmedCount === winners.length && winners.length > 0 ? "#166534" : "#b45309" }}>
+                  <CheckCheck className="size-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-[13px] font-semibold" style={{ color: "#0b1426", fontFamily: "var(--font-sans)" }}>
+                    Bước 17 — Xác nhận nhận Quyết định khen thưởng
+                  </div>
+                  <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+                    {confirmedCount}/{winners.length} người đã xác nhận · {pendingCount} chưa xác nhận · Đồng bộ hồ sơ cán bộ điện tử (mock)
+                  </div>
+                </div>
+              </div>
+
+              {/* Cá nhân — xác nhận của bản thân */}
+              {isIndividual && myWinner && (
+                <div className="px-5 py-4 border-b" style={{ borderColor: "#eef2f8", background: "white" }}>
+                  {receiptConfirmed ? (
+                    <div className="flex items-start gap-3 p-3 rounded-[10px]" style={{ background: "#f0fdf4", border: "1px solid #86efac" }}>
+                      <CheckCircle2 className="size-5 text-[#166534] shrink-0 mt-px" />
+                      <div>
+                        <div className="text-[13px] font-semibold text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>
+                          Đã xác nhận nhận Quyết định khen thưởng
+                        </div>
+                        <div className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+                          Hồ sơ cán bộ điện tử đang được cập nhật tự động · <span style={{ color: "#b45309" }}>[Mock — chưa tích hợp module HSCB]</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                          {myWinner.name} — {c.awards[winners.indexOf(myWinner)] ?? "Bằng khen"}
+                        </div>
+                        <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Nhấn xác nhận để ghi nhận đã nhận QĐ khen thưởng</div>
+                      </div>
+                      <DsButton variant="primary" size="sm" onClick={() => setReceiptConfirmed(true)}>
+                        <CheckCircle2 className="size-3.5" />Xác nhận đã nhận
+                      </DsButton>
+                    </div>
+                  )}
+                </div>
+              )}
+              {isIndividual && !myWinner && (
+                <div className="px-5 py-4 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                  Tài khoản của bạn không có trong danh sách được khen thưởng đợt này.
+                </div>
+              )}
+
+              {/* Admin / canMove — danh sách toàn bộ winners */}
+              {(canMove || isAdmin) && (
+                <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
+                  {winners.map(p => {
+                    const isMe = p.name === user.name;
+                    const confirmed = receiptMap.has(p.id) || (isMe && receiptConfirmed);
+                    return (
+                      <div key={p.id} className="px-5 py-3 flex items-center gap-3" style={{ background: confirmed ? "#f0fdf4" : "white" }}>
+                        <div className="size-7 rounded-full flex items-center justify-center text-white text-[12px] shrink-0"
+                          style={{ background: confirmed ? "#166534" : "#9ca3af", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                          {p.name.slice(0, 2)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[13px] font-semibold text-[#0b1426] truncate">{p.name}</div>
+                          <div className="text-[13px] text-[#635647]">{p.donVi}</div>
+                        </div>
+                        <span className="text-[13px] px-2 py-0.5 rounded-full shrink-0"
+                          style={{ background: confirmed ? "#dcfce7" : "#fef3c7", color: confirmed ? "#166534" : "#b45309", fontWeight: 600 }}>
+                          {confirmed ? "Đã xác nhận" : "Chờ xác nhận"}
+                        </span>
+                        {!confirmed && (
+                          <button
+                            onClick={() => setReceiptMap(prev => { const s = new Set(prev); s.add(p.id); return s; })}
+                            className="text-[13px] px-2.5 py-1 rounded-[6px] border transition-all shrink-0"
+                            style={{ borderColor: "#86efac", color: "#166534", background: "white" }}
+                            title="Xác nhận thay (khi cá nhân không tự xác nhận được)">
+                            <Check className="size-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              {(canMove || isAdmin) && (
+                <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "#eef2f8", background: "#f9fafb" }}>
+                  <span className="text-[13px]" style={{ color: confirmedCount === winners.length ? "#166534" : "#b45309", fontFamily: "var(--font-sans)" }}>
+                    {confirmedCount === winners.length && winners.length > 0
+                      ? `✅ ${winners.length}/${winners.length} đã xác nhận — sẵn sàng tổng kết`
+                      : `⏳ Còn ${pendingCount} người chưa xác nhận nhận QĐ`}
+                  </span>
+                  <span className="ml-auto text-[13px] text-[#b45309]" style={{ fontFamily: "var(--font-sans)" }}>
+                    [Mock — Hồ sơ cán bộ điện tử chưa tích hợp]
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         <div className="flex items-center justify-between">
           <RoleBadge role={user.roleLabel || user.role} canAct={canMove} />
@@ -4246,7 +6131,7 @@ function FinancialTab({ c }: { c: Campaign }) {
 function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }: {
   c: Campaign; user: LoginUser;
   onBack: () => void;
-  onTransition: (id: string, s: CampaignState) => void;
+  onTransition: (id: string, s: CampaignState, reason?: string) => void;
   onAddParticipant: (campaignId: string, p: Participant) => void;
 }) {
   const { theme } = useTheme();
@@ -4264,13 +6149,42 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
   const isCreator = user.id === c.creatorId;
   const approvedCount = c.participants.filter(p => p.hoSoStatus === "da_duyet").length;
 
-  const TABS = [
-    { key:"overview" as const,     label:"Tổng quan",   icon:Info,      badge:null },
-    { key:"participants" as const, label:"Hồ sơ",        icon:Users,     badge:c.participants.length ? `${c.participants.length}` : null },
-    { key:"scoring" as const,      label:"Xếp hạng",    icon:BarChart2, badge:null },
-    { key:"kinh_phi" as const,     label:"Kinh phí",    icon:Hash,      badge:null },
-    { key:"history" as const,      label:"Lịch sử",     icon:FileText,  badge:`${c.auditLog.length}` },
+  const restrictedRoles: LoginUser["role"][] = ["lãnh đạo cấp cao", "quản trị hệ thống", "hội đồng"];
+  const ALL_TABS = [
+    { key:"overview" as const,     label:"Tổng quan",   icon:Info,      badge:null,                                    restricted:false },
+    { key:"participants" as const, label:"Hồ sơ",        icon:Users,     badge:c.participants.length ? `${c.participants.length}` : null, restricted:false },
+    { key:"scoring" as const,      label:"Xếp hạng",    icon:BarChart2, badge:null,                                    restricted:false },
+    { key:"kinh_phi" as const,     label:"Kinh phí",    icon:Hash,      badge:null,                                    restricted:true  },
+    { key:"history" as const,      label:"Lịch sử",     icon:FileText,  badge:`${c.auditLog.length}`,                  restricted:true  },
   ];
+  const TABS = ALL_TABS.filter(t => !t.restricted || restrictedRoles.includes(user.role));
+  const safeTab = TABS.some(t => t.key === tab) ? tab : "overview" as const;
+
+  const readinessWarnings = useMemo<TransitionWarning[]>(() => {
+    const sub = c.participants.filter(p => p.hoSoStatus === "da_nop" || p.hoSoStatus === "da_duyet").length;
+    const jPct = c.totalUnits ? Math.round(c.joinedUnits / c.totalUnits * 100) : 0;
+    const draftBools = [
+      !!c.name && c.name.length > 5,
+      !!c.mucTieu && c.mucTieu.length > 20,
+      !!c.doiTuong && c.doiTuong.length > 10,
+      c.tieuChi.length >= 3,
+      !!c.ngayBatDau && !!c.ngayKetThuc,
+      !!c.ngayNopHoSo,
+      c.awards.length >= 1,
+      c.canCuPhapLy.length >= 2,
+    ];
+    return checkTransitionReadiness(c, {
+      draftReady: draftBools.every(Boolean),
+      draftMissing: draftBools.filter(d => !d).length,
+      joinPct: jPct,
+      submittedCount: sub,
+      approvedCount,
+      // optimistic for opts that require local workspace state
+      allReviewed: true, hdAllDone: true,
+      quorumMet: true, allVoted: true, minutesSigned: true, sigConfirmed: true,
+    });
+  }, [c, approvedCount]);
+  const canProceed = readinessWarnings.every(w => w.canProceed);
 
   return (
     <div className="min-h-full flex flex-col" style={{ background:"var(--color-paper)" }}>
@@ -4339,16 +6253,27 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
             </div>
           ) : canMove ? (
             confirming ? (
-              <div className="flex items-center gap-1.5">
-                <span className="text-[13px] px-2.5 py-1 rounded-[6px] border"
-                  style={{ background:"#fef9ec", borderColor:"#fcd34d", color:"#92400e", fontFamily: "var(--font-sans)" }}>
-                  → <strong>{nxtLabel}</strong>?
-                </span>
-                <DsButton variant="secondary" size="sm" onClick={() => setConfirming(false)}>Hủy</DsButton>
-                <DsButton variant="primary" size="sm"
-                  onClick={() => { onTransition(c.id, nextState(c.state)); setConfirming(false); }}>
-                  <CheckCheck className="size-3" />OK
-                </DsButton>
+              <div className="flex items-start gap-1.5 relative">
+                <div className="flex flex-col gap-1.5">
+                  {readinessWarnings.length > 0 && (
+                    <div className="absolute bottom-full right-0 mb-2 z-50 w-80"
+                      style={{ filter:"drop-shadow(0 4px 12px rgba(0,0,0,0.12))" }}>
+                      <ReadinessPanel warnings={readinessWarnings} compact />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[13px] px-2.5 py-1 rounded-[6px] border"
+                      style={{ background: canProceed ? "#fef9ec" : "#fef2f2", borderColor: canProceed ? "#fcd34d" : "#fca5a5", color: canProceed ? "#92400e" : "#991b1b", fontFamily: "var(--font-sans)" }}>
+                      → <strong>{nxtLabel}</strong>?
+                    </span>
+                    <DsButton variant="secondary" size="sm" onClick={() => setConfirming(false)}>Hủy</DsButton>
+                    <DsButton variant="primary" size="sm" disabled={!canProceed}
+                      onClick={() => { onTransition(c.id, nextState(c.state)); setConfirming(false); }}
+                      title={!canProceed ? "Cần hoàn thành các yêu cầu trước khi chuyển bước" : undefined}>
+                      <CheckCheck className="size-3" />Đồng ý
+                    </DsButton>
+                  </div>
+                </div>
               </div>
             ) : (
               <DsButton variant="primary" size="sm" onClick={() => setConfirming(true)}>
@@ -4559,7 +6484,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
             style={{ borderColor:"var(--color-line)", boxShadow:"0 1px 3px rgba(11,20,38,0.04)" }}>
             {TABS.map(t => {
               const Icon = t.icon;
-              const active = tab === t.key;
+              const active = safeTab === t.key;
               return (
                 <button key={t.key} onClick={() => setTab(t.key)}
                   className="flex items-center gap-1.5 px-4 py-3 text-[13px] border-b-2 transition-all"
@@ -4580,16 +6505,46 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
 
           {/* Tab content */}
           <div className="px-6 py-5 flex-1">
-            {tab === "overview"     && <OverviewTab c={c} />}
-            {tab === "participants" && <ParticipantsTab c={c} />}
-            {tab === "scoring"      && <ScoringTab c={c} />}
-            {tab === "kinh_phi"     && <FinancialTab c={c} />}
-            {tab === "history"      && <HistoryTab c={c} />}
+            {safeTab === "overview"     && <OverviewTab c={c} />}
+            {safeTab === "participants" && <ParticipantsTab c={c} />}
+            {safeTab === "scoring"      && <ScoringTab c={c} />}
+            {safeTab === "kinh_phi"     && <FinancialTab c={c} />}
+            {safeTab === "history"      && <HistoryTab c={c} />}
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+/* ── card action call helper ─────────────────────────────────────── */
+function getCardAction(user: LoginUser, c: Campaign): { label: string; textColor: string; bg: string; border?: string; urgent?: boolean } | null {
+  const role = user.role;
+  const can  = canTransition(user, c);
+  if (c.state === "draft"       && can) return { label:"Hoàn thiện soạn thảo",       textColor:"#0e7490", bg:"#e0f2fe", border:"#67e8f9" };
+  if (c.state === "submitted"   && can) return { label:"Cần phê duyệt ✦",            textColor:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", urgent:true };
+  if (c.state === "approved"    && can) return { label:"Cần ban hành",               textColor:"#1a4fa0", bg:"#ddeafc", border:"#93c5fd", urgent:true };
+  if (c.state === "active") {
+    if (role === "lãnh đạo đơn vị" || role === "cá nhân") return { label:"Đăng ký tham gia →", textColor:"white", bg:"#166534" };
+    if (can) {
+      const pending = c.totalUnits - c.joinedUnits;
+      return pending > 0
+        ? { label:`${pending} đơn vị chưa đăng ký`, textColor:"#92400e", bg:"#fef9ec", border:"#fcd34d" }
+        : { label:"Đóng nhận hồ sơ khi sẵn sàng",  textColor:"#166534", bg:"#f0fdf4", border:"#86efac" };
+    }
+  }
+  if (c.state === "submission_closed" && can) return { label:"Mở thẩm định cơ sở →", textColor:"#166534", bg:"#f0fdf4", border:"#86efac" };
+  if (c.state === "unit_review") {
+    if (role === "lãnh đạo đơn vị") {
+      const pend = c.participants.filter(p => p.hoSoStatus === "da_nop").length;
+      return pend > 0 ? { label:`Thẩm định ${pend} hồ sơ ✦`, textColor:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", urgent:true } : null;
+    }
+    if (can) return { label:"Chuyển Hội đồng xét duyệt", textColor:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd" };
+  }
+  if (c.state === "council_review"  && can) return { label:"Bỏ phiếu tán thành ✦",  textColor:"#7c3aed", bg:"#f5f3ff", border:"#c4b5fd", urgent:true };
+  if (c.state === "final_approval"  && can) return { label:"Ký duyệt ban hành ✦",   textColor:"#92400e", bg:"#fef9ec", border:"#fcd34d", urgent:true };
+  if (c.state === "decision_issued" && can) return { label:"Công bố kết quả →",      textColor:"#166534", bg:"#f0fdf4", border:"#86efac" };
+  return null;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -4603,7 +6558,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
   const joinPct = c.totalUnits ? Math.round(c.joinedUnits / c.totalUnits * 100) : 0;
   const curIdx  = stateIndex(c.state);
   const phasePct= Math.round((curIdx / (STATE_ORDER.length - 1)) * 100);
-  const canRegister = c.state === "active" && !canTransition(user, c) && (user.role === "lãnh đạo đơn vị" || user.role === "cá nhân");
+  const cardAction = getCardAction(user, c);
 
   return (
     <div onClick={onClick}
@@ -4694,14 +6649,15 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
           {c.awards.length>2 && <span className="text-[13px] text-[#635647] self-center">+{c.awards.length-2}</span>}
         </div>
 
-        {/* Footer */}
+        {/* Footer — action call */}
         <div className="mt-auto pt-3 border-t" style={{ borderColor:"var(--color-line)" }}>
-          {canRegister ? (
-            <button onClick={onClick}
-              className="w-full flex items-center justify-center gap-2 h-9 rounded-[8px] text-[13px] font-semibold transition-all"
-              style={{ background:"#166534", color:"white", fontFamily: "var(--font-sans)" }}>
-              <Plus className="size-3.5" />Đăng ký tham gia
-            </button>
+          {cardAction ? (
+            <div className="w-full flex items-center justify-center gap-2 h-9 rounded-[8px] text-[13px] font-semibold border"
+              style={{ background:cardAction.bg, color:cardAction.textColor, borderColor:cardAction.border ?? "transparent",
+                fontFamily:"var(--font-sans)" }}>
+              {cardAction.urgent && <span className="size-1.5 rounded-full animate-pulse" style={{ background:cardAction.textColor }} />}
+              {cardAction.label}
+            </div>
           ) : (
             <div className="flex items-center justify-between">
               <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
@@ -4823,17 +6779,27 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
           <button className="btn-icon" onClick={onClose}><X className="size-4" /></button>
         </div>
         {/* Steps */}
-        <div className="flex items-center gap-2 px-6 pt-4">
-          {STEPS.map((_,i) => (
-            <div key={i} className="flex items-center gap-1 flex-1 last:flex-none">
-              <div className="size-6 rounded-full flex items-center justify-center text-[13px]"
-                style={{ background:i<step?"#16a34a":i===step?theme.primary:"#e5e7eb",
-                  color:"#fff", fontFamily: "var(--font-sans)", fontWeight:600 }}>
-                {i<step ? "✓" : i+1}
+        <div className="px-6 pt-4 pb-1">
+          <div className="flex items-start gap-0">
+            {STEPS.map((label, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1 relative">
+                <div className="flex items-center w-full">
+                  <div className="flex-1 h-px" style={{ background: i === 0 ? "transparent" : i <= step ? "#16a34a" : "#e5e7eb" }} />
+                  <div className="size-6 rounded-full flex items-center justify-center text-[13px] shrink-0"
+                    style={{ background: i < step ? "#16a34a" : i === step ? theme.primary : "#e5e7eb",
+                      color:"#fff", fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                    {i < step ? "✓" : i + 1}
+                  </div>
+                  <div className="flex-1 h-px" style={{ background: i === STEPS.length - 1 ? "transparent" : i < step ? "#16a34a" : "#e5e7eb" }} />
+                </div>
+                <span className="text-[13px] text-center leading-tight"
+                  style={{ fontFamily:"var(--font-sans)", fontWeight: i === step ? 600 : 400,
+                    color: i < step ? "#16a34a" : i === step ? theme.primary : "#9ca3af" }}>
+                  {label}
+                </span>
               </div>
-              {i<STEPS.length-1 && <div className="flex-1 h-px" style={{ background:i<step?"#16a34a":"#e5e7eb" }} />}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
           {step===0 && (<>
@@ -5109,9 +7075,15 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
 /* ═══════════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════════ */
-export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: LoginUser; onDetailOpen?: () => void; onDetailClose?: () => void }) {
+export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen, onDetailClose }: {
+  user: LoginUser;
+  campaigns: Campaign[];
+  onCampaignsChange: React.Dispatch<React.SetStateAction<Campaign[]>>;
+  onDetailOpen?: () => void;
+  onDetailClose?: () => void;
+}) {
   const { theme } = useTheme();
-  const [campaigns, setCampaigns] = useState<Campaign[]>(MOCK_CAMPAIGNS);
+  const setCampaigns = onCampaignsChange;
   const [detail, setDetail]       = useState<Campaign | null>(null);
 
   const openDetail = (c: Campaign) => { setDetail(c); onDetailOpen?.(); };
@@ -5146,7 +7118,7 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
   const hasFilter = filterToChuc!=="all"||filterThamGia!=="all"||filterType!=="all"||filterYear!=="all"||search;
   const clearFilters = () => { setSearch(""); setFilterToChuc("all"); setFilterThamGia("all"); setFilterType("all"); setFilterYear("all"); };
 
-  const handleTransition = (id: string, newState: CampaignState) => {
+  const handleTransition = (id: string, newState: CampaignState, reason?: string) => {
     setCampaigns(prev => prev.map(c => {
       if (c.id !== id) return c;
       const entry: AuditEntry = {
@@ -5154,7 +7126,9 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
         actor:user.name||"Người dùng",
         role:{"cá nhân":"Người tham gia","lãnh đạo đơn vị":"Lãnh đạo đơn vị","hội đồng":"Thành viên HĐ","lãnh đạo cấp cao":"Lãnh đạo","quản trị hệ thống":"Quản trị"}[user.role]||"Người dùng",
         time:nowFmt(),
-        detail:`Chuyển trạng thái → ${STATE_CFG[newState].label}`,
+        detail: reason
+          ? `Trả về chỉnh sửa — Lý do: ${reason}`
+          : `Chuyển trạng thái → ${STATE_CFG[newState].label}`,
         state:newState,
       };
       return {
@@ -5184,7 +7158,7 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
       <CampaignDetailView
         c={live} user={user}
         onBack={closeDetail}
-        onTransition={(id, ns) => handleTransition(id, ns)}
+        onTransition={(id, ns, reason) => handleTransition(id, ns, reason)}
         onAddParticipant={handleAddParticipant}
       />
     );
@@ -5280,18 +7254,79 @@ export function PhongTraoPage({ user, onDetailOpen, onDetailClose }: { user: Log
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="flex-1 overflow-y-auto px-6 py-5">
-        {filtered.length === 0 ? (
-          <div className="flex flex-col items-center gap-4 py-20 text-center">
-            <div className="size-16 rounded-full flex items-center justify-center" style={{ background:theme.tint }}>
-              <Trophy className="size-7" style={{ color:theme.primary }} />
+      {/* Summary stats row */}
+      <div className="px-6 pt-4 pb-0 shrink-0">
+        <div className="grid grid-cols-4 gap-3 mb-4">
+          {[
+            { label:"Tổng phong trào", value: campaigns.length, sub:`${filtered.length} đang hiển thị`, color:"#1C5FBE", bg:"#eff6ff" },
+            { label:"Đang triển khai", value: campaigns.filter(c => c.state === "active").length,
+              sub:`${campaigns.filter(c => STATE_CFG[c.state].phase === 1).length} giai đoạn Triển khai`, color:"#166534", bg:"#f0fdf4" },
+            { label:"Đang xét duyệt",  value: campaigns.filter(c => STATE_CFG[c.state].phase === 2).length,
+              sub:`${campaigns.filter(c => c.state === "council_review").length} chờ Hội đồng`, color:"#7c3aed", bg:"#faf5ff" },
+            { label:"Đã khen thưởng",  value: campaigns.filter(c => c.state === "decision_issued" || c.state === "public" || c.state === "archived").length,
+              sub:`${campaigns.reduce((s,c)=>s+c.participants.filter(p=>p.hoSoStatus==="da_duyet").length,0)} cá nhân/tập thể`, color:"#b45309", bg:"#fffbeb" },
+          ].map(s => (
+            <div key={s.label} className="rounded-[10px] border px-4 py-3 flex items-center gap-3"
+              style={{ borderColor:`${s.color}25`, background:s.bg, fontFamily:"var(--font-sans)" }}>
+              <div>
+                <div className="text-[22px] font-bold" style={{ color:s.color }}>{s.value}</div>
+                <div className="text-[13px] font-semibold text-[#0b1426]">{s.label}</div>
+                <div className="text-[13px] text-[#635647]">{s.sub}</div>
+              </div>
             </div>
-            <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
-              Không tìm thấy phong trào
-            </h3>
-          </div>
-        ) : (
+          ))}
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="flex-1 overflow-y-auto px-6 py-0 pb-5">
+        {filtered.length === 0 ? (() => {
+          const hasFilters = search || filterPhase !== "all" || filterToChuc !== "all" || filterThamGia !== "all" || filterType !== "all" || filterYear !== "all";
+          const clearFilters = () => { setSearch(""); setFilterPhase("all"); setFilterToChuc("all"); setFilterThamGia("all"); setFilterType("all"); setFilterYear("all"); };
+          const activeFilters: string[] = [];
+          if (search) activeFilters.push(`Tìm kiếm: "${search}"`);
+          if (filterPhase !== "all") activeFilters.push(`Giai đoạn: ${PHASES[filterPhase as number]?.label ?? filterPhase}`);
+          if (filterToChuc !== "all") activeFilters.push(`Đơn vị tổ chức: ${filterToChuc}`);
+          if (filterThamGia !== "all") activeFilters.push(`Đơn vị tham gia: ${filterThamGia}`);
+          if (filterType !== "all") { const typeLabels: Record<string,string> = {cap_so:"Cấp Sở/Ngành",toan_tinh:"Toàn tỉnh",lien_nganh:"Liên ngành"}; activeFilters.push(`Loại: ${typeLabels[filterType] ?? filterType}`); }
+          if (filterYear !== "all") activeFilters.push(`Năm: ${filterYear}`);
+
+          return (
+            <div className="flex flex-col items-center gap-5 py-20 text-center">
+              <div className="size-16 rounded-full flex items-center justify-center" style={{ background: hasFilters ? "#fef3c7" : theme.tint }}>
+                {hasFilters
+                  ? <Filter className="size-7 text-[#b45309]" />
+                  : <Trophy className="size-7" style={{ color:theme.primary }} />
+                }
+              </div>
+              <div>
+                <h3 className="text-[14px] font-semibold text-[#0b1426] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                  {hasFilters ? "Không có phong trào phù hợp với bộ lọc" : "Chưa có phong trào nào"}
+                </h3>
+                <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                  {hasFilters
+                    ? `Tất cả ${campaigns.length} phong trào đều bị lọc ra`
+                    : "Tạo phong trào đầu tiên để bắt đầu quản lý thi đua khen thưởng"
+                  }
+                </p>
+              </div>
+              {hasFilters && activeFilters.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-2 max-w-md">
+                  {activeFilters.map((f,i) => (
+                    <span key={i} className="px-2.5 py-1 rounded-full text-[13px] bg-[#fef3c7] text-[#92400e] border border-[#fcd34d]" style={{ fontFamily:"var(--font-sans)" }}>
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {hasFilters && (
+                <button className="btn btn-secondary btn-sm" onClick={clearFilters}>
+                  <X className="size-3.5" /> Xóa bộ lọc
+                </button>
+              )}
+            </div>
+          );
+        })() : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {filtered.map(c => (
               <CampaignCard key={c.id} c={c} user={user} onClick={() => openDetail(c)} />

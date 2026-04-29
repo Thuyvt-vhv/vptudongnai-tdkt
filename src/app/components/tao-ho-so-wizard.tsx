@@ -200,7 +200,7 @@ function Step1({ data, onChange }: { data: WizardData; onChange: (d: Partial<Wiz
       <div className="flex items-center gap-2 mb-2">
         <Sparkles className="size-4 text-[#7c3aed]" />
         <span className="text-[13px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-          AI Tố Nga gợi ý dựa trên hồ sơ của bạn
+          Trợ lý AI gợi ý dựa trên hồ sơ của bạn
         </span>
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -525,7 +525,7 @@ function Step5({ data }: { data: WizardData }) {
             </div>
           </div>
           <div className="text-center">
-            <p className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI Tố Nga đang phân tích…</p>
+            <p className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Trợ lý AI đang phân tích…</p>
             <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Đối chiếu Luật TĐKT 2022 · NĐ 152/2025/NĐ-CP · TT 15/2025</p>
           </div>
           <div className="w-64 h-2 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
@@ -559,7 +559,7 @@ function Step5({ data }: { data: WizardData }) {
               <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
                 {passCount}/{checks.length} tiêu chí đạt · Danh hiệu: {dh.ten}
               </div>
-              <div className="text-[13px] text-[#6b5e47] mt-1">Phân tích bởi AI Tố Nga · {new Date().toLocaleDateString("vi-VN")}</div>
+              <div className="text-[13px] text-[#6b5e47] mt-1">Phân tích bởi Trợ lý AI · {new Date().toLocaleDateString("vi-VN")}</div>
             </div>
           </div>
 

@@ -58,7 +58,7 @@ const MOCK_EVENTS: ActivityEvent[] = [
   },
   {
     id:"a03", time:"2026-04-24T09:15:00", timeLabel:"09:15 hôm nay", kind:"ai",
-    actor:"AI Tố Nga", actorRole:"Trợ lý AI", actorInitials:"AI",
+    actor:"Trợ lý AI", actorRole:"Trợ lý AI", actorInitials:"AI",
     actorFrom:"#7c3aed", actorTo:"#6d28d9",
     title:"AI phát hiện trùng lặp",
     body:"NS-2026-0152 có 89% độ tương đồng với NS-2025-0234 (đã được trao CSTĐCS năm 2025). Cần kiểm tra lại điều kiện 2 năm liên tiếp.",
