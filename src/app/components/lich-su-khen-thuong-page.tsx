@@ -121,7 +121,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
         </div>
       </div>
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto px-10 py-6">
         {detail ? (
           /* Detail view */
           <div className="max-w-2xl mx-auto">
@@ -169,7 +169,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
           </div>
         ) : view==="timeline" ? (
           /* Timeline view */
-          <div className="max-w-3xl mx-auto">
+          <div className="px-[120px]">
             {years.filter(y=>byYear[y]?.length>0).map(year=>(
               <div key={year} className="mb-8">
                 <div className="flex items-center gap-3 mb-4">
@@ -187,7 +187,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                       const lc=LEVEL_CFG[r.level];
                       return (
                         <div key={r.id} className="relative">
-                          <div className="absolute -left-3 top-4 size-2 rounded-full" style={{ background:r.color }}/>
+                          <div className="absolute -left-3 top-4 size-2 rounded-full -translate-x-1/2" style={{ background:r.color }}/>
                           <button onClick={()=>setDetail(r)} className="w-full rounded-[10px] border border-[#e2e8f0] p-4 text-left hover:bg-[#f4f7fb] hover:border-[#d1ccc0] transition-all" style={{ background:"white" }}>
                             <div className="flex items-start gap-3">
                               <div className="size-9 rounded-[8px] flex items-center justify-center shrink-0" style={{ background:`${r.color}18` }}>

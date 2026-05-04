@@ -2120,7 +2120,7 @@ export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
   return (
     <div className="h-full flex flex-col" style={{ background:"var(--color-paper)" }}>
       {/* Header */}
-      <div className="px-8 pt-6 pb-5 border-b" style={{ borderColor:"var(--color-line)" }}>
+      <div className="px-6 pt-6 pb-5 border-b" style={{ borderColor:"var(--color-line)" }}>
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
@@ -2172,7 +2172,7 @@ export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
       </div>
 
       {/* Sessions grid */}
-      <div className="flex-1 overflow-y-auto px-8 py-5">
+      <div className="flex-1 overflow-y-auto px-6 py-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {sessions.map(s => (
             <SessionCard key={s.id} s={s} onOpen={() => setOpenSession(s)} />

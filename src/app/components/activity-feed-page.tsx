@@ -288,7 +288,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
     <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
       {/* Header */}
-      <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+      <div className="px-6 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
@@ -361,7 +361,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
       </div>
 
       {/* Feed */}
-      <div className="flex-1 overflow-y-auto px-8 py-6 max-w-3xl">
+      <div className="flex-1 overflow-y-auto px-6 py-6">
         {groups.map(group => (
           <div key={group.label} className="mb-6">
             {/* Date divider */}

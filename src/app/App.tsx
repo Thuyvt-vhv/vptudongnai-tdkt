@@ -196,8 +196,8 @@ function AccessDenied({
 
 /* ─── App shell ──────────────────────────────────────────────── */
 export default function App() {
-  const [currentUser, setCurrentUser] = useState<LoginUser | null>(null);
-  const [active, setActive]           = useState("Bảng điều hành");
+  const [currentUser, setCurrentUser] = usePersistedState<LoginUser | null>("currentUser", null);
+  const [active, setActive]           = usePersistedState<string>("active", "Bảng điều hành");
   const [prevActive, setPrevActive]   = useState("Bảng điều hành");
   const [publicLYK, setPublicLYK]     = useState(false);
   const [cmdOpen, setCmdOpen]         = useState(false);

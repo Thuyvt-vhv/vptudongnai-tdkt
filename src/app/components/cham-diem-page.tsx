@@ -91,158 +91,148 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
   };
 
   return (
-    <div className="p-8 space-y-6 max-w-[1400px]" style={{ background: "var(--color-paper)" }}>
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Chấm điểm & Bình xét</h2>
-          <p className="text-[13px] text-[#635647] mt-0.5">Năm công tác 2026 · Đợt bình xét 01/2026</p>
+    <div style={{ background: "var(--color-paper)", fontFamily: "var(--font-sans)" }}>
+
+      {/* ── Header bar — sticky to main scroll ── */}
+      <div className="sticky top-0 z-20 px-6 py-4 border-b border-[#eef2f8] flex items-center gap-4 flex-wrap"
+        style={{ background: "white" }}>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <BarChart3 className="size-[18px]" style={{ color: theme.primary }} />
+            <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Chấm điểm & Bình xét</h2>
+          </div>
+          <p className="text-[13px] text-[#635647]">Năm công tác 2026 · Đợt bình xét 01/2026 · {UNITS.length} đơn vị</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          {[
+            { icon: Users,       v: `${submitted}/${total}`, label: "đã nộp",       color: theme.primary, bg: theme.tint },
+            { icon: TrendingUp,  v: "85.2đ",                 label: "điểm TB",       color: "#166534",     bg: "#dcfce7" },
+            { icon: Star,        v: "5",                     label: "đủ điều kiện",  color: "#b45309",     bg: "#fef3c7" },
+            { icon: AlertCircle, v: `${total - submitted}`,  label: "chưa nộp",     color: "#9f1239",     bg: "#fee2e2" },
+          ].map(s => (
+            <div key={s.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px]" style={{ background: s.bg }}>
+              <s.icon className="size-3.5 shrink-0" style={{ color: s.color }} />
+              <span className="text-[13px] font-bold tabular-nums" style={{ color: s.color }}>{s.v}</span>
+              <span className="text-[13px]" style={{ color: s.color, opacity: 0.75 }}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-2 shrink-0">
           <button className="btn btn-sm btn-secondary"><Download className="size-3.5" /> Xuất Excel</button>
           {(user.role === "hội đồng" || user.role === "lãnh đạo cấp cao" || user.role === "quản trị hệ thống") && (
-            <button className="btn btn-sm btn-primary">Chốt kết quả bình xét</button>
+            <button className="btn btn-sm btn-primary">Chốt kết quả</button>
           )}
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { icon:Users, label:"Đơn vị đã nộp", v:`${submitted}/${total}`, color: theme.primary, bg: theme.tint },
-          { icon:TrendingUp, label:"Điểm TB toàn tỉnh", v:"85.2", color:"#166534", bg:"#dcfce7" },
-          { icon:Star, label:"Đủ điều kiện khen", v:"5 đơn vị", color:"#b45309", bg:"#fef3c7" },
-          { icon:AlertCircle, label:"Chưa nộp báo cáo", v:`${total-submitted} đơn vị`, color:"#9f1239", bg:"#fee2e2" },
-        ].map(s => (
-          <div key={s.label} className="bg-white rounded-xl border border-[#e2e8f0] p-4 flex items-center gap-3">
-            <div className="size-10 rounded-xl grid place-items-center shrink-0" style={{ background: s.bg }}>
-              <s.icon className="size-5" style={{ color: s.color }} />
-            </div>
-            <div>
-              <div className="text-[18px] font-bold" style={{ fontFamily: "var(--font-sans)", color: s.color }}>{s.v}</div>
-              <div className="text-[13px] text-[#635647]">{s.label}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Table */}
-      <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#ffffff] flex items-center justify-between">
-          <h3 className="text-[14px] font-semibold text-[#0b1426]">Bảng chấm điểm thi đua</h3>
-          <div className="flex items-center gap-2">
-            <button className="btn btn-sm btn-secondary"><Filter className="size-3.5" /> Lọc</button>
-            <span className="text-[13px] text-[#635647]">{UNITS.length} đơn vị</span>
-          </div>
-        </div>
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-[#eef2f8] bg-[#ffffff]">
-              <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider w-8">#</th>
-              <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider">Đơn vị</th>
-              {CRITERIA.map(c => (
-                <th key={c.key} className="px-3 py-3 text-center text-[13px] font-semibold text-[#635647] uppercase tracking-wider hidden lg:table-cell" style={{ maxWidth:80 }}>
-                  {c.label.split(" ").slice(0,2).join(" ")}
-                  <div className="text-[13px] font-normal">/{c.max}đ</div>
-                </th>
-              ))}
-              <th className="px-4 py-3 text-center text-[13px] font-semibold text-[#635647] uppercase tracking-wider">Tổng</th>
-              <th className="px-4 py-3 text-center text-[13px] font-semibold text-[#635647] uppercase tracking-wider">Trạng thái</th>
-              <th className="px-4 py-3 w-8" />
-            </tr>
-          </thead>
-          <tbody>
-            {UNITS.map((u, idx) => (
-              <React.Fragment key={u.id}>
-                <tr
-                  className={`border-b border-[#f4f7fb] transition-colors cursor-pointer hover:bg-[#ffffff]
-                    ${expandedId === u.id ? "bg-[var(--color-primary-tint)]" : ""}`}
-                  onClick={() => setExpandedId(expandedId === u.id ? null : u.id)}>
-                  <td className="px-4 py-3 text-center">
-                    <div className="flex items-center justify-center">
-                      {u.rank ? medalIcon(u.rank) : <span className="text-[13px] text-[#635647]">{idx + 1}</span>}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="text-[13px] font-medium text-[#0b1426]">{u.name}</p>
-                    <p className="text-[13px] text-[#635647]">{u.type}</p>
-                  </td>
-                  {u.scores.map((s, si) => (
-                    <td key={si} className="px-3 py-3 text-center hidden lg:table-cell">
-                      {u.submitted ? (
-                        <span className={`text-[13px] font-semibold
-                          ${s.score / s.max >= 0.9 ? "text-[#166534]" : s.score / s.max >= 0.7 ? "" : "text-[#b45309]"}`}
-                          style={s.score / s.max >= 0.7 && s.score / s.max < 0.9 ? { color: theme.primary } : undefined}>
-                          {s.score}
-                        </span>
-                      ) : <span className="text-[#c9bfa6]">—</span>}
-                    </td>
-                  ))}
-                  <td className="px-4 py-3 text-center">
-                    <div className={`text-[14px] font-bold ${u.total >= 90 ? "text-[#166534]" : u.total >= 70 ? "" : u.total > 0 ? "text-[#b45309]" : "text-[#c9bfa6]"}`}
-                      style={u.total >= 70 && u.total < 90 ? { color: theme.primary, fontFamily: "var(--font-sans)" } : { fontFamily: "var(--font-sans)" }}>
-                      {u.submitted ? u.total : "—"}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-center">
+      {/* ── Table — full width, thead sticky ── */}
+      <table className="w-full border-collapse" style={{ fontFamily: "var(--font-sans)" }}>
+        <thead className="sticky top-[65px] z-10" style={{ background: "#f8fafc", borderBottom: "2px solid #e2e8f0" }}>
+          <tr>
+            <th className="px-4 py-3 text-left text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-10">#</th>
+            <th className="px-4 py-3 text-left text-[12px] font-semibold text-[#635647] uppercase tracking-wider">Đơn vị / Tổ chức</th>
+            {CRITERIA.map(c => (
+              <th key={c.key} className="px-2 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[90px]">
+                <div className="leading-tight">{c.label.split(" ").slice(0,2).join(" ")}</div>
+                <div className="text-[11px] font-normal text-[#9a8a74] mt-0.5">/{c.max}đ</div>
+              </th>
+            ))}
+            <th className="px-3 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[80px]">Tổng</th>
+            <th className="px-4 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[120px]">Trạng thái</th>
+            <th className="w-10" />
+          </tr>
+        </thead>
+        <tbody>
+          {UNITS.map((u, idx) => (
+            <React.Fragment key={u.id}>
+              <tr
+                className={`border-b border-[#f0f4f8] transition-colors cursor-pointer
+                  ${expandedId === u.id ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#f8fafc]"}`}
+                onClick={() => setExpandedId(expandedId === u.id ? null : u.id)}>
+                <td className="px-4 py-3.5 text-center w-10">
+                  <div className="flex items-center justify-center">
+                    {u.rank ? medalIcon(u.rank) : <span className="text-[13px] text-[#9a8a74]">{idx + 1}</span>}
+                  </div>
+                </td>
+                <td className="px-4 py-3.5">
+                  <p className="text-[13px] font-semibold text-[#0b1426]">{u.name}</p>
+                  <p className="text-[13px] text-[#635647]">{u.type}</p>
+                </td>
+                {u.scores.map((s, si) => (
+                  <td key={si} className="px-2 py-3.5 text-center">
                     {u.submitted ? (
-                      <span className="inline-flex items-center gap-1 text-[13px] text-[#166534] bg-[#dcfce7] px-2 py-0.5 rounded">
-                        <CheckCircle2 className="size-3" /> Đã nộp
+                      <span className={`text-[13px] font-semibold tabular-nums
+                        ${s.score / s.max >= 0.9 ? "text-[#166534]" : s.score / s.max >= 0.7 ? "" : "text-[#b45309]"}`}
+                        style={s.score / s.max >= 0.7 && s.score / s.max < 0.9 ? { color: theme.primary } : undefined}>
+                        {s.score}
                       </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 text-[13px] text-[#c8102e] bg-[#fee2e2] px-2 py-0.5 rounded">
-                        <AlertCircle className="size-3" /> Chưa nộp
-                      </span>
-                    )}
+                    ) : <span className="text-[#c9bfa6]">—</span>}
                   </td>
-                  <td className="px-4 py-3">
-                    <ChevronDown className={`size-4 text-[#635647] transition-transform ${expandedId === u.id ? "rotate-180" : ""}`} />
+                ))}
+                <td className="px-3 py-3.5 text-center">
+                  <span className={`text-[14px] font-bold tabular-nums ${u.total >= 90 ? "text-[#166534]" : u.total >= 70 ? "" : u.total > 0 ? "text-[#b45309]" : "text-[#c9bfa6]"}`}
+                    style={u.total >= 70 && u.total < 90 ? { color: theme.primary } : undefined}>
+                    {u.submitted ? u.total : "—"}
+                  </span>
+                </td>
+                <td className="px-4 py-3.5 text-center">
+                  {u.submitted ? (
+                    <span className="inline-flex items-center gap-1 text-[13px] text-[#166534] bg-[#dcfce7] px-2 py-0.5 rounded-full">
+                      <CheckCircle2 className="size-3" /> Đã nộp
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-[13px] text-[#c8102e] bg-[#fee2e2] px-2 py-0.5 rounded-full">
+                      <AlertCircle className="size-3" /> Chưa nộp
+                    </span>
+                  )}
+                </td>
+                <td className="px-2 py-3.5 w-10">
+                  <ChevronDown className={`size-4 text-[#9a8a74] transition-transform ${expandedId === u.id ? "rotate-180" : ""}`} />
+                </td>
+              </tr>
+              {expandedId === u.id && (
+                <tr>
+                  <td colSpan={11} style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
+                    <div className="px-6 py-4 space-y-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-[13px] font-semibold text-[#0b1426]">Chi tiết điểm từng tiêu chí — {u.name}</p>
+                        {canEdit && (
+                          editId === u.id
+                            ? <div className="flex gap-2">
+                                <button onClick={e => { e.stopPropagation(); saveEdit(); }} className="btn btn-sm btn-primary">Lưu điểm</button>
+                                <button onClick={e => { e.stopPropagation(); setEditId(null); }} className="btn btn-sm btn-secondary">Huỷ</button>
+                              </div>
+                            : <button onClick={e => { e.stopPropagation(); startEdit(u); }} className="btn btn-sm btn-secondary">Chỉnh sửa điểm</button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-3 gap-x-8 gap-y-2">
+                        {u.scores.map((s, si) => (
+                          <div key={si} className="flex items-center gap-3">
+                            <span className="text-[13px] text-[#635647] w-44 shrink-0">{s.criteria}</span>
+                            {editId === u.id ? (
+                              <input type="number" min={0} max={s.max}
+                                value={editScores[`c${si+1}`] ?? s.score}
+                                onChange={e => setEditScores(prev => ({ ...prev, [`c${si+1}`]: +e.target.value }))}
+                                className="w-16 text-center ds-input ds-input-sm"
+                                onClick={e => e.stopPropagation()} />
+                            ) : (
+                              <ScoreBar score={s.score} max={s.max} />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2 mt-2 text-[13px] text-[#635647]">
+                        <CalendarDays className="size-3.5" />
+                        Cập nhật lần cuối: {u.lastUpdate}
+                      </div>
+                    </div>
                   </td>
                 </tr>
-                {expandedId === u.id && (
-                  <tr>
-                    <td colSpan={9} className="px-6 py-4 bg-[#ffffff] border-b border-[#eef2f8]">
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="text-[13px] font-semibold text-[#0b1426]">Chi tiết điểm từng tiêu chí</p>
-                          {canEdit && (
-                            editId === u.id
-                              ? <div className="flex gap-2">
-                                  <button onClick={e => { e.stopPropagation(); saveEdit(); }} className="btn btn-sm btn-primary">Lưu điểm</button>
-                                  <button onClick={e => { e.stopPropagation(); setEditId(null); }} className="btn btn-sm btn-secondary">Huỷ</button>
-                                </div>
-                              : <button onClick={e => { e.stopPropagation(); startEdit(u); }} className="btn btn-sm btn-secondary">Chỉnh sửa điểm</button>
-                          )}
-                        </div>
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                          {u.scores.map((s, si) => (
-                            <div key={si} className="flex items-center gap-3">
-                              <span className="text-[13px] text-[#635647] w-44 shrink-0">{s.criteria}</span>
-                              {editId === u.id ? (
-                                <input type="number" min={0} max={s.max}
-                                  value={editScores[`c${si+1}`] ?? s.score}
-                                  onChange={e => setEditScores(prev => ({ ...prev, [`c${si+1}`]: +e.target.value }))}
-                                  className="w-16 text-center ds-input ds-input-sm"
-                                  onClick={e => e.stopPropagation()} />
-                              ) : (
-                                <ScoreBar score={s.score} max={s.max} />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="flex items-center gap-2 mt-2 text-[13px] text-[#635647]">
-                          <CalendarDays className="size-3.5" />
-                          Cập nhật lần cuối: {u.lastUpdate}
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              )}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
 
       {toast && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-xl shadow-xl text-white text-[13px] font-medium flex items-center gap-2"

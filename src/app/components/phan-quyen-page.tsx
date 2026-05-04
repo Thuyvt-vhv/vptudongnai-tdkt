@@ -932,7 +932,7 @@ export function PhanQuyenPage() {
     <div className="h-full flex flex-col" style={{ background:"var(--color-paper)" }}>
 
       {/* ── Header ── */}
-      <div className="px-8 pt-6 pb-5 border-b" style={{ borderColor:"var(--color-line)" }}>
+      <div className="px-6 pt-6 pb-5 border-b" style={{ borderColor:"var(--color-line)" }}>
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
@@ -976,7 +976,7 @@ export function PhanQuyenPage() {
       </div>
 
       {/* ── Hierarchy diagram strip ── */}
-      <div className="px-8 py-4 border-b flex items-center gap-0"
+      <div className="px-6 py-4 border-b flex items-center gap-0"
         style={{ borderColor:"var(--color-line)", background:"white" }}>
         <div className="flex items-center gap-2 text-[13px] text-[#635647]"
           style={{ fontFamily: "var(--font-sans)" }}>
@@ -1018,7 +1018,7 @@ export function PhanQuyenPage() {
       </div>
 
       {/* ── Tabs ── */}
-      <div className="flex items-center gap-0 border-b px-8"
+      <div className="flex items-center gap-0 border-b px-6"
         style={{ borderColor:"var(--color-line)", background:"white" }}>
         {TABS.map(t => {
           const Icon = t.icon;
@@ -1040,7 +1040,7 @@ export function PhanQuyenPage() {
       </div>
 
       {/* ── Tab Content ── */}
-      <div className="flex-1 overflow-y-auto px-8 py-6">
+      <div className="flex-1 overflow-y-auto px-6 py-6">
         {tab === "matrix"   && <PermissionMatrix focusRole={activeRole} />}
         {tab === "workflow" && <WorkflowPermissions />}
         {tab === "users"    && <UserManagement focusRole={activeRole} />}

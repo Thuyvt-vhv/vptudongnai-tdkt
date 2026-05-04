@@ -110,7 +110,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
     <div className="h-full overflow-y-auto" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
       {/* Hero */}
-      <div className="relative overflow-hidden px-8 py-14 text-center"
+      <div className="relative overflow-hidden px-6 py-14 text-center"
         style={{ background: "linear-gradient(135deg,#0b1426 0%,#1a2744 50%,#1C5FBE 100%)" }}>
         {/* Decorative circles */}
         <div className="absolute top-0 left-0 size-64 rounded-full opacity-10" style={{ background: "radial-gradient(circle,#8a6400,transparent)", transform: "translate(-30%,-30%)" }} />
@@ -154,7 +154,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
       </div>
 
       {/* Category cards */}
-      <div className="px-8 py-8">
+      <div className="px-6 py-8">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           <button onClick={() => setActiveCategory("all")}
             className="flex flex-col items-center gap-2 p-4 rounded-[12px] border text-center transition-all hover:shadow-md"

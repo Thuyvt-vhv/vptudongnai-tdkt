@@ -1323,7 +1323,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
 
         {/* Role header banner */}
-        <div className="shrink-0 px-7 py-4 border-b border-[#e2e8f0]"
+        <div className="shrink-0 px-6 py-4 border-b border-[#e2e8f0]"
           style={{ background:`linear-gradient(to right, ${meta.bg}, white)` }}>
           <div className="flex items-center gap-4">
             <div className="size-12 rounded-xl flex items-center justify-center"
@@ -1370,7 +1370,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Module tabs */}
-        <div className="shrink-0 border-b border-[#e2e8f0] px-7 flex items-end gap-1 overflow-x-auto"
+        <div className="shrink-0 border-b border-[#e2e8f0] px-6 flex items-end gap-1 overflow-x-auto"
           style={{ background:"rgba(255,255,255,0.95)" }}>
           {spec.modules.map(mod=>{
             const Icon = mod.icon;
@@ -1411,7 +1411,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
         {/* Module body */}
         <div className="flex-1 overflow-y-auto">
           {/* Module header */}
-          <div className="px-7 py-4 border-b border-[#e2e8f0]"
+          <div className="px-6 py-4 border-b border-[#e2e8f0]"
             style={{ background:"#f4f7fb" }}>
             <div className="flex items-center gap-3">
               <div className="size-9 rounded-lg flex items-center justify-center"
@@ -1448,7 +1448,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
           </div>
 
           {/* Feature cards */}
-          <div className="px-7 py-5 space-y-3">
+          <div className="px-6 py-5 space-y-3">
             {currentMod.features.map(f=>(
               <FeatureCard key={f.id} feature={f} roleColor={meta.color}/>
             ))}

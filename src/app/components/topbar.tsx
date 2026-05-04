@@ -67,7 +67,7 @@ function ActionBtn({ icon: Icon, onClick, title, badge }: {
 }) {
   return (
     <button onClick={onClick} title={title}
-      className="relative size-[34px] rounded-[8px] flex items-center justify-center transition-all"
+      className="relative size-[34px] rounded-[8px] flex items-center justify-center transition-all active:scale-95 active:opacity-80"
       style={{ color: "#6b7280" }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLElement).style.background = "#eef2f8";

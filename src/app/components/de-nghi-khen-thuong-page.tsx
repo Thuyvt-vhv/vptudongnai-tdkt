@@ -760,7 +760,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
       {/* Main area */}
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="px-8 pt-6 pb-0 bg-white border-b border-[#eef2f8]">
+        <div className="px-6 pt-6 pb-0 bg-white border-b border-[#eef2f8]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
@@ -802,7 +802,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Toolbar */}
-        <div className="px-8 py-3 bg-white border-b border-[#eef2f8] flex items-center gap-3">
+        <div className="px-6 py-3 bg-white border-b border-[#eef2f8] flex items-center gap-3">
           <div className="flex-1 max-w-sm">
             <label className="flex items-center gap-2 h-9 px-3 rounded-lg bg-[#f4f7fb] border border-[#e2e8f0] focus-within:border-[var(--color-primary-btn)] transition">
               <Search className="size-3.5 text-[#635647]" />

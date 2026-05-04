@@ -234,7 +234,7 @@ function AwardsTab() {
             <tbody>{MOCK_AWARDS.map((a,i)=>{
               const lc=LEVEL_LABEL[a.level]; const isSel=sel?.id===a.id;
               return (
-                <tr key={a.id} onClick={()=>setSel(a)} className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
+                <tr key={a.id} onClick={()=>setSel(a)} className="border-t border-[#e2e8f0] cursor-pointer transition-colors row-clickable"
                   style={{ background:isSel?"#ffffff":i%2===0?"white":"#f4f7fb" }}>
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
@@ -565,7 +565,7 @@ function KinhPhiTab() {
                   <tr
                     key={r.id}
                     onClick={() => openEdit(r)}
-                    className="border-t border-[#e2e8f0] cursor-pointer transition-colors"
+                    className="border-t border-[#e2e8f0] cursor-pointer transition-colors row-clickable"
                     style={{ background: isSel ? "#ffffff" : i % 2 === 0 ? "white" : "#f4f7fb" }}
                   >
                     <td className="px-3 py-2.5">

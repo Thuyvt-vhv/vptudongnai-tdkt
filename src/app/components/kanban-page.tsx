@@ -325,7 +325,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
       <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
-        <div className="px-8 py-4 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+        <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bảng Kanban Hồ sơ</h1>
@@ -383,7 +383,7 @@ export function KanbanPage({ user }: { user: LoginUser }) {
         </div>
 
         {/* Footer hint */}
-        <div className="px-8 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#ffffff" }}>
+        <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#ffffff" }}>
           <span className="flex items-center gap-1.5 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
             <GripVertical className="size-3.5" />Kéo thả để chuyển bước quy trình
           </span>

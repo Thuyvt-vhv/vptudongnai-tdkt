@@ -83,7 +83,7 @@ function Podium({ top3 }: { top3: RankEntry[] }) {
   ];
 
   return (
-    <div className="relative overflow-hidden px-8 pt-10 pb-8"
+    <div className="relative overflow-hidden px-6 pt-10 pb-8"
       style={{ background: "linear-gradient(135deg,#eff6ff 0%,#f5f3ff 45%,#fefce8 100%)" }}>
 
       {/* Background decoration blobs */}

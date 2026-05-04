@@ -221,7 +221,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
   return (
     <div className="h-full flex flex-col overflow-hidden" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
       {/* ── Header ── */}
-      <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
+      <div className="px-6 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lịch công tác & Sự kiện</h1>
           <p className="text-[13px] text-[#635647] mt-0.5">

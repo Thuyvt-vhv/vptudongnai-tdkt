@@ -276,7 +276,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
 
   return (
     <div className="h-full overflow-y-auto" style={{ background: "#ffffff", fontFamily: "var(--font-sans)" }}>
-      <div className="max-w-[1100px] mx-auto px-8 py-6">
+      <div className="px-6 py-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>

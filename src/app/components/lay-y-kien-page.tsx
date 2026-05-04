@@ -1193,7 +1193,7 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
   return (
     <div className="h-full flex flex-col" style={{ background: "var(--color-paper)" }}>
       {/* Page header */}
-      <div className="px-8 pt-6 pb-4 border-b" style={{ borderColor: "var(--color-line)", background: "var(--color-paper)" }}>
+      <div className="px-6 pt-6 pb-4 border-b" style={{ borderColor: "var(--color-line)", background: "var(--color-paper)" }}>
         <div className="flex items-start justify-between gap-4 mb-5">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -1234,12 +1234,12 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
       </div>
 
       {/* Stats */}
-      <div className="px-8 pt-5 pb-0">
+      <div className="px-6 pt-5 pb-0">
         <StatsBar records={records} />
       </div>
 
       {/* Tabs + search */}
-      <div className="px-8 pt-5 pb-0 flex items-center gap-4 border-b"
+      <div className="px-6 pt-5 pb-0 flex items-center gap-4 border-b"
         style={{ borderColor: "var(--color-line)" }}>
         {/* Tabs */}
         <div className="flex items-center gap-1">
@@ -1287,7 +1287,7 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
       </div>
 
       {/* Grid */}
-      <div className="flex-1 overflow-y-auto px-8 py-5">
+      <div className="flex-1 overflow-y-auto px-6 py-5">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
             <div className="size-16 rounded-full flex items-center justify-center"

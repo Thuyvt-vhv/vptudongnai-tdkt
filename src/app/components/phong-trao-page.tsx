@@ -538,7 +538,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
   ];
 
   return (
-    <div className="px-8 py-3 border-b flex items-center gap-0 overflow-x-auto"
+    <div className="px-6 py-3 border-b flex items-center gap-0 overflow-x-auto"
       style={{ background:"#fafaf9", borderColor:"var(--color-line)" }}>
       {/* State pill */}
       <div className="flex items-center gap-2 pr-4 border-r mr-4 shrink-0" style={{ borderColor:"#e2e8f0" }}>
@@ -777,7 +777,7 @@ function FullStateTimeline({ state }: { state: CampaignState }) {
   const curIdx = stateIndex(state);
 
   return (
-    <div className="px-8 pt-5 pb-6 bg-white border-b" style={{ borderColor:"var(--color-line)" }}>
+    <div className="px-6 pt-5 pb-6 bg-white border-b" style={{ borderColor:"var(--color-line)" }}>
 
       {/* ── Phase labels ── */}
       <div className="flex items-center mb-4">
@@ -6566,10 +6566,6 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
       <div className="p-5 flex flex-col gap-4 flex-1">
         {/* Header */}
         <div className="flex items-start gap-3">
-          <div className="size-10 rounded-[10px] flex items-center justify-center shrink-0 transition-transform group-hover:scale-105"
-            style={{ background:phase.color+"18" }}>
-            <Trophy className="size-5" style={{ color:phase.color }} />
-          </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap mb-1">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[13px]"
@@ -6582,14 +6578,14 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
                 style={{ fontFamily: "var(--font-sans)" }}>{TYPE_LABELS[c.type]}</span>
               {c.urgent&&<span className="text-[13px] text-[#c8102e]">🔴</span>}
             </div>
-            <h3 className="text-[13px] text-[#0b1426] leading-snug"
+            <h3 className="text-[16px] text-[#0b1426] leading-snug"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{c.name}</h3>
           </div>
         </div>
 
         {/* Workflow progress */}
         <div className="space-y-1">
-          <div className="flex items-center justify-between text-[13px]">
+          <div className="flex items-center justify-between text-[14px]">
             <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
               Giai đoạn: <span style={{ color:phase.color, fontWeight:600 }}>{phase.label}</span>
             </span>
@@ -6604,7 +6600,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
         {/* Participation */}
         {c.totalUnits > 0 && (
           <div className="space-y-1">
-            <div className="flex items-center justify-between text-[13px]">
+            <div className="flex items-center justify-between text-[14px]">
               <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
                 {c.joinedUnits}/{c.totalUnits} đơn vị tham gia
               </span>
@@ -6621,17 +6617,17 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
 
         {/* Meta */}
         <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+          <div className="flex items-center gap-1.5 text-[14px] text-[#635647]"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Calendar className="size-3 shrink-0" />{c.period}
           </div>
           {(c.state==="active"||c.state==="submission_closed") && left > 0 && (
-            <div className="flex items-center gap-1.5 text-[13px]"
+            <div className="flex items-center gap-1.5 text-[14px]"
               style={{ color:left<=7?"#c8102e":left<=14?"#b45309":"#166534", fontFamily: "var(--font-sans)", fontWeight:500 }}>
               <Timer className="size-3 shrink-0" />Còn {left} ngày nộp hồ sơ
             </div>
           )}
-          <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+          <div className="flex items-center gap-1.5 text-[14px] text-[#635647]"
             style={{ fontFamily: "var(--font-sans)" }}>
             <User className="size-3 shrink-0" />{c.leader}
           </div>
@@ -6652,7 +6648,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
         {/* Footer — action call */}
         <div className="mt-auto pt-3 border-t" style={{ borderColor:"var(--color-line)" }}>
           {cardAction ? (
-            <div className="w-full flex items-center justify-center gap-2 h-9 rounded-[8px] text-[13px] font-semibold border"
+            <div className="w-full flex items-center justify-center gap-2 h-9 rounded-[8px] text-[14px] font-semibold border"
               style={{ background:cardAction.bg, color:cardAction.textColor, borderColor:cardAction.border ?? "transparent",
                 fontFamily:"var(--font-sans)" }}>
               {cardAction.urgent && <span className="size-1.5 rounded-full animate-pulse" style={{ background:cardAction.textColor }} />}
@@ -6660,8 +6656,8 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
-              <span className="flex items-center gap-1 text-[13px] transition-colors group-hover:gap-1.5"
+              <span className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
+              <span className="flex items-center gap-1 text-[14px] transition-colors group-hover:gap-1.5"
                 style={{ color:theme.primary, fontFamily: "var(--font-sans)", fontWeight:500 }}>
                 Xem chi tiết <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>

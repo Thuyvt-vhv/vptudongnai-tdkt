@@ -142,7 +142,7 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
   return (
     <div className="flex flex-col h-full min-h-screen" style={{ background: "#f4f7fb", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div className="px-8 py-5 border-b flex items-center justify-between" style={{ background: "white", borderColor: "#e2e8f0" }}>
+      <div className="px-6 py-5 border-b flex items-center justify-between" style={{ background: "white", borderColor: "#e2e8f0" }}>
         <div>
           <h1 className="text-[18px] font-bold text-[#0b1426]">Sơ đồ BPMN — Luồng Phát động Phong trào</h1>
           <p className="text-[13px] text-[#635647] mt-0.5">
@@ -184,7 +184,7 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
       </div>
 
       {/* Legend */}
-      <div className="px-8 py-3 border-b flex items-center gap-6" style={{ background: "white", borderColor: "#e2e8f0" }}>
+      <div className="px-6 py-3 border-b flex items-center gap-6" style={{ background: "white", borderColor: "#e2e8f0" }}>
         <span className="text-[12px] font-semibold text-[#635647] uppercase tracking-wider">Vai trò:</span>
         {[
           { color: "#ddeafc", border: "#1C5FBE", label: "Lãnh đạo cấp cao" },

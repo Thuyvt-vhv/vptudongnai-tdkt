@@ -535,6 +535,66 @@
     padding: var(--space-3) var(--space-4);
   }
 
+  /* ========= Global interaction safety net =========
+     All <button> elements not using the .btn system get
+     baseline cursor, smooth transition, active press, and
+     focus-visible ring — no per-element Tailwind changes needed.
+  */
+  button:not(.btn) {
+    cursor: pointer;
+  }
+  button:not(.btn):not(:disabled) {
+    transition: background-color 140ms ease, color 140ms ease,
+                border-color 140ms ease, opacity 140ms ease,
+                transform 80ms ease, box-shadow 140ms ease;
+  }
+  button:not(.btn):not(:disabled):active {
+    transform: translateY(1px);
+    opacity: 0.88;
+  }
+  button:not(.btn):not(:disabled):focus-visible {
+    box-shadow: var(--ring-focus);
+    outline: none;
+  }
+  button:not(.btn):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Auto-hover for buttons with white/transparent bg (no Tailwind bg-[...] class).
+     Buttons with inline style={{ background }} are unaffected because inline styles
+     have higher specificity and win over this rule. */
+  button:not(.btn):not(:disabled):not([class*="bg-["]):not([class*="bg-white"]):not([class*="bg-transparent"]):hover {
+    background-color: #f4f7fb;
+  }
+  button:not(.btn):not(:disabled)[class*="bg-white"]:hover {
+    background-color: #f4f7fb;
+  }
+
+  /* .btn-soft — bordered white-bg button (most common non-.btn pattern) */
+  .btn-soft:not(:disabled):hover  { background: #f4f7fb; border-color: #c9bfb0; }
+  .btn-soft:not(:disabled):active { background: #eef2f8; border-color: #b8ae9a; transform: translateY(1px); }
+
+  /* .btn-colored — solid-color custom button (inline style background) */
+  .btn-colored:not(:disabled):hover  { opacity: 0.88; }
+  .btn-colored:not(:disabled):active { opacity: 0.76; transform: translateY(1px); }
+
+  /* .row-clickable — <tr> or <div> with onClick */
+  .row-clickable {
+    cursor: pointer;
+    transition: background-color 120ms ease;
+  }
+  .row-clickable:hover  { background-color: #f8fafc !important; }
+  .row-clickable:active { background-color: #eef2f8 !important; }
+
+  /* .link-text — inline text link (blue) */
+  .link-text {
+    cursor: pointer;
+    transition: opacity 120ms ease, text-decoration-color 120ms ease;
+  }
+  .link-text:hover  { opacity: 0.72; text-decoration: underline; }
+  .link-text:active { opacity: 0.55; }
+
   /* ========= Search bar (theme-aware) ======= */
   .search-bar {
     display: flex;
