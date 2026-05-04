@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import mermaid from "mermaid";
 import { Download, ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import type { LoginUser } from "./login-page";
@@ -144,26 +144,26 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
       {/* Header */}
       <div className="px-6 py-5 border-b flex items-center justify-between" style={{ background: "white", borderColor: "#e2e8f0" }}>
         <div>
-          <h1 className="text-[18px] font-bold text-[#0b1426]">Sơ đồ BPMN — Luồng Phát động Phong trào</h1>
-          <p className="text-[13px] text-[#635647] mt-0.5">
+          <h1 className="text-[18px] font-bold text-slate-900">Sơ đồ BPMN — Luồng Phát động Phong trào</h1>
+          <p className="text-[13px] text-slate-700 mt-0.5">
             VPTU Đồng Nai · 18 bước · 4 giai đoạn · 5 vai trò · BPMN 2.0
           </p>
         </div>
         <div className="flex items-center gap-2">
           {/* Zoom controls */}
           <button onClick={() => setScale(s => Math.max(0.3, s - 0.1))}
-            className="size-8 rounded-[6px] border flex items-center justify-center text-[#635647] hover:bg-[#f4f7fb] transition-colors"
+            className="size-8 rounded-[6px] border flex items-center justify-center text-slate-700 hover:bg-[#f4f7fb] transition-colors"
             style={{ borderColor: "#e2e8f0" }}>
             <ZoomOut className="size-4" />
           </button>
-          <span className="text-[13px] text-[#635647] w-12 text-center">{Math.round(scale * 100)}%</span>
+          <span className="text-[13px] text-slate-700 w-12 text-center">{Math.round(scale * 100)}%</span>
           <button onClick={() => setScale(s => Math.min(2, s + 0.1))}
-            className="size-8 rounded-[6px] border flex items-center justify-center text-[#635647] hover:bg-[#f4f7fb] transition-colors"
+            className="size-8 rounded-[6px] border flex items-center justify-center text-slate-700 hover:bg-[#f4f7fb] transition-colors"
             style={{ borderColor: "#e2e8f0" }}>
             <ZoomIn className="size-4" />
           </button>
           <button onClick={() => setScale(1)}
-            className="size-8 rounded-[6px] border flex items-center justify-center text-[#635647] hover:bg-[#f4f7fb] transition-colors"
+            className="size-8 rounded-[6px] border flex items-center justify-center text-slate-700 hover:bg-[#f4f7fb] transition-colors"
             style={{ borderColor: "#e2e8f0" }}>
             <RotateCcw className="size-3.5" />
           </button>
@@ -185,7 +185,7 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
 
       {/* Legend */}
       <div className="px-6 py-3 border-b flex items-center gap-6" style={{ background: "white", borderColor: "#e2e8f0" }}>
-        <span className="text-[12px] font-semibold text-[#635647] uppercase tracking-wider">Vai trò:</span>
+        <span className="text-[12px] font-semibold text-slate-700 uppercase tracking-wider">Vai trò:</span>
         {[
           { color: "#ddeafc", border: "#1C5FBE", label: "Lãnh đạo cấp cao" },
           { color: "#f5f3ff", border: "#7c3aed", label: "Hội đồng TĐKT" },
@@ -199,8 +199,8 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
           </div>
         ))}
         <div className="ml-4 flex items-center gap-4" style={{ borderLeft: "1px solid #e2e8f0", paddingLeft: 16 }}>
-          <span className="text-[12px] text-[#635647]">◆ = Parallel gateway</span>
-          <span className="text-[12px] text-[#635647]">◇ = Exclusive gateway (XOR)</span>
+          <span className="text-[12px] text-slate-700">◆ = Parallel gateway</span>
+          <span className="text-[12px] text-slate-700">◇ = Exclusive gateway (XOR)</span>
         </div>
       </div>
 
@@ -220,7 +220,7 @@ export function BpmnPhongTraoPage({ user: _user }: { user: LoginUser }) {
             />
           ) : (
             <div className="flex items-center justify-center h-64">
-              <div className="text-[14px] text-[#635647] animate-pulse">Đang render sơ đồ BPMN…</div>
+              <div className="text-[14px] text-slate-700 animate-pulse">Đang render sơ đồ BPMN…</div>
             </div>
           )}
         </div>

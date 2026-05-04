@@ -150,10 +150,10 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
           </div>
           <div className="flex-1">
             <span className="text-[13px]" style={{ color: report.color, fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.code}</span>
-            <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h3>
+            <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h3>
           </div>
           <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#eef2f8]">
-            <X className="size-4 text-[#635647]" />
+            <X className="size-4 text-slate-700" />
           </button>
         </div>
         {/* Page mock */}
@@ -161,36 +161,36 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
           <div className="max-w-[600px] mx-auto border border-[#e2e8f0] rounded-[8px] p-8 space-y-5" style={{ background: "white" }}>
             {/* Document header */}
             <div className="text-center border-b border-[#e2e8f0] pb-5">
-              <div className="text-[13px] uppercase tracking-widest text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>UBND TỈNH ĐỒNG NAI</div>
-              <div className="text-[13px] text-[#635647] mb-3">Số: {report.code}/BC-TĐKT/{params.nam || "2026"}</div>
-              <h2 className="text-[18px] text-[#0b1426] uppercase" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h2>
-              <div className="text-[13px] text-[#5a5040] mt-2">
+              <div className="text-[13px] uppercase tracking-widest text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>UBND TỈNH ĐỒNG NAI</div>
+              <div className="text-[13px] text-slate-700 mb-3">Số: {report.code}/BC-TĐKT/{params.nam || "2026"}</div>
+              <h2 className="text-[18px] text-slate-900 uppercase" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h2>
+              <div className="text-[13px] text-slate-700 mt-2">
                 {Object.entries(params).map(([k, v]) => v).filter(Boolean).join(" · ")}
               </div>
             </div>
             {/* Mock content */}
-            <div className="space-y-3 text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
-              <p className="font-bold text-[#0b1426]">I. KẾT QUẢ TỔNG HỢP</p>
+            <div className="space-y-3 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="font-bold text-slate-900">I. KẾT QUẢ TỔNG HỢP</p>
               <div className="grid grid-cols-3 gap-3">
                 {[["Tổng hồ sơ", "124"], ["Đã hoàn thành", "112"], ["Tỷ lệ đúng hạn", "97.2%"]].map(([k, v]) => (
                   <div key={k} className="rounded-[8px] p-3 text-center" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
-                    <div className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{v}</div>
-                    <div className="text-[13px] text-[#635647]">{k}</div>
+                    <div className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{v}</div>
+                    <div className="text-[13px] text-slate-700">{k}</div>
                   </div>
                 ))}
               </div>
-              <p className="font-bold text-[#0b1426] pt-2">II. DANH SÁCH CHI TIẾT</p>
+              <p className="font-bold text-slate-900 pt-2">II. DANH SÁCH CHI TIẾT</p>
               {[1, 2, 3].map(i => (
                 <div key={i} className="flex items-center gap-3 py-2 border-b border-[#eef2f8]">
-                  <span className="text-[#635647] w-5">{i}.</span>
+                  <span className="text-slate-700 w-5">{i}.</span>
                   <div className="flex-1">
                     <div className="h-2 rounded bg-[#e2e8f0] w-3/4 mb-1" />
                     <div className="h-2 rounded bg-[#eef2f8] w-1/2" />
                   </div>
-                  <span className="text-[13px] text-[#6b5e47]">Page {i}</span>
+                  <span className="text-[13px] text-slate-600">Page {i}</span>
                 </div>
               ))}
-              <p className="text-[13px] text-[#6b5e47] italic text-center pt-4">— Xem đầy đủ nội dung trong file xuất —</p>
+              <p className="text-[13px] text-slate-600 italic text-center pt-4">— Xem đầy đủ nội dung trong file xuất —</p>
             </div>
           </div>
         </div>
@@ -205,7 +205,7 @@ function ReportPreview({ report, params, onClose }: { report: ReportTemplate; pa
               </button>
             );
           })}
-          <button onClick={onClose} className="ml-auto px-4 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Đóng</button>
+          <button onClick={onClose} className="ml-auto px-4 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Đóng</button>
         </div>
       </div>
     </div>
@@ -245,11 +245,11 @@ function ReportCard({ report, user, onGenerate }: { report: ReportTemplate; user
               <span className="text-[13px] px-2 py-0.5 rounded" style={{ background: report.bg, color: report.color, fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.code}</span>
               {!canAccess && <span className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)" }}>Không có quyền</span>}
             </div>
-            <h3 className="text-[14px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h3>
+            <h3 className="text-[14px] text-slate-900 leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{report.title}</h3>
           </div>
         </div>
-        <p className="text-[13px] text-[#635647] mb-3 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{report.desc}</p>
-        <div className="flex items-center gap-1.5 text-[13px] text-[#5a5040] mb-4" style={{ fontFamily: "var(--font-sans)" }}>
+        <p className="text-[13px] text-slate-700 mb-3 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{report.desc}</p>
+        <div className="flex items-center gap-1.5 text-[13px] text-slate-700 mb-4" style={{ fontFamily: "var(--font-sans)" }}>
           <Shield className="size-3.5 text-[#1C5FBE]" />{report.canCu}
         </div>
         {/* Params */}
@@ -257,7 +257,7 @@ function ReportCard({ report, user, onGenerate }: { report: ReportTemplate; user
           <div className="space-y-2 mb-4">
             {report.params.map(p => (
               <div key={p.key}>
-                <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   {p.label}{p.required && <span className="text-[#c8102e] ml-0.5">*</span>}
                 </label>
                 {p.type === "select" ? (
@@ -323,8 +323,8 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
             <FileText className="size-5 text-[#8a6400]" />
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Báo cáo tổng hợp</h1>
-            <p className="text-[13px] text-[#635647]">{REPORTS.length} mẫu báo cáo · PDF / Excel / Word · Căn cứ TT 15/2025/TT-BNV</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Báo cáo tổng hợp</h1>
+            <p className="text-[13px] text-slate-700">{REPORTS.length} mẫu báo cáo · PDF / Excel / Word · Căn cứ TT 15/2025/TT-BNV</p>
           </div>
           <div className="ml-auto">
             {lastGenerated && (
@@ -370,7 +370,7 @@ export function BaoCaoPage({ user }: { user: LoginUser }) {
         {/* Bottom note */}
         <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background: "white" }}>
           <AlertCircle className="size-4 text-[#1C5FBE] shrink-0 mt-0.5" />
-          <p className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+          <p className="text-[13px] text-slate-700 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
             Tất cả báo cáo được tạo tự động từ dữ liệu hệ thống, đảm bảo tính nhất quán và đúng mẫu theo quy định.
             Báo cáo PDF được ký số CA trước khi gửi cơ quan cấp trên.
             <span className="text-[#1C5FBE] ml-1">Lưu ý: Vui lòng kiểm tra dữ liệu đầu vào trước khi xuất báo cáo chính thức.</span>

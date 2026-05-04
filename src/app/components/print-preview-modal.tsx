@@ -87,14 +87,14 @@ function DocHeader({ left1, left2, soHieu, right1="CỘNG HÒA XÃ HỘI CHỦ N
   return (
     <div className="grid grid-cols-2 gap-0 mb-6" style={{ fontFamily: "var(--font-sans)" }}>
       <div className="text-center border-r border-[#333] pr-4">
-        <div className="text-[13px] uppercase tracking-wide font-bold text-[#0b1426]">{left1}</div>
-        <div className="text-[13px] font-bold text-[#0b1426] mt-0.5 border-b-2 border-[#0b1426] pb-0.5 inline-block">{left2}</div>
-        <div className="text-[13px] text-[#0b1426] mt-1">Số: {soHieu}</div>
+        <div className="text-[13px] uppercase tracking-wide font-bold text-slate-900">{left1}</div>
+        <div className="text-[13px] font-bold text-slate-900 mt-0.5 border-b-2 border-[#0b1426] pb-0.5 inline-block">{left2}</div>
+        <div className="text-[13px] text-slate-900 mt-1">Số: {soHieu}</div>
       </div>
       <div className="text-center pl-4">
-        <div className="text-[13px] uppercase font-bold text-[#0b1426]">{right1}</div>
-        <div className="text-[13px] font-bold text-[#0b1426] mt-0.5 border-b-2 border-[#0b1426] pb-0.5 inline-block">Độc lập – Tự do – Hạnh phúc</div>
-        <div className="text-[13px] text-[#0b1426] mt-1 italic">Đồng Nai, ngày {date}</div>
+        <div className="text-[13px] uppercase font-bold text-slate-900">{right1}</div>
+        <div className="text-[13px] font-bold text-slate-900 mt-0.5 border-b-2 border-[#0b1426] pb-0.5 inline-block">Độc lập – Tự do – Hạnh phúc</div>
+        <div className="text-[13px] text-slate-900 mt-1 italic">Đồng Nai, ngày {date}</div>
       </div>
     </div>
   );
@@ -104,7 +104,7 @@ function DocHeader({ left1, left2, soHieu, right1="CỘNG HÒA XÃ HỘI CHỦ N
 function SignatureBlock({ role, name, isSigned }: { role: string; name: string; isSigned: boolean }) {
   return (
     <div className="text-center min-w-[180px]" style={{ fontFamily: "var(--font-sans)" }}>
-      <div className="text-[13px] font-bold uppercase text-[#0b1426] mb-4">{role}</div>
+      <div className="text-[13px] font-bold uppercase text-slate-900 mb-4">{role}</div>
       {isSigned ? (
         <div className="flex flex-col items-center gap-1 mb-2">
           <div className="size-14 rounded-full border-4 border-[#c8102e] flex items-center justify-center opacity-80">
@@ -117,7 +117,7 @@ function SignatureBlock({ role, name, isSigned }: { role: string; name: string; 
           <span className="text-[13px] text-[#d1d5db] italic">(chưa ký)</span>
         </div>
       )}
-      <div className="text-[13px] font-bold text-[#0b1426]">{name}</div>
+      <div className="text-[13px] font-bold text-slate-900">{name}</div>
     </div>
   );
 }
@@ -144,22 +144,22 @@ function ToTrinhDoc({ isSigned }: { isSigned: boolean }) {
         />
 
         <div className="text-center mb-5">
-          <div className="text-[14px] font-black uppercase tracking-wide text-[#0b1426] mb-1">TỜ TRÌNH</div>
-          <div className="text-[13px] text-[#0b1426]">V/v đề nghị khen thưởng kết quả</div>
-          <div className="text-[13px] font-bold text-[#0b1426] mt-0.5">"{D.phongTrao}"</div>
+          <div className="text-[14px] font-black uppercase tracking-wide text-slate-900 mb-1">TỜ TRÌNH</div>
+          <div className="text-[13px] text-slate-900">V/v đề nghị khen thưởng kết quả</div>
+          <div className="text-[13px] font-bold text-slate-900 mt-0.5">"{D.phongTrao}"</div>
         </div>
 
-        <div className="mb-4 text-[13px] text-[#0b1426]">
+        <div className="mb-4 text-[13px] text-slate-900">
           <span className="font-bold">Kính gửi:</span> Chủ tịch Ủy ban Nhân dân tỉnh Đồng Nai
         </div>
 
-        <div className="mb-4 text-[13px] text-[#0b1426] leading-relaxed">
+        <div className="mb-4 text-[13px] text-slate-900 leading-relaxed">
           Căn cứ Luật Thi đua, Khen thưởng năm 2022 và NĐ 152/2025/NĐ-CP ngày 14/6/2025; Hội đồng Thi đua Khen thưởng tỉnh Đồng Nai trân trọng báo cáo kết quả bình xét và đề nghị khen thưởng như sau:
         </div>
 
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">I. KẾT QUẢ PHONG TRÀO</div>
-          <div className="pl-4 space-y-1.5 text-[13px] text-[#0b1426]">
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">I. KẾT QUẢ PHONG TRÀO</div>
+          <div className="pl-4 space-y-1.5 text-[13px] text-slate-900">
             {[
               [`Phong trào:`, D.phongTrao],
               [`Mã phong trào:`, D.soHieu],
@@ -176,12 +176,12 @@ function ToTrinhDoc({ isSigned }: { isSigned: boolean }) {
         </div>
 
         <div className="mb-5">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">II. DANH SÁCH ĐỀ NGHỊ KHEN THƯỞNG</div>
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">II. DANH SÁCH ĐỀ NGHỊ KHEN THƯỞNG</div>
           <table className="w-full text-[13px] border-collapse" style={{ borderColor: "#d1d5db" }}>
             <thead>
               <tr style={{ background: "#f4f7fb" }}>
                 {["STT", "Họ và tên", "Đơn vị", "Danh hiệu đề nghị", "Điểm"].map(h => (
-                  <th key={h} className="border px-2 py-1.5 text-left font-bold text-[#0b1426]" style={{ borderColor: "#d1d5db" }}>{h}</th>
+                  <th key={h} className="border px-2 py-1.5 text-left font-bold text-slate-900" style={{ borderColor: "#d1d5db" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -199,14 +199,14 @@ function ToTrinhDoc({ isSigned }: { isSigned: boolean }) {
           </table>
         </div>
 
-        <div className="mb-5 text-[13px] text-[#0b1426] leading-relaxed">
+        <div className="mb-5 text-[13px] text-slate-900 leading-relaxed">
           Hội đồng Thi đua Khen thưởng tỉnh kính trình Chủ tịch UBND tỉnh xem xét, phê duyệt danh sách trên và ban hành Quyết định khen thưởng theo quy định.
         </div>
 
         <div className="flex justify-between mt-6">
           <div className="text-center">
-            <div className="text-[13px] text-[#0b1426] mb-1 italic">Nơi nhận:</div>
-            <div className="text-[13px] text-[#5a5040] space-y-0.5 text-left">
+            <div className="text-[13px] text-slate-900 mb-1 italic">Nơi nhận:</div>
+            <div className="text-[13px] text-slate-700 space-y-0.5 text-left">
               <div>– Như kính gửi;</div>
               <div>– Sở Nội vụ;</div>
               <div>– Lưu VP.</div>
@@ -236,23 +236,23 @@ function QuyetDinhDoc({ isSigned }: { isSigned: boolean }) {
           date={D.ngayKy}
         />
         <div className="text-center mb-6">
-          <div className="text-[14px] font-black uppercase tracking-wide text-[#0b1426] mb-1">QUYẾT ĐỊNH</div>
-          <div className="text-[13px] text-[#0b1426]">Về việc tặng danh hiệu thi đua khen thưởng</div>
-          <div className="text-[13px] font-bold text-[#0b1426] mt-0.5">kết quả {D.phongTrao}</div>
+          <div className="text-[14px] font-black uppercase tracking-wide text-slate-900 mb-1">QUYẾT ĐỊNH</div>
+          <div className="text-[13px] text-slate-900">Về việc tặng danh hiệu thi đua khen thưởng</div>
+          <div className="text-[13px] font-bold text-slate-900 mt-0.5">kết quả {D.phongTrao}</div>
         </div>
         <div className="text-center mb-4">
-          <span className="text-[13px] font-black uppercase text-[#0b1426]">CHỦ TỊCH UBND TỈNH ĐỒNG NAI</span>
+          <span className="text-[13px] font-black uppercase text-slate-900">CHỦ TỊCH UBND TỈNH ĐỒNG NAI</span>
         </div>
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] mb-2">Căn cứ:</div>
+          <div className="text-[13px] font-bold text-slate-900 mb-2">Căn cứ:</div>
           {D.canCu.map((c, i) => (
             <div key={i} className="flex items-start gap-2 mb-1.5">
-              <span className="text-[13px] text-[#0b1426] shrink-0">–</span>
-              <span className="text-[13px] text-[#0b1426] leading-relaxed italic">{c}</span>
+              <span className="text-[13px] text-slate-900 shrink-0">–</span>
+              <span className="text-[13px] text-slate-900 leading-relaxed italic">{c}</span>
             </div>
           ))}
         </div>
-        <div className="space-y-3 mb-5 text-[13px] text-[#0b1426]">
+        <div className="space-y-3 mb-5 text-[13px] text-slate-900">
           <div>
             <span className="font-bold">Điều 1.</span>
             <span className="ml-2">Tặng danh hiệu thi đua và hình thức khen thưởng cho các cá nhân/tập thể có thành tích xuất sắc trong {D.phongTrao} theo danh sách đính kèm gồm {D.winners.length} người.</span>
@@ -287,7 +287,7 @@ function QuyetDinhDoc({ isSigned }: { isSigned: boolean }) {
           </div>
         </div>
         <div className="flex justify-between mt-6">
-          <div className="text-[13px] text-[#5a5040] space-y-0.5">
+          <div className="text-[13px] text-slate-700 space-y-0.5">
             <div className="font-bold mb-1 text-[13px]">Nơi nhận:</div>
             <div>– Như Điều 3;</div>
             <div>– Sở Nội vụ, Sở Tài chính;</div>
@@ -301,7 +301,7 @@ function QuyetDinhDoc({ isSigned }: { isSigned: boolean }) {
             <QrCode className="size-8 text-[#1C5FBE] shrink-0" />
             <div>
               <div className="text-[13px] text-[#1C5FBE] font-bold">Xác thực điện tử — NĐ 130/2018/NĐ-CP</div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono,monospace" }}>VQ-2026-{D.soQuyetDinh} · RSA-2048 · SHA-256 verified</div>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono,monospace" }}>VQ-2026-{D.soQuyetDinh} · RSA-2048 · SHA-256 verified</div>
             </div>
           </div>
         )}
@@ -327,36 +327,36 @@ function BienBanDoc({ isSigned }: { isSigned: boolean }) {
           date={D.ngayHop}
         />
         <div className="text-center mb-5">
-          <div className="text-[14px] font-black uppercase tracking-wide text-[#0b1426] mb-1">BIÊN BẢN HỌP</div>
-          <div className="text-[13px] font-bold text-[#0b1426]">Hội đồng Thi đua Khen thưởng tỉnh Đồng Nai</div>
-          <div className="text-[13px] text-[#5a5040] mt-0.5 italic">
+          <div className="text-[14px] font-black uppercase tracking-wide text-slate-900 mb-1">BIÊN BẢN HỌP</div>
+          <div className="text-[13px] font-bold text-slate-900">Hội đồng Thi đua Khen thưởng tỉnh Đồng Nai</div>
+          <div className="text-[13px] text-slate-700 mt-0.5 italic">
             Phiên xét duyệt kết quả {D.phongTrao}
           </div>
-          <div className="text-[13px] text-[#5a5040]">
+          <div className="text-[13px] text-slate-700">
             Thời gian: 08h00 ngày {D.ngayHop} · Địa điểm: Phòng họp UBND tỉnh Đồng Nai
           </div>
         </div>
 
         {/* Thành phần dự họp */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">I. THÀNH PHẦN DỰ HỌP</div>
-          <div className="pl-4 text-[13px] text-[#0b1426] space-y-1 mb-2">
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">I. THÀNH PHẦN DỰ HỌP</div>
+          <div className="pl-4 text-[13px] text-slate-900 space-y-1 mb-2">
             {D.thanhVienHD.map((tv, i) => (
               <div key={i} className="flex items-start gap-2">
-                <span className="shrink-0 text-[#635647]">{i + 1}.</span>
+                <span className="shrink-0 text-slate-700">{i + 1}.</span>
                 <span>{tv}</span>
               </div>
             ))}
           </div>
-          <div className="pl-4 text-[13px] text-[#0b1426]">
+          <div className="pl-4 text-[13px] text-slate-900">
             <span className="font-semibold">Số thành viên có mặt:</span> 7/7 ✅ <em>(đạt túc số 2/3 theo Điều 57 Luật TĐKT)</em>
           </div>
         </div>
 
         {/* Nội dung cuộc họp */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">II. NỘI DUNG CUỘC HỌP</div>
-          <div className="pl-4 text-[13px] text-[#0b1426] leading-relaxed space-y-2">
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">II. NỘI DUNG CUỘC HỌP</div>
+          <div className="pl-4 text-[13px] text-slate-900 leading-relaxed space-y-2">
             <p>Chủ tọa khai mạc phiên họp và thông báo danh sách {D.soKhenThuong} hồ sơ được đề nghị khen thưởng sau khi đã qua thẩm định cấp cơ sở.</p>
             <p>Thư ký đọc tóm tắt từng hồ sơ: thành tích nổi bật, điểm xếp loại, kết quả thẩm định cơ sở.</p>
             <p>Hội đồng thảo luận, đặt câu hỏi làm rõ với cán bộ phụ trách hồ sơ.</p>
@@ -366,7 +366,7 @@ function BienBanDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Kết quả bỏ phiếu */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">III. KẾT QUẢ BỎ PHIẾU KÍN</div>
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">III. KẾT QUẢ BỎ PHIẾU KÍN</div>
           <table className="w-full text-[13px] border-collapse">
             <thead>
               <tr style={{ background: "#f5f3ff" }}>
@@ -399,8 +399,8 @@ function BienBanDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Kết luận */}
         <div className="mb-5">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase mb-2">IV. KẾT LUẬN</div>
-          <div className="pl-4 text-[13px] text-[#0b1426] leading-relaxed space-y-1.5">
+          <div className="text-[13px] font-bold text-slate-900 uppercase mb-2">IV. KẾT LUẬN</div>
+          <div className="pl-4 text-[13px] text-slate-900 leading-relaxed space-y-1.5">
             <p>Hội đồng thống nhất đề nghị khen thưởng <strong>{D.winners.filter((_, i) => D.ketQuaBoPieu[i]?.tanThanh >= 5).length}/{D.soKhenThuong}</strong> hồ sơ đã được bỏ phiếu thông qua.</p>
             <p>Giao Văn phòng Hội đồng tổng hợp, lập Tờ trình trình Chủ tịch UBND tỉnh ký ban hành Quyết định khen thưởng.</p>
             <p>Biên bản kết thúc vào lúc 10h30 ngày {D.ngayHop}, được toàn thể thành viên nhất trí thông qua.</p>
@@ -428,18 +428,18 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
       )}
       <div className="relative p-8 z-20" style={{ fontFamily: "var(--font-sans)" }}>
         {/* Form header */}
-        <div className="text-right text-[13px] text-[#5a5040] mb-3 italic">
+        <div className="text-right text-[13px] text-slate-700 mb-3 italic">
           Mẫu số 01/TT15 (Ban hành kèm theo Thông tư 15/2025/TT-BNV ngày 01/8/2025 của Bộ Nội vụ)
         </div>
         <div className="text-center mb-5">
-          <div className="text-[14px] font-black uppercase text-[#0b1426] mb-1">TỜ KHAI THÀNH TÍCH CÁ NHÂN</div>
-          <div className="text-[13px] text-[#0b1426]">(Đề nghị tặng danh hiệu thi đua, hình thức khen thưởng)</div>
+          <div className="text-[14px] font-black uppercase text-slate-900 mb-1">TỜ KHAI THÀNH TÍCH CÁ NHÂN</div>
+          <div className="text-[13px] text-slate-900">(Đề nghị tặng danh hiệu thi đua, hình thức khen thưởng)</div>
         </div>
 
         {/* Section I */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">I. THÔNG TIN CÁ NHÂN</div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-2 pl-2 text-[13px] text-[#0b1426]">
+          <div className="text-[13px] font-bold text-slate-900 uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">I. THÔNG TIN CÁ NHÂN</div>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2 pl-2 text-[13px] text-slate-900">
             {[
               ["Họ và tên:", w.ten],
               ["Ngày sinh:", "15/03/1985"],
@@ -464,8 +464,8 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section II */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">II. THÀNH TÍCH NỔI BẬT (Căn cứ Điều 7 TT 12/2019/TT-BNV)</div>
-          <div className="pl-2 space-y-2 text-[13px] text-[#0b1426]">
+          <div className="text-[13px] font-bold text-slate-900 uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">II. THÀNH TÍCH NỔI BẬT (Căn cứ Điều 7 TT 12/2019/TT-BNV)</div>
+          <div className="pl-2 space-y-2 text-[13px] text-slate-900">
             <div className="p-2.5 rounded" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
               Hoàn thành xuất sắc 100% nhiệm vụ được giao năm 2025. Chủ trì 02 đề tài nghiên cứu cấp tỉnh được nghiệm thu xếp loại Xuất sắc. Có 01 sáng kiến kinh nghiệm được Hội đồng sáng kiến tỉnh công nhận, tiết kiệm ngân sách ước tính 250 triệu đồng/năm.
             </div>
@@ -474,7 +474,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
 
         {/* Section III */}
         <div className="mb-4">
-          <div className="text-[13px] font-bold text-[#0b1426] uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">III. DANH HIỆU ĐÃ ĐƯỢC TẶNG</div>
+          <div className="text-[13px] font-bold text-slate-900 uppercase bg-[#f4f7fb] px-3 py-1.5 mb-3">III. DANH HIỆU ĐÃ ĐƯỢC TẶNG</div>
           <table className="w-full text-[13px] border-collapse pl-2">
             <thead>
               <tr style={{ background: "#f4f7fb" }}>
@@ -500,7 +500,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
         </div>
 
         {/* Section IV — Hình thức đề nghị */}
-        <div className="mb-5 text-[13px] text-[#0b1426]">
+        <div className="mb-5 text-[13px] text-slate-900">
           <div className="text-[13px] font-bold uppercase bg-[#f4f7fb] px-3 py-1.5 mb-2">IV. ĐỀ NGHỊ XÉT TẶNG</div>
           <div className="pl-2">
             Đề nghị tặng danh hiệu: <strong className="text-[#1C5FBE]">{w.danhHieu}</strong> năm 2026
@@ -510,13 +510,13 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
         {/* Signature block */}
         <div className="flex justify-between mt-6">
           <div className="text-center">
-            <div className="text-[13px] font-bold uppercase text-[#0b1426] mb-6">XÁC NHẬN CỦA THỦ TRƯỞNG ĐƠN VỊ</div>
+            <div className="text-[13px] font-bold uppercase text-slate-900 mb-6">XÁC NHẬN CỦA THỦ TRƯỞNG ĐƠN VỊ</div>
             <div className="h-10" />
-            <div className="text-[13px] text-[#635647] italic">(Ký tên, đóng dấu)</div>
+            <div className="text-[13px] text-slate-700 italic">(Ký tên, đóng dấu)</div>
           </div>
           <div className="text-center">
-            <div className="text-[13px] text-[#0b1426] italic mb-1">Đồng Nai, ngày {D.ngayKy}</div>
-            <div className="text-[13px] font-bold uppercase text-[#0b1426] mb-6">NGƯỜI KHAI</div>
+            <div className="text-[13px] text-slate-900 italic mb-1">Đồng Nai, ngày {D.ngayKy}</div>
+            <div className="text-[13px] font-bold uppercase text-slate-900 mb-6">NGƯỜI KHAI</div>
             {isSigned ? (
               <div className="flex flex-col items-center gap-1">
                 <div className="size-12 rounded-full border-4 border-[#1C5FBE] flex items-center justify-center opacity-80">
@@ -524,7 +524,7 @@ function MauBieuDoc({ isSigned }: { isSigned: boolean }) {
                 </div>
               </div>
             ) : <div className="h-10" />}
-            <div className="text-[13px] font-bold text-[#0b1426] mt-2">{w.ten}</div>
+            <div className="text-[13px] font-bold text-slate-900 mt-2">{w.ten}</div>
           </div>
         </div>
       </div>
@@ -549,9 +549,9 @@ function BaoCaoDoc({ isSigned }: { isSigned: boolean }) {
           date={D.ngayKy}
         />
         <div className="text-center mb-5">
-          <div className="text-[14px] font-black uppercase tracking-wide text-[#0b1426] mb-1">BÁO CÁO TỔNG KẾT</div>
-          <div className="text-[13px] font-bold text-[#0b1426]">{D.phongTrao}</div>
-          <div className="text-[13px] text-[#5a5040] italic mt-0.5">Mã: {D.soHieu} · Kỳ xét: 2026</div>
+          <div className="text-[14px] font-black uppercase tracking-wide text-slate-900 mb-1">BÁO CÁO TỔNG KẾT</div>
+          <div className="text-[13px] font-bold text-slate-900">{D.phongTrao}</div>
+          <div className="text-[13px] text-slate-700 italic mt-0.5">Mã: {D.soHieu} · Kỳ xét: 2026</div>
         </div>
 
         {/* KPI summary */}
@@ -572,7 +572,7 @@ function BaoCaoDoc({ isSigned }: { isSigned: boolean }) {
         {/* Section I */}
         <div className="mb-4">
           <div className="text-[13px] font-bold uppercase bg-[#e0f2fe] px-3 py-1.5 mb-3 text-[#0891b2]">I. KẾT QUẢ TRIỂN KHAI PHONG TRÀO</div>
-          <div className="pl-2 text-[13px] text-[#0b1426] space-y-1.5">
+          <div className="pl-2 text-[13px] text-slate-900 space-y-1.5">
             <p>Phong trào được phát động từ tháng 01/2026, có <strong>{D.daDangKy}/{D.tongDonVi}</strong> đơn vị tham gia đăng ký ({Math.round(D.daDangKy/D.tongDonVi*100)}% kế hoạch).</p>
             <p>Tổng số <strong>{D.tongHoSo}</strong> hồ sơ được nộp; qua thẩm định cấp cơ sở còn <strong>{D.soKhenThuong + 1}</strong> hồ sơ đủ điều kiện; Hội đồng phê duyệt <strong>{D.soKhenThuong}</strong> hồ sơ.</p>
             <p>Tỷ lệ hoàn thành kế hoạch: <strong style={{ color: "#0f7a3e" }}>đạt và vượt mức</strong> — tăng 15% so với năm 2025.</p>
@@ -612,7 +612,7 @@ function BaoCaoDoc({ isSigned }: { isSigned: boolean }) {
         {/* Section III — Kinh phí */}
         <div className="mb-4">
           <div className="text-[13px] font-bold uppercase bg-[#e0f2fe] px-3 py-1.5 mb-2 text-[#0891b2]">III. KINH PHÍ KHEN THƯỞNG</div>
-          <div className="pl-2 text-[13px] text-[#0b1426] space-y-1">
+          <div className="pl-2 text-[13px] text-slate-900 space-y-1">
             <div>– Tổng kinh phí khen thưởng: <strong>{D.tongKinhPhi} đồng</strong></div>
             <div>– Nguồn kinh phí: <strong>{D.nguonKP}</strong> (Điều 6 TT 28/2025/TT-BTC)</div>
             <div>– Hình thức chi: Chuyển khoản qua Kho bạc Nhà nước tỉnh Đồng Nai</div>
@@ -622,7 +622,7 @@ function BaoCaoDoc({ isSigned }: { isSigned: boolean }) {
         {/* Section IV — Kiến nghị */}
         <div className="mb-5">
           <div className="text-[13px] font-bold uppercase bg-[#e0f2fe] px-3 py-1.5 mb-2 text-[#0891b2]">IV. KIẾN NGHỊ, ĐỀ XUẤT</div>
-          <div className="pl-2 text-[13px] text-[#0b1426] space-y-1.5">
+          <div className="pl-2 text-[13px] text-slate-900 space-y-1.5">
             <p>1. Tiếp tục duy trì phong trào thi đua hàng năm với tiêu chí chấm điểm được cập nhật theo TT 15/2025/TT-BNV.</p>
             <p>2. Tăng mức tiền thưởng phù hợp lạm phát; xem xét bổ sung nguồn NSNN hỗ trợ các đơn vị cấp cơ sở.</p>
             <p>3. Ứng dụng phần mềm quản lý TĐKT tỉnh để tự động hóa quy trình hồ sơ theo TT 15/2025/TT-BNV.</p>
@@ -630,7 +630,7 @@ function BaoCaoDoc({ isSigned }: { isSigned: boolean }) {
         </div>
 
         <div className="flex justify-between mt-6">
-          <div className="text-[13px] text-[#5a5040] space-y-0.5">
+          <div className="text-[13px] text-slate-700 space-y-0.5">
             <div className="font-bold text-[13px] mb-1">Nơi nhận:</div>
             <div>– UBND tỉnh (để báo cáo);</div>
             <div>– Sở Nội vụ, Sở Tài chính;</div>
@@ -695,9 +695,9 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Printer className="size-4 text-[#1C5FBE]" />
-              <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>In / Xuất tài liệu</span>
+              <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>In / Xuất tài liệu</span>
             </div>
-            <p className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
               {D.soHieu} · {D.phongTrao.slice(0, 30)}…
             </p>
           </div>
@@ -705,7 +705,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           <div className="flex-1 overflow-y-auto p-4 space-y-5">
             {/* Doc type */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại tài liệu</label>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại tài liệu</label>
               <div className="space-y-1.5">
                 {DOC_TYPES.map(dt => {
                   const DTIcon = dt.icon;
@@ -717,7 +717,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
                       <DTIcon className="size-4 shrink-0 mt-0.5" style={{ color: active ? dt.color : "#635647" }} />
                       <div>
                         <div className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: active ? 700 : 500, color: active ? dt.color : "#0b1426" }}>{dt.label}</div>
-                        <div className="text-[13px] text-[#635647]">{dt.desc}</div>
+                        <div className="text-[13px] text-slate-700">{dt.desc}</div>
                       </div>
                     </button>
                   );
@@ -727,7 +727,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
 
             {/* Format */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Định dạng xuất</label>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Định dạng xuất</label>
               <div className="flex gap-2">
                 {FORMATS.map(f => (
                   <button key={f.id} onClick={() => setFormat(f.id)}
@@ -746,15 +746,15 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
 
             {/* Options */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tùy chọn</label>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tùy chọn</label>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={isSigned} onChange={() => setIsSigned(v => !v)} className="rounded border-[#d1d5db]" style={{ accentColor: "#1C5FBE" }} />
-                  <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Bao gồm chữ ký số CA</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Bao gồm chữ ký số CA</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={isSigned} onChange={() => setIsSigned(v => !v)} className="rounded border-[#d1d5db]" style={{ accentColor: "#1C5FBE" }} />
-                  <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Bao gồm QR xác thực</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Bao gồm QR xác thực</span>
                 </label>
               </div>
             </div>
@@ -767,7 +767,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
                   Tài liệu xuất được ghi Audit Log (người xuất, thời điểm, format).
                 </div>
               </div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Chuẩn: QCVN 01:2019/BNV · A4 · UTF-8
               </div>
             </div>
@@ -804,8 +804,8 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
           {/* Preview header */}
           <div className="px-6 py-3.5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
             <div className="flex items-center gap-2 flex-wrap">
-              <Eye className="size-4 text-[#635647]" />
-              <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xem trước</span>
+              <Eye className="size-4 text-slate-700" />
+              <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xem trước</span>
               <span className="px-2 py-0.5 rounded text-[13px]" style={{ background: selectedDoc.color + "15", color: selectedDoc.color, fontFamily: "var(--font-sans)", border: `1px solid ${selectedDoc.color}30` }}>
                 {selectedDoc.label}
               </span>
@@ -821,7 +821,7 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
               )}
             </div>
             <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
-              <X className="size-4 text-[#635647]" />
+              <X className="size-4 text-slate-700" />
             </button>
           </div>
 
@@ -834,10 +834,10 @@ export function PrintPreviewModal({ open, onClose, user }: { open: boolean; onCl
 
           {/* Footer */}
           <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center justify-between shrink-0" style={{ background: "#ffffff" }}>
-            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Trang 1/1 · Khổ A4 · Chuẩn QCVN 01:2019/BNV
             </span>
-            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono,monospace" }}>
+            <span className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono,monospace" }}>
               {new Date().toLocaleTimeString("vi-VN")} · {user.name}
             </span>
           </div>

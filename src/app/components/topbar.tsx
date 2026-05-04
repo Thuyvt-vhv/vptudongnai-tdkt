@@ -161,7 +161,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
                         )}
                       </div>
                       <p className="text-[13px] mt-0.5 leading-relaxed" style={{ color: "#64748b" }}>{n.body}</p>
-                      <span className="text-[13px] mt-1 block" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>{n.time}</span>
+                      <span className="text-[13px] mt-1 block" style={{ color: "#64748b", fontFamily: "var(--font-sans)" }}>{n.time}</span>
                     </div>
                   </button>
                 );
@@ -169,7 +169,7 @@ function NotifBell({ user, onSelectModule }: { user: LoginUser; onSelectModule: 
             </div>
             {/* Footer */}
             <div className="px-4 py-2.5 flex justify-between items-center" style={{ borderTop: "1px solid #f1f5f9", background: "#ffffff" }}>
-              <span className="text-[13px]" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>Cập nhật vừa xong</span>
+              <span className="text-[13px]" style={{ color: "#64748b", fontFamily: "var(--font-sans)" }}>Cập nhật vừa xong</span>
               <button onClick={() => { setOpen(false); onSelectModule("Thông báo"); }}
                 className="flex items-center gap-1.5 text-[13px] px-2.5 py-1 rounded-[6px] transition-colors hover:bg-blue-50"
                 style={{ color: "#3b82f6", fontFamily: "var(--font-sans)", fontWeight: 600 }}>
@@ -225,13 +225,13 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
             style={{ background: "#f4f7fb", border: "1px solid #e2e8f0" }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#c4a96a"; (e.currentTarget as HTMLElement).style.background = "#eef2f8"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; }}>
-            <Search className="size-3.5 shrink-0" style={{ color: "#74654a" }} strokeWidth={2} />
-            <span className="flex-1 text-[13px]" style={{ color: "#74654a", fontFamily: "var(--font-sans)" }}>
+            <Search className="size-3.5 shrink-0" style={{ color: "#64748b" }} strokeWidth={2} />
+            <span className="flex-1 text-[13px]" style={{ color: "#64748b", fontFamily: "var(--font-sans)" }}>
               Tìm hồ sơ, cán bộ, quyết định…
             </span>
             <div className="flex items-center gap-0.5 shrink-0">
               <kbd className="h-[18px] px-1.5 text-[13px] rounded-[4px]"
-                style={{ background: "white", color: "#74654a", border: "1px solid #ddd5c0", fontFamily: "JetBrains Mono,monospace", fontWeight: 700, boxShadow: "0 1px 0 #ddd5c0" }}>⌘K</kbd>
+                style={{ background: "white", color: "#64748b", border: "1px solid #ddd5c0", fontFamily: "JetBrains Mono,monospace", fontWeight: 700, boxShadow: "0 1px 0 #ddd5c0" }}>⌘K</kbd>
             </div>
           </button>
         </div>
@@ -287,12 +287,12 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
                 <div className="text-[13px]" style={{ color: "#1a1409", fontFamily: "var(--font-sans)", fontWeight: 600, lineHeight: 1.2 }}>
                   {user.name.split(" ").slice(-1)[0]}
                 </div>
-                <div className="text-[13px]" style={{ color: "#74654a", fontFamily: "var(--font-sans)", lineHeight: 1.2 }}>
+                <div className="text-[13px]" style={{ color: "#64748b", fontFamily: "var(--font-sans)", lineHeight: 1.2 }}>
                   {user.roleLabel}
                 </div>
               </div>
               <ChevronDown className={`size-3 transition-transform duration-200 ${showMenu ? "rotate-180" : ""}`}
-                style={{ color: "#74654a" }} />
+                style={{ color: "#64748b" }} />
             </button>
 
             {showMenu && (
@@ -363,10 +363,10 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
               <HelpCircle className="size-4" style={{ color: "#1C5FBE" }} strokeWidth={1.75} />
             </div>
             <div>
-              <span style={{ fontSize: 14, fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0b1426", letterSpacing: "-0.01em" }}>
+              <span style={{ fontSize: 14, fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.01em" }}>
                 Trung tâm Hỗ trợ
               </span>
-              <span className="ml-2 text-[13px]" style={{ color: "#8a9ab5", fontFamily: "var(--font-sans)" }}>
+              <span className="ml-2 text-[13px]" style={{ color: "#64748b", fontFamily: "var(--font-sans)" }}>
                 VPTU Đồng Nai
               </span>
             </div>
@@ -375,7 +375,7 @@ export function Topbar({ user, active, onLogout, onSelectModule, onOpenCmd, onOp
           {/* Right: close */}
           <button onClick={() => setShowHelp(false)}
             className="flex items-center gap-2 h-9 px-4 rounded-[9px] text-[13px] transition-all"
-            style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)", fontWeight: 600, background: "#f4f7fb", border: "1px solid #e2e8f0" }}
+            style={{ color: "#64748b", fontFamily: "var(--font-sans)", fontWeight: 600, background: "#f4f7fb", border: "1px solid #e2e8f0" }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#d0d7e3"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}>
             <X className="size-3.5" strokeWidth={2} />
@@ -409,7 +409,7 @@ function MenuRow({ icon: Icon, label, sub, onClick, danger }: {
         <div className="text-[12.5px]" style={{ color: danger ? "#ef4444" : "#1e293b", fontFamily: "var(--font-sans)", fontWeight: 600 }}>
           {label}
         </div>
-        {sub && <div className="text-[13px] mt-px" style={{ color: "#4f5d6e", fontFamily: "var(--font-sans)" }}>{sub}</div>}
+        {sub && <div className="text-[13px] mt-px" style={{ color: "#64748b", fontFamily: "var(--font-sans)" }}>{sub}</div>}
       </div>
     </button>
   );

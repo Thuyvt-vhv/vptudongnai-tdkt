@@ -231,12 +231,12 @@ function KpiCard({ label, value, numVal, delta, up, icon: Icon, accent, module: 
       </div>
 
       <div className="relative mt-3">
-        <div className="text-[13px] uppercase tracking-[0.08em] text-[#635647]"
+        <div className="text-[13px] uppercase tracking-[0.08em] text-slate-700"
           style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
           {label}
         </div>
         <div className="flex items-end gap-2 mt-1">
-          <div className="text-[24px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0b1426" }}>
+          <div className="text-[24px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0f172a" }}>
             {displayVal}
           </div>
           <span className={`flex items-center gap-0.5 text-[13px] px-1.5 py-0.5 rounded-full mb-0.5 leading-none`}
@@ -278,7 +278,7 @@ function TrendChart() {
         {yTicks.map(t => (
           <g key={t}>
             <line x1={pad.l} x2={w - pad.r} y1={yFor(t)} y2={yFor(t)} stroke="#e8eef5" strokeWidth={1} strokeDasharray="4 3" />
-            <text x={pad.l - 8} y={yFor(t) + 4} textAnchor="end" fontSize="10" fill="#74654a" fontFamily="JetBrains Mono">{t}</text>
+            <text x={pad.l - 8} y={yFor(t) + 4} textAnchor="end" fontSize="10" fill="#64748b" fontFamily="JetBrains Mono">{t}</text>
           </g>
         ))}
         <path d={areaFor("proposals")} fill="url(#tg1)" />
@@ -290,7 +290,7 @@ function TrendChart() {
         <circle cx={xs[xs.length-1]} cy={yFor(lastP.approved)}  r={4} fill="white" stroke="#c8102e" strokeWidth={2} />
         {/* Month labels */}
         {trendData.map((d, i) => (
-          <text key={d.m} x={xs[i]} y={h - 8} textAnchor="middle" fontSize="11" fill="#74654a" fontFamily="Google Sans">{d.m}</text>
+          <text key={d.m} x={xs[i]} y={h - 8} textAnchor="middle" fontSize="11" fill="#64748b" fontFamily="Google Sans">{d.m}</text>
         ))}
       </svg>
     </div>
@@ -303,10 +303,10 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
     <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-4 shrink-0">
         <div>
-          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>
             Quy trình hồ sơ
           </h3>
-          <p className="text-[13px] mt-0.5" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>Đang lưu chuyển realtime</p>
+          <p className="text-[13px] mt-0.5" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>Đang lưu chuyển realtime</p>
         </div>
         <div className="flex items-center gap-1.5 px-2 py-1 rounded-full"
           style={{ background: "rgba(200,16,46,0.08)" }}>
@@ -352,7 +352,7 @@ function FunnelPipeline({ onNavigate }: { onNavigate: (m: string) => void }) {
 
       {/* Conversion rate */}
       <div className="mt-3 pt-3 flex items-center justify-between" style={{ borderTop: "1px solid #eef2f8" }}>
-        <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>Tỉ lệ phê duyệt</span>
+        <span className="text-[13px]" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>Tỉ lệ phê duyệt</span>
         <span className="text-[13px]" style={{ fontFamily: "JetBrains Mono", fontWeight: 700, color: "#0f7a3e" }}>
           {((pipeline[3].count / pipeline[0].count) * 100).toFixed(0)}%
         </span>
@@ -380,7 +380,7 @@ function DeadlineCard({ onNavigate }: { onNavigate: (m: string) => void }) {
   return (
     <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-3 shrink-0">
-        <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>Hạn chót sắp đến</h3>
+        <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>Hạn chót sắp đến</h3>
         <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: "rgba(200,16,46,0.09)", color: "#c8102e", fontFamily: "JetBrains Mono", fontWeight: 700 }}>
           2 khẩn
         </span>
@@ -399,8 +399,8 @@ function DeadlineCard({ onNavigate }: { onNavigate: (m: string) => void }) {
                 <DIcon className="size-3.5" strokeWidth={1.8} style={{ color: d.color }} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 500, color: "#0b1426" }}>{d.label}</div>
-                <div className="text-[13px]" style={{ color: "#74654a" }}>{d.date}</div>
+                <div className="text-[13px] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 500, color: "#0f172a" }}>{d.label}</div>
+                <div className="text-[13px]" style={{ color: "#64748b" }}>{d.date}</div>
               </div>
               <div className="shrink-0 min-w-[42px] text-right">
                 <div className="text-[13px] leading-none" style={{ fontFamily: "JetBrains Mono", fontWeight: 700, color: d.daysLeft === 0 ? "#c8102e" : d.color }}>
@@ -428,10 +428,10 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
     <div className="bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-start justify-between mb-5">
         <div>
-          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>
             Bảng xếp hạng thi đua
           </h3>
-          <p className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>
+          <p className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>
             Khối Sở ban ngành · AI chấm 14 tiêu chí
           </p>
         </div>
@@ -454,7 +454,7 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
               <div className="text-center">
                 <div className="text-[18px] mb-1">{medals[i]}</div>
                 <div className="text-[13px] leading-tight text-center px-1"
-                  style={{ fontFamily: "var(--font-sans)", fontWeight: 600, color: "#0b1426" }}>
+                  style={{ fontFamily: "var(--font-sans)", fontWeight: 600, color: "#0f172a" }}>
                   {u.name.replace("Sở ", "")}
                 </div>
                 <div className="text-[13px] mt-1" style={{ fontFamily: "JetBrains Mono", fontWeight: 700, color: mc }}>
@@ -478,15 +478,15 @@ function MedalPodium({ onNavigate }: { onNavigate: (m: string) => void }) {
         {units.slice(3).map((u, i) => (
           <div key={u.name} className="flex items-center gap-3 px-3 py-2 rounded-[7px] hover:bg-[#f4f7fb] transition-colors cursor-pointer"
             onClick={() => onNavigate("Bảng xếp hạng")}>
-            <span className="w-5 text-center text-[13px]" style={{ fontFamily: "var(--font-sans)", fontStyle: "italic", color: "#74654a" }}>{i + 4}</span>
+            <span className="w-5 text-center text-[13px]" style={{ fontFamily: "var(--font-sans)", fontStyle: "italic", color: "#64748b" }}>{i + 4}</span>
             <div className="flex-1 min-w-0">
-              <div className="text-[12.5px] truncate" style={{ fontFamily: "var(--font-sans)", color: "#3d3020" }}>{u.name}</div>
+              <div className="text-[12.5px] truncate" style={{ fontFamily: "var(--font-sans)", color: "#1e293b" }}>{u.name}</div>
               <div className="mt-1 h-1 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                 <div className="h-full rounded-full" style={{ width: `${u.score}%`, background: "#c4b89a" }} />
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="text-[13px]" style={{ fontFamily: "JetBrains Mono", fontWeight: 600, color: "#0b1426" }}>{u.score}</div>
+              <div className="text-[13px]" style={{ fontFamily: "JetBrains Mono", fontWeight: 600, color: "#0f172a" }}>{u.score}</div>
               <div className="text-[13px]" style={{ color: u.score >= u.prev ? "#0f7a3e" : "#c8102e" }}>
                 {u.score >= u.prev ? "▲" : "▼"}{Math.abs(u.score - u.prev).toFixed(1)}
               </div>
@@ -505,10 +505,10 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
     <div className="bg-white rounded-[14px] p-5 flex flex-col h-full" style={{ border: "1px solid #dde3ec" }}>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+          <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>
             Hoạt động gần đây
           </h3>
-          <p className="text-[13px] mt-0.5" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>Cập nhật theo thời gian thực</p>
+          <p className="text-[13px] mt-0.5" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>Cập nhật theo thời gian thực</p>
         </div>
         <div className="flex items-center gap-1.5 px-2 py-1 rounded-full" style={{ background: "rgba(15,122,62,0.08)" }}>
           <Radio className="size-3" style={{ color: "#0f7a3e" }} />
@@ -530,10 +530,10 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
                   <FIcon className="size-3" strokeWidth={2} style={{ color: f.color }} />
                 </div>
                 <div className="flex-1 min-w-0 pt-0.5">
-                  <p className="text-[13px] leading-snug" style={{ fontFamily: "var(--font-sans)", color: "#2d2010", fontWeight: 400 }}>
+                  <p className="text-[13px] leading-snug" style={{ fontFamily: "var(--font-sans)", color: "#1e293b", fontWeight: 400 }}>
                     {f.text}
                   </p>
-                  <span className="text-[13px] mt-0.5 block" style={{ color: "#74654a", fontFamily: "JetBrains Mono" }}>
+                  <span className="text-[13px] mt-0.5 block" style={{ color: "#64748b", fontFamily: "JetBrains Mono" }}>
                     {f.time} trước
                   </span>
                 </div>
@@ -545,7 +545,7 @@ function ActivityFeed({ onNavigate }: { onNavigate: (m: string) => void }) {
 
       <button onClick={() => onNavigate("Dòng thời gian")}
         className="mt-4 w-full h-8 rounded-[7px] text-[13px] flex items-center justify-center gap-1.5 transition-colors"
-        style={{ background: "#f4f7fb", border: "1px solid #dde3ec", color: "#5a4e3c", fontFamily: "var(--font-sans)", fontWeight: 600 }}
+        style={{ background: "#f4f7fb", border: "1px solid #dde3ec", color: "#334155", fontFamily: "var(--font-sans)", fontWeight: 600 }}
         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#eef2f8"; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f4f7fb"; }}>
         Xem dòng thời gian đầy đủ <ChevronRight className="size-3" />
@@ -569,7 +569,7 @@ function TaskPanel({ cfg, onNavigate }: { cfg: typeof ROLE_CONFIG["user"]; onNav
             style={{ background: "#0b1426" }}>
             <Zap className="size-3 text-white" />
           </div>
-          <span style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+          <span style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>
             Việc cần làm hôm nay
           </span>
           {urgent > 0 && (
@@ -610,7 +610,7 @@ function TaskPanel({ cfg, onNavigate }: { cfg: typeof ROLE_CONFIG["user"]; onNav
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] leading-snug"
-                  style={{ fontFamily: "var(--font-sans)", fontWeight: t.urgent ? 600 : 400, color: "#0b1426" }}>
+                  style={{ fontFamily: "var(--font-sans)", fontWeight: t.urgent ? 600 : 400, color: "#0f172a" }}>
                   {t.text}
                 </p>
                 <button onClick={() => onNavigate(t.module)}
@@ -655,7 +655,7 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
     <div className="p-6 space-y-5 max-w-[1600px]">
 
       {/* ══ TIÊU ĐỀ ══════════════════════════════════════════════ */}
-      <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 28, color: "#0b1426", lineHeight: 1.2 }}>
+      <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 28, color: "#0f172a", lineHeight: 1.2 }}>
         Xin chào, <span style={{ color: "#1C5FBE" }}>{displayName}</span> 👋
       </h1>
 
@@ -676,10 +676,10 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
         <div className="col-span-7 bg-white rounded-[14px] p-5" style={{ border: "1px solid #dde3ec" }}>
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0b1426" }}>
+              <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 14, color: "#0f172a" }}>
                 Xu hướng đề nghị & phê duyệt
               </h3>
-              <p className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>
+              <p className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>
                 T9/2025–T4/2026 · thực tế · so cùng kỳ năm trước
               </p>
             </div>
@@ -701,8 +701,8 @@ export function Dashboard({ user, onNavigate }: { user?: LoginUser; onNavigate?:
             ].map(s => (
               <div key={s.label} className="text-center">
                 <div className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: s.color }}>{s.value}</div>
-                <div className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#635647" }}>{s.label}</div>
-                <div className="text-[13px] mt-0.5" style={{ fontFamily: "JetBrains Mono", color: "#74654a" }}>{s.delta}</div>
+                <div className="text-[13px] mt-0.5" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>{s.label}</div>
+                <div className="text-[13px] mt-0.5" style={{ fontFamily: "JetBrains Mono", color: "#64748b" }}>{s.delta}</div>
               </div>
             ))}
           </div>

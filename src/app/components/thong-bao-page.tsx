@@ -129,7 +129,7 @@ function NotifItem({
         <div className="flex items-start gap-2 mb-1">
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-0.5">
-              <span className="text-[13px] text-[#0b1426]"
+              <span className="text-[13px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight: n.read ? 500 : 700 }}>
                 {n.title}
               </span>
@@ -145,7 +145,7 @@ function NotifItem({
                 {pri.label}
               </span>
               {n.meta && (
-                <code className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono, monospace" }}>
+                <code className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono, monospace" }}>
                   {n.meta}
                 </code>
               )}
@@ -156,7 +156,7 @@ function NotifItem({
             {!n.read && (
               <button onClick={e => { e.stopPropagation(); onRead(n.id); }}
                 className="size-7 rounded-[6px] flex items-center justify-center hover:bg-[#eef2f8]" title="Đánh dấu đã đọc">
-                <Eye className="size-3.5 text-[#635647]" />
+                <Eye className="size-3.5 text-slate-700" />
               </button>
             )}
             <button onClick={e => { e.stopPropagation(); onDelete(n.id); }}
@@ -165,11 +165,11 @@ function NotifItem({
             </button>
           </div>
         </div>
-        <p className="text-[13px] text-[#5a5040] leading-relaxed mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+        <p className="text-[13px] text-slate-700 leading-relaxed mb-2" style={{ fontFamily: "var(--font-sans)" }}>
           {n.body}
         </p>
         <div className="flex items-center gap-3">
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             {n.time}
           </span>
           {n.action && (
@@ -238,10 +238,10 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
             <Bell className="size-5 text-[#8a6400]" />
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Trung tâm Thông báo
             </h1>
-            <p className="text-[13px] text-[#635647]">
+            <p className="text-[13px] text-slate-700">
               {unread} chưa đọc · {notifs.length} tổng · Tự động cập nhật realtime
             </p>
           </div>
@@ -255,14 +255,14 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
             )}
             {unread > 0 && (
               <button onClick={markAll}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-[#f4f7fb] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <CheckCircle2 className="size-3.5" />Đọc tất cả
               </button>
             )}
             {notifs.some(n => n.read) && (
               <button onClick={deleteRead}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#635647] hover:bg-[#f4f7fb] transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-[#f4f7fb] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <Archive className="size-3.5" />Xóa đã đọc
               </button>
@@ -300,7 +300,7 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
         {/* Search + filter row */}
         <div className="flex gap-2">
           <div className="relative flex-1 max-w-xs">
-            <Search className="size-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#635647]" />
+            <Search className="size-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-700" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm trong thông báo..."
               className="w-full pl-8 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
               style={{ height: 34, fontFamily: "var(--font-sans)" }} />
@@ -321,8 +321,8 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
       <div className="flex-1 overflow-y-auto p-6">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center py-20 gap-3">
-            <CheckCircle2 className="size-12 text-[#d1ccc0]" />
-            <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Không có thông báo nào</p>
+            <CheckCircle2 className="size-12 text-slate-400" />
+            <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Không có thông báo nào</p>
           </div>
         ) : (
           <div className="max-w-3xl mx-auto space-y-6">
@@ -332,10 +332,10 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
               return (
                 <div key={g}>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[13px] uppercase tracking-widest text-[#635647]"
+                    <span className="text-[13px] uppercase tracking-widest text-slate-700"
                       style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{g}</span>
                     <div className="flex-1 h-px" style={{ background: "#e2e8f0" }} />
-                    <span className="text-[13px] text-[#6b5e47]">{items.length}</span>
+                    <span className="text-[13px] text-slate-600">{items.length}</span>
                   </div>
                   <div className="space-y-2">
                     {items.map(n => (
@@ -353,9 +353,9 @@ export function ThongBaoPage({ user, onNavigate }: { user: LoginUser; onNavigate
       <div className="px-6 py-3 border-t border-[#e2e8f0] flex items-center gap-2" style={{ background: "white" }}>
         <div className="flex items-center gap-1.5">
           <div className="size-1.5 rounded-full bg-[#4ade80]" style={{ boxShadow: "0 0 6px #4ade80" }} />
-          <span className="text-[13px] text-[#635647]">Kết nối realtime · Cập nhật tức thì</span>
+          <span className="text-[13px] text-slate-700">Kết nối realtime · Cập nhật tức thì</span>
         </div>
-        <div className="ml-auto text-[13px] text-[#6b5e47]">
+        <div className="ml-auto text-[13px] text-slate-600">
           {filtered.length} / {notifs.length} thông báo hiển thị
         </div>
       </div>

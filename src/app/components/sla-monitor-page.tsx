@@ -72,8 +72,8 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
             <Activity className="size-5 text-white"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>SLA Monitor</h1>
-            <p className="text-[13px] text-[#635647]">Theo dõi deadline real-time · TT 15/2025/TT-BNV · {ITEMS.length} hồ sơ đang xử lý</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>SLA Monitor</h1>
+            <p className="text-[13px] text-slate-700">Theo dõi deadline real-time · TT 15/2025/TT-BNV · {ITEMS.length} hồ sơ đang xử lý</p>
           </div>
           <div className="ml-auto flex items-center gap-3">
             {counts.critical+counts.overdue>0&&(
@@ -82,7 +82,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
                 <span className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{counts.critical+counts.overdue} vi phạm SLA cần xử lý</span>
               </div>
             )}
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               <RefreshCw className="size-3.5"/>Làm mới
             </button>
           </div>
@@ -92,7 +92,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
           <div className="rounded-[10px] border-2 border-[#fde68a] p-3 flex items-center gap-3" style={{ background:"white" }}>
             <SLAGauge pct={slaRate} color="#166534"/>
             <div>
-              <div className="text-[13px] text-[#635647]">SLA Compliance</div>
+              <div className="text-[13px] text-slate-700">SLA Compliance</div>
               <div className="text-[18px] text-[#166534]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{slaRate}%</div>
             </div>
           </div>
@@ -115,7 +115,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
             <option value="all">Tất cả giai đoạn</option>
             {stages.map(s=><option key={s}>{s}</option>)}
           </select>
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{filtered.length} hồ sơ</span>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{filtered.length} hồ sơ</span>
         </div>
       </div>
       {/* Table */}
@@ -142,11 +142,11 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
                 <tr key={item.id} className="border-t border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ background:item.status==="critical"||item.status==="overdue"?"#fff8f8":i%2===0?"white":"#fdfcfa" }}>
                   <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{item.hoSoId}</code></td>
                   <td className="px-3 py-3">
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontWeight:600 }}>{item.tenNguoi}</div>
-                    <div className="text-[13px] text-[#635647]">{item.donVi}</div>
+                    <div className="text-[13px] text-slate-900" style={{ fontWeight:600 }}>{item.tenNguoi}</div>
+                    <div className="text-[13px] text-slate-700">{item.donVi}</div>
                   </td>
                   <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#ddeafc",color:"#1C5FBE",fontFamily: "var(--font-sans)" }}>{item.danhHieu}</span></td>
-                  <td className="px-3 py-3 text-[#5a5040]">{item.stage}</td>
+                  <td className="px-3 py-3 text-slate-700">{item.stage}</td>
                   <td className="px-3 py-3"><code className="text-[13px]" style={{ fontFamily:"JetBrains Mono, monospace",color:daysColor }}>{item.deadline}</code></td>
                   <td className="px-3 py-3">
                     <div className="flex items-center gap-1">
@@ -156,7 +156,7 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
                       <span className="text-[13px]" style={{ color:daysColor }}>{item.daysLeft<0?"ngày trễ":"ngày còn"}</span>
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-[13px] text-[#5a5040]">{item.responsible}</td>
+                  <td className="px-3 py-3 text-[13px] text-slate-700">{item.responsible}</td>
                   <td className="px-3 py-3">
                     <span className="flex items-center gap-1 text-[13px] px-2 py-0.5 rounded" style={{ background:cfg.bg,color:cfg.color,border:`1px solid ${cfg.border}`,fontFamily: "var(--font-sans)",fontWeight:700 }}>
                       <SIcon className="size-3"/>{cfg.label}
@@ -179,14 +179,14 @@ export function SLAMonitorPage({ user }: { user: LoginUser }) {
         <div className="mt-4 p-4 rounded-[10px] border border-[#e2e8f0]" style={{ background:"#ffffff" }}>
           <div className="flex items-center gap-2 mb-2">
             <Clock className="size-4 text-[#b45309]"/>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quy định SLA theo TT 15/2025/TT-BNV</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quy định SLA theo TT 15/2025/TT-BNV</span>
           </div>
           <div className="grid grid-cols-4 gap-3">
             {[["ĐV → HĐ tiếp nhận","7 ngày LV","Manager","#1C5FBE"],["HĐ thẩm định","15 ngày LV","Council","#7c3aed"],["LYK công khai (tối thiểu)","5 ngày LV","Council","#c8102e"],["Bỏ phiếu HĐ","3 ngày LV","Council","#92400e"],].map(([gd,t,r,c])=>(
               <div key={gd as string} className="p-2.5 rounded-[6px] border" style={{ borderColor:`${c as string}30`,background:`${c as string}08` }}>
-                <div className="text-[13px] text-[#5a5040] mb-0.5">{gd as string}</div>
+                <div className="text-[13px] text-slate-700 mb-0.5">{gd as string}</div>
                 <div className="text-[14px]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:c as string }}>{t as string}</div>
-                <div className="text-[13px] text-[#635647]">{r as string}</div>
+                <div className="text-[13px] text-slate-700">{r as string}</div>
               </div>
             ))}
           </div>

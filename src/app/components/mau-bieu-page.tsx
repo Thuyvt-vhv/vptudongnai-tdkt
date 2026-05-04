@@ -158,11 +158,11 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
             <FileText className="size-5" style={{ color:mau.color }}/>
           </div>
           <div className="flex-1">
-            <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{mau.so} — {mau.ten}</div>
-            <div className="text-[13px] text-[#635647]">{mau.canCu}</div>
+            <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{mau.so} — {mau.ten}</div>
+            <div className="text-[13px] text-slate-700">{mau.canCu}</div>
           </div>
           <div className="flex gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               <Printer className="size-3.5"/>In
             </button>
             <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600 }}>
@@ -178,7 +178,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
           <div className="bg-white mx-auto shadow-lg" style={{ width:595,minHeight:842,padding:"48px 56px",fontFamily: "var(--font-sans)" }}>
             {/* Letterhead */}
             <div className="flex items-start justify-between mb-8">
-              <div className="text-[13px] text-[#0b1426] leading-relaxed">
+              <div className="text-[13px] text-slate-900 leading-relaxed">
                 <div style={{ fontWeight:700 }}>UBND TỈNH ĐỒNG NAI</div>
                 <div style={{ fontWeight:700 }}>VP TỈNH ỦY ĐỒNG NAI</div>
                 <div className="mt-1">Số: {SAMPLE_DATA["Số QĐ"]||"___/20__"}</div>
@@ -192,13 +192,13 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
             </div>
             {/* Title */}
             <div className="text-center mb-6">
-              <div className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700,textTransform:"uppercase" }}>
+              <div className="text-[14px] text-slate-900 mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700,textTransform:"uppercase" }}>
                 {mau.ten.toUpperCase().split("(")[0].trim()}
               </div>
-              <div className="text-[13px] text-[#5a5040] italic">({mau.canCu})</div>
+              <div className="text-[13px] text-slate-700 italic">({mau.canCu})</div>
             </div>
             {/* Body */}
-            <div className="space-y-3 text-[13px] text-[#0b1426]">
+            <div className="space-y-3 text-[13px] text-slate-900">
               {mau.nhom==="quyet_dinh"&&(
                 <>
                   <p className="leading-relaxed">Căn cứ Luật Thi đua, Khen thưởng năm 2022; Nghị định số 98/2023/NĐ-CP ngày 16/12/2023; Thông tư số 01/2024/TT-BNV ngày 01/02/2024 của Bộ Nội vụ;</p>
@@ -220,7 +220,7 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
                 <>
                   {mau.bando.map((f,i)=>(
                     <div key={i} className="flex items-start gap-3 pb-2 border-b border-dashed border-[#e2e8f0]">
-                      <span className="w-[160px] shrink-0 text-[#5a5040]">{f}:</span>
+                      <span className="w-[160px] shrink-0 text-slate-700">{f}:</span>
                       <span style={{ fontWeight:SAMPLE_DATA[f]?400:400,color:SAMPLE_DATA[f]?"#0b1426":"#d1d5db",fontStyle:SAMPLE_DATA[f]?"normal":"italic" }}>
                         {SAMPLE_DATA[f]||".........................................................................."}
                       </span>
@@ -232,14 +232,14 @@ function PDFPreview({ mau, onClose }: { mau: MauBieu; onClose: () => void }) {
             {/* Signature block */}
             <div className="mt-12 flex justify-end">
               <div className="text-center text-[13px]">
-                <div className="italic text-[#5a5040]">Đồng Nai, ngày {SAMPLE_DATA["Ngày ký"]||"___ tháng ___ năm 20__"}</div>
+                <div className="italic text-slate-700">Đồng Nai, ngày {SAMPLE_DATA["Ngày ký"]||"___ tháng ___ năm 20__"}</div>
                 <div className="mt-1" style={{ fontWeight:700 }}>{SAMPLE_DATA["Lãnh đạo ký"]||"THỦ TRƯỞNG ĐƠN VỊ"}</div>
-                <div className="text-[13px] italic text-[#635647]">(Ký, đóng dấu)</div>
+                <div className="text-[13px] italic text-slate-700">(Ký, đóng dấu)</div>
                 <div className="mt-8 pt-2 border-t border-[#d1d5db]" style={{ fontWeight:700 }}>[Chữ ký số CA]</div>
               </div>
             </div>
             {/* TT15 compliance note */}
-            <div className="mt-6 pt-4 border-t border-[#e2e8f0] text-[13px] text-[#635647] text-center italic">
+            <div className="mt-6 pt-4 border-t border-[#e2e8f0] text-[13px] text-slate-700 text-center italic">
               Mẫu biểu chuẩn theo {mau.canCu} · Hệ thống VPTU Đồng Nai v2.0
             </div>
           </div>
@@ -271,8 +271,8 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
             <BookOpen className="size-5 text-white"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Mẫu biểu TT 15/2025/TT-BNV</h1>
-            <p className="text-[13px] text-[#635647]">{MAUS.length} mẫu biểu chuẩn · Hiệu lực từ 05/08/2025 · Export PDF đúng form</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Mẫu biểu TT 15/2025/TT-BNV</h1>
+            <p className="text-[13px] text-slate-700">{MAUS.length} mẫu biểu chuẩn · Hiệu lực từ 05/08/2025 · Export PDF đúng form</p>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-[8px]" style={{ background:"#dcfce7",border:"1px solid #86efac" }}>
@@ -300,7 +300,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
         {/* Filters */}
         <div className="flex gap-2 flex-wrap items-center">
           <div className="relative">
-            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]"/>
+            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700"/>
             <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Tìm mẫu biểu..."
               className="pl-9 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none" style={{ height:36,width:240,fontFamily: "var(--font-sans)" }}/>
           </div>
@@ -309,7 +309,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
               <button key={k} onClick={()=>setNhomFilter(k)} className="px-3 py-1.5 rounded-[6px] border text-[13px] transition-all" style={{ background:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"white",color:nhomFilter===k?"white":"#5a5040",borderColor:nhomFilter===k?NHOM_CFG[k as keyof typeof NHOM_CFG]?.c||"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:nhomFilter===k?700:400 }}>{l}</button>
             ))}
           </div>
-          <span className="ml-auto text-[13px] text-[#635647]">{filtered.length} mẫu biểu</span>
+          <span className="ml-auto text-[13px] text-slate-700">{filtered.length} mẫu biểu</span>
         </div>
       </div>
       {/* Grid */}
@@ -329,10 +329,10 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <code className="text-[13px] block mb-0.5" style={{ color:m.color,fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{m.so}</code>
-                      <h3 className="text-[13px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{m.ten}</h3>
+                      <h3 className="text-[13px] text-slate-900 leading-snug" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{m.ten}</h3>
                     </div>
                   </div>
-                  <p className="text-[13px] text-[#635647] leading-relaxed mb-3">{m.moTa}</p>
+                  <p className="text-[13px] text-slate-700 leading-relaxed mb-3">{m.moTa}</p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:nc.bg,color:nc.c,fontFamily: "var(--font-sans)",fontWeight:700 }}>{nc.l}</span>
                     <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>
@@ -342,12 +342,12 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
                       {m.usageCount} lần dùng
                     </span>
                   </div>
-                  <div className="text-[13px] text-[#635647] mb-3">
+                  <div className="text-[13px] text-slate-700 mb-3">
                     <span className="font-semibold">{m.bando.length} trường bắt buộc:</span>{" "}
                     {m.bando.slice(0,3).join(", ")}{m.bando.length>3&&`... +${m.bando.length-3} nữa`}
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+                    <button onClick={()=>setPreview(m)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
                       <Eye className="size-3.5"/>Xem trước
                     </button>
                     <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white" style={{ background:m.color,fontFamily: "var(--font-sans)",fontWeight:600 }}>
@@ -362,7 +362,7 @@ export function MauBieuPage({ user }: { user: LoginUser }) {
         {/* Legal footer */}
         <div className="mt-6 p-4 rounded-[10px] border border-[#e2e8f0] flex items-start gap-3" style={{ background:"#ffffff" }}>
           <AlertCircle className="size-5 text-[#b45309] shrink-0 mt-0.5"/>
-          <div className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="text-[13px] text-slate-700 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
             <span style={{ fontWeight:700,color:"#0b1426" }}>Lưu ý pháp lý:</span>{" "}
             Tất cả mẫu biểu trên đây được ban hành theo{" "}
             <span style={{ fontWeight:700 }}>Thông tư 01/2024/TT-BNV</span> ngày 01/02/2024 của Bộ Nội vụ, có hiệu lực từ ngày 01/02/2024, thay thế các mẫu biểu của TT 12/2019/TT-BNV.

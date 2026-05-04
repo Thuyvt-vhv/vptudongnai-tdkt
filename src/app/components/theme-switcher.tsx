@@ -48,10 +48,10 @@ function ThemePreview({ theme, active }: { theme: typeof THEMES[0]; active: bool
 
       {/* Label */}
       <div className="px-3 py-2" style={{ background: theme.paperBg }}>
-        <p className="text-[13px] leading-tight truncate" style={{ color: "#0b1426", fontWeight: 600 }}>
+        <p className="text-[13px] leading-tight truncate" style={{ color: "#0f172a", fontWeight: 600 }}>
           {theme.name}
         </p>
-        <p className="text-[13px] leading-tight truncate mt-0.5" style={{ color: "#635647" }}>
+        <p className="text-[13px] leading-tight truncate mt-0.5" style={{ color: "#334155" }}>
           {theme.desc}
         </p>
       </div>
@@ -134,10 +134,10 @@ export function ThemeSwitcherButton() {
                 ))}
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                <p className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                   Giao diện màu sắc
                 </p>
-                <p className="text-[13px] text-[#635647]">
+                <p className="text-[13px] text-slate-700">
                   Đang dùng: <span className="font-semibold" style={{ color: theme.primary }}>{theme.name}</span>
                 </p>
               </div>
@@ -196,7 +196,7 @@ export function ThemeSwitcherButton() {
                 <p className="text-[13px] font-semibold" style={{ color: activeTheme.primary }}>
                   {activeTheme.name}
                 </p>
-                <p className="text-[13px]" style={{ color: "#635647" }}>
+                <p className="text-[13px]" style={{ color: "#334155" }}>
                   {preview ? "Xem trước" : "Đang dùng"}
                 </p>
               </div>
@@ -213,7 +213,7 @@ export function ThemeSwitcherButton() {
               <div className="size-3 rounded-full" style={{ background: theme.primary }} />
               <div className="size-3 rounded-full" style={{ background: theme.gold }} />
               <div className="size-3 rounded-full border" style={{ background: theme.tint, borderColor: "#e2e8f0" }} />
-              <p className="text-[13px] text-[#635647] ml-1">
+              <p className="text-[13px] text-slate-700 ml-1">
                 {theme.desc}
               </p>
             </div>

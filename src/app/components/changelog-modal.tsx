@@ -136,9 +136,9 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
           <div className="px-5 py-4 border-b border-[#e2e8f0]">
             <div className="flex items-center gap-2">
               <Star className="size-4 text-[#8a6400]"/>
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Có gì mới</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Có gì mới</span>
             </div>
-            <p className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>VPTU Đồng Nai Changelog</p>
+            <p className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>VPTU Đồng Nai Changelog</p>
           </div>
           <div className="flex-1 overflow-y-auto p-2 space-y-1">
             {VERSIONS.map(v => {
@@ -154,7 +154,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[13px] text-[#0b1426]"
+                      <span className="text-[13px] text-slate-900"
                         style={{ fontFamily:"JetBrains Mono,monospace", fontWeight:isSelected?700:500 }}>
                         v{v.version}
                       </span>
@@ -165,7 +165,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                         </span>
                       )}
                     </div>
-                    <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{v.date}</div>
+                    <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{v.date}</div>
                   </div>
                   {isSelected && <ChevronRight className="size-3.5 text-[#1C5FBE] shrink-0 mt-1"/>}
                 </button>
@@ -185,7 +185,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
+                  <h2 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                     {ver.title}
                   </h2>
                   {ver.isLatest && (
@@ -193,14 +193,14 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                   )}
                 </div>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <code className="text-[13px] text-[#5a5040]" style={{ fontFamily:"JetBrains Mono,monospace" }}>v{ver.version}</code>
-                  <span className="text-[#6b5e47]">·</span>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Phát hành {ver.date}</span>
+                  <code className="text-[13px] text-slate-700" style={{ fontFamily:"JetBrains Mono,monospace" }}>v{ver.version}</code>
+                  <span className="text-slate-600">·</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Phát hành {ver.date}</span>
                 </div>
               </div>
             </div>
             <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
-              <X className="size-4 text-[#635647]"/>
+              <X className="size-4 text-slate-700"/>
             </button>
           </div>
 
@@ -214,7 +214,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
             </div>
 
             {/* Changes */}
-            <h3 className="text-[13px] uppercase tracking-wider text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
+            <h3 className="text-[13px] uppercase tracking-wider text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
               Chi tiết thay đổi ({ver.changes.length})
             </h3>
             <div className="space-y-2">
@@ -227,7 +227,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
                       style={{ background:cfg.bg, color:cfg.color, fontFamily: "var(--font-sans)", fontWeight:700 }}>
                       {cfg.label}
                     </span>
-                    <span className="text-[13px] text-[#0b1426] leading-relaxed flex-1" style={{ fontFamily: "var(--font-sans)" }}>
+                    <span className="text-[13px] text-slate-900 leading-relaxed flex-1" style={{ fontFamily: "var(--font-sans)" }}>
                       {c.text}
                     </span>
                   </div>
@@ -238,7 +238,7 @@ export function ChangelogModal({ open, onClose }: { open: boolean; onClose: () =
 
           {/* Footer */}
           <div className="px-8 py-4 border-t border-[#e2e8f0] flex items-center justify-between" style={{ background:"#ffffff" }}>
-            <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               VPTU Đồng Nai · Thi đua Khen thưởng · Tỉnh ủy Đồng Nai
             </div>
             <button onClick={onClose}

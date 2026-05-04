@@ -40,7 +40,7 @@ const ROLE_DEFS: RoleDef[] = [
     labelVi: "Quản trị hệ thống",
     desc: "Toàn quyền cấu hình hệ thống, phân quyền người dùng, quản trị danh mục và kiểm tra bảo mật.",
     icon: Settings,
-    color: "#0b1426",
+    color: "#0f172a",
     bg: "#e8ecf3",
     border: "#c5cdd9",
     gradient: "linear-gradient(135deg, #0b1426, #1a2744)",
@@ -529,7 +529,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
       {/* Legend */}
       <div className="flex items-center gap-4 p-3 rounded-[8px] bg-[#ffffff] border"
         style={{ borderColor:"var(--color-line)" }}>
-        <span className="text-[13px] uppercase tracking-wide text-[#635647]"
+        <span className="text-[13px] uppercase tracking-wide text-slate-700"
           style={{ fontFamily: "var(--font-sans)" }}>Chú thích:</span>
         {Object.entries(PERM_CFG).map(([k, cfg]) => (
           <div key={k} className="flex items-center gap-1.5">
@@ -551,7 +551,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
         {/* Header row */}
         <div className="grid border-b"
           style={{ gridTemplateColumns:"260px repeat(5, 1fr)", borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-          <div className="px-4 py-3 text-[13px] uppercase tracking-wide text-[#635647]"
+          <div className="px-4 py-3 text-[13px] uppercase tracking-wide text-slate-700"
             style={{ fontFamily: "var(--font-sans)" }}>Tính năng / Hành động</div>
           {roles.map(r => {
             const Icon = r.icon;
@@ -588,7 +588,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
                   style={{ background:group.color+"15" }}>
                   <Icon className="size-3.5" style={{ color:group.color }} />
                 </div>
-                <span className="text-[13px] text-[#0b1426] flex-1 text-left"
+                <span className="text-[13px] text-slate-900 flex-1 text-left"
                   style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{group.label}</span>
                 <div className="flex items-center gap-2 mr-2">
                   {roles.map(r => {
@@ -602,7 +602,7 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
                     );
                   })}
                 </div>
-                {isOpen ? <ChevronDown className="size-3.5 text-[#635647]" /> : <ChevronRight className="size-3.5 text-[#635647]" />}
+                {isOpen ? <ChevronDown className="size-3.5 text-slate-700" /> : <ChevronRight className="size-3.5 text-slate-700" />}
               </button>
 
               {/* Actions */}
@@ -615,10 +615,10 @@ function PermissionMatrix({ focusRole }: { focusRole: RoleId | null }) {
                   <div className="px-4 py-2.5 pl-10 flex items-center gap-2">
                     <div className="size-1 rounded-full shrink-0" style={{ background:group.color }} />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[13px] text-[#0b1426]"
+                      <div className="text-[13px] text-slate-900"
                         style={{ fontFamily: "var(--font-sans)" }}>{action.label}</div>
                       {action.legalNote && (
-                        <div className="text-[13px] text-[#635647] flex items-center gap-1"
+                        <div className="text-[13px] text-slate-700 flex items-center gap-1"
                           style={{ fontFamily: "var(--font-sans)" }}>
                           <BookOpen className="size-2.5" />{action.legalNote}
                         </div>
@@ -669,9 +669,9 @@ function WorkflowPermissions() {
         {/* Header */}
         <div className="grid border-b"
           style={{ gridTemplateColumns:"180px 1fr repeat(5, 1fr)", borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-          <div className="px-4 py-3 text-[13px] uppercase tracking-wide text-[#635647]"
+          <div className="px-4 py-3 text-[13px] uppercase tracking-wide text-slate-700"
             style={{ fontFamily: "var(--font-sans)" }}>Trạng thái</div>
-          <div className="px-3 py-3 text-[13px] uppercase tracking-wide text-[#635647] border-l"
+          <div className="px-3 py-3 text-[13px] uppercase tracking-wide text-slate-700 border-l"
             style={{ borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}>Mô tả</div>
           {ROLE_DEFS.map(r => {
             const Icon = r.icon;
@@ -704,7 +704,7 @@ function WorkflowPermissions() {
                 {row.label}
               </span>
             </div>
-            <div className="px-3 py-3 border-l text-[13px] text-[#635647]"
+            <div className="px-3 py-3 border-l text-[13px] text-slate-700"
               style={{ borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}>
               {row.description}
             </div>
@@ -755,7 +755,7 @@ function UserManagement({ focusRole }: { focusRole: RoleId | null }) {
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="search-bar w-64">
-          <Search className="size-3.5 text-[#635647] shrink-0" />
+          <Search className="size-3.5 text-slate-700 shrink-0" />
           <input className="flex-1 bg-transparent outline-none text-[13px] placeholder:text-[#b8b0a0]"
             style={{ fontFamily: "var(--font-sans)" }}
             placeholder="Tìm người dùng, đơn vị..."
@@ -800,7 +800,7 @@ function UserManagement({ focusRole }: { focusRole: RoleId | null }) {
           <thead>
             <tr style={{ background:"var(--color-paper)" }}>
               {["Người dùng","Chức vụ","Đơn vị","Vai trò","Trạng thái","Đăng nhập gần nhất",""].map(h => (
-                <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-[#635647] border-b"
+                <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-slate-700 border-b"
                   style={{ borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}>{h}</th>
               ))}
             </tr>
@@ -822,9 +822,9 @@ function UserManagement({ focusRole }: { focusRole: RoleId | null }) {
                         {initials}
                       </div>
                       <div>
-                        <div className="text-[13px] text-[#0b1426]"
+                        <div className="text-[13px] text-slate-900"
                           style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{u.name}</div>
-                        <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                        <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                           {u.email}
                         </div>
                       </div>
@@ -848,7 +848,7 @@ function UserManagement({ focusRole }: { focusRole: RoleId | null }) {
                       {u.status==="active" ? "Hoạt động" : "Đã vô hiệu"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[13px] text-[#635647]"
+                  <td className="px-4 py-3 text-[13px] text-slate-700"
                     style={{ fontFamily: "var(--font-sans)" }}>{u.lastLogin}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
@@ -892,7 +892,7 @@ function AuditLog() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                  <span className="text-[13px] text-[#0b1426]"
+                  <span className="text-[13px] text-slate-900"
                     style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{e.user}</span>
                   {roleDef && <RoleTag roleId={roleDef.id} size="sm" />}
                   <AuditActionBadge type={e.action} />
@@ -901,7 +901,7 @@ function AuditLog() {
                   {e.detail}
                 </p>
               </div>
-              <div className="shrink-0 text-[13px] text-[#635647]"
+              <div className="shrink-0 text-[13px] text-slate-700"
                 style={{ fontFamily: "var(--font-sans)" }}>{e.time}</div>
             </div>
           );
@@ -940,7 +940,7 @@ export function PhanQuyenPage() {
                 style={{ background:theme.tint }}>
                 <ShieldCheck className="size-4" style={{ color:theme.primary }} />
               </div>
-              <h1 className="text-[18px] text-[#0b1426]"
+              <h1 className="text-[18px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                 Phân quyền Hệ thống
               </h1>
@@ -949,7 +949,7 @@ export function PhanQuyenPage() {
                 <Scale className="size-3" />5 vai trò · RBAC
               </span>
             </div>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Quản lý 5 vai trò chuẩn — {totalUsers.toLocaleString()} người dùng — theo Luật TĐKT 2022 & NĐ 13/2023
             </p>
           </div>
@@ -978,9 +978,9 @@ export function PhanQuyenPage() {
       {/* ── Hierarchy diagram strip ── */}
       <div className="px-6 py-4 border-b flex items-center gap-0"
         style={{ borderColor:"var(--color-line)", background:"white" }}>
-        <div className="flex items-center gap-2 text-[13px] text-[#635647]"
+        <div className="flex items-center gap-2 text-[13px] text-slate-700"
           style={{ fontFamily: "var(--font-sans)" }}>
-          <Shield className="size-3.5 text-[#635647]" />
+          <Shield className="size-3.5 text-slate-700" />
           Cấu trúc phân cấp:
         </div>
         {ROLE_DEFS.map((r, i) => {
@@ -1009,7 +1009,7 @@ export function PhanQuyenPage() {
         })}
         {activeRole && (
           <button
-            className="ml-4 flex items-center gap-1 text-[13px] text-[#635647] hover:text-[#c8102e] transition-colors"
+            className="ml-4 flex items-center gap-1 text-[13px] text-slate-700 hover:text-[#c8102e] transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}
             onClick={() => setActiveRole(null)}>
             <X className="size-3" />Bỏ lọc

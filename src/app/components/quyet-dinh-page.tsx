@@ -135,7 +135,7 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           {/* Meta info */}
           <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
             <div className="px-4 py-2.5 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông tin Quyết định</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông tin Quyết định</span>
             </div>
             <div className="p-4 grid grid-cols-2 gap-3">
               {[
@@ -144,8 +144,8 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
                 ["Hình thức KT", qd.awardType],["Đơn vị", qd.unit],
               ].map(([k,v])=>(
                 <div key={k}>
-                  <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-0.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{k}</div>
-                  <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Số Quyết định"||k==="Hình thức KT"?700:400 }}>{v}</div>
+                  <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-0.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{k}</div>
+                  <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Số Quyết định"||k==="Hình thức KT"?700:400 }}>{v}</div>
                 </div>
               ))}
             </div>
@@ -155,18 +155,18 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
             <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden" style={{ background:"white" }}>
               <div className="px-4 py-2.5 border-b border-[#e2e8f0] flex items-center gap-2" style={{ background:"#f4f7fb" }}>
                 <Users className="size-4 text-[#1C5FBE]"/>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh sách được khen thưởng ({qd.recipients.length})</span>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh sách được khen thưởng ({qd.recipients.length})</span>
               </div>
               <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                 <thead><tr style={{ background:"#f4f7fb" }}>
-                  {["#","Họ tên","Chức vụ","Đơn vị","Điểm"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
+                  {["#","Họ tên","Chức vụ","Đơn vị","Điểm"].map(h=><th key={h} className="text-left px-3 py-2 text-slate-900" style={{ fontWeight:700 }}>{h}</th>)}
                 </tr></thead>
                 <tbody>{qd.recipients.map((r,i)=>(
                   <tr key={i} className="border-t border-[#e2e8f0]">
-                    <td className="px-3 py-2 text-[#635647]">{i+1}</td>
+                    <td className="px-3 py-2 text-slate-700">{i+1}</td>
                     <td className="px-3 py-2" style={{ fontWeight:600,color:"#0b1426" }}>{r.name}</td>
-                    <td className="px-3 py-2 text-[#5a5040]">{r.chucVu}</td>
-                    <td className="px-3 py-2 text-[#5a5040]">{r.donVi}</td>
+                    <td className="px-3 py-2 text-slate-700">{r.chucVu}</td>
+                    <td className="px-3 py-2 text-slate-700">{r.donVi}</td>
                     <td className="px-3 py-2 text-center" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:"#8a6400" }}>{r.diem}</td>
                   </tr>
                 ))}</tbody>
@@ -175,9 +175,9 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           )}
           {/* Căn cứ pháp lý */}
           <div className="rounded-[10px] border border-[#e2e8f0] p-4" style={{ background:"white" }}>
-            <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Căn cứ pháp lý</div>
+            <div className="text-[13px] text-slate-900 mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Căn cứ pháp lý</div>
             {qd.canCu.map((c,i)=>(
-              <div key={i} className="flex items-center gap-2 text-[13px] text-[#5a5040] mb-1">
+              <div key={i} className="flex items-center gap-2 text-[13px] text-slate-700 mb-1">
                 <BookOpen className="size-3.5 text-[#1C5FBE] shrink-0"/>
                 {c}
               </div>
@@ -192,11 +192,11 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>CA Certificate Serial</div>
+                  <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>CA Certificate Serial</div>
                   <code className="text-[13px] text-[#166534]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{qd.caSerial}</code>
                 </div>
                 <div>
-                  <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>QR Verification Code</div>
+                  <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>QR Verification Code</div>
                   <div className="flex items-center gap-2">
                     <code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{qd.qrHash}</code>
                     <button onClick={copyQR} className="size-6 rounded flex items-center justify-center hover:bg-[#dcfce7]">
@@ -210,9 +210,9 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
                 <div className="size-16 rounded-[6px] flex items-center justify-center" style={{ background:"#f0fdf4",border:"2px solid #166534" }}>
                   <QrCode className="size-10 text-[#166534]"/>
                 </div>
-                <div className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                   Quét QR code để xác minh tính xác thực của Quyết định.<br/>
-                  <span className="text-[#635647]">Hoặc truy cập: <span style={{ color:"#1C5FBE" }}>vinhquang.dongnai.gov.vn/verify/{qd.qrHash.slice(-8)}</span></span>
+                  <span className="text-slate-700">Hoặc truy cập: <span style={{ color:"#1C5FBE" }}>vinhquang.dongnai.gov.vn/verify/{qd.qrHash.slice(-8)}</span></span>
                 </div>
               </div>
             </div>
@@ -223,13 +223,13 @@ function QDDetail({ qd, onClose }:{ qd:Decision; onClose:()=>void }) {
           <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] text-white" style={{ background:"#0b1426",fontFamily: "var(--font-sans)",fontWeight:600 }}>
             <Eye className="size-4"/>Xem PDF
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <Download className="size-4"/>Tải về
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <Printer className="size-4"/>In
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+          <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <Share2 className="size-4"/>Chia sẻ
           </button>
         </div>
@@ -269,11 +269,11 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
             <ScrollText className="size-5 text-[#8a6400]"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quyết định Khen thưởng</h1>
-            <p className="text-[13px] text-[#635647]">Kho lưu trữ bất biến · QR verify · CA signed · Căn cứ NĐ 152/2025/NĐ-CP</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Quyết định Khen thưởng</h1>
+            <p className="text-[13px] text-slate-700">Kho lưu trữ bất biến · QR verify · CA signed · Căn cứ NĐ 152/2025/NĐ-CP</p>
           </div>
           <div className="ml-auto flex gap-2">
-            <button onClick={()=>setView(v=>v==="grid"?"table":"grid")} className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button onClick={()=>setView(v=>v==="grid"?"table":"grid")} className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               {view==="grid"?<BarChart2 className="size-3.5"/>:<FileText className="size-3.5"/>}
               {view==="grid"?"Dạng bảng":"Dạng thẻ"}
             </button>
@@ -300,7 +300,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
         {/* Filters */}
         <div className="flex gap-2 items-center flex-wrap">
           <div className="relative">
-            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]"/>
+            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700"/>
             <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Tìm mã QĐ, tiêu đề, đơn vị..."
               className="pl-9 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]" style={{ height:36,width:260,fontFamily: "var(--font-sans)" }}/>
           </div>
@@ -314,7 +314,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                 style={{ background:levelFilter===k?"#0b1426":"white",color:levelFilter===k?"white":"#5a5040",borderColor:levelFilter===k?"#0b1426":"#e2e8f0",fontFamily: "var(--font-sans)",fontWeight:levelFilter===k?700:400 }}>{l}</button>
             ))}
           </div>
-          <span className="ml-auto text-[13px] text-[#635647]">{visible.length} quyết định</span>
+          <span className="ml-auto text-[13px] text-slate-700">{visible.length} quyết định</span>
         </div>
       </div>
       {/* Content */}
@@ -330,7 +330,7 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div>
                         <code className="text-[13px] text-[#1C5FBE] block mb-1" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{qd.code}</code>
-                        <h3 className="text-[13px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{qd.title}</h3>
+                        <h3 className="text-[13px] text-slate-900 leading-snug" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{qd.title}</h3>
                       </div>
                       {qd.status==="published"&&qd.caSerial&&<Shield className="size-5 text-[#166534] shrink-0 mt-0.5"/>}
                     </div>
@@ -339,12 +339,12 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:sc.bg,color:sc.c,fontFamily: "var(--font-sans)" }}>{sc.l}</span>
                       {qd.recipients.length>0&&<span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#ffffff",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{qd.recipients.length} người</span>}
                     </div>
-                    <div className="text-[13px] text-[#635647] truncate">{qd.unit}</div>
+                    <div className="text-[13px] text-slate-700 truncate">{qd.unit}</div>
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#eef2f8]">
-                      <div className="flex items-center gap-1 text-[13px] text-[#635647]">
+                      <div className="flex items-center gap-1 text-[13px] text-slate-700">
                         <Calendar className="size-3.5"/>{qd.signedDate}
                       </div>
-                      <ChevronRight className="size-4 text-[#635647]"/>
+                      <ChevronRight className="size-4 text-slate-700"/>
                     </div>
                   </div>
                 </button>
@@ -364,19 +364,19 @@ export function QuyetDinhPage({ user }: { user: LoginUser }) {
                     <td className="px-3 py-3"><code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{d.code}</code></td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        {d.type==="tap_the"?<Users className="size-3.5 text-[#635647] shrink-0"/>:<User className="size-3.5 text-[#635647] shrink-0"/>}
-                        <span className="text-[13px] text-[#0b1426]" style={{ fontWeight:500 }}>{d.title}</span>
+                        {d.type==="tap_the"?<Users className="size-3.5 text-slate-700 shrink-0"/>:<User className="size-3.5 text-slate-700 shrink-0"/>}
+                        <span className="text-[13px] text-slate-900" style={{ fontWeight:500 }}>{d.title}</span>
                       </div>
                     </td>
-                    <td className="px-3 py-3 text-[13px] text-[#635647]">{d.unit}</td>
+                    <td className="px-3 py-3 text-[13px] text-slate-700">{d.unit}</td>
                     <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#ffffff",color:"#8a6400",fontFamily: "var(--font-sans)" }}>{d.awardType}</span></td>
                     <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c }}>{lc.l}</span></td>
-                    <td className="px-3 py-3 text-[13px] text-[#5a5040]">{d.signedDate}</td>
+                    <td className="px-3 py-3 text-[13px] text-slate-700">{d.signedDate}</td>
                     <td className="px-3 py-3"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:sc.bg,color:sc.c }}>{sc.l}</span></td>
                     <td className="px-3 py-3">
                       <div className="flex gap-1">
                         <button onClick={()=>setDetail(d)} className="size-7 rounded flex items-center justify-center hover:bg-[#ddeafc]"><Eye className="size-3.5 text-[#1C5FBE]"/></button>
-                        <button className="size-7 rounded flex items-center justify-center hover:bg-[#f4f7fb]"><Download className="size-3.5 text-[#5a5040]"/></button>
+                        <button className="size-7 rounded flex items-center justify-center hover:bg-[#f4f7fb]"><Download className="size-3.5 text-slate-700"/></button>
                         {d.qrHash&&<button className="size-7 rounded flex items-center justify-center hover:bg-[#dcfce7]"><QrCode className="size-3.5 text-[#166534]"/></button>}
                       </div>
                     </td>

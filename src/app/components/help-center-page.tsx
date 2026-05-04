@@ -70,12 +70,12 @@ function FAQAccordion({ items }: { items: FAQItem[] }) {
           style={{ borderColor: open === i ? "#bfdbfe" : "#e2e8f0", background: open === i ? "#f8fbff" : "white" }}>
           <button className="w-full flex items-center justify-between px-5 py-4 text-left"
             onClick={() => setOpen(open === i ? null : i)}>
-            <span className="text-[13px] text-[#0b1426] flex-1 pr-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{item.q}</span>
-            <ChevronDown className={`size-4 text-[#635647] shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
+            <span className="text-[13px] text-slate-900 flex-1 pr-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{item.q}</span>
+            <ChevronDown className={`size-4 text-slate-700 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
           </button>
           {open === i && (
             <div className="px-5 pb-4 border-t border-[#eef2f8]">
-              <p className="text-[13px] text-[#5a5040] leading-relaxed mt-3" style={{ fontFamily: "var(--font-sans)" }}>{item.a}</p>
+              <p className="text-[13px] text-slate-700 leading-relaxed mt-3" style={{ fontFamily: "var(--font-sans)" }}>{item.a}</p>
               <div className="mt-3 flex items-center gap-3">
                 <button className="flex items-center gap-1.5 text-[13px] text-[#1C5FBE] hover:text-[#1752a8]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                   <BookOpen className="size-3.5" />Xem điều khoản liên quan
@@ -129,14 +129,14 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
           </p>
           {/* Search bar */}
           <div className="max-w-lg mx-auto relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-[#635647]" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-700" />
             <input value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Tìm kiếm hướng dẫn, điều khoản, quy trình…"
-              className="w-full pl-11 pr-4 py-3.5 rounded-[12px] text-[14px] text-[#0b1426] outline-none shadow-xl"
+              className="w-full pl-11 pr-4 py-3.5 rounded-[12px] text-[14px] text-slate-900 outline-none shadow-xl"
               style={{ fontFamily: "var(--font-sans)", border: "none" }} />
             {search && (
               <button onClick={() => setSearch("")} className="absolute right-4 top-1/2 -translate-y-1/2">
-                <X className="size-4 text-[#635647]" />
+                <X className="size-4 text-slate-700" />
               </button>
             )}
           </div>
@@ -196,9 +196,9 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
         {/* FAQ */}
         {activeTab === "faq" && (
           <div className="max-w-3xl">
-            {search && <p className="text-[13px] text-[#635647] mb-4">{filteredFAQ.length} kết quả cho "{search}"</p>}
+            {search && <p className="text-[13px] text-slate-700 mb-4">{filteredFAQ.length} kết quả cho "{search}"</p>}
             {filteredFAQ.length === 0
-              ? <div className="text-center py-16 text-[#635647]">Không tìm thấy kết quả phù hợp.</div>
+              ? <div className="text-center py-16 text-slate-700">Không tìm thấy kết quả phù hợp.</div>
               : <FAQAccordion items={filteredFAQ} />}
           </div>
         )}
@@ -213,7 +213,7 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
         {/* Legal */}
         {activeTab === "legal" && (
           <div className="max-w-3xl space-y-4">
-            <p className="text-[13px] text-[#635647] mb-5" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700 mb-5" style={{ fontFamily: "var(--font-sans)" }}>
               Tất cả văn bản pháp lý mà VPTU Đồng Nai đối chiếu trong quá trình xét duyệt hồ sơ.
             </p>
             {LEGAL_REFS.map((ref, i) => (
@@ -224,16 +224,16 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
                     <code className="text-[13px] px-2 py-0.5 rounded" style={{ background: `${ref.color}15`, color: ref.color, fontFamily: "JetBrains Mono,monospace", fontWeight: 700 }}>
                       {ref.code}
                     </code>
-                    <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ref.tag}</span>
-                    <span className="text-[13px] text-[#6b5e47]">{ref.year}</span>
+                    <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{ref.tag}</span>
+                    <span className="text-[13px] text-slate-600">{ref.year}</span>
                   </div>
-                  <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ref.title}</p>
+                  <p className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ref.title}</p>
                 </div>
                 <div className="ml-auto flex items-center gap-2 shrink-0">
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>
                     <BookOpen className="size-3.5" />Xem
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#5a5040" }}>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] border border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ fontFamily: "var(--font-sans)", color: "#334155" }}>
                     <Sparkles className="size-3.5" />Hỏi AI
                   </button>
                 </div>
@@ -258,8 +258,8 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
                     style={{ background: "#8a6400", color: "white", fontFamily: "var(--font-sans)", fontWeight: 700 }}>{v.level}</div>
                 </div>
                 <div className="p-4">
-                  <p className="text-[13px] text-[#0b1426] leading-snug mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v.title}</p>
-                  <div className="flex items-center justify-between text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <p className="text-[13px] text-slate-900 leading-snug mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v.title}</p>
+                  <div className="flex items-center justify-between text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     <span>{v.views.toLocaleString("vi-VN")} lượt xem</span>
                     <button className="flex items-center gap-1 text-[#1C5FBE]" style={{ fontWeight: 600 }}>
                       Xem ngay <ArrowRight className="size-3" />
@@ -287,8 +287,8 @@ export function HelpCenterPage({ user }: { user: LoginUser }) {
                   <div className="size-10 rounded-[10px] flex items-center justify-center mb-3" style={{ background: `${c.color}15` }}>
                     <CIcon className="size-5" style={{ color: c.color }} />
                   </div>
-                  <h3 className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{c.title}</h3>
-                  <p className="text-[13px] text-[#635647] mb-4 whitespace-pre-line" style={{ fontFamily: "var(--font-sans)" }}>{c.desc}</p>
+                  <h3 className="text-[14px] text-slate-900 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{c.title}</h3>
+                  <p className="text-[13px] text-slate-700 mb-4 whitespace-pre-line" style={{ fontFamily: "var(--font-sans)" }}>{c.desc}</p>
                   <button className="flex items-center gap-1.5 text-[13px]" style={{ color: c.color, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     {c.action} <ArrowRight className="size-3.5" />
                   </button>

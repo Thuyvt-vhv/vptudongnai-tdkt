@@ -116,12 +116,12 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
               <Keyboard className="size-5 text-[#8a6400]"/>
             </div>
             <div>
-              <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phím tắt</h2>
-              <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tăng tốc làm việc với VPTU Đồng Nai</p>
+              <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phím tắt</h2>
+              <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Tăng tốc làm việc với VPTU Đồng Nai</p>
             </div>
           </div>
           <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] transition-colors">
-            <X className="size-4 text-[#635647]"/>
+            <X className="size-4 text-slate-700"/>
           </button>
         </div>
 
@@ -132,14 +132,14 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
             <div className="p-6 space-y-6">
               {SHORTCUTS.slice(0, 3).map(g => (
                 <div key={g.group}>
-                  <div className="text-[13px] uppercase tracking-widest text-[#6b5e47] mb-2.5"
+                  <div className="text-[13px] uppercase tracking-widest text-slate-600 mb-2.5"
                     style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                     {g.group}
                   </div>
                   <div className="space-y-2">
                     {g.items.map((item, i) => (
                       <div key={i} className="flex items-center justify-between gap-4">
-                        <span className="text-[13px] text-[#5a5040] flex-1" style={{ fontFamily: "var(--font-sans)" }}>
+                        <span className="text-[13px] text-slate-700 flex-1" style={{ fontFamily: "var(--font-sans)" }}>
                           {item.desc}
                         </span>
                         <div className="flex items-center gap-1 shrink-0">
@@ -147,7 +147,7 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
                             <span key={ki} className="flex items-center gap-1">
                               <Key k={k}/>
                               {ki < item.keys.length - 1 && (
-                                <span className="text-[13px] text-[#6b5e47]">+</span>
+                                <span className="text-[13px] text-slate-600">+</span>
                               )}
                             </span>
                           ))}
@@ -162,14 +162,14 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
             <div className="p-6 space-y-6">
               {SHORTCUTS.slice(3).map(g => (
                 <div key={g.group}>
-                  <div className="text-[13px] uppercase tracking-widest text-[#6b5e47] mb-2.5"
+                  <div className="text-[13px] uppercase tracking-widest text-slate-600 mb-2.5"
                     style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                     {g.group}
                   </div>
                   <div className="space-y-2">
                     {g.items.map((item, i) => (
                       <div key={i} className="flex items-center justify-between gap-4">
-                        <span className="text-[13px] text-[#5a5040] flex-1" style={{ fontFamily: "var(--font-sans)" }}>
+                        <span className="text-[13px] text-slate-700 flex-1" style={{ fontFamily: "var(--font-sans)" }}>
                           {item.desc}
                         </span>
                         <div className="flex items-center gap-1 shrink-0">
@@ -177,7 +177,7 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
                             <span key={ki} className="flex items-center gap-1">
                               <Key k={k}/>
                               {ki < item.keys.length - 1 && (
-                                <span className="text-[13px] text-[#6b5e47]">+</span>
+                                <span className="text-[13px] text-slate-600">+</span>
                               )}
                             </span>
                           ))}
@@ -193,11 +193,11 @@ export function ShortcutsOverlay({ open, onClose }: { open: boolean; onClose: ()
 
         {/* Footer */}
         <div className="px-6 py-3 border-t border-[#eef2f8] flex items-center gap-4" style={{ background:"#ffffff" }}>
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             Nhấn <kbd className="px-1.5 py-0.5 rounded border border-[#e2e8f0] bg-white text-[13px]" style={{ fontFamily:"JetBrains Mono,monospace" }}>?</kbd> để mở bất kỳ lúc nào
           </span>
-          <span className="text-[13px] text-[#6b5e47] mx-1">·</span>
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-600 mx-1">·</span>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             macOS: ⌘ = Command &nbsp;&nbsp; Windows: ⌘ = Ctrl
           </span>
         </div>

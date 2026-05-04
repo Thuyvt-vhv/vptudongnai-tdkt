@@ -60,7 +60,7 @@ function ScoreBar({ score, max }: { score: number; max: number }) {
         <div className="h-full rounded-full transition-all"
           style={{ width:`${pct}%`, background: pct >= 90 ? "#166534" : pct >= 70 ? theme.primary : "#b45309" }} />
       </div>
-      <span className="text-[13px] font-mono text-[#0b1426] w-10 text-right">{score}/{max}</span>
+      <span className="text-[13px] font-mono text-slate-900 w-10 text-right">{score}/{max}</span>
     </div>
   );
 }
@@ -99,9 +99,9 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
             <BarChart3 className="size-[18px]" style={{ color: theme.primary }} />
-            <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Chấm điểm & Bình xét</h2>
+            <h2 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Chấm điểm & Bình xét</h2>
           </div>
-          <p className="text-[13px] text-[#635647]">Năm công tác 2026 · Đợt bình xét 01/2026 · {UNITS.length} đơn vị</p>
+          <p className="text-[13px] text-slate-700">Năm công tác 2026 · Đợt bình xét 01/2026 · {UNITS.length} đơn vị</p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           {[
@@ -129,16 +129,16 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
       <table className="w-full border-collapse" style={{ fontFamily: "var(--font-sans)" }}>
         <thead className="sticky top-[65px] z-10" style={{ background: "#f8fafc", borderBottom: "2px solid #e2e8f0" }}>
           <tr>
-            <th className="px-4 py-3 text-left text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-10">#</th>
-            <th className="px-4 py-3 text-left text-[12px] font-semibold text-[#635647] uppercase tracking-wider">Đơn vị / Tổ chức</th>
+            <th className="px-4 py-3 text-left text-[12px] font-semibold text-slate-700 uppercase tracking-wider w-10">#</th>
+            <th className="px-4 py-3 text-left text-[12px] font-semibold text-slate-700 uppercase tracking-wider">Đơn vị / Tổ chức</th>
             {CRITERIA.map(c => (
-              <th key={c.key} className="px-2 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[90px]">
+              <th key={c.key} className="px-2 py-3 text-center text-[12px] font-semibold text-slate-700 uppercase tracking-wider w-[90px]">
                 <div className="leading-tight">{c.label.split(" ").slice(0,2).join(" ")}</div>
                 <div className="text-[11px] font-normal text-[#9a8a74] mt-0.5">/{c.max}đ</div>
               </th>
             ))}
-            <th className="px-3 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[80px]">Tổng</th>
-            <th className="px-4 py-3 text-center text-[12px] font-semibold text-[#635647] uppercase tracking-wider w-[120px]">Trạng thái</th>
+            <th className="px-3 py-3 text-center text-[12px] font-semibold text-slate-700 uppercase tracking-wider w-[80px]">Tổng</th>
+            <th className="px-4 py-3 text-center text-[12px] font-semibold text-slate-700 uppercase tracking-wider w-[120px]">Trạng thái</th>
             <th className="w-10" />
           </tr>
         </thead>
@@ -155,8 +155,8 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                   </div>
                 </td>
                 <td className="px-4 py-3.5">
-                  <p className="text-[13px] font-semibold text-[#0b1426]">{u.name}</p>
-                  <p className="text-[13px] text-[#635647]">{u.type}</p>
+                  <p className="text-[13px] font-semibold text-slate-900">{u.name}</p>
+                  <p className="text-[13px] text-slate-700">{u.type}</p>
                 </td>
                 {u.scores.map((s, si) => (
                   <td key={si} className="px-2 py-3.5 text-center">
@@ -195,7 +195,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                   <td colSpan={11} style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
                     <div className="px-6 py-4 space-y-3">
                       <div className="flex items-center justify-between mb-1">
-                        <p className="text-[13px] font-semibold text-[#0b1426]">Chi tiết điểm từng tiêu chí — {u.name}</p>
+                        <p className="text-[13px] font-semibold text-slate-900">Chi tiết điểm từng tiêu chí — {u.name}</p>
                         {canEdit && (
                           editId === u.id
                             ? <div className="flex gap-2">
@@ -208,7 +208,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                       <div className="grid grid-cols-3 gap-x-8 gap-y-2">
                         {u.scores.map((s, si) => (
                           <div key={si} className="flex items-center gap-3">
-                            <span className="text-[13px] text-[#635647] w-44 shrink-0">{s.criteria}</span>
+                            <span className="text-[13px] text-slate-700 w-44 shrink-0">{s.criteria}</span>
                             {editId === u.id ? (
                               <input type="number" min={0} max={s.max}
                                 value={editScores[`c${si+1}`] ?? s.score}
@@ -221,7 +221,7 @@ export function ChamDiemPage({ user }: { user: LoginUser }) {
                           </div>
                         ))}
                       </div>
-                      <div className="flex items-center gap-2 mt-2 text-[13px] text-[#635647]">
+                      <div className="flex items-center gap-2 mt-2 text-[13px] text-slate-700">
                         <CalendarDays className="size-3.5" />
                         Cập nhật lần cuối: {u.lastUpdate}
                       </div>

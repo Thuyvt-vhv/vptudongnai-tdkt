@@ -190,7 +190,7 @@ const initRecords: ConsultationRecord[] = [
 
 /* ─── Status config ──────────────────────────────────────────────── */
 const SC: Record<YKStatus, { label: string; color: string; bg: string; border: string; icon: typeof Clock }> = {
-  chua_bat_dau: { label: "Chưa bắt đầu", color: "#5a5040", bg: "#eef2f8", border: "#d9d1bd", icon: Clock },
+  chua_bat_dau: { label: "Chưa bắt đầu", color: "#334155", bg: "#eef2f8", border: "#d9d1bd", icon: Clock },
   dang_lay:     { label: "Đang lấy ý kiến", color: "#1a6a2e", bg: "#d1fae5", border: "#6ee7b7", icon: Megaphone },
   sap_het_han:  { label: "Sắp hết hạn", color: "#92400e", bg: "#fef3c7", border: "#fcd34d", icon: AlertCircle },
   da_ket_thuc:  { label: "Đã kết thúc", color: "#1a4fa0", bg: "#dbeafe", border: "#93c5fd", icon: CheckCircle2 },
@@ -326,7 +326,7 @@ function CountdownBadge({ record }: { record: ConsultationRecord }) {
           <Timer className="size-3.5" />
           <span>Còn {left} ngày</span>
         </div>
-        <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
           {done}/{record.soNgayQuyDinh} ngày
         </span>
       </div>
@@ -340,7 +340,7 @@ function CountdownBadge({ record }: { record: ConsultationRecord }) {
 
 function OpinionBar({ record }: { record: ConsultationRecord }) {
   if (!record.tongYKien) return (
-    <div className="text-[13px] text-[#635647] italic" style={{ fontFamily: "var(--font-sans)" }}>
+    <div className="text-[13px] text-slate-700 italic" style={{ fontFamily: "var(--font-sans)" }}>
       Chưa có ý kiến nào
     </div>
   );
@@ -438,10 +438,10 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
             <Megaphone className="size-4" style={{ color: theme.primary }} />
           </div>
           <div className="flex-1">
-            <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+            <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
               Tạo đợt lấy ý kiến công khai mới
             </h2>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Bắt buộc theo Điều 17 Luật TĐKT 2022 — Tối thiểu 7 ngày làm việc
             </p>
           </div>
@@ -524,7 +524,7 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
             <div className="ds-input-root">
               <label className="ds-input-label ds-input-label-required">
                 Số ngày lấy ý kiến
-                <span className="ml-1 text-[13px] text-[#635647] font-normal">(min: 7)</span>
+                <span className="ml-1 text-[13px] text-slate-700 font-normal">(min: 7)</span>
               </label>
               <select className="ds-input ds-input-md"
                 value={form.soNgayQuyDinh}
@@ -546,8 +546,8 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
               <label className="ds-input-label">Ngày kết thúc (tự động)</label>
               <div className="h-10 flex items-center px-3 rounded-[6px] bg-[#f4f7fb] border"
                 style={{ borderColor: "var(--color-line)", fontFamily: "var(--font-sans)" }}>
-                <span className="text-[14px] text-[#0b1426]">{fmtDate(endStr)}</span>
-                <span className="ml-2 text-[13px] text-[#635647]">(+{form.soNgayQuyDinh} ngày)</span>
+                <span className="text-[14px] text-slate-900">{fmtDate(endStr)}</span>
+                <span className="ml-2 text-[13px] text-slate-700">(+{form.soNgayQuyDinh} ngày)</span>
               </div>
             </div>
             <div className="col-span-2 ds-input-root">
@@ -571,9 +571,9 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
                   style={{ accentColor: theme.primary }}
                   checked={form.daXuatBan}
                   onChange={e => setForm(p => ({ ...p, daXuatBan: e.target.checked }))} />
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                   Xuất bản công khai trên Cổng thông tin điện tử đơn vị
-                  <span className="ml-1 text-[13px] text-[#635647] font-normal">(theo Điều 5 NĐ 152/2025/NĐ-CP)</span>
+                  <span className="ml-1 text-[13px] text-slate-700 font-normal">(theo Điều 5 NĐ 152/2025/NĐ-CP)</span>
                 </span>
               </label>
             </div>
@@ -583,7 +583,7 @@ function CreateForm({ onClose, onCreated }: { onClose: () => void; onCreated: (r
         {/* Footer */}
         <div className="flex items-center justify-between gap-3 px-6 py-4 border-t"
           style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Sau khi tạo, hệ thống sẽ gửi thông báo tới các thành viên liên quan.
           </p>
           <div className="flex items-center gap-2">
@@ -649,10 +649,10 @@ function OpinionForm({ record, onClose, onSubmitted }: {
             <MessageSquare className="size-4 text-[#0f7a3e]" />
           </div>
           <div className="flex-1">
-            <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+            <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
               Gửi ý kiến
             </h2>
-            <p className="text-[13px] text-[#635647] truncate max-w-xs" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700 truncate max-w-xs" style={{ fontFamily: "var(--font-sans)" }}>
               {record.tenDoiTuong} — {record.hinhThucKhenThuong}
             </p>
           </div>
@@ -710,10 +710,10 @@ function OpinionForm({ record, onClose, onSubmitted }: {
                     checked={form.anonymous}
                     onChange={e => setForm(p => ({ ...p, anonymous: e.target.checked }))} />
                   <div>
-                    <span className="text-[13px] text-[#0b1426] block" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
+                    <span className="text-[13px] text-slate-900 block" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
                       Gửi ẩn danh
                     </span>
-                    <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                       Tên và đơn vị của bạn sẽ được ẩn. Hệ thống vẫn lưu thông tin để phòng chống spam.
                     </span>
                   </div>
@@ -769,10 +769,10 @@ function OpinionForm({ record, onClose, onSubmitted }: {
               <CheckCircle2 className="size-8 text-[#0f7a3e]" />
             </div>
             <div>
-              <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 Ý kiến đã được ghi nhận
               </h3>
-              <p className="text-[13px] text-[#635647] mt-1 max-w-xs" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700 mt-1 max-w-xs" style={{ fontFamily: "var(--font-sans)" }}>
                 Cảm ơn bạn đã tham gia đóng góp ý kiến. Ý kiến sẽ được tổng hợp vào biên bản chính thức.
               </p>
             </div>
@@ -812,12 +812,12 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
           style={{ borderColor: "var(--color-line)", background: "var(--color-paper)" }}>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {record.id} · {record.maHoSo}
               </span>
               <StatusTag status={record.status} />
             </div>
-            <h2 className="text-[18px] text-[#0b1426] leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+            <h2 className="text-[18px] text-slate-900 leading-snug" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
               {record.tenDoiTuong}
             </h2>
             <div className="flex items-center gap-2 mt-1 flex-wrap">
@@ -847,11 +847,11 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
             <div className="grid grid-cols-2 gap-4 mb-4">
               {/* Countdown */}
               <div className="rounded-[8px] p-4 border" style={{ borderColor: "var(--color-line)", background: "#fff" }}>
-                <div className="text-[13px] text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)" }}>
                   Tiến độ thời gian
                 </div>
                 <CountdownBadge record={record} />
-                <div className="mt-2.5 flex items-center justify-between text-[13px] text-[#635647]"
+                <div className="mt-2.5 flex items-center justify-between text-[13px] text-slate-700"
                   style={{ fontFamily: "var(--font-sans)" }}>
                   <span>{fmtDate(record.ngayBatDau)}</span>
                   <span>{fmtDate(record.ngayKetThuc)}</span>
@@ -859,7 +859,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
               </div>
               {/* Opinion stats */}
               <div className="rounded-[8px] p-4 border" style={{ borderColor: "var(--color-line)", background: "#fff" }}>
-                <div className="text-[13px] text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)" }}>
                   Kết quả ý kiến ({record.tongYKien} người)
                 </div>
                 <OpinionBar record={record} />
@@ -876,10 +876,10 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
 
             {/* Thành tích */}
             <div className="rounded-[6px] p-3 bg-[#ffffff] border" style={{ borderColor: "var(--color-line)" }}>
-              <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
-              <p className="text-[13px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                 {record.tomTatThanhTich}
               </p>
             </div>
@@ -899,7 +899,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
           {/* Opinion list */}
           <div className="px-6 py-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[14px] text-[#0b1426]"
+              <h3 className="text-[14px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 Danh sách ý kiến ({record.yKienList.length})
               </h3>
@@ -925,7 +925,7 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
             </div>
 
             {filtered.length === 0 ? (
-              <div className="text-center py-10 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-center py-10 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Chưa có ý kiến nào trong danh mục này.
               </div>
             ) : (
@@ -947,16 +947,16 @@ function DetailPanel({ record, onClose, onAddOpinion, user }: {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-[13px] text-[#0b1426]"
+                          <span className="text-[13px] text-slate-900"
                             style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
                             {yk.anonymous ? "Ẩn danh" : yk.hoTen}
                           </span>
                           {!yk.anonymous && (
-                            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                            <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                               {yk.chucVu} · {yk.donVi}
                             </span>
                           )}
-                          <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                          <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                             {fmtDate(yk.thoiGian)}
                           </span>
                         </div>
@@ -1043,7 +1043,7 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-0.5">
-              <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {record.id}
               </span>
               <StatusTag status={record.status} />
@@ -1054,11 +1054,11 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
                 </span>
               )}
             </div>
-            <div className="text-[14px] text-[#0b1426] leading-snug truncate"
+            <div className="text-[14px] text-slate-900 leading-snug truncate"
               style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
               {record.tenDoiTuong}
             </div>
-            <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>
               {record.chucVu ? `${record.chucVu} · ` : ""}{record.donVi}
             </div>
           </div>
@@ -1068,11 +1068,11 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px]"
           style={{ background: "#ffffff", border: "1px solid var(--color-line)" }}>
           <Star className="size-3 shrink-0" style={{ color: "#8a6400" }} />
-          <span className="text-[13px] text-[#0b1426] truncate"
+          <span className="text-[13px] text-slate-900 truncate"
             style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>
             {record.hinhThucKhenThuong}
           </span>
-          <span className="ml-auto text-[13px] text-[#635647] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="ml-auto text-[13px] text-slate-700 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>
             {record.capKhenThuong}
           </span>
         </div>
@@ -1086,7 +1086,7 @@ function ConsultCard({ record, onOpen }: { record: ConsultationRecord; onOpen: (
         {/* Footer */}
         <div className="flex items-center justify-between pt-1 border-t"
           style={{ borderColor: "var(--color-line)" }}>
-          <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+          <div className="flex items-center gap-1.5 text-[13px] text-slate-700"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Calendar className="size-3" />
             {fmtDate(record.ngayBatDau)} – {fmtDate(record.ngayKetThuc)}
@@ -1125,11 +1125,11 @@ function StatsBar({ records }: { records: ConsultationRecord[] }) {
               <Icon className="size-4" style={{ color: s.color }} />
             </div>
             <div>
-              <div className="text-[18px] text-[#0b1426]"
+              <div className="text-[18px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight: 700, lineHeight: 1.2 }}>
                 {s.value}
               </div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {s.label}
               </div>
             </div>
@@ -1201,7 +1201,7 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
                 style={{ background: theme.tint }}>
                 <Megaphone className="size-4" style={{ color: theme.primary }} />
               </div>
-              <h1 className="text-[18px] text-[#0b1426]"
+              <h1 className="text-[18px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Lấy ý kiến công khai
               </h1>
@@ -1211,7 +1211,7 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
                 Bắt buộc theo luật
               </span>
             </div>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Quản lý các đợt lấy ý kiến trước khi trình hồ sơ — tối thiểu 7 ngày làm việc (Điều 17 Luật TĐKT 2022)
             </p>
           </div>
@@ -1274,9 +1274,9 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
         {/* Search */}
         <div className="ml-auto mb-2">
           <div className="search-bar w-64">
-            <Search className="size-3.5 text-[#635647] shrink-0" />
+            <Search className="size-3.5 text-slate-700 shrink-0" />
             <input
-              className="flex-1 bg-transparent outline-none text-[13px] text-[#0b1426] placeholder:text-[#b8b0a0]"
+              className="flex-1 bg-transparent outline-none text-[13px] text-slate-900 placeholder:text-[#b8b0a0]"
               style={{ fontFamily: "var(--font-sans)" }}
               placeholder="Tìm kiếm..."
               value={search}
@@ -1295,10 +1295,10 @@ export function LayYKienPage({ user }: { user: LoginUser }) {
               <Megaphone className="size-7" style={{ color: theme.primary }} />
             </div>
             <div>
-              <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 Chưa có đợt lấy ý kiến nào
               </h3>
-              <p className="text-[13px] text-[#635647] mt-1" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700 mt-1" style={{ fontFamily: "var(--font-sans)" }}>
                 {canCreate ? "Nhấn \"Tạo đợt mới\" để bắt đầu." : "Chưa có đợt nào trong danh mục này."}
               </p>
             </div>

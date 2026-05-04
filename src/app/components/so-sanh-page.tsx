@@ -146,20 +146,20 @@ function HoSoSelector({ value, onChange, excluded }: {
               {value.ten.split(" ").slice(-1)[0][0]}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{value.ten}</div>
-              <div className="text-[13px] text-[#635647] truncate">{value.id} · {value.danhHieu}</div>
+              <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{value.ten}</div>
+              <div className="text-[13px] text-slate-700 truncate">{value.id} · {value.danhHieu}</div>
             </div>
             <button onClick={e => { e.stopPropagation(); onChange(null); }} className="shrink-0 hover:text-[#c8102e]">
-              <X className="size-4 text-[#635647]"/>
+              <X className="size-4 text-slate-700"/>
             </button>
           </>
         ) : (
           <>
             <div className="size-9 rounded-full border-2 border-dashed border-[#d1d5db] flex items-center justify-center shrink-0">
-              <Plus className="size-4 text-[#635647]"/>
+              <Plus className="size-4 text-slate-700"/>
             </div>
-            <span className="text-[13px] text-[#6b5e47] flex-1" style={{ fontFamily: "var(--font-sans)" }}>Chọn hồ sơ để so sánh…</span>
-            <ChevronDown className="size-4 text-[#635647]"/>
+            <span className="text-[13px] text-slate-600 flex-1" style={{ fontFamily: "var(--font-sans)" }}>Chọn hồ sơ để so sánh…</span>
+            <ChevronDown className="size-4 text-slate-700"/>
           </>
         )}
       </button>
@@ -169,7 +169,7 @@ function HoSoSelector({ value, onChange, excluded }: {
           <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-40 rounded-[10px] border border-[#e2e8f0] shadow-xl overflow-hidden"
             style={{ background: "white" }}>
             {options.length === 0 ? (
-              <div className="px-4 py-3 text-[13px] text-[#635647]">Không còn hồ sơ để chọn</div>
+              <div className="px-4 py-3 text-[13px] text-slate-700">Không còn hồ sơ để chọn</div>
             ) : options.map(hs => (
               <button key={hs.id} onClick={() => { onChange(hs); setOpen(false); }}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-[#f4f7fb] transition-colors">
@@ -178,8 +178,8 @@ function HoSoSelector({ value, onChange, excluded }: {
                   {hs.ten.split(" ").slice(-1)[0][0]}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{hs.ten}</div>
-                  <div className="text-[13px] text-[#635647]">{hs.id} · {hs.danhHieu}</div>
+                  <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{hs.ten}</div>
+                  <div className="text-[13px] text-slate-700">{hs.id} · {hs.danhHieu}</div>
                 </div>
                 <span className="text-[13px] shrink-0" style={{ fontFamily: "JetBrains Mono,monospace", fontWeight: 700, color: hs.aiScore >= 90 ? "#166534" : hs.aiScore >= 75 ? "#b45309" : "#c8102e" }}>
                   AI {hs.aiScore}
@@ -221,7 +221,7 @@ function AIRecommendation({ cols }: { cols: (HoSoFull | null)[] }) {
         <Sparkles className="size-5 text-[#7c3aed]"/>
         <span className="text-[14px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Trợ lý AI Khuyến nghị</span>
       </div>
-      <p className="text-[13px] text-[#0b1426] leading-relaxed mb-3" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-[13px] text-slate-900 leading-relaxed mb-3" style={{ fontFamily: "var(--font-sans)" }}>
         Dựa trên đánh giá tổng hợp {filled.length} hồ sơ, AI nhận thấy:{" "}
         <strong>{winner.ten}</strong> (AI Score: {winner.aiScore}/100) có hồ sơ mạnh nhất với{" "}
         {winner.soNamCSTD} năm CSTĐCS liên tiếp và {winner.namCongTacHienTai} năm công tác.{" "}
@@ -282,11 +282,11 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <GitCompare className="size-5 text-[#1C5FBE]"/>
-              <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>So sánh & Đối chiếu Hồ sơ</h1>
+              <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>So sánh & Đối chiếu Hồ sơ</h1>
             </div>
-            <p className="text-[13px] text-[#635647]">So sánh tối đa 3 hồ sơ đồng thời · Trợ lý AI khuyến nghị ưu tiên</p>
+            <p className="text-[13px] text-slate-700">So sánh tối đa 3 hồ sơ đồng thời · Trợ lý AI khuyến nghị ưu tiên</p>
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="flex items-center gap-2 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <Shield className="size-4"/>
             Đối chiếu Luật TĐKT 2022
           </div>
@@ -298,7 +298,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
             <div key={i}>
               <div className="flex items-center gap-1.5 mb-1.5">
                 <div className="size-2 rounded-full" style={{ background: colColors[i] }}/>
-                <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   Hồ sơ {i+1}
                 </span>
               </div>
@@ -323,21 +323,21 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                     {col.ten.split(" ").slice(-1)[0][0]}
                   </div>
                   <div>
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{col.ten}</div>
-                    <div className="text-[13px] text-[#635647]">{col.id}</div>
+                    <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{col.ten}</div>
+                    <div className="text-[13px] text-slate-700">{col.id}</div>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <div>
                     <div className="flex justify-between text-[13px] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
-                      <span className="text-[#635647]">Điểm AI</span>
+                      <span className="text-slate-700">Điểm AI</span>
                       <span style={{ color: colColors[i], fontWeight: 700 }}>{col.aiScore}/100</span>
                     </div>
                     <ScoreBar score={col.aiScore} color={colColors[i]}/>
                   </div>
                   <div>
                     <div className="flex justify-between text-[13px] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
-                      <span className="text-[#635647]">Tổng điểm chấm</span>
+                      <span className="text-slate-700">Tổng điểm chấm</span>
                       <span style={{ color: colColors[i], fontWeight: 700 }}>{col.tongDiem}/100</span>
                     </div>
                     <ScoreBar score={col.tongDiem} color={colColors[i]}/>
@@ -365,7 +365,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
             ) : (
               <div key={i} className="rounded-[12px] border-2 border-dashed border-[#e2e8f0] p-4 flex flex-col items-center justify-center min-h-[160px] text-center">
                 <Plus className="size-8 text-[#d1d5db] mb-2"/>
-                <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>Chọn hồ sơ thứ {i+1}</span>
+                <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>Chọn hồ sơ thứ {i+1}</span>
               </div>
             ))}
           </div>
@@ -376,15 +376,15 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
           <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
             {/* Table header */}
             <div className="grid border-b border-[#e2e8f0]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)", background: "#ffffff" }}>
-              <div className="px-4 py-3 text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+              <div className="px-4 py-3 text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Tiêu chí
               </div>
               {cols.map((col, i) => (
                 <div key={i} className="px-4 py-3 border-l border-[#eef2f8]">
                   <div className="flex items-center gap-1.5">
                     <div className="size-2.5 rounded-full" style={{ background: colColors[i] }}/>
-                    <span className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: col ? 700 : 400 }}>
-                      {col ? col.ten.split(" ").slice(-2).join(" ") : <span className="text-[#6b5e47]">—</span>}
+                    <span className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: col ? 700 : 400 }}>
+                      {col ? col.ten.split(" ").slice(-2).join(" ") : <span className="text-slate-600">—</span>}
                     </span>
                   </div>
                 </div>
@@ -396,7 +396,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
               <div key={group.group}>
                 {/* Group header */}
                 <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
-                  <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                  <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     {group.group}
                   </span>
                 </div>
@@ -406,7 +406,7 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
                     <div key={String(crit.key)} className="grid border-b border-[#f4f7fb] last:border-0 hover:bg-[#ffffff] transition-colors"
                       style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
                       <div className="px-4 py-3">
-                        <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{crit.label}</span>
+                        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{crit.label}</span>
                       </div>
                       {cols.map((col, i) => {
                         const isBest = bestIdx === i && col !== null;
@@ -436,16 +436,16 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
             {/* Thành tích */}
             <div>
               <div className="px-4 py-2 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
-                <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thành tích nổi bật</span>
+                <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thành tích nổi bật</span>
               </div>
               <div className="grid border-b border-[#f4f7fb]" style={{ gridTemplateColumns: "200px repeat(3, 1fr)" }}>
-                <div className="px-4 py-3"><span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách thành tích</span></div>
+                <div className="px-4 py-3"><span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách thành tích</span></div>
                 {cols.map((col, i) => (
                   <div key={i} className="px-4 py-3 border-l border-[#f4f7fb]">
                     {col ? (
                       <ul className="space-y-1">
                         {col.tienTichCaNhan.map((t, ti) => (
-                          <li key={ti} className="flex items-start gap-1.5 text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+                          <li key={ti} className="flex items-start gap-1.5 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                             <Star className="size-3 text-[#8a6400] shrink-0 mt-0.5"/>
                             {t}
                           </li>
@@ -463,10 +463,10 @@ export function SoSanhPage({ user }: { user: LoginUser }) {
         {filledCols.length < 2 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <GitCompare className="size-16 text-[#d1d5db]"/>
-            <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Chọn ít nhất 2 hồ sơ để bắt đầu so sánh
             </h3>
-            <p className="text-[13px] text-[#635647] text-center max-w-sm" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700 text-center max-w-sm" style={{ fontFamily: "var(--font-sans)" }}>
               Trợ lý AI sẽ phân tích và khuyến nghị hồ sơ nào nên được ưu tiên dựa trên tiêu chí Luật TĐKT 2022.
             </p>
           </div>

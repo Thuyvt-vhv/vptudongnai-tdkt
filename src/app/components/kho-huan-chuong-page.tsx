@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import {
   Award, Search, Filter, ChevronRight, Star, Clock, Users,
   CheckCircle2, Info, X, Download, Shield, Trophy, Medal,
@@ -178,7 +178,7 @@ function AddAwardModal({
   };
 
   const inputCls = "w-full px-3 py-2 rounded-[6px] border text-[13px] outline-none focus:border-[#1C5FBE] transition-colors";
-  const labelCls = "block text-[12px] font-semibold text-[#5a5040] mb-1";
+  const labelCls = "block text-[12px] font-semibold text-slate-700 mb-1";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background:"rgba(11,20,38,0.45)" }}>
@@ -193,11 +193,11 @@ function AddAwardModal({
               <Medal className="size-4 text-white"/>
             </div>
             <div>
-              <h2 className="text-[15px] font-bold text-[#0b1426]">Thêm mới Huân – Huy chương</h2>
-              <p className="text-[12px] text-[#635647]">Điền đầy đủ thông tin danh hiệu khen thưởng</p>
+              <h2 className="text-[15px] font-bold text-slate-900">Thêm mới Huân – Huy chương</h2>
+              <p className="text-[12px] text-slate-700">Điền đầy đủ thông tin danh hiệu khen thưởng</p>
             </div>
           </div>
-          <button onClick={onClose} className="size-8 flex items-center justify-center rounded-[6px] hover:bg-[#e2e8f0] transition-colors text-[#635647]">
+          <button onClick={onClose} className="size-8 flex items-center justify-center rounded-[6px] hover:bg-[#e2e8f0] transition-colors text-slate-700">
             <X className="size-4"/>
           </button>
         </div>
@@ -353,7 +353,7 @@ function AddAwardModal({
             <div className="space-y-2">
               {form.conditions.map((c,i)=>(
                 <div key={i} className="flex items-center gap-2">
-                  <span className="text-[12px] text-[#635647] shrink-0 w-5 text-right">{i+1}.</span>
+                  <span className="text-[12px] text-slate-700 shrink-0 w-5 text-right">{i+1}.</span>
                   <input
                     value={c}
                     onChange={e=>setCondition(i,e.target.value)}
@@ -391,7 +391,7 @@ function AddAwardModal({
         {/* Footer */}
         <div className="shrink-0 flex items-center justify-end gap-2 px-6 py-4 border-t border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <button onClick={onClose}
-            className="px-4 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
+            className="px-4 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-slate-700 hover:bg-[#f4f7fb] transition-colors"
             style={{ fontFamily:"var(--font-sans)" }}>
             Hủy
           </button>
@@ -438,11 +438,11 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
             <Medal className="size-5 text-white"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kho Huân – Huy chương</h1>
-            <p className="text-[13px] text-[#635647]">{awards.length} loại danh hiệu · {totalAwarded} lần trao tặng · Căn cứ NĐ 152/2025/NĐ-CP</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kho Huân – Huy chương</h1>
+            <p className="text-[13px] text-slate-700">{awards.length} loại danh hiệu · {totalAwarded} lần trao tặng · Căn cứ NĐ 152/2025/NĐ-CP</p>
           </div>
           <div className="ml-auto flex gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               <Download className="size-3.5"/>Xuất danh mục
             </button>
             {canAdd && (
@@ -474,7 +474,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
         {/* Filters */}
         <div className="flex gap-2 items-center flex-wrap">
           <div className="relative flex-1 min-w-[200px] max-w-xs">
-            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]"/>
+            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700"/>
             <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Tìm danh hiệu..."
               className="w-full pl-9 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none" style={{ height:36,fontFamily: "var(--font-sans)" }}/>
           </div>
@@ -523,26 +523,26 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
               </div>
               <div className="grid grid-cols-2 gap-0 divide-x divide-[#e2e8f0]" style={{ background:"white" }}>
                 <div className="p-6">
-                  <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Điều kiện xét tặng</h3>
+                  <h3 className="text-[14px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Điều kiện xét tặng</h3>
                   <ul className="space-y-2">
                     {selected.conditions.map((c,i)=>(
-                      <li key={i} className="flex items-start gap-2 text-[13px] text-[#5a5040]">
+                      <li key={i} className="flex items-start gap-2 text-[13px] text-slate-700">
                         <CheckCircle2 className="size-4 shrink-0 mt-0.5" style={{ color:selected.color }}/>
                         <span>{c}</span>
                       </li>
                     ))}
                   </ul>
-                  <p className="text-[13px] text-[#635647] mt-4 leading-relaxed">{selected.description}</p>
+                  <p className="text-[13px] text-slate-700 mt-4 leading-relaxed">{selected.description}</p>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[14px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền & Căn cứ</h3>
+                  <h3 className="text-[14px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền & Căn cứ</h3>
                   <div className="space-y-3">
                     {[["Thẩm quyền ký",selected.signingAuth,"🖊️"],["Căn cứ pháp lý",selected.canCu,"⚖️"],["Đối tượng",selected.type==="individual"?"Cá nhân":selected.type==="collective"?"Tập thể":"Cá nhân & Tập thể","👤"],["Số năm thi đua",`Tối thiểu ${selected.minYears} năm liên tục`,"📅"],["Điểm xếp loại",`Tối thiểu ${selected.minScore}/100 điểm`,"⭐"]].map(([k,v,ic])=>(
                       <div key={k as string} className="flex items-start gap-2.5 p-3 rounded-[8px]" style={{ background:"#f4f7fb" }}>
                         <span className="text-[14px] shrink-0">{ic as string}</span>
                         <div>
-                          <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{k as string}</div>
-                          <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{v as string}</div>
+                          <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{k as string}</div>
+                          <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{v as string}</div>
                         </div>
                       </div>
                     ))}
@@ -559,7 +559,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
         ) : (
           /* Grid view */
           <>
-            <p className="text-[13px] text-[#635647] mb-4" style={{ fontFamily: "var(--font-sans)" }}>Hiển thị {filtered.length}/{awards.length} danh hiệu</p>
+            <p className="text-[13px] text-slate-700 mb-4" style={{ fontFamily: "var(--font-sans)" }}>Hiển thị {filtered.length}/{awards.length} danh hiệu</p>
             <div className="grid grid-cols-3 gap-4">
               {filtered.map(a=>{
                 const lc=LEVEL_CFG[a.level];
@@ -577,9 +577,9 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
                         <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.color,fontFamily: "var(--font-sans)",fontWeight:700 }}>{lc.label}</span>
                         <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{CAT_CFG[a.category].label}</span>
                       </div>
-                      <h3 className="text-[13px] text-[#0b1426] leading-snug mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{a.name}</h3>
-                      <p className="text-[13px] text-[#635647] line-clamp-2">{a.description.slice(0,90)}...</p>
-                      <div className="flex items-center gap-3 mt-3 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                      <h3 className="text-[13px] text-slate-900 leading-snug mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{a.name}</h3>
+                      <p className="text-[13px] text-slate-700 line-clamp-2">{a.description.slice(0,90)}...</p>
+                      <div className="flex items-center gap-3 mt-3 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                         <span>≥{a.minYears} năm TD</span>
                         <span>≥{a.minScore} điểm</span>
                         <span className="ml-auto">{a.canCu.split(" ").slice(-1)}</span>
@@ -591,7 +591,7 @@ export function KhoHuanChuongPage({ user }: { user: LoginUser }) {
               {filtered.length===0&&(
                 <div className="col-span-3 flex flex-col items-center justify-center py-16 gap-3">
                   <Search className="size-12 text-[#d1d5db]"/>
-                  <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Không tìm thấy danh hiệu nào</p>
+                  <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Không tìm thấy danh hiệu nào</p>
                 </div>
               )}
             </div>

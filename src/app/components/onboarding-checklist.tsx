@@ -93,8 +93,8 @@ export function OnboardingBadge({
           style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>{pct}%</span>
       </div>
       <div className="text-left">
-        <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bắt đầu nhanh</div>
-        <div className="text-[13px] text-[#635647]">{done}/{tasks.length} hoàn thành</div>
+        <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bắt đầu nhanh</div>
+        <div className="text-[13px] text-slate-700">{done}/{tasks.length} hoàn thành</div>
       </div>
     </button>
   );
@@ -178,16 +178,16 @@ export function OnboardingPanel({
                 <div className="mt-0.5 shrink-0">
                   {isCompleted
                     ? <CheckCircle2 className="size-5 text-[#166534]" />
-                    : <Circle className="size-5 text-[#d1ccc0] group-hover:text-[#1C5FBE] transition-colors" />}
+                    : <Circle className="size-5 text-slate-400 group-hover:text-[#1C5FBE] transition-colors" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className={`text-[13px] ${isCompleted ? "text-[#635647] line-through" : "text-[#0b1426]"}`}
+                    <span className={`text-[13px] ${isCompleted ? "text-slate-700 line-through" : "text-slate-900"}`}
                       style={{ fontFamily: "var(--font-sans)", fontWeight: isCompleted ? 400 : 600 }}>
                       {task.label}
                     </span>
                   </div>
-                  <p className="text-[13px] text-[#635647] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+                  <p className="text-[13px] text-slate-700 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                     {task.desc}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ export function OnboardingPanel({
                     style={{ background: isCompleted ? "#dcfce7" : "#ffffff", color: isCompleted ? "#166534" : "#8a6400", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
                     +{task.xp}xp
                   </span>
-                  {!isCompleted && <ChevronRight className="size-3.5 text-[#d1ccc0] group-hover:text-[#1C5FBE] transition-colors" />}
+                  {!isCompleted && <ChevronRight className="size-3.5 text-slate-400 group-hover:text-[#1C5FBE] transition-colors" />}
                 </div>
               </div>
             );
@@ -216,10 +216,10 @@ export function OnboardingPanel({
           </div>
         ) : (
           <div className="px-5 py-3 border-t border-[#eef2f8] flex items-center justify-between" style={{ background: "#ffffff" }}>
-            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               {tasks.length - done} nhiệm vụ còn lại
             </span>
-            <button onClick={onClose} className="text-[13px] text-[#635647] hover:text-[#0b1426] transition-colors"
+            <button onClick={onClose} className="text-[13px] text-slate-700 hover:text-slate-900 transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               Ẩn tạm thời
             </button>

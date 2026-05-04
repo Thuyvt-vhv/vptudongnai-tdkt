@@ -10,8 +10,10 @@ import {
   Crown, User,
   ChevronRight, Map,
   FileText, Calendar, GitCompare,
-  Kanban,
   ChevronDown, GitMerge,
+  Building2, Sparkles,
+  ListChecks, Star, Wallet,
+  BarChart3, PieChart,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 
@@ -44,32 +46,46 @@ const NAV_CONFIG: NavGroup[] = [
   {
     group: "Tổng quan",
     items: [
-      { icon: LayoutDashboard, label: "Bảng điều hành",   badge: null, roles: "all" },
-      { icon: Trophy,          label: "Bảng xếp hạng",    badge: null, roles: "all" },
+      { icon: LayoutDashboard, label: "Bảng điều hành", badge: null, roles: "all" },
+      { icon: Calendar,        label: "Lịch công tác",   badge: null, roles: "all" },
     ],
   },
   {
-    group: "Nghiệp vụ",
+    group: "Thi đua Khen thưởng",
     items: [
-      { icon: Trophy,        label: "Phong trào thi đua",    badge: "5",  roles: "all",    badgeByRole:{ "cá nhân":"3", "lãnh đạo đơn vị":"3", "hội đồng":"5", "lãnh đạo cấp cao":"5", "quản trị hệ thống":"5" } },
-      { icon: Award,         label: "Đề nghị khen thưởng",   badge: "47", roles: "all",    badgeByRole:{ "cá nhân":"2", "lãnh đạo đơn vị":"6", "hội đồng":"47", "lãnh đạo cấp cao":"12", "quản trị hệ thống":"47" } },
-      { icon: Megaphone,     label: "Lấy ý kiến công khai",  badge: "3",  roles: "all" },
-      { icon: Gavel,         label: "Hội đồng xét duyệt",    badge: "1",  roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: FileSignature, label: "Ký số & Phê duyệt",     badge: "8",  roles: ["lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: ClipboardList, label: "Chấm điểm & Bình xét",  badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: ScrollText,    label: "Quyết định khen thưởng", badge: null, roles: "all" },
+      { icon: Trophy,        label: "Phong trào thi đua",      badge: "5",  roles: "all", badgeByRole: { "cá nhân":"3", "lãnh đạo đơn vị":"3", "hội đồng":"5", "lãnh đạo cấp cao":"5", "quản trị hệ thống":"5" } },
+      { icon: Award,         label: "Đề nghị khen thưởng",     badge: "47", roles: "all", badgeByRole: { "cá nhân":"2", "lãnh đạo đơn vị":"6", "hội đồng":"47", "lãnh đạo cấp cao":"12", "quản trị hệ thống":"47" } },
+      { icon: Megaphone,     label: "Lấy ý kiến công khai",    badge: "3",  roles: "all" },
+      { icon: Gavel,         label: "Hội đồng xét duyệt",      badge: "1",  roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: ClipboardList, label: "Chấm điểm & Bình xét",    badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: FileSignature, label: "Ký số & Phê duyệt",       badge: "8",  roles: ["lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: ScrollText,    label: "Quyết định khen thưởng",  badge: null, roles: "all" },
     ],
   },
   {
-    group: "Dữ liệu",
+    group: "Hồ sơ",
     items: [
-      { icon: Users,       label: "Hồ sơ cán bộ",          badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
-      { icon: Archive,     label: "Kho huân – huy chương",  badge: null, roles: "all" },
-      { icon: ShieldCheck, label: "Lịch sử khen thưởng",    badge: null, roles: "all" },
-      { icon: FileText,    label: "Báo cáo tổng hợp",       badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
-      { icon: Calendar,    label: "Lịch công tác",           badge: null, roles: "all" },
-      { icon: GitCompare,  label: "So sánh hồ sơ",           badge: "AI", roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
-      { icon: Kanban,      label: "Kanban hồ sơ",            badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: Users,      label: "Hồ sơ cán bộ",     badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: Building2,  label: "Hồ sơ tập thể",     badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: ListChecks, label: "Xếp loại viên chức", badge: null, roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
+    ],
+  },
+  {
+    group: "Kho dữ liệu",
+    items: [
+      { icon: Star,       label: "Thành tích khen thưởng", badge: null, roles: "all" },
+      { icon: Trophy,     label: "Bảng xếp hạng",          badge: null, roles: "all" },
+      { icon: Archive,    label: "Kho huân – huy chương",   badge: null, roles: "all" },
+      { icon: ShieldCheck,label: "Lịch sử khen thưởng",     badge: null, roles: "all" },
+    ],
+  },
+  {
+    group: "Phân tích",
+    items: [
+      { icon: BarChart3,  label: "Báo cáo tổng hợp", badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: GitCompare, label: "So sánh hồ sơ",     badge: "AI", roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống","lãnh đạo đơn vị"] },
+      { icon: Sparkles,   label: "Gợi ý danh hiệu",   badge: "AI", roles: ["hội đồng","lãnh đạo đơn vị","lãnh đạo cấp cao","quản trị hệ thống"] },
+      { icon: Wallet,     label: "Quỹ TĐKT",           badge: null, roles: ["hội đồng","lãnh đạo cấp cao","quản trị hệ thống"] },
     ],
   },
 ];
@@ -124,7 +140,7 @@ function NavBadge({ value, active }: { value: string; active: boolean }) {
   );
   return (
     <span className="flex items-center justify-center h-[17px] min-w-[17px] px-1 rounded-full text-[13px] shrink-0"
-      style={{ background: urgent ? "#c8102e" : "#e8eef5", color: urgent ? "white" : "#7a6a4e", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
+      style={{ background: urgent ? "#c8102e" : "#e8eef5", color: urgent ? "white" : "#64748b", fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
       {value}
     </span>
   );
@@ -144,7 +160,7 @@ export function Sidebar({ user, active, onSelect }: {
     setCollapsed(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]);
 
   return (
-    <aside className="w-[224px] shrink-0 flex flex-col h-full select-none"
+    <aside className="w-[224px] shrink-0 flex flex-col h-full select-none relative z-[100]"
       style={{ background: "#f4f7fb", borderRight: "1px solid #dde3ec" }}>
 
       {/* ── Dark brand header ──────────────────────────────────── */}
@@ -199,12 +215,12 @@ export function Sidebar({ user, active, onSelect }: {
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.5)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
                 <span className="flex-1 text-left text-[13px] uppercase"
-                  style={{ color: "#635647", fontFamily: "var(--font-sans)", fontWeight: 700, letterSpacing: "0.09em" }}>
+                  style={{ color: "#334155", fontFamily: "var(--font-sans)", fontWeight: 700, letterSpacing: "0.09em" }}>
                   {g.group}
                 </span>
                 {isCollapsed
-                  ? <ChevronRight className="size-2.5 transition-colors" style={{ color: "#c4b89a" }} />
-                  : <ChevronDown  className="size-2.5 transition-colors" style={{ color: "#c4b89a" }} />}
+                  ? <ChevronRight className="size-2.5 transition-colors" style={{ color: "#94a3b8" }} />
+                  : <ChevronDown  className="size-2.5 transition-colors" style={{ color: "#94a3b8" }} />}
               </button>
 
               {!isCollapsed && (
@@ -223,7 +239,7 @@ export function Sidebar({ user, active, onSelect }: {
                           background: isActive
                             ? "linear-gradient(135deg, #1C5FBE 0%, #1752a8 100%)"
                             : "transparent",
-                          color: isActive ? "white" : "#5a4e3c",
+                          color: isActive ? "white" : "#334155",
                           boxShadow: isActive
                             ? "0 2px 10px rgba(28,95,190,0.35), 0 1px 3px rgba(28,95,190,0.2)"
                             : "none",
@@ -231,14 +247,14 @@ export function Sidebar({ user, active, onSelect }: {
                         onMouseEnter={e => {
                           if (!isActive) {
                             (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.65)";
-                            (e.currentTarget as HTMLElement).style.color = "#2d1f0e";
+                            (e.currentTarget as HTMLElement).style.color = "#1e293b";
                             (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 4px rgba(0,0,0,0.06)";
                           }
                         }}
                         onMouseLeave={e => {
                           if (!isActive) {
                             (e.currentTarget as HTMLElement).style.background = "transparent";
-                            (e.currentTarget as HTMLElement).style.color = "#5a4e3c";
+                            (e.currentTarget as HTMLElement).style.color = "#334155";
                             (e.currentTarget as HTMLElement).style.boxShadow = "none";
                           }
                         }}>
@@ -246,7 +262,7 @@ export function Sidebar({ user, active, onSelect }: {
                         <Icon
                           className="size-[14px] shrink-0 transition-colors ml-[4px]"
                           strokeWidth={isActive ? 2.2 : 1.7}
-                          style={{ color: isActive ? "rgba(255,255,255,0.9)" : "#74654a" }}
+                          style={{ color: isActive ? "rgba(255,255,255,0.9)" : "#64748b" }}
                         />
                         <span className="flex-1 text-left truncate" style={{ fontWeight: isActive ? 600 : 400, fontSize: 13.5 }}>
                           {it.label}

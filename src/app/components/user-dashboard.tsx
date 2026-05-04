@@ -94,13 +94,13 @@ function ScoreGauge({ score, label }: { score: number; label: string }) {
             style={{ transition: "stroke-dashoffset 0.05s" }} />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[24px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, lineHeight: 1 }}>{displayed}</span>
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>/100</span>
+          <span className="text-[24px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, lineHeight: 1 }}>{displayed}</span>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>/100</span>
         </div>
       </div>
       <div className="text-center">
-        <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{label}</div>
-        <div className="text-[13px] text-[#635647]">Điểm thi đua 2026</div>
+        <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{label}</div>
+        <div className="text-[13px] text-slate-700">Điểm thi đua 2026</div>
       </div>
     </div>
   );
@@ -210,7 +210,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Sparkles className="size-4 text-[#7c3aed]" />
-                <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI gợi ý danh hiệu phù hợp</h2>
+                <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>AI gợi ý danh hiệu phù hợp</h2>
               </div>
               <span className="text-[13px] px-2 py-1 rounded-full bg-[#f5f3ff] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Dựa trên hồ sơ của bạn</span>
             </div>
@@ -235,7 +235,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{s.danhHieu}</h3>
+                      <h3 className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{s.danhHieu}</h3>
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: s.bg, color: s.color, fontFamily: "var(--font-sans)" }}>{s.capBac}</span>
                     </div>
                     {s.ok
@@ -259,7 +259,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <FileText className="size-4 text-[#1C5FBE]" />
-                <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h2>
+                <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h2>
               </div>
               <button onClick={() => onNavigate("Đề nghị khen thưởng")}
                 className="flex items-center gap-1 text-[13px] text-[#1C5FBE] hover:text-[#1752a8]"
@@ -280,19 +280,19 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <code className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "JetBrains Mono,monospace" }}>{h.code}</code>
+                      <code className="text-[13px] text-slate-600" style={{ fontFamily: "JetBrains Mono,monospace" }}>{h.code}</code>
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: h.statusBg, color: h.statusColor, fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.status}</span>
                     </div>
-                    <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{h.danhHieu}</div>
+                    <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{h.danhHieu}</div>
                   </div>
-                  <div className="text-[13px] text-[#6b5e47] shrink-0" style={{ fontFamily: "JetBrains Mono,monospace" }}>{h.updated}</div>
+                  <div className="text-[13px] text-slate-600 shrink-0" style={{ fontFamily: "JetBrains Mono,monospace" }}>{h.updated}</div>
                   <ChevronRight className="size-4 text-[#d1d5db]" />
                 </div>
               ))}
             </div>
             <div className="px-5 py-3 border-t border-[#f4f7fb]">
               <button onClick={() => setWizardOpen(true)}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-[8px] border-2 border-dashed border-[#d1d5db] text-[13px] text-[#635647] hover:border-[#1C5FBE] hover:text-[#1C5FBE] transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-[8px] border-2 border-dashed border-[#d1d5db] text-[13px] text-slate-700 hover:border-[#1C5FBE] hover:text-[#1C5FBE] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 <Plus className="size-4" />Tạo hồ sơ mới
               </button>
@@ -304,7 +304,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Megaphone className="size-4 text-[#8a6400]" />
-                <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phong trào đang tham gia</h2>
+                <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phong trào đang tham gia</h2>
               </div>
               <button onClick={() => onNavigate("Phong trào thi đua")}
                 className="flex items-center gap-1 text-[13px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
@@ -316,15 +316,15 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                 <div key={pt.id} className="p-4 rounded-[10px]" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{pt.ten}</h3>
-                      <p className="text-[13px] text-[#635647]">{pt.batDau} – {pt.ketThuc}</p>
+                      <h3 className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{pt.ten}</h3>
+                      <p className="text-[13px] text-slate-700">{pt.batDau} – {pt.ketThuc}</p>
                     </div>
                     <span className="text-[14px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: pt.color }}>{pt.progress}%</span>
                   </div>
                   <div className="h-2 rounded-full overflow-hidden" style={{ background: "#e2e8f0" }}>
                     <div className="h-full rounded-full transition-all" style={{ width: `${pt.progress}%`, background: pt.color }} />
                   </div>
-                  <div className="flex items-center justify-between mt-2 text-[13px] text-[#635647]">
+                  <div className="flex items-center justify-between mt-2 text-[13px] text-slate-700">
                     <span>Tiến độ thực hiện</span>
                     <button className="flex items-center gap-1 text-[#1C5FBE] hover:text-[#1752a8]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                       Ghi nhận kết quả <ArrowRight className="size-3" />
@@ -344,7 +344,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
             <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: "1px solid #eef2f8" }}>
               <div className="flex items-center gap-2">
                 <Bell className="size-4 text-[#c8102e]" />
-                <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông báo</h2>
+                <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thông báo</h2>
                 {visibleNotif.filter(n => n.type === "warning").length > 0 && (
                   <span className="size-5 rounded-full bg-[#c8102e] text-white text-[13px] flex items-center justify-center"
                     style={{ fontFamily: "JetBrains Mono,monospace", fontWeight: 700 }}>
@@ -359,14 +359,14 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                   style={{ background: NOTIF_BG[n.type], border: `1px solid ${NOTIF_COLOR[n.type]}20` }}>
                   <div className="size-1.5 rounded-full mt-1.5 shrink-0" style={{ background: NOTIF_COLOR[n.type] }} />
                   <div className="flex-1">
-                    <p className="text-[13px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{n.text}</p>
-                    <p className="text-[13px] text-[#6b5e47] mt-1" style={{ fontFamily: "JetBrains Mono,monospace" }}>{n.time}</p>
+                    <p className="text-[13px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{n.text}</p>
+                    <p className="text-[13px] text-slate-600 mt-1" style={{ fontFamily: "JetBrains Mono,monospace" }}>{n.time}</p>
                   </div>
-                  <button onClick={() => setDismissed(d => [...d, n.id])} className="text-[#d1d5db] hover:text-[#635647] text-[14px] leading-none shrink-0">✕</button>
+                  <button onClick={() => setDismissed(d => [...d, n.id])} className="text-[#d1d5db] hover:text-slate-700 text-[14px] leading-none shrink-0">✕</button>
                 </div>
               ))}
               {visibleNotif.length === 0 && (
-                <p className="text-center text-[13px] text-[#6b5e47] py-4" style={{ fontFamily: "var(--font-sans)" }}>Không có thông báo mới</p>
+                <p className="text-center text-[13px] text-slate-600 py-4" style={{ fontFamily: "var(--font-sans)" }}>Không có thông báo mới</p>
               )}
             </div>
           </div>
@@ -374,7 +374,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
           {/* Quick Actions */}
           <div className="rounded-[14px] border border-[#e2e8f0] overflow-hidden" style={{ background: "white" }}>
             <div className="px-5 py-4" style={{ borderBottom: "1px solid #eef2f8" }}>
-              <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thao tác nhanh</h2>
+              <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Thao tác nhanh</h2>
             </div>
             <div className="p-4 space-y-2">
               {[
@@ -393,7 +393,7 @@ export function UserDashboard({ user, onNavigate }: { user: LoginUser; onNavigat
                     <div className="size-7 rounded-[6px] flex items-center justify-center" style={{ background: `${qa.color}20` }}>
                       <Icon className="size-3.5" style={{ color: qa.color }} />
                     </div>
-                    <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{qa.label}</span>
+                    <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{qa.label}</span>
                     <ChevronRight className="size-3.5 text-[#d1d5db] ml-auto" />
                   </button>
                 );

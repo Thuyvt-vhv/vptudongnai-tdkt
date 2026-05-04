@@ -70,18 +70,18 @@ export function KySoPage({ user }: { user: LoginUser }) {
       {/* Left: document list */}
       <div className="w-[300px] shrink-0 border-r border-[#e2e8f0] bg-white flex flex-col overflow-hidden">
         <div className="px-4 py-4 border-b border-[#eef2f8] bg-[#ffffff]">
-          <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+          <h2 className="text-[14px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
             Ký số & Phê duyệt
           </h2>
           <div className="flex items-center gap-3 mt-3">
             <div className="flex-1 text-center">
               <div className="text-[18px] font-bold" style={{ color: theme.primary, fontFamily: "var(--font-sans)" }}>{pending.length}</div>
-              <div className="text-[13px] text-[#635647]">Chờ ký</div>
+              <div className="text-[13px] text-slate-700">Chờ ký</div>
             </div>
             <div className="w-px h-8 bg-[#e2e8f0]" />
             <div className="flex-1 text-center">
               <div className="text-[18px] font-bold text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>{signed.length}</div>
-              <div className="text-[13px] text-[#635647]">Đã ký</div>
+              <div className="text-[13px] text-slate-700">Đã ký</div>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
             <Shield className="size-4 shrink-0" style={{ color: theme.primary }} />
             <div className="flex-1 min-w-0">
               <p className="text-[13px] font-semibold" style={{ color: theme.primary }}>Chứng thư số CA hợp lệ</p>
-              <p className="text-[13px] text-[#635647] truncate">VNPT-CA · Hết hạn 2027</p>
+              <p className="text-[13px] text-slate-700 truncate">VNPT-CA · Hết hạn 2027</p>
             </div>
           </div>
         </div>
@@ -113,8 +113,8 @@ export function KySoPage({ user }: { user: LoginUser }) {
                   }
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-semibold text-[#0b1426] leading-tight truncate">{doc.title}</p>
-                  <p className="text-[13px] text-[#635647] mt-0.5">{doc.code}</p>
+                  <p className="text-[13px] font-semibold text-slate-900 leading-tight truncate">{doc.title}</p>
+                  <p className="text-[13px] text-slate-700 mt-0.5">{doc.code}</p>
                   <div className="mt-1"><DocStatusBadge status={doc.status} /></div>
                 </div>
                 {doc.id === selectedId && <ChevronRight className="size-4 shrink-0 mt-1" style={{ color: theme.primary }} />}
@@ -129,11 +129,11 @@ export function KySoPage({ user }: { user: LoginUser }) {
         {/* Doc header */}
         <div className="px-6 py-4 border-b border-[#eef2f8] bg-white flex items-center justify-between">
           <div>
-            <p className="text-[13px] font-mono text-[#635647]">{selected.code}</p>
-            <h3 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{selected.title}</h3>
+            <p className="text-[13px] font-mono text-slate-700">{selected.code}</p>
+            <h3 className="text-[14px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{selected.title}</h3>
             <div className="flex items-center gap-3 mt-1">
               <DocStatusBadge status={selected.status} />
-              <span className="text-[13px] text-[#635647]">{selected.type}</span>
+              <span className="text-[13px] text-slate-700">{selected.type}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -147,7 +147,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
           {(["preview","chain"] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
               className={`py-2.5 text-[13px] border-b-2 transition-colors
-                ${tab === t ? "font-semibold" : "border-transparent text-[#635647] hover:text-[#0b1426]"}`}
+                ${tab === t ? "font-semibold" : "border-transparent text-slate-700 hover:text-slate-900"}`}
               style={tab === t ? { color: theme.primary, borderColor: theme.primary } : undefined}>
               {t === "preview" ? "Nội dung văn bản" : "Chuỗi phê duyệt"}
             </button>
@@ -166,14 +166,14 @@ export function KySoPage({ user }: { user: LoginUser }) {
                   <p className="text-[13px] font-semibold mt-1">ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI</p>
                 </div>
                 <div className="px-8 py-6">
-                  <pre className="text-[13px] text-[#0b1426] leading-relaxed whitespace-pre-wrap font-sans">{selected.content}</pre>
+                  <pre className="text-[13px] text-slate-900 leading-relaxed whitespace-pre-wrap font-sans">{selected.content}</pre>
                 </div>
                 {/* Signature area */}
                 <div className="px-8 pb-8">
                   <div className="mt-6 flex justify-end">
                     <div className="text-center w-56">
-                      <p className="text-[13px] text-[#635647]">Đồng Nai, ngày {selected.signedDate ?? "___"}/04/2026</p>
-                      <p className="text-[13px] font-semibold text-[#0b1426] mt-1">CHỦ TỊCH UBND TỈNH</p>
+                      <p className="text-[13px] text-slate-700">Đồng Nai, ngày {selected.signedDate ?? "___"}/04/2026</p>
+                      <p className="text-[13px] font-semibold text-slate-900 mt-1">CHỦ TỊCH UBND TỈNH</p>
                       {selected.status === "da_ky" ? (
                         <div className="mt-4 border-2 border-[#166534] rounded-lg p-3 bg-[#f0fdf4]">
                           <div className="flex items-center justify-center gap-2 text-[#166534]">
@@ -181,7 +181,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
                             <span className="text-[13px] font-bold">ĐÃ KÝ SỐ</span>
                           </div>
                           <p className="text-[13px] text-[#166534] mt-1">Nguyễn Văn Hùng · {selected.signedDate}</p>
-                          <p className="text-[13px] text-[#635647] font-mono mt-1">SHA256: 3a4f2b...d9e1</p>
+                          <p className="text-[13px] text-slate-700 font-mono mt-1">SHA256: 3a4f2b...d9e1</p>
                         </div>
                       ) : (
                         <div className="mt-4 border-2 border-dashed border-[#e2e8f0] rounded-lg p-4 bg-[#ffffff]">
@@ -197,7 +197,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
           )}
           {tab === "chain" && (
             <div className="max-w-lg mx-auto space-y-4">
-              <h4 className="text-[14px] font-semibold text-[#0b1426]">Chuỗi phê duyệt</h4>
+              <h4 className="text-[14px] font-semibold text-slate-900">Chuỗi phê duyệt</h4>
               {[
                 { role:"Chuyên viên TĐKT", name:"Võ Minh Tuấn", action:"Thẩm định & trình", date:"18/04/2026", done:true },
                 { role:"Trưởng phòng TĐKT", name:"Lê Hoàng Nam", action:"Phê duyệt & trình ký", date:"22/04/2026", done:true },
@@ -214,11 +214,11 @@ export function KySoPage({ user }: { user: LoginUser }) {
                   <div className="flex-1 pb-6">
                     <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-[13px] text-[#635647] uppercase tracking-wide">{step.role}</span>
+                        <span className="text-[13px] text-slate-700 uppercase tracking-wide">{step.role}</span>
                         {step.done && <span className="text-[13px] text-[#166534] font-semibold flex items-center gap-1"><CheckCircle2 className="size-3" /> {step.date}</span>}
                       </div>
-                      <p className="text-[13px] font-semibold text-[#0b1426]">{step.name}</p>
-                      <p className="text-[13px] text-[#635647] mt-0.5">{step.action}</p>
+                      <p className="text-[13px] font-semibold text-slate-900">{step.name}</p>
+                      <p className="text-[13px] text-slate-700 mt-0.5">{step.action}</p>
                     </div>
                   </div>
                 </div>
@@ -246,7 +246,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
             ) : (
               <div className="flex items-start gap-6">
                 <div className="flex-1 space-y-3">
-                  <p className="text-[13px] font-semibold text-[#0b1426]">Chọn chứng thư số & xác thực PIN</p>
+                  <p className="text-[13px] font-semibold text-slate-900">Chọn chứng thư số & xác thực PIN</p>
                   <div className="space-y-2">
                     {CA_CERTS.map(cert => (
                       <label key={cert.id}
@@ -258,8 +258,8 @@ export function KySoPage({ user }: { user: LoginUser }) {
                           className="accent-[var(--color-primary-btn)]" />
                         <Shield className="size-5 shrink-0" style={{ color: theme.primary }} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-semibold text-[#0b1426] truncate">{cert.name}</p>
-                          <p className="text-[13px] text-[#635647]">{cert.issuer} · Hết hạn: {cert.valid}</p>
+                          <p className="text-[13px] font-semibold text-slate-900 truncate">{cert.name}</p>
+                          <p className="text-[13px] text-slate-700">{cert.issuer} · Hết hạn: {cert.valid}</p>
                         </div>
                         {selectedCert === cert.id && <CheckCircle2 className="size-4 shrink-0" style={{ color: theme.primary }} />}
                       </label>
@@ -294,7 +294,7 @@ export function KySoPage({ user }: { user: LoginUser }) {
         {!canSign && (
           <div className="px-6 py-3 border-t border-[#eef2f8] bg-[#ffffff] flex items-center gap-2">
             <AlertTriangle className="size-4 text-[#b45309]" />
-            <span className="text-[13px] text-[#635647]">Chỉ Lãnh đạo VP Tỉnh ủy mới có quyền ký số văn bản này.</span>
+            <span className="text-[13px] text-slate-700">Chỉ Lãnh đạo VP Tỉnh ủy mới có quyền ký số văn bản này.</span>
           </div>
         )}
       </div>

@@ -297,15 +297,15 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                       <div className="flex-1 rounded-[10px] border p-3.5" style={{ background: "white", borderColor: "#e2e8f0" }}>
                         <div className="flex items-start justify-between gap-2 mb-1">
                           <div>
-                            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.event}</span>
+                            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.event}</span>
                           </div>
-                          <span className="text-[13px] text-[#6b5e47] shrink-0" style={{ fontFamily: "JetBrains Mono, monospace" }}>{ev.date}</span>
+                          <span className="text-[13px] text-slate-600 shrink-0" style={{ fontFamily: "JetBrains Mono, monospace" }}>{ev.date}</span>
                         </div>
-                        <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                        <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                           {ev.actor} · <span className="italic">{ev.role}</span>
                         </div>
                         {ev.note && (
-                          <div className="mt-2 p-2 rounded-[6px] text-[13px] text-[#5a5040]"
+                          <div className="mt-2 p-2 rounded-[6px] text-[13px] text-slate-700"
                             style={{ background: "#ffffff", fontFamily: "var(--font-sans)", border: "1px solid #e2e8f0" }}>
                             {ev.note}
                           </div>
@@ -321,7 +321,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                       <Clock className="size-2.5 text-[#d1d5db]" />
                     </div>
                     <div className="flex-1 rounded-[10px] border border-dashed border-[#d1d5db] p-3 text-center">
-                      <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>Đang chờ bước tiếp theo…</span>
+                      <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>Đang chờ bước tiếp theo…</span>
                     </div>
                   </div>
                 )}
@@ -336,7 +336,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
                 <div key={i} className="flex items-center gap-3 p-3.5 rounded-[10px] border"
                   style={{ borderColor: d.uploaded ? "#86efac" : "#e2e8f0", background: d.uploaded ? "#f0fdf4" : "white" }}>
                   <FileText className="size-5 shrink-0" style={{ color: d.uploaded ? "#166534" : "#635647" }} />
-                  <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
+                  <span className="flex-1 text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
                   {d.uploaded
                     ? <span className="flex items-center gap-1 text-[13px] text-[#166534]"><CheckCircle2 className="size-3.5" />Đã tải</span>
                     : <span className="text-[13px] text-[#b45309]">Chưa tải</span>}
@@ -362,12 +362,12 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
 
               {/* Upload docs */}
               <div>
-                <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tải lên tài liệu bổ sung</h3>
+                <h3 className="text-[13px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tải lên tài liệu bổ sung</h3>
                 <div className="space-y-2">
                   {docs.filter(d => !d.uploaded).map((d, i) => (
                     <div key={i} className="flex items-center gap-3 p-3.5 rounded-[10px] border" style={{ borderColor: "#e2e8f0", background: "white" }}>
-                      <FileText className="size-5 text-[#635647] shrink-0" />
-                      <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
+                      <FileText className="size-5 text-slate-700 shrink-0" />
+                      <span className="flex-1 text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{d.ten}</span>
                       <button onClick={() => handleUpload(d.ten)}
                         disabled={uploading === d.ten}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[13px] text-white"
@@ -387,7 +387,7 @@ function HoSoDetail({ hs, onClose }: { hs: MyHoSo; onClose: () => void }) {
 
               {/* Reply / ghi chú */}
               <div>
-                <h3 className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Gửi ghi chú cho thẩm định viên</h3>
+                <h3 className="text-[13px] text-slate-900 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Gửi ghi chú cho thẩm định viên</h3>
                 <textarea value={reply} onChange={e => setReply(e.target.value)}
                   rows={3}
                   placeholder="Giải thích, lưu ý hoặc câu hỏi gửi thẩm định viên..."
@@ -448,8 +448,8 @@ export function UserHoSoTracker({ user, onNavigate }: { user: LoginUser; onNavig
       {/* Header */}
       <div className="px-8 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
-          <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h1>
-          <p className="text-[13px] text-[#635647]">Theo dõi tiến trình xét duyệt · Cập nhật {new Date().toLocaleDateString("vi-VN")}</p>
+          <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Hồ sơ của tôi</h1>
+          <p className="text-[13px] text-slate-700">Theo dõi tiến trình xét duyệt · Cập nhật {new Date().toLocaleDateString("vi-VN")}</p>
         </div>
         <button onClick={() => setWizardOpen(true)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-[10px] text-[13px] text-white"
@@ -548,7 +548,7 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-            <code className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono, monospace" }}>{hs.code}</code>
+            <code className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono, monospace" }}>{hs.code}</code>
             <span className="px-2 py-0.5 rounded-full text-[13px]"
               style={{ background: sc.bg, color: sc.color, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               <span className="flex items-center gap-1"><StatusIcon className="size-2.5" />{sc.label}</span>
@@ -559,8 +559,8 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
               </span>
             )}
           </div>
-          <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{hs.danhHieu}</h3>
-          <div className="flex items-center gap-3 mt-1 text-[13px] text-[#635647]">
+          <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{hs.danhHieu}</h3>
+          <div className="flex items-center gap-3 mt-1 text-[13px] text-slate-700">
             <span>{hs.capBac}</span>
             <span>·</span>
             <span>Cập nhật {hs.updatedDate}</span>
@@ -586,7 +586,7 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
               </span>
             </div>
           </div>
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>AI Score</span>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>AI Score</span>
         </div>
       </div>
 
@@ -603,7 +603,7 @@ function HoSoCard({ hs, onClick }: { hs: MyHoSo; onClick: () => void }) {
               </div>
             );
           })}
-          <span className="text-[13px] ml-1 text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] ml-1 text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Bước {wfStep + 1}/5
           </span>
         </div>

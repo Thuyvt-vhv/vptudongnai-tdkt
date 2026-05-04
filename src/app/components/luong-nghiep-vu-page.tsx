@@ -177,7 +177,7 @@ function FlowView({ selectedStep, onSelect }: {
                                 </div>
                                 <div className="flex items-start gap-1.5">
                                   <Icon className="size-3.5 shrink-0 mt-0.5" style={{ color: rm.color }} />
-                                  <span className="text-[13px] leading-tight" style={{ fontWeight: 700, color: "#0b1426" }}>
+                                  <span className="text-[13px] leading-tight" style={{ fontWeight: 700, color: "#0f172a" }}>
                                     {step.title}
                                   </span>
                                 </div>
@@ -210,23 +210,23 @@ function FlowView({ selectedStep, onSelect }: {
 
         {/* Phase connectors legend */}
         <div className="flex items-center gap-6 mt-4 px-1">
-          <div className="flex items-center gap-2 text-[13px] text-[#5a5040]">
+          <div className="flex items-center gap-2 text-[13px] text-slate-700">
             <ArrowRight className="size-3.5 text-[#1C5FBE]" />
             <span>Luồng duyệt tiếp theo</span>
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[#5a5040]">
+          <div className="flex items-center gap-2 text-[13px] text-slate-700">
             <RotateCcw className="size-3.5 text-[#c8102e]" />
             <span>Từ chối / Trả về</span>
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[#5a5040]">
+          <div className="flex items-center gap-2 text-[13px] text-slate-700">
             <span className="size-2 rounded-full bg-[#166534]" />
             <span>Đã triển khai</span>
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[#5a5040]">
+          <div className="flex items-center gap-2 text-[13px] text-slate-700">
             <span className="size-2 rounded-full bg-[#b45309]" />
             <span>Một phần</span>
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[#5a5040]">
+          <div className="flex items-center gap-2 text-[13px] text-slate-700">
             <span className="size-2 rounded-full bg-[#c8102e]" />
             <span>Chưa có</span>
           </div>
@@ -296,13 +296,13 @@ function SequenceView({ selectedStep, onSelect }: {
                   <div className="px-4 py-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Icon className="size-4 shrink-0" style={{ color: rm.color }} />
-                      <span className="text-[13px] text-[#0b1426]" style={{ fontWeight: 700 }}>{step.title}</span>
+                      <span className="text-[13px] text-slate-900" style={{ fontWeight: 700 }}>{step.title}</span>
                       <span className="ml-auto text-[13px] px-2 py-0.5 rounded-full"
                         style={{ background: rm.bg, color: rm.color, border: `1px solid ${rm.border}`, fontWeight: 600 }}>
                         {rm.emoji} {rm.short}
                       </span>
                     </div>
-                    <p className="text-[13px] text-[#5a5040] leading-relaxed">{step.desc}</p>
+                    <p className="text-[13px] text-slate-700 leading-relaxed">{step.desc}</p>
 
                     <div className="flex items-center gap-3 mt-2 flex-wrap">
                       {step.next && (
@@ -363,14 +363,14 @@ function DetailPanel({ step, onClose, onNavigate }: {
               {rm.emoji} {step.role}
             </span>
           </div>
-          <h3 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+          <h3 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             Bước {step.id}: {step.title}
           </h3>
-          <p className="text-[13px] text-[#5a5040] leading-relaxed mt-1">{step.desc}</p>
+          <p className="text-[13px] text-slate-700 leading-relaxed mt-1">{step.desc}</p>
         </div>
         <button onClick={onClose}
           className="size-8 rounded-lg flex items-center justify-center hover:bg-black/5 shrink-0">
-          <X className="size-4 text-[#635647]" />
+          <X className="size-4 text-slate-700" />
         </button>
       </div>
 
@@ -379,10 +379,10 @@ function DetailPanel({ step, onClose, onNavigate }: {
         {/* Căn cứ */}
         {step.canCu && (
           <div className="flex items-start gap-2">
-            <BookOpen className="size-4 text-[#635647] shrink-0 mt-0.5" />
+            <BookOpen className="size-4 text-slate-700 shrink-0 mt-0.5" />
             <div>
-              <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-0.5 font-bold">Căn cứ pháp lý</div>
-              <div className="text-[13px] text-[#0b1426] font-semibold">{step.canCu}</div>
+              <div className="text-[13px] uppercase tracking-wide text-slate-700 mb-0.5 font-bold">Căn cứ pháp lý</div>
+              <div className="text-[13px] text-slate-900 font-semibold">{step.canCu}</div>
             </div>
           </div>
         )}
@@ -392,7 +392,7 @@ function DetailPanel({ step, onClose, onNavigate }: {
           <Flag className="size-4 shrink-0 mt-0.5"
             style={{ color: step.status === "done" ? "#166534" : step.status === "partial" ? "#b45309" : "#c8102e" }} />
           <div>
-            <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-0.5 font-bold">Trạng thái</div>
+            <div className="text-[13px] uppercase tracking-wide text-slate-700 mb-0.5 font-bold">Trạng thái</div>
             <div className="text-[13px] font-bold"
               style={{ color: step.status === "done" ? "#166534" : step.status === "partial" ? "#b45309" : "#c8102e" }}>
               {step.status === "done" ? "✅ Đã triển khai đầy đủ" : step.status === "partial" ? "⚠️ Triển khai một phần" : "❌ Chưa triển khai"}
@@ -405,7 +405,7 @@ function DetailPanel({ step, onClose, onNavigate }: {
           <div className="flex items-start gap-2">
             <ArrowRight className="size-4 shrink-0 mt-0.5" style={{ color: rm.color }} />
             <div>
-              <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-0.5 font-bold">Duyệt → Chuyển đến</div>
+              <div className="text-[13px] uppercase tracking-wide text-slate-700 mb-0.5 font-bold">Duyệt → Chuyển đến</div>
               <div className="flex flex-wrap gap-1.5">
                 {step.next.map(nid => {
                   const ns = STEPS.find(s => s.id === nid);
@@ -471,10 +471,10 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
             <GitMerge className="size-6 text-[#8a6400]" />
           </div>
           <div className="flex-1">
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Luồng Nghiệp vụ: Phát động Phong trào
             </h1>
-            <p className="text-[13px] text-[#5a5040] mt-0.5">
+            <p className="text-[13px] text-slate-700 mt-0.5">
               5 vai trò · 4 giai đoạn · 17 bước · Có nhánh từ chối & trả về
             </p>
           </div>
@@ -505,7 +505,7 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
         {/* Stats row */}
         <div className="grid grid-cols-5 gap-3 mb-5">
           {[
-            { label: "Tổng bước",       value: STEPS.length,          color: "#0b1426", bg: "#f5f3ee" },
+            { label: "Tổng bước",       value: STEPS.length,          color: "#0f172a", bg: "#f5f3ee" },
             { label: "Đã triển khai",   value: statusCount.done,      color: "#166534", bg: "#dcfce7" },
             { label: "Một phần",        value: statusCount.partial,   color: "#b45309", bg: "#fef3c7" },
             { label: "Chưa có",         value: statusCount.missing,   color: "#c8102e", bg: "#fee2e2" },
@@ -591,7 +591,7 @@ export function LuongNghiepVuPage({ user }: { user: LoginUser }) {
             ].map((r, i) => (
               <div key={i} className="rounded-[10px] border p-4" style={{ background: r.bg, borderColor: r.border }}>
                 <div className="text-[13px] mb-1 font-bold" style={{ color: r.color }}>{r.step}</div>
-                <div className="text-[13px] text-[#5a5040] mb-2">
+                <div className="text-[13px] text-slate-700 mb-2">
                   <span className="font-bold">Vấn đề:</span> {r.issue}
                 </div>
                 <div className="flex items-start gap-2 text-[13px]" style={{ color: r.color }}>

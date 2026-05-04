@@ -169,7 +169,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
 
           {step === 0 && (
             <div className="space-y-4">
-              <p className="text-[13px] text-[#635647] mb-4" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700 mb-4" style={{ fontFamily: "var(--font-sans)" }}>
                 Điền thông tin cá nhân/tập thể đăng ký. Căn cứ NĐ 152/2025/NĐ-CP Điều 6.
               </p>
               <div className="grid grid-cols-2 gap-4">
@@ -180,7 +180,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                   ["namCongTac", "Số năm công tác", "number"],
                 ] as const).map(([field, label]) => (
                   <div key={field}>
-                    <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{label}</label>
+                    <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{label}</label>
                     <input
                       value={String(form[field as keyof typeof form])}
                       onChange={e => setForm(p => ({ ...p, [field]: field === "namCongTac" ? +e.target.value : e.target.value }))}
@@ -190,7 +190,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                 ))}
               </div>
               <div>
-                <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đối tượng *</label>
+                <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đối tượng *</label>
                 <div className="flex gap-3">
                   {(["ca_nhan", "tap_the"] as const).map(t => (
                     <button key={t} onClick={() => setForm(p => ({ ...p, type: t }))}
@@ -218,7 +218,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                 </p>
               </div>
               <div>
-                <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   Danh hiệu đề nghị *
                 </label>
                 <div className="space-y-2">
@@ -237,7 +237,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   Tóm tắt thành tích nổi bật (tối đa 300 chữ)
                 </label>
                 <textarea value={form.tomTatThanhTich}
@@ -260,8 +260,8 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
                   ["Danh hiệu đề nghị", form.danhHieuDeNghi],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-start gap-3">
-                    <span className="text-[13px] text-[#635647] w-32 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
-                    <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v}</span>
+                    <span className="text-[13px] text-slate-700 w-32 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
+                    <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v}</span>
                   </div>
                 ))}
               </div>
@@ -282,7 +282,7 @@ export function DangKyModal({ campaignName, campaignId, user, onClose, onSubmit 
         <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e2e8f0" }}>
           <button onClick={() => step === 0 ? onClose() : setStep(s => s - 1)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f4f7fb] transition-colors"
-            style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
+            style={{ borderColor: "#e2e8f0", color: "#334155", fontFamily: "var(--font-sans)" }}>
             <ChevronLeft className="size-4" />{step === 0 ? "Hủy" : "Quay lại"}
           </button>
           {step < 2 ? (
@@ -372,7 +372,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
             <div className="space-y-4">
               <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: "#e2e8f0" }}>
                 <div className="px-4 py-3 border-b" style={{ borderColor: "#e2e8f0", background: "#ffffff" }}>
-                  <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                  <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     Thông tin cơ bản hồ sơ
                   </span>
                 </div>
@@ -386,16 +386,16 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                     ["Danh hiệu đề nghị", hoSo.danhHieuDeNghi],
                   ].map(([k, v]) => (
                     <div key={k}>
-                      <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{k}</div>
-                      <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{v}</div>
+                      <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{k}</div>
+                      <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{v}</div>
                     </div>
                   ))}
                 </div>
               </div>
               {hoSo.tomTatThanhTich && (
                 <div className="rounded-[10px] border p-4" style={{ borderColor: "#e2e8f0" }}>
-                  <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
-                  <p className="text-[13px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{hoSo.tomTatThanhTich}</p>
+                  <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
+                  <p className="text-[13px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{hoSo.tomTatThanhTich}</p>
                 </div>
               )}
               <div className="p-3 rounded-[8px] border flex items-start gap-2" style={{ background: "#f0f4ff", borderColor: "#bfdbfe" }}>
@@ -412,10 +412,10 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
           {step === 1 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                   Danh sách tài liệu theo TT 15/2025/TT-BNV
                 </span>
-                <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {minhChung.filter(m => m.uploaded).length}/{minhChung.length} đã tải lên
                 </span>
               </div>
@@ -430,14 +430,14 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{mc.ten}</span>
+                      <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{mc.ten}</span>
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{
                         background: mc.loai === "Bắt buộc" ? "#fee2e2" : "#eef2f8",
                         color: mc.loai === "Bắt buộc" ? "#c8102e" : "#5a5040",
                         fontFamily: "var(--font-sans)", fontWeight: 700,
                       }}>{mc.loai}</span>
                     </div>
-                    <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{mc.mo_ta}</p>
+                    <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{mc.mo_ta}</p>
                   </div>
                   <button onClick={() => toggleUpload(mc.id)}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] border transition-all shrink-0"
@@ -488,7 +488,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
               {aiChecking && (
                 <div className="flex flex-col items-center py-8 gap-3">
                   <Loader2 className="size-8 text-[#7c3aed] animate-spin" />
-                  <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Đang phân tích hồ sơ…</p>
+                  <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Đang phân tích hồ sơ…</p>
                 </div>
               )}
 
@@ -500,10 +500,10 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
                       {aiScore}
                     </div>
                     <div>
-                      <div className="text-[14px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0b1426" }}>
+                      <div className="text-[14px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: "#0f172a" }}>
                         {aiScore >= 85 ? "Hồ sơ đủ điều kiện ✅" : aiScore >= 70 ? "Đủ điều kiện, có lưu ý ⚠️" : "Cần bổ sung hồ sơ ❌"}
                       </div>
-                      <div className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Điểm AI · Tài liệu: {minhChung.filter(m => m.uploaded).length}/{minhChung.length}</div>
+                      <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Điểm AI · Tài liệu: {minhChung.filter(m => m.uploaded).length}/{minhChung.length}</div>
                     </div>
                   </div>
                   {[
@@ -550,7 +550,7 @@ export function NopHoSoModal({ hoSo, deadline, onClose, onSubmit }: NopHoSoModal
         <div className="px-6 py-4 border-t flex items-center justify-between" style={{ borderColor: "#e2e8f0" }}>
           <button onClick={() => step === 0 ? onClose() : setStep(s => s - 1)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] border text-[13px] hover:bg-[#f4f7fb]"
-            style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>
+            style={{ borderColor: "#e2e8f0", color: "#334155", fontFamily: "var(--font-sans)" }}>
             <ChevronLeft className="size-4" />{step === 0 ? "Hủy" : "Quay lại"}
           </button>
           {step < 3 ? (
@@ -597,7 +597,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
     da_nop:  { label: "Chờ thẩm định", color: "#1a4fa0", bg: "#dbeafe", border: "#93c5fd" },
     da_duyet:{ label: "Đã duyệt",       color: "#166534", bg: "#dcfce7", border: "#86efac" },
     tra_lai: { label: "Trả lại",         color: "#9f1239", bg: "#fee2e2", border: "#fca5a5" },
-    dang_soan:{ label: "Đang soạn",     color: "#635647", bg: "#eef2f8", border: "#d9d1bd" },
+    dang_soan:{ label: "Đang soạn",     color: "#334155", bg: "#eef2f8", border: "#d9d1bd" },
   };
 
   const renderCard = (h: HoSoThamGia, showActions: boolean) => {
@@ -615,22 +615,22 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</span>
+              <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</span>
               <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}`, fontFamily: "var(--font-sans)", fontWeight: 600 }}>{sc.label}</span>
             </div>
-            <div className="flex items-center gap-3 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="flex items-center gap-3 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               <span>{h.position}</span><span>·</span><span>{h.donVi}</span>
               <span>·</span><span className="text-[#1C5FBE]">{h.danhHieuDeNghi}</span>
             </div>
           </div>
-          {h.nopLuc && <span className="text-[13px] text-[#6b5e47] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>Nộp: {h.nopLuc}</span>}
+          {h.nopLuc && <span className="text-[13px] text-slate-600 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>Nộp: {h.nopLuc}</span>}
         </button>
 
         {isOpen && (
           <div className="px-5 pb-5 border-t" style={{ borderColor: "#eef2f8" }}>
             {/* Documents */}
             <div className="mt-4 mb-4">
-              <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+              <div className="text-[13px] text-slate-900 mb-2" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Tài liệu đính kèm
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -647,8 +647,8 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
 
             {h.tomTatThanhTich && (
               <div className="mb-4 p-3 rounded-[8px]" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
-                <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
-                <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{h.tomTatThanhTich}</p>
+                <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Tóm tắt thành tích</div>
+                <p className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{h.tomTatThanhTich}</p>
               </div>
             )}
 
@@ -658,7 +658,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
                   <div className="space-y-3">
                     {confirming.action === "approve" && (
                       <div>
-                        <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Nhận xét thẩm định (tùy chọn)</label>
+                        <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Nhận xét thẩm định (tùy chọn)</label>
                         <textarea value={note[h.id] ?? ""} onChange={e => setNote(p => ({ ...p, [h.id]: e.target.value }))}
                           rows={2} placeholder="Đủ điều kiện, hồ sơ đầy đủ…"
                           className="w-full px-3 py-2 border border-[#d1d5db] rounded-[8px] text-[13px] resize-none outline-none focus:border-[#166534]"
@@ -667,7 +667,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
                     )}
                     {confirming.action === "return" && (
                       <div>
-                        <label className="block text-[13px] uppercase tracking-wide text-[#5a5040] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lý do trả lại *</label>
+                        <label className="block text-[13px] uppercase tracking-wide text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lý do trả lại *</label>
                         <textarea value={reason[h.id] ?? ""} onChange={e => setReason(p => ({ ...p, [h.id]: e.target.value }))}
                           rows={2} placeholder="Thiếu minh chứng X, cần bổ sung Y…"
                           className="w-full px-3 py-2 border border-[#d1d5db] rounded-[8px] text-[13px] resize-none outline-none focus:border-[#c8102e]"
@@ -675,7 +675,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
                       </div>
                     )}
                     <div className="flex gap-2">
-                      <button onClick={() => setConfirming(null)} className="flex-1 py-2 rounded-[8px] border text-[13px]" style={{ borderColor: "#e2e8f0", color: "#5a5040", fontFamily: "var(--font-sans)" }}>Hủy</button>
+                      <button onClick={() => setConfirming(null)} className="flex-1 py-2 rounded-[8px] border text-[13px]" style={{ borderColor: "#e2e8f0", color: "#334155", fontFamily: "var(--font-sans)" }}>Hủy</button>
                       <button
                         onClick={() => {
                           if (confirming.action === "approve") onApprove(h.id, note[h.id] ?? "");
@@ -750,7 +750,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
         <div>
           <div className="flex items-center gap-2 mb-3">
             <Clock className="size-4 text-[#1a4fa0]" />
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Chờ thẩm định ({pending.length})</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Chờ thẩm định ({pending.length})</span>
           </div>
           <div className="space-y-2">{pending.map(h => renderCard(h, true))}</div>
         </div>
@@ -761,7 +761,7 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
         <div>
           <div className="flex items-center gap-2 mb-3">
             <CheckCheck className="size-4 text-[#166534]" />
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đã xử lý ({reviewed.length})</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đã xử lý ({reviewed.length})</span>
           </div>
           <div className="space-y-2">{reviewed.map(h => renderCard(h, false))}</div>
         </div>
@@ -769,8 +769,8 @@ export function ThamDinhPanel({ hoSoList, user, onApprove, onReturn }: ThamDinhP
 
       {hoSoList.length === 0 && (
         <div className="flex flex-col items-center py-16 gap-3">
-          <FileText className="size-12 text-[#d1ccc0]" />
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chưa có hồ sơ nào được nộp.</p>
+          <FileText className="size-12 text-slate-400" />
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Chưa có hồ sơ nào được nộp.</p>
         </div>
       )}
     </div>
@@ -796,7 +796,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
     dong_y:        { label: "Đồng ý",    icon: ThumbsUp,  color: "#166534", bg: "#dcfce7" },
     khong_dong_y:  { label: "Không đồng ý", icon: ThumbsDown, color: "#c8102e", bg: "#fee2e2" },
     kien_nghi:     { label: "Kiến nghị", icon: MessageSquare, color: "#b45309", bg: "#fef9ec" },
-    chua_bo_phieu: { label: "Chưa bỏ phiếu", icon: Clock, color: "#635647", bg: "#eef2f8" },
+    chua_bo_phieu: { label: "Chưa bỏ phiếu", icon: Clock, color: "#334155", bg: "#eef2f8" },
   };
 
   return (
@@ -842,14 +842,14 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
                   {h.ten.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[14px] text-[#0b1426] mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
+                  <div className="text-[14px] text-slate-900 mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
                   <div className="text-[13px] text-[#7c3aed]" style={{ fontFamily: "var(--font-sans)" }}>{h.danhHieuDeNghi}</div>
                 </div>
 
                 {/* Vote progress */}
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="text-right">
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{dongY}/{tong} đồng ý</div>
+                    <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{dongY}/{tong} đồng ý</div>
                     <div className="flex items-center gap-1 mt-1">
                       <div className="w-20 h-1.5 rounded-full overflow-hidden bg-[#eef2f8]">
                         <div className="h-full rounded-full" style={{ width: `${(dongY / tong) * 100}%`, background: passed ? "#166534" : "#b45309" }} />
@@ -881,7 +881,7 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
                     ))}
                   </div>
 
-                  <div className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                  <div className="text-[13px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     Phiếu của bạn ({user.name}):
                   </div>
                   <div className="grid grid-cols-3 gap-2">
@@ -914,8 +914,8 @@ export function HoiDongVotePanel({ hoSoList, user, onVote }: HoiDongVotePanelPro
 
       {approved.length === 0 && (
         <div className="flex flex-col items-center py-16 gap-3">
-          <Award className="size-12 text-[#d1ccc0]" />
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <Award className="size-12 text-slate-400" />
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Chưa có hồ sơ nào được thẩm định để đưa vào phiên bỏ phiếu.
           </p>
         </div>
@@ -965,7 +965,7 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
       <h3 className="text-[18px] text-[#166534]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
         Quyết định đã được ký!
       </h3>
-      <p className="text-[14px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
         {qdSo} — {selected.size} cá nhân/tập thể được khen thưởng
       </p>
     </div>
@@ -1004,11 +1004,11 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
         <div className="flex items-center gap-2">
           <input type="checkbox" checked={selected.size === passed.length} onChange={toggleAll}
             className="size-4 rounded cursor-pointer" />
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             Chọn tất cả hồ sơ đủ điều kiện ({passed.length})
           </span>
         </div>
-        <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
           Đã chọn: {selected.size}
         </span>
       </div>
@@ -1028,12 +1028,12 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
                 {h.ten.charAt(0)}
               </div>
               <div className="flex-1">
-                <div className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
+                <div className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
                 <div className="text-[13px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)" }}>{h.danhHieuDeNghi}</div>
               </div>
               <div className="text-right">
                 <div className="text-[13px] text-[#166534]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{pct}% đồng ý</div>
-                <div className="text-[13px] text-[#635647]">{h.donVi}</div>
+                <div className="text-[13px] text-slate-700">{h.donVi}</div>
               </div>
               {isSelected && (
                 <div className="size-6 rounded-full flex items-center justify-center" style={{ background: "#8a6400" }}>
@@ -1046,7 +1046,7 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
       </div>
 
       {passed.length === 0 && (
-        <div className="text-center py-10 text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+        <div className="text-center py-10 text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
           Chưa có hồ sơ nào hoàn thành vòng bỏ phiếu.
         </div>
       )}
@@ -1059,7 +1059,7 @@ export function KyDuyetPanel({ hoSoList, campaignName, user, onSign }: KyDuyetPa
         {signing ? "Đang ký số CA…" : `Ký số & Ban hành ${qdSo} (${selected.size} trường hợp)`}
       </button>
 
-      <p className="text-center text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-center text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
         Chữ ký số CA có giá trị pháp lý theo NĐ 130/2018/NĐ-CP và Luật GDĐT 2023
       </p>
     </div>
@@ -1106,9 +1106,9 @@ export function KetQuaPanel({ hoSoList, campaignName }: KetQuaPanelProps) {
               {idx + 1}
             </div>
             <div className="flex-1">
-              <div className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
+              <div className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h.ten}</div>
               <div className="text-[13px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)" }}>{h.danhHieuDeNghi}</div>
-              <div className="text-[13px] text-[#635647]">{h.donVi}</div>
+              <div className="text-[13px] text-slate-700">{h.donVi}</div>
             </div>
             {h.quyetDinhSo && (
               <code className="text-[13px] px-2 py-1 rounded" style={{ background: "#f0f4ff", color: "#1C5FBE", fontFamily: "JetBrains Mono,monospace" }}>
@@ -1119,7 +1119,7 @@ export function KetQuaPanel({ hoSoList, campaignName }: KetQuaPanelProps) {
           </div>
         ))}
         {awarded.length === 0 && (
-          <div className="text-center py-12 text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="text-center py-12 text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Chưa có quyết định khen thưởng nào được ban hành.
           </div>
         )}

@@ -9,10 +9,10 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
   return (
     <section className="space-y-5">
       <div className="pb-3 border-b border-[#e2e8f0]">
-        <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 18 }} className="text-[#0b1426]">
+        <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 18 }} className="text-slate-900">
           {title}
         </h3>
-        {sub && <p className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{sub}</p>}
+        {sub && <p className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{sub}</p>}
       </div>
       {children}
     </section>
@@ -22,7 +22,7 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <p className="text-[13px] text-[#635647] tracking-[0.06em] uppercase" style={{ fontFamily: "var(--font-sans)" }}>{label}</p>
+      <p className="text-[13px] text-slate-700 tracking-[0.06em] uppercase" style={{ fontFamily: "var(--font-sans)" }}>{label}</p>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
     </div>
   );
@@ -221,12 +221,12 @@ export function DsShowcase() {
         <Row label="Use case thực tế">
           <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e2e8f0] bg-white">
             <Award className="size-4 text-[#8a6400]" />
-            <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Huân chương Lao động hạng Ba</span>
+            <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Huân chương Lao động hạng Ba</span>
             <DsBadge variant="gold" size="sm">Cấp Nhà nước</DsBadge>
           </div>
           <div className="flex items-center gap-2 px-3 py-2 rounded-[6px] border border-[#e2e8f0] bg-white">
-            <Clock className="size-4 text-[#635647]" />
-            <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Hồ sơ #CB-2024-00847</span>
+            <Clock className="size-4 text-slate-700" />
+            <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Hồ sơ #CB-2024-00847</span>
             <DsBadge variant="warning" size="sm" dot>Thẩm định</DsBadge>
           </div>
         </Row>
@@ -239,20 +239,20 @@ export function DsShowcase() {
 
         <Row label="Biến thể">
           <DsCard variant="default" padding="md" className="w-[180px]">
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>variant="default"</p>
-            <p className="text-[14px] text-[#0b1426] mt-1" style={{ fontFamily: "var(--font-sans)" }}>Shadow nhẹ + viền</p>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>variant="default"</p>
+            <p className="text-[14px] text-slate-900 mt-1" style={{ fontFamily: "var(--font-sans)" }}>Shadow nhẹ + viền</p>
           </DsCard>
           <DsCard variant="elevated" padding="md" className="w-[180px]">
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>variant="elevated"</p>
-            <p className="text-[14px] text-[#0b1426] mt-1" style={{ fontFamily: "var(--font-sans)" }}>Shadow rõ hơn</p>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>variant="elevated"</p>
+            <p className="text-[14px] text-slate-900 mt-1" style={{ fontFamily: "var(--font-sans)" }}>Shadow rõ hơn</p>
           </DsCard>
           <DsCard variant="flat" padding="md" className="w-[180px]">
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>variant="flat"</p>
-            <p className="text-[14px] text-[#0b1426] mt-1" style={{ fontFamily: "var(--font-sans)" }}>Chỉ viền, không shadow</p>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>variant="flat"</p>
+            <p className="text-[14px] text-slate-900 mt-1" style={{ fontFamily: "var(--font-sans)" }}>Chỉ viền, không shadow</p>
           </DsCard>
           <DsCard variant="paper" padding="md" className="w-[180px]">
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>variant="paper"</p>
-            <p className="text-[14px] text-[#0b1426] mt-1" style={{ fontFamily: "var(--font-sans)" }}>Nền vàng nhạt</p>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>variant="paper"</p>
+            <p className="text-[14px] text-slate-900 mt-1" style={{ fontFamily: "var(--font-sans)" }}>Nền vàng nhạt</p>
           </DsCard>
         </Row>
 
@@ -260,16 +260,16 @@ export function DsShowcase() {
           <DsCard variant="default" padding="md" hoverable className="w-[200px]">
             <div className="flex items-center gap-2">
               <Award className="size-4 text-[#8a6400]" />
-              <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>Hover để thấy</span>
+              <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>Hover để thấy</span>
             </div>
-            <p className="text-[13px] text-[#635647] mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>Shadow & border nổi lên</p>
+            <p className="text-[13px] text-slate-700 mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>Shadow & border nổi lên</p>
           </DsCard>
           <DsCard variant="elevated" padding="md" hoverable className="w-[200px]">
             <div className="flex items-center gap-2">
               <Sparkles className="size-4 text-[#c8102e]" />
-              <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>AI gợi ý</span>
+              <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>AI gợi ý</span>
             </div>
-            <p className="text-[13px] text-[#635647] mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>3 hồ sơ đủ điều kiện</p>
+            <p className="text-[13px] text-slate-700 mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>3 hồ sơ đủ điều kiện</p>
           </DsCard>
         </Row>
 
@@ -287,8 +287,8 @@ export function DsShowcase() {
                   ["Danh hiệu", "Chiến sĩ thi đua cấp Tỉnh"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-start gap-2">
-                    <dt className="text-[13px] text-[#635647] w-20 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</dt>
-                    <dd className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>{v}</dd>
+                    <dt className="text-[13px] text-slate-700 w-20 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</dt>
+                    <dd className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}>{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -315,9 +315,9 @@ export function DsShowcase() {
                   { label: "Đang ký số", val: "8", badge: <DsBadge variant="info" size="sm" dot>Live</DsBadge> },
                 ].map((item) => (
                   <div key={item.label} className="rounded-[6px] bg-[#f4f7fb] p-3">
-                    <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>{item.label}</div>
+                    <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>{item.label}</div>
                     <div className="flex items-end justify-between">
-                      <span style={{ fontFamily: "JetBrains Mono", fontWeight: 500, fontSize: 18 }} className="text-[#0b1426] leading-none">{item.val}</span>
+                      <span style={{ fontFamily: "JetBrains Mono", fontWeight: 500, fontSize: 18 }} className="text-slate-900 leading-none">{item.val}</span>
                       {item.badge}
                     </div>
                   </div>
@@ -330,8 +330,8 @@ export function DsShowcase() {
         <Row label="Padding scale">
           {(["sm", "md", "lg"] as const).map((p) => (
             <DsCard key={p} variant="flat" padding={p} className="w-[150px]">
-              <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>padding="{p}"</p>
-              <p className="text-[14px] text-[#0b1426] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>padding="{p}"</p>
+              <p className="text-[14px] text-slate-900 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
                 {p === "sm" ? "16px" : p === "md" ? "24px" : "32px"}
               </p>
             </DsCard>
@@ -347,7 +347,7 @@ export function DsShowcase() {
 
           {/* Spacing */}
           <DsCard variant="flat" padding="md">
-            <p className="text-[13px] tracking-[0.1em] text-[#635647] uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Spacing scale</p>
+            <p className="text-[13px] tracking-[0.1em] text-slate-700 uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Spacing scale</p>
             <div className="space-y-2">
               {[
                 ["--space-1","4px"],["--space-2","8px"],["--space-3","12px"],["--space-4","16px"],
@@ -355,8 +355,8 @@ export function DsShowcase() {
               ].map(([token, val]) => (
                 <div key={token} className="flex items-center gap-3">
                   <div className="bg-[#c8102e]/20 rounded" style={{ width: val, height: 10, minWidth: 4 }} />
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono" }}>{token}</span>
-                  <span className="text-[13px] text-[#0b1426] ml-auto" style={{ fontFamily: "JetBrains Mono" }}>{val}</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono" }}>{token}</span>
+                  <span className="text-[13px] text-slate-900 ml-auto" style={{ fontFamily: "JetBrains Mono" }}>{val}</span>
                 </div>
               ))}
             </div>
@@ -364,7 +364,7 @@ export function DsShowcase() {
 
           {/* Shadow */}
           <DsCard variant="flat" padding="md">
-            <p className="text-[13px] tracking-[0.1em] text-[#635647] uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Shadow scale</p>
+            <p className="text-[13px] tracking-[0.1em] text-slate-700 uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Shadow scale</p>
             <div className="space-y-3">
               {[
                 ["xs","0 1px 2px ..."],
@@ -381,8 +381,8 @@ export function DsShowcase() {
                     style={{ boxShadow: `var(--shadow-${name})` }}
                   />
                   <div>
-                    <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "JetBrains Mono" }}>--shadow-{name}</span>
-                    <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{desc}</p>
+                    <span className="text-[13px] text-slate-900" style={{ fontFamily: "JetBrains Mono" }}>--shadow-{name}</span>
+                    <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{desc}</p>
                   </div>
                 </div>
               ))}
@@ -391,7 +391,7 @@ export function DsShowcase() {
 
           {/* Color palette */}
           <DsCard variant="flat" padding="md">
-            <p className="text-[13px] tracking-[0.1em] text-[#635647] uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Color palette</p>
+            <p className="text-[13px] tracking-[0.1em] text-slate-700 uppercase mb-3" style={{ fontFamily: "var(--font-sans)" }}>Color palette</p>
             <div className="space-y-2">
               {[
                 ["Ink (Navy)", "#0b1426"],
@@ -406,8 +406,8 @@ export function DsShowcase() {
               ].map(([name, hex]) => (
                 <div key={name} className="flex items-center gap-2.5">
                   <div className="w-7 h-5 rounded border border-black/8 shrink-0" style={{ background: hex }} />
-                  <span className="text-[13px] text-[#0b1426] flex-1" style={{ fontFamily: "var(--font-sans)" }}>{name}</span>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono" }}>{hex}</span>
+                  <span className="text-[13px] text-slate-900 flex-1" style={{ fontFamily: "var(--font-sans)" }}>{name}</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono" }}>{hex}</span>
                 </div>
               ))}
             </div>
@@ -421,7 +421,7 @@ export function DsShowcase() {
           <DsCard.Header>
             <div>
               <DsCard.Title>Đề nghị khen thưởng cá nhân</DsCard.Title>
-              <p className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>Điền đầy đủ thông tin để gửi trình Hội đồng</p>
+              <p className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>Điền đầy đủ thông tin để gửi trình Hội đồng</p>
             </div>
             <DsBadge variant="info" dot>Bản nháp</DsBadge>
           </DsCard.Header>
@@ -446,7 +446,7 @@ export function DsShowcase() {
                 <p className="ds-input-label mb-1.5">Danh hiệu đề nghị</p>
                 <div className="flex flex-wrap gap-2">
                   {["Chiến sĩ thi đua cơ sở","Chiến sĩ thi đua cấp Tỉnh","Bằng khen UBND Tỉnh","Huân chương Lao động hạng Ba"].map((d) => (
-                    <button key={d} className="px-3 py-1.5 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#0b1426] hover:border-[#c8102e] hover:bg-[#c8102e]/5 transition-colors" style={{ fontFamily: "var(--font-sans)" }}>{d}</button>
+                    <button key={d} className="px-3 py-1.5 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-900 hover:border-[#c8102e] hover:bg-[#c8102e]/5 transition-colors" style={{ fontFamily: "var(--font-sans)" }}>{d}</button>
                   ))}
                 </div>
               </div>
@@ -464,7 +464,7 @@ export function DsShowcase() {
               <DsButton variant="secondary" size="md">Lưu bản nháp</DsButton>
               <DsButton variant="ghost" size="md">Huỷ</DsButton>
             </DsCard.Actions>
-            <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono" }}>
+            <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono" }}>
               <AlertCircle className="size-3 inline mr-1" />Chưa lưu
             </span>
           </DsCard.Footer>

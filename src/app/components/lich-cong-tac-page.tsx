@@ -112,24 +112,24 @@ function EventDetail({ ev, onClose }: { ev: CalEvent; onClose: () => void }) {
               </div>
             </div>
             <button onClick={onClose} className="size-7 rounded flex items-center justify-center hover:bg-[#f4f7fb]">
-              <X className="size-4 text-[#635647]"/>
+              <X className="size-4 text-slate-700"/>
             </button>
           </div>
-          <h3 className="text-[14px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.title}</h3>
-          {ev.subtitle && <p className="text-[13px] text-[#5a5040] mb-3" style={{ fontFamily: "var(--font-sans)" }}>{ev.subtitle}</p>}
-          <div className="space-y-2 text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
-            <div className="flex items-center gap-2"><Calendar className="size-3.5 text-[#635647]"/>
+          <h3 className="text-[14px] text-slate-900 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.title}</h3>
+          {ev.subtitle && <p className="text-[13px] text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)" }}>{ev.subtitle}</p>}
+          <div className="space-y-2 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="flex items-center gap-2"><Calendar className="size-3.5 text-slate-700"/>
               {ev.date.split("-").reverse().join("/")} {ev.time && `· ${ev.time}`}{ev.allDay && " · Cả ngày"}
             </div>
-            {ev.location && <div className="flex items-center gap-2"><MapPin className="size-3.5 text-[#635647]"/>{ev.location}</div>}
-            {ev.attendees && <div className="flex items-center gap-2"><Users className="size-3.5 text-[#635647]"/>{ev.attendees} người tham dự</div>}
+            {ev.location && <div className="flex items-center gap-2"><MapPin className="size-3.5 text-slate-700"/>{ev.location}</div>}
+            {ev.attendees && <div className="flex items-center gap-2"><Users className="size-3.5 text-slate-700"/>{ev.attendees} người tham dự</div>}
           </div>
         </div>
         <div className="px-5 py-3 border-t border-[#eef2f8] flex gap-2" style={{ background: "#ffffff" }}>
           <button className="flex-1 py-2 rounded-[7px] text-[13px] text-white" style={{ background: cfg.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
             Đặt nhắc nhở
           </button>
-          <button onClick={onClose} className="flex-1 py-2 rounded-[7px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+          <button onClick={onClose} className="flex-1 py-2 rounded-[7px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-white transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
             Đóng
           </button>
         </div>
@@ -151,8 +151,8 @@ function UpcomingSidebar({ events, onSelect }: { events: CalEvent[]; onSelect: (
   return (
     <div className="w-72 shrink-0 border-l border-[#e2e8f0] flex flex-col" style={{ background: "#ffffff" }}>
       <div className="px-4 py-4 border-b border-[#e2e8f0]">
-        <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sự kiện sắp tới</h3>
-        <p className="text-[13px] text-[#635647] mt-0.5">{upcoming.length} sự kiện</p>
+        <h3 className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sự kiện sắp tới</h3>
+        <p className="text-[13px] text-slate-700 mt-0.5">{upcoming.length} sự kiện</p>
       </div>
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {upcoming.map(ev => {
@@ -175,8 +175,8 @@ function UpcomingSidebar({ events, onSelect }: { events: CalEvent[]; onSelect: (
                   <Icon className="size-3 shrink-0" style={{ color: cfg.color }}/>
                   {ev.urgent && <span className="size-1.5 rounded-full bg-[#c8102e]"/>}
                 </div>
-                <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ev.title}</div>
-                {ev.time && <div className="text-[13px] text-[#635647]" style={{ fontFamily: "JetBrains Mono, monospace" }}>{ev.time}</div>}
+                <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ev.title}</div>
+                {ev.time && <div className="text-[13px] text-slate-700" style={{ fontFamily: "JetBrains Mono, monospace" }}>{ev.time}</div>}
               </div>
             </button>
           );
@@ -223,8 +223,8 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
       {/* ── Header ── */}
       <div className="px-6 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
-          <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lịch công tác & Sự kiện</h1>
-          <p className="text-[13px] text-[#635647] mt-0.5">
+          <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Lịch công tác & Sự kiện</h1>
+          <p className="text-[13px] text-slate-700 mt-0.5">
             {monthEvents.length} sự kiện trong tháng{urgentCount > 0 && ` · ${urgentCount} khẩn cấp`}
           </p>
         </div>
@@ -262,17 +262,17 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               <button onClick={prevMonth} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-white transition-colors">
-                <ChevronLeft className="size-4 text-[#5a5040]"/>
+                <ChevronLeft className="size-4 text-slate-700"/>
               </button>
-              <h2 className="text-[18px] text-[#0b1426] min-w-[200px] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+              <h2 className="text-[18px] text-slate-900 min-w-[200px] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 {MONTH_NAMES[month]} {year}
               </h2>
               <button onClick={nextMonth} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-white transition-colors">
-                <ChevronRight className="size-4 text-[#5a5040]"/>
+                <ChevronRight className="size-4 text-slate-700"/>
               </button>
             </div>
             <button onClick={() => { setYear(today.getFullYear()); setMonth(today.getMonth()); }}
-              className="px-3 py-1.5 rounded-[7px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+              className="px-3 py-1.5 rounded-[7px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-white transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               Hôm nay
             </button>
@@ -285,7 +285,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
               return (
                 <div key={t} className="flex items-center gap-1.5">
                   <div className="size-2 rounded-full" style={{ background: cfg.color }}/>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{cfg.label}</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{cfg.label}</span>
                 </div>
               );
             })}
@@ -319,7 +319,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
                     minHeight: 90,
                   }}>
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className={`size-6 rounded-full flex items-center justify-center text-[13px] ${isToday ? "text-white" : isSunday ? "text-[#c8102e]" : "text-[#5a5040]"}`}
+                    <span className={`size-6 rounded-full flex items-center justify-center text-[13px] ${isToday ? "text-white" : isSunday ? "text-[#c8102e]" : "text-slate-700"}`}
                       style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: isToday ? 700 : 500, background: isToday ? "#1C5FBE" : "transparent" }}>
                       {day}
                     </span>
@@ -330,7 +330,7 @@ export function LichCongTacPage({ user }: { user: LoginUser }) {
                       <EventPill key={ev.id} ev={ev} onClick={() => setSelected(ev)}/>
                     ))}
                     {dayEvents.length > 2 && (
-                      <button className="text-[13px] text-[#635647] hover:text-[#1C5FBE] text-left pl-1"
+                      <button className="text-[13px] text-slate-700 hover:text-[#1C5FBE] text-left pl-1"
                         style={{ fontFamily: "var(--font-sans)" }}>
                         +{dayEvents.length - 2} thêm
                       </button>

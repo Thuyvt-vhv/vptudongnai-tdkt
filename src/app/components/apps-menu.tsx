@@ -25,7 +25,7 @@ const APP_ITEMS: AppItem[] = [
     label: "Cấu hình",
     desc: "Tham số hệ thống & đơn vị tổ chức",
     icon: Settings,
-    color: "#5a5040",
+    color: "#334155",
     bg: "#eef2f8",
   },
   {
@@ -115,17 +115,17 @@ export function AppsMenu({
             style={{ borderColor: "#eef2f8", background: "#f4f7fb" }}
           >
             <div className="flex items-center gap-2">
-              <GridIcon className="size-4 text-[#635647]" />
+              <GridIcon className="size-4 text-slate-700" />
               <span
                 className="text-[13px] tracking-wide uppercase"
-                style={{ color: "#635647", fontFamily: "var(--font-sans)", fontWeight: 600 }}
+                style={{ color: "#334155", fontFamily: "var(--font-sans)", fontWeight: 600 }}
               >
                 Ứng dụng hệ thống
               </span>
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="size-6 flex items-center justify-center rounded-md hover:bg-[#e2e8f0] transition-colors text-[#635647]"
+              className="size-6 flex items-center justify-center rounded-md hover:bg-[#e2e8f0] transition-colors text-slate-700"
             >
               <X className="size-3.5" />
             </button>
@@ -177,7 +177,7 @@ export function AppsMenu({
                     </div>
                     <p
                       className="text-[13px] leading-snug"
-                      style={{ color: "#635647", fontFamily: "var(--font-sans)" }}
+                      style={{ color: "#334155", fontFamily: "var(--font-sans)" }}
                     >
                       {app.desc}
                     </p>
@@ -200,7 +200,7 @@ export function AppsMenu({
             className="px-4 py-2.5 border-t text-center"
             style={{ borderColor: "#eef2f8", background: "#f4f7fb" }}
           >
-            <p className="text-[13px]" style={{ color: "#6b5e47", fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px]" style={{ color: "#475569", fontFamily: "var(--font-sans)" }}>
               Phiên bản 1.0.0 · VPTU Đồng Nai © 2026
             </p>
           </div>

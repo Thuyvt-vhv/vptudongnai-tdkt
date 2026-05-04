@@ -59,11 +59,11 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
             <ScrollText className="size-5 text-[#8a6400]"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Lịch sử Khen thưởng</h1>
-            <p className="text-[13px] text-[#635647]">{MOCK_HISTORY.length} quyết định · {years[0]}-{years[years.length-1]} · Lưu trữ bất biến theo NĐ 13/2023</p>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Lịch sử Khen thưởng</h1>
+            <p className="text-[13px] text-slate-700">{MOCK_HISTORY.length} quyết định · {years[0]}-{years[years.length-1]} · Lưu trữ bất biến theo NĐ 13/2023</p>
           </div>
           <div className="ml-auto flex gap-2">
-            <button onClick={()=>setView(v=>v==="timeline"?"table":"timeline")} className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button onClick={()=>setView(v=>v==="timeline"?"table":"timeline")} className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#d1d5db] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               {view==="timeline"?<BarChart2 className="size-3.5"/>:<Clock className="size-3.5"/>}
               {view==="timeline"?"Bảng dữ liệu":"Dòng thời gian"}
             </button>
@@ -91,7 +91,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
         {/* Filters */}
         <div className="flex gap-2 flex-wrap">
           <div className="relative">
-            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]"/>
+            <Search className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700"/>
             <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Tìm tên, đơn vị, số QĐ..."
               className="pl-9 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none" style={{ height:36,width:260,fontFamily: "var(--font-sans)" }}/>
           </div>
@@ -115,7 +115,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
               Xóa bộ lọc
             </button>
           }
-          <span className="ml-auto text-[13px] text-[#635647] flex items-center" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="ml-auto text-[13px] text-slate-700 flex items-center" style={{ fontFamily: "var(--font-sans)" }}>
             {filtered.length} kết quả
           </span>
         </div>
@@ -149,18 +149,18 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
               <div className="p-6 space-y-3" style={{ background:"white" }}>
                 {[["Số Quyết định",detail.soQD],["Ngày ký",detail.ngayKy],["Người ký",detail.nguoiKy],["Lý do khen thưởng",detail.lyDo],["Đối tượng",detail.loai==="ca_nhan"?"Cá nhân":"Tập thể"]].map(([k,v])=>(
                   <div key={k as string} className="flex gap-3">
-                    <span className="text-[13px] text-[#635647] w-[150px] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k as string}</span>
-                    <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Số Quyết định"?700:400 }}>{v as string}</span>
+                    <span className="text-[13px] text-slate-700 w-[150px] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k as string}</span>
+                    <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Số Quyết định"?700:400 }}>{v as string}</span>
                   </div>
                 ))}
                 <div className="flex gap-3 pt-3 border-t border-[#e2e8f0]">
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     <Eye className="size-4"/>Xem QĐ PDF
                   </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     <QrCode className="size-4"/>QR Verify
                   </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-[8px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     <Download className="size-4"/>Tải về
                   </button>
                 </div>
@@ -178,7 +178,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                     <span className="text-[14px] text-white" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{year}</span>
                   </div>
                   <div className="flex-1 h-px" style={{ background:"#e2e8f0" }}/>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{(byYear[year]||[]).length} quyết định</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{(byYear[year]||[]).length} quyết định</span>
                 </div>
                 <div className="relative pl-5">
                   <div className="absolute left-2 top-0 bottom-0 w-px" style={{ background:"#e2e8f0" }}/>
@@ -195,11 +195,11 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap mb-1">
-                                  <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{r.tenNguoi}</span>
+                                  <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{r.tenNguoi}</span>
                                   <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c,fontFamily: "var(--font-sans)" }}>{r.danhHieu}</span>
                                   <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily: "var(--font-sans)" }}>{r.loai==="ca_nhan"?"Cá nhân":"Tập thể"}</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-[13px] text-[#635647]">
+                                <div className="flex items-center gap-3 text-[13px] text-slate-700">
                                   <span>{r.donVi}</span>
                                   <span>·</span>
                                   <span style={{ fontFamily:"JetBrains Mono, monospace" }}>{r.soQD}</span>
@@ -209,9 +209,9 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                               </div>
                               <div className="text-right shrink-0">
                                 <div className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:r.color }}>{r.diem}</div>
-                                <div className="text-[13px] text-[#635647]">điểm</div>
+                                <div className="text-[13px] text-slate-700">điểm</div>
                               </div>
-                              <ChevronRight className="size-4 text-[#635647] shrink-0 mt-2"/>
+                              <ChevronRight className="size-4 text-slate-700 shrink-0 mt-2"/>
                             </div>
                           </button>
                         </div>
@@ -224,7 +224,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
             {filtered.length===0&&(
               <div className="flex flex-col items-center justify-center py-16 gap-3">
                 <Search className="size-12 text-[#d1d5db]"/>
-                <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Không tìm thấy kết quả phù hợp</p>
+                <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Không tìm thấy kết quả phù hợp</p>
               </div>
             )}
           </div>
@@ -240,15 +240,15 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                 return (
                   <tr key={r.id} className="border-t border-[#e2e8f0] hover:bg-[#f4f7fb] transition-colors" style={{ background:i%2===0?"white":"#fdfcfa" }}>
                     <td className="px-3 py-2.5"><code className="text-[13px]" style={{ color:"#1C5FBE",fontFamily:"JetBrains Mono, monospace" }}>{r.soQD}</code></td>
-                    <td className="px-3 py-2.5 text-[#635647]">{r.ngayKy}</td>
+                    <td className="px-3 py-2.5 text-slate-700">{r.ngayKy}</td>
                     <td className="px-3 py-2.5">
-                      <div className="font-semibold text-[#0b1426]">{r.tenNguoi}</div>
-                      <div className="text-[13px] text-[#635647]">{r.donVi}</div>
+                      <div className="font-semibold text-slate-900">{r.tenNguoi}</div>
+                      <div className="text-[13px] text-slate-700">{r.donVi}</div>
                     </td>
                     <td className="px-3 py-2.5"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:`${r.color}18`,color:r.color,fontFamily: "var(--font-sans)" }}>{r.danhHieu}</span></td>
                     <td className="px-3 py-2.5"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c }}>{lc.l}</span></td>
                     <td className="px-3 py-2.5 text-center"><span style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:r.color }}>{r.diem}</span></td>
-                    <td className="px-3 py-2.5 text-[13px] text-[#5a5040]">{r.nguoiKy}</td>
+                    <td className="px-3 py-2.5 text-[13px] text-slate-700">{r.nguoiKy}</td>
                     <td className="px-3 py-2.5">
                       <button onClick={()=>setDetail(r)} className="size-7 rounded flex items-center justify-center hover:bg-[#ddeafc] transition-colors">
                         <Eye className="size-4 text-[#1C5FBE]"/>
@@ -258,7 +258,7 @@ export function LichSuKhenThuongPage({ user }: { user: LoginUser }) {
                 );
               })}</tbody>
             </table>
-            {filtered.length===0&&<div className="text-center py-10 text-[#635647] text-[13px]">Không có kết quả</div>}
+            {filtered.length===0&&<div className="text-center py-10 text-slate-700 text-[13px]">Không có kết quả</div>}
           </div>
         )}
       </div>

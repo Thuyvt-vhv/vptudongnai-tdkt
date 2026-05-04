@@ -252,8 +252,8 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
               <span style={{ fontSize:13, fontWeight:800, color:"#ffd27a" }}>VQ</span>
             </div>
             <div>
-              <div className="text-[14px] font-bold text-[#0b1426]">VPTU Đồng Nai</div>
-              <div className="text-[13px] text-[#635647]">Hệ thống Thi đua – Khen thưởng</div>
+              <div className="text-[14px] font-bold text-slate-900">VPTU Đồng Nai</div>
+              <div className="text-[13px] text-slate-700">Hệ thống Thi đua – Khen thưởng</div>
             </div>
           </div>
 
@@ -264,8 +264,8 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
               <Shield className="size-3.5" style={{ color:"#1C5FBE" }}/>
               <span className="text-[13px] font-semibold" style={{ color:"#1C5FBE" }}>Cổng đăng nhập bảo mật</span>
             </div>
-            <h2 className="text-[24px] font-bold text-[#0b1426] mb-1">Chào mừng trở lại</h2>
-            <p className="text-[14px] text-[#635647]">Đăng nhập để truy cập hệ thống Thi đua Khen thưởng</p>
+            <h2 className="text-[24px] font-bold text-slate-900 mb-1">Chào mừng trở lại</h2>
+            <p className="text-[14px] text-slate-700">Đăng nhập để truy cập hệ thống Thi đua Khen thưởng</p>
           </div>
 
           {/* Login form card */}
@@ -277,7 +277,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
               <div>
-                <label className="block text-[13px] font-semibold text-[#0b1426] mb-1.5">
+                <label className="block text-[13px] font-semibold text-slate-900 mb-1.5">
                   Email / Tài khoản
                 </label>
                 <input
@@ -297,7 +297,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
 
               {/* Password */}
               <div>
-                <label className="block text-[13px] font-semibold text-[#0b1426] mb-1.5">
+                <label className="block text-[13px] font-semibold text-slate-900 mb-1.5">
                   Mật khẩu
                 </label>
                 <div className="relative">
@@ -355,7 +355,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                 style={{ background:"#0b1426" }}>
                 <User className="size-3 text-white"/>
               </div>
-              <span className="text-[13px] font-semibold text-[#0b1426]">Đăng nhập nhanh theo vai trò</span>
+              <span className="text-[13px] font-semibold text-slate-900">Đăng nhập nhanh theo vai trò</span>
               <span className="ml-auto text-[12px] px-2 py-0.5 rounded-full font-semibold"
                 style={{ background:"#eef2f8", color:"#635647" }}>Demo</span>
             </div>
@@ -400,7 +400,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                   {/* Role info */}
                   <div className="px-5 pt-4 pb-3">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[13px] font-bold text-[#0b1426]">{activeAccount.roleLabel}</span>
+                      <span className="text-[13px] font-bold text-slate-900">{activeAccount.roleLabel}</span>
                       <span className="text-[12px] px-2 py-0.5 rounded-full"
                         style={{ background:rv.bg, color:rv.color, border:`1px solid ${rv.border}` }}>
                         {activeAccount.title}
@@ -429,7 +429,7 @@ export function LoginPage({ onLogin, onPublicLYK }: { onLogin: (u: LoginUser) =>
                         {activeAccount.initials}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-[13px] font-semibold text-[#0b1426]">{activeAccount.name}</div>
+                        <div className="text-[13px] font-semibold text-slate-900">{activeAccount.name}</div>
                         <div className="text-[12px] truncate" style={{ color:"#635647" }}>{activeAccount.unit}</div>
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <code className="text-[11px] px-1.5 py-px rounded"

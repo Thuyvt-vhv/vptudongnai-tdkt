@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { REWARD_CATALOG, formatTienThuong, getNguonKinhPhiLabel } from "@/app/data/reward-catalog";
-import type { NguonKinhPhi, RewardForm } from "@/app/data/reward-catalog";
+import type { NguonKinhPhi, RewardForm, RewardLevel } from "@/app/data/reward-catalog";
 
 /* ═══════════════════════════════════════════════════════════════
    TYPES
@@ -98,16 +98,16 @@ function OrgNode({ unit, depth=0, onSelect, selected }: { unit:OrgUnit; depth?:n
     <div>
       <div className="flex items-center gap-1.5 group" style={{ paddingLeft:`${depth*20}px` }}>
         <button className="size-5 flex items-center justify-center rounded shrink-0" onClick={()=>setOpen(!open)} style={{ visibility:hasChildren?"visible":"hidden" }}>
-          {open?<ChevronDown className="size-3.5 text-[#635647]"/>:<ChevronRight className="size-3.5 text-[#635647]"/>}
+          {open?<ChevronDown className="size-3.5 text-slate-700"/>:<ChevronRight className="size-3.5 text-slate-700"/>}
         </button>
         <button onClick={()=>onSelect(unit)} className="flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-[6px] text-left transition-colors"
           style={{ background:isSel?cfg.bg:"transparent",border:isSel?`1.5px solid ${cfg.color}40`:"1.5px solid transparent" }}>
           <div className="size-5 rounded flex items-center justify-center shrink-0" style={{ background:cfg.bg }}>
             <Building2 className="size-3" style={{ color:cfg.color }}/>
           </div>
-          <span className="text-[13px] text-[#0b1426] flex-1 truncate" style={{ fontFamily: "var(--font-sans)",fontWeight:isSel?700:400 }}>{unit.name}</span>
+          <span className="text-[13px] text-slate-900 flex-1 truncate" style={{ fontFamily: "var(--font-sans)",fontWeight:isSel?700:400 }}>{unit.name}</span>
           <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:cfg.bg,color:cfg.color,fontFamily: "var(--font-sans)" }}>{unit.code}</span>
-          {unit.headCount>0&&<span className="text-[13px] text-[#635647]">{unit.headCount}</span>}
+          {unit.headCount>0&&<span className="text-[13px] text-slate-700">{unit.headCount}</span>}
         </button>
         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button className="size-6 rounded flex items-center justify-center hover:bg-[#ddeafc]"><Plus className="size-3 text-[#1C5FBE]"/></button>
@@ -138,7 +138,7 @@ function OrgTab() {
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Building2 className="size-4 text-[#1C5FBE]"/>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cây tổ chức · {total} đơn vị</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cây tổ chức · {total} đơn vị</span>
           <div className="ml-auto flex gap-2">
             <button onClick={()=>setAdding(!adding)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600 }}>
               <Plus className="size-3.5"/>Thêm đơn vị
@@ -181,18 +181,18 @@ function OrgTab() {
       {/* Detail panel */}
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
         <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chi tiết Đơn vị</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Chi tiết Đơn vị</span>
         </div>
         {selected ? (
           <div className="p-4 space-y-3 flex-1 overflow-y-auto">
             {[["Tên đơn vị","Văn phòng Tỉnh ủy Đồng Nai"],["Mã đơn vị","VPT-DNI"],["Cấp đơn vị","Sở/Ban"],["Đơn vị cha","Tỉnh ủy Đồng Nai"],["Số CBCC","320 người"],["Trạng thái","Hoạt động"],["Ngày thành lập","01/01/1975"],["Địa chỉ","Số 2 Nguyễn Văn Trị, TP. Biên Hòa"]].map(([k,v])=>(
               <div key={k} className="flex gap-2">
-                <span className="text-[13px] text-[#635647] w-[100px] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Mã đơn vị"?700:400 }}>{v}</span>
+                <span className="text-[13px] text-slate-700 w-[100px] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:k==="Mã đơn vị"?700:400 }}>{v}</span>
               </div>
             ))}
             <div className="pt-3 flex gap-2 border-t border-[#e2e8f0]">
-              <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] border border-[#d1d5db] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+              <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] border border-[#d1d5db] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 <Edit3 className="size-3.5"/>Sửa thông tin
               </button>
               <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] border border-[#93c5fd] text-[#1C5FBE]" style={{ fontFamily: "var(--font-sans)" }}>
@@ -201,7 +201,7 @@ function OrgTab() {
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-[#635647] text-[13px]">Chọn đơn vị để xem chi tiết</div>
+          <div className="flex-1 flex items-center justify-center text-slate-700 text-[13px]">Chọn đơn vị để xem chi tiết</div>
         )}
       </div>
     </div>
@@ -221,7 +221,7 @@ function AwardsTab() {
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
         <div className="flex items-center px-4 py-3 border-b border-[#e2e8f0] gap-2" style={{ background:"#f4f7fb" }}>
           <Award className="size-4 text-[#8a6400]"/>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh hiệu Thi đua ({MOCK_AWARDS.length})</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Danh hiệu Thi đua ({MOCK_AWARDS.length})</span>
           <button className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#8a6400",fontFamily: "var(--font-sans)",fontWeight:600 }}>
             <Plus className="size-3.5"/>Thêm danh hiệu
           </button>
@@ -229,7 +229,7 @@ function AwardsTab() {
         <div className="flex-1 overflow-y-auto">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
             <thead><tr style={{ background:"#f4f7fb" }}>
-              {["Danh hiệu","Cấp","Loại","Năm TD min","Điểm min","Căn cứ","Trạng thái"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
+              {["Danh hiệu","Cấp","Loại","Năm TD min","Điểm min","Căn cứ","Trạng thái"].map(h=><th key={h} className="text-left px-3 py-2 text-slate-900" style={{ fontWeight:700 }}>{h}</th>)}
             </tr></thead>
             <tbody>{MOCK_AWARDS.map((a,i)=>{
               const lc=LEVEL_LABEL[a.level]; const isSel=sel?.id===a.id;
@@ -243,14 +243,14 @@ function AwardsTab() {
                     </div>
                   </td>
                   <td className="px-3 py-2"><span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:lc.bg,color:lc.c }}>{lc.l}</span></td>
-                  <td className="px-3 py-2 text-[#5a5040]">{a.type==="individual"?"Cá nhân":a.type==="collective"?"Tập thể":"Cả hai"}</td>
+                  <td className="px-3 py-2 text-slate-700">{a.type==="individual"?"Cá nhân":a.type==="collective"?"Tập thể":"Cả hai"}</td>
                   <td className="px-3 py-2 text-center"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>{a.minYears} năm</span></td>
                   <td className="px-3 py-2 text-center"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#f4f7fb",color:"#5a5040",fontFamily:"JetBrains Mono, monospace" }}>{a.minScore}</span></td>
-                  <td className="px-3 py-2 text-[13px] text-[#635647]">{a.canCu}</td>
+                  <td className="px-3 py-2 text-[13px] text-slate-700">{a.canCu}</td>
                   <td className="px-3 py-2">
                     {a.active
                       ? <span className="flex items-center gap-1 text-[13px] text-[#166534]"><CheckCircle2 className="size-3"/>Hoạt động</span>
-                      : <span className="flex items-center gap-1 text-[13px] text-[#635647]"><X className="size-3"/>Tạm dừng</span>
+                      : <span className="flex items-center gap-1 text-[13px] text-slate-700"><X className="size-3"/>Tạm dừng</span>
                     }
                   </td>
                 </tr>
@@ -261,13 +261,13 @@ function AwardsTab() {
       </div>
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
         <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình Điều kiện</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình Điều kiện</span>
         </div>
         {sel ? (
           <div className="p-4 flex-1 overflow-y-auto space-y-4">
             <div className="flex items-center gap-2">
               <span className="size-3 rounded-full shrink-0" style={{ background:sel.color }}/>
-              <span className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{sel.name}</span>
+              <span className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{sel.name}</span>
               <code className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:sel.color+"20",color:sel.color,fontFamily:"JetBrains Mono, monospace" }}>{sel.shortName}</code>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -278,8 +278,8 @@ function AwardsTab() {
                 { label:"Căn cứ pháp lý", value:sel.canCu, key:"canCu" },
               ].map(f=>(
                 <div key={f.key} className="p-3 rounded-[8px] border border-[#e2e8f0] relative group" style={{ background:"#f4f7fb" }}>
-                  <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{f.label}</div>
-                  <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{f.value}</div>
+                  <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{f.label}</div>
+                  <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{f.value}</div>
                   <button onClick={()=>setEditField(f.key)} className="absolute top-1.5 right-1.5 size-5 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" style={{ background:"#fef3c7" }}>
                     <Edit3 className="size-3 text-[#92400e]"/>
                   </button>
@@ -287,7 +287,7 @@ function AwardsTab() {
               ))}
             </div>
             <div>
-              <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Điều kiện bổ sung (NĐ 152/2025/NĐ-CP)</div>
+              <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Điều kiện bổ sung (NĐ 152/2025/NĐ-CP)</div>
               {[
                 "Không bị kỷ luật hoặc vi phạm pháp luật trong kỳ xét",
                 "Hoàn thành xuất sắc nhiệm vụ được giao",
@@ -295,7 +295,7 @@ function AwardsTab() {
                 "Có minh chứng thành tích cụ thể, có số liệu kiểm chứng",
                 sel.minYears>=3?"Đã được tặng danh hiệu bậc thấp hơn":null,
               ].filter(Boolean).map((c,i)=>(
-                <div key={i} className="flex items-start gap-2 text-[13px] text-[#5a5040] mb-1.5">
+                <div key={i} className="flex items-start gap-2 text-[13px] text-slate-700 mb-1.5">
                   <CheckCircle2 className="size-3.5 shrink-0 mt-0.5" style={{ color:"#166534" }}/>
                   <span>{c}</span>
                 </div>
@@ -305,12 +305,12 @@ function AwardsTab() {
               <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white" style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600 }}>
                 <Save className="size-3.5"/>Lưu thay đổi
               </button>
-              <button onClick={()=>setSel(null)} className="px-3 py-2 rounded-[6px] text-[13px] border border-[#e2e8f0] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+              <button onClick={()=>setSel(null)} className="px-3 py-2 rounded-[6px] text-[13px] border border-[#e2e8f0] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Hủy
               </button>
             </div>
           </div>
-        ) : <div className="flex-1 flex items-center justify-center text-[#635647] text-[13px]">Chọn danh hiệu để cấu hình</div>}
+        ) : <div className="flex-1 flex items-center justify-center text-slate-700 text-[13px]">Chọn danh hiệu để cấu hình</div>}
       </div>
     </div>
   );
@@ -334,7 +334,7 @@ function SigningTab() {
     <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden h-full flex flex-col">
       <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
         <Lock className="size-4 text-[#92400e]"/>
-        <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền Ký số — theo QĐ 34/2021 + NĐ 152/2025/NĐ-CP</span>
+        <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thẩm quyền Ký số — theo QĐ 34/2021 + NĐ 152/2025/NĐ-CP</span>
         <div className="ml-auto flex gap-2">
           <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] text-[13px] text-white" style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600 }}>
             <Save className="size-3.5"/>Lưu cấu hình
@@ -359,8 +359,8 @@ function SigningTab() {
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full shrink-0" style={{ background:a.color }}/>
                   <div>
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontWeight:600 }}>{a.name}</div>
-                    <div className="text-[13px] text-[#635647]">{a.canCu}</div>
+                    <div className="text-[13px] text-slate-900" style={{ fontWeight:600 }}>{a.name}</div>
+                    <div className="text-[13px] text-slate-700">{a.canCu}</div>
                   </div>
                 </div>
               </td>
@@ -383,7 +383,7 @@ function SigningTab() {
       </div>
       <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-3" style={{ background:"#f4f7fb" }}>
         <Info className="size-4 text-[#1C5FBE]"/>
-        <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: QĐ 34/2021/QĐ-TTg và NĐ 152/2025/NĐ-CP/NĐ-CP. Thẩm quyền ký phải được Lãnh đạo Tỉnh ủy phê duyệt.</span>
+        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: QĐ 34/2021/QĐ-TTg và NĐ 152/2025/NĐ-CP/NĐ-CP. Thẩm quyền ký phải được Lãnh đạo Tỉnh ủy phê duyệt.</span>
       </div>
     </div>
   );
@@ -400,17 +400,17 @@ function SLATab() {
       <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Clock className="size-4 text-[#b45309]"/>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình SLA theo TT 15/2025/TT-BNV</span>
-          <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tổng: <strong>{total}</strong> ngày làm việc</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình SLA theo TT 15/2025/TT-BNV</span>
+          <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Tổng: <strong>{total}</strong> ngày làm việc</span>
         </div>
         <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
           <thead><tr style={{ background:"#f4f7fb" }}>
-            {["#","Giai đoạn","Vai trò","Thời gian (ngày LV)","Cảnh báo trước","Loại ngày"].map(h=><th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight:700 }}>{h}</th>)}
+            {["#","Giai đoạn","Vai trò","Thời gian (ngày LV)","Cảnh báo trước","Loại ngày"].map(h=><th key={h} className="text-left px-3 py-2 text-slate-900" style={{ fontWeight:700 }}>{h}</th>)}
           </tr></thead>
           <tbody>{stages.map((s,i)=>(
             <tr key={s.id} className="border-t border-[#e2e8f0]" style={{ background:i%2===0?"white":"#f4f7fb" }}>
-              <td className="px-3 py-3 text-[#635647]" style={{ fontFamily:"JetBrains Mono, monospace" }}>{i+1}</td>
-              <td className="px-3 py-3 text-[#0b1426]">{s.name}</td>
+              <td className="px-3 py-3 text-slate-700" style={{ fontFamily:"JetBrains Mono, monospace" }}>{i+1}</td>
+              <td className="px-3 py-3 text-slate-900">{s.name}</td>
               <td className="px-3 py-3"><span className="text-[13px] px-2 py-0.5 rounded" style={{ background:"#f5f3ff",color:"#7c3aed",fontFamily: "var(--font-sans)" }}>{s.role}</span></td>
               <td className="px-3 py-3">
                 {editing===s.id ? (
@@ -432,7 +432,7 @@ function SLATab() {
                 ) : (
                   <div className="flex items-center gap-2">
                     <span className="text-[13px]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700,color:s.days<=3?"#c8102e":s.days<=7?"#b45309":"#166534" }}>{s.days}</span>
-                    <span className="text-[13px] text-[#635647]">ngày</span>
+                    <span className="text-[13px] text-slate-700">ngày</span>
                     <button onClick={()=>{ setEditing(s.id); setTempDays(s.days); }} className="size-5 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity" style={{ background:"#fef3c7" }}>
                       <Edit3 className="size-3 text-[#92400e]"/>
                     </button>
@@ -446,14 +446,14 @@ function SLATab() {
         </table>
         <div className="px-4 py-2.5 border-t border-[#e2e8f0] flex items-center gap-2" style={{ background:"#f4f7fb" }}>
           <AlertTriangle className="size-4 text-[#b45309]"/>
-          <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>Giai đoạn LYK công khai phải tối thiểu 5 ngày làm việc theo Điều 15 TT 15/2025/TT-BNV</span>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Giai đoạn LYK công khai phải tối thiểu 5 ngày làm việc theo Điều 15 TT 15/2025/TT-BNV</span>
         </div>
       </div>
       {/* Kỳ xét config */}
       <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
           <Calendar className="size-4 text-[#1C5FBE]"/>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kỳ xét tặng năm 2026</span>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Kỳ xét tặng năm 2026</span>
         </div>
         <div className="p-4 grid grid-cols-3 gap-3">
           {[
@@ -462,8 +462,8 @@ function SLATab() {
             { label:"Kỳ xét đột xuất", open:"Linh hoạt", close:"Linh hoạt", status:"Theo QĐ" },
           ].map(k=>(
             <div key={k.label} className="p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background:"white" }}>
-              <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{k.label}</div>
-              <div className="text-[13px] text-[#5a5040] space-y-1">
+              <div className="text-[13px] text-slate-900 mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{k.label}</div>
+              <div className="text-[13px] text-slate-700 space-y-1">
                 <div>Mở hồ sơ: <strong>{k.open}</strong></div>
                 <div>Đóng hồ sơ: <strong>{k.close}</strong></div>
               </div>
@@ -484,20 +484,35 @@ const NGUON_CFG: Record<NguonKinhPhi, { label: string; color: string; bg: string
 };
 const LEVEL_CFG2: Record<string, { label: string; color: string; bg: string }> = {
   nha_nuoc:   { label: "Nhà nước",   color: "#c8102e", bg: "#fee2e2" },
-  chinh_phu:  { label: "Chính phủ",  color: "#0b1426", bg: "#e8ecf3" },
+  chinh_phu:  { label: "Chính phủ",  color: "#0f172a", bg: "#e8ecf3" },
   bo_nganh:   { label: "Bộ/Ngành",   color: "#7c3aed", bg: "#f5f3ff" },
   tinh:       { label: "Cấp Tỉnh",   color: "#1C5FBE", bg: "#ddeafc" },
   so_huyen:   { label: "Sở/Huyện",   color: "#b45309", bg: "#fef3c7" },
   co_so:      { label: "Cơ sở",      color: "#166534", bg: "#dcfce7" },
 };
 
+interface CustomReward {
+  id: string; ten: string; level: RewardLevel;
+  tienThuong: number; nguonKinhPhi: NguonKinhPhi; canCu: string;
+  custom: true;
+}
+type AddForm = { ten: string; level: RewardLevel; tienThuong: string; nguonKinhPhi: NguonKinhPhi; canCu: string };
+type RightMode = "idle" | "edit" | "add";
+
 function KinhPhiTab() {
-  /* local overrides — in real app this would be persisted */
+  /* ── catalog overrides ────────────────────────────── */
   const [overrides, setOverrides] = useState<Record<string, { tienThuong: number; nguonKinhPhi: NguonKinhPhi }>>({});
   const [sel, setSel] = useState<RewardForm | null>(null);
   const [editTien, setEditTien] = useState("");
   const [editNguon, setEditNguon] = useState<NguonKinhPhi>("quy_thi_dua");
   const [saved, setSaved] = useState<Record<string, boolean>>({});
+
+  /* ── custom items ─────────────────────────────────── */
+  const [customItems, setCustomItems] = useState<CustomReward[]>([]);
+  const [rightMode, setRightMode] = useState<RightMode>("idle");
+  const [addForm, setAddForm] = useState<AddForm>({ ten: "", level: "tinh", tienThuong: "", nguonKinhPhi: "quy_thi_dua", canCu: "" });
+  const [addErrors, setAddErrors] = useState<Partial<Record<keyof AddForm, string>>>({});
+  const [addSaved, setAddSaved] = useState(false);
 
   const getEffective = (r: RewardForm) => ({
     tienThuong:   overrides[r.id]?.tienThuong   ?? r.tienThuong,
@@ -505,7 +520,7 @@ function KinhPhiTab() {
   });
 
   const openEdit = (r: RewardForm) => {
-    setSel(r);
+    setSel(r); setRightMode("edit");
     const eff = getEffective(r);
     setEditTien(String(eff.tienThuong));
     setEditNguon(eff.nguonKinhPhi);
@@ -521,15 +536,49 @@ function KinhPhiTab() {
     setSaved(p => ({ ...p, [sel.id]: true }));
   };
 
-  /* summary totals by nguon */
-  const totals = REWARD_CATALOG.reduce<Record<NguonKinhPhi, number>>(
-    (acc, r) => {
-      const eff = getEffective(r);
-      if (eff.tienThuong > 0) acc[eff.nguonKinhPhi] = (acc[eff.nguonKinhPhi] || 0) + eff.tienThuong;
-      return acc;
-    },
-    {} as Record<NguonKinhPhi, number>
-  );
+  /* ── add-new helpers ──────────────────────────────── */
+  const startAdd = () => {
+    setSel(null);
+    setRightMode("add");
+    setAddForm({ ten: "", level: "tinh", tienThuong: "", nguonKinhPhi: "quy_thi_dua", canCu: "" });
+    setAddErrors({});
+    setAddSaved(false);
+  };
+
+  const validateAdd = (): boolean => {
+    const errs: typeof addErrors = {};
+    if (!addForm.ten.trim())                                          errs.ten = "Vui lòng nhập tên hình thức";
+    if (!(parseInt(addForm.tienThuong.replace(/\D/g, ""), 10) > 0)) errs.tienThuong = "Vui lòng nhập mức tiền > 0";
+    if (!addForm.canCu.trim())                                        errs.canCu = "Vui lòng nhập căn cứ pháp lý";
+    setAddErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const confirmAdd = () => {
+    if (!validateAdd()) return;
+    setCustomItems(p => [{
+      id: `custom-${Date.now()}`,
+      ten: addForm.ten.trim(),
+      level: addForm.level,
+      tienThuong: parseInt(addForm.tienThuong.replace(/\D/g, ""), 10),
+      nguonKinhPhi: addForm.nguonKinhPhi,
+      canCu: addForm.canCu.trim(),
+      custom: true,
+    }, ...p]);
+    setAddSaved(true);
+    setTimeout(() => { setRightMode("idle"); setAddSaved(false); }, 1200);
+  };
+
+  const deleteCustom = (id: string) => setCustomItems(p => p.filter(x => x.id !== id));
+
+  /* summary totals by nguon — includes custom items */
+  const totals = [
+    ...REWARD_CATALOG.map(r => ({ nguon: getEffective(r).nguonKinhPhi, amt: getEffective(r).tienThuong })),
+    ...customItems.map(r => ({ nguon: r.nguonKinhPhi, amt: r.tienThuong })),
+  ].reduce<Record<NguonKinhPhi, number>>((acc, { nguon, amt }) => {
+    if (amt > 0) acc[nguon] = (acc[nguon] || 0) + amt;
+    return acc;
+  }, {} as Record<NguonKinhPhi, number>);
 
   return (
     <div className="grid grid-cols-5 gap-4 h-full">
@@ -537,19 +586,27 @@ function KinhPhiTab() {
       <div className="col-span-3 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
           <Wallet className="size-4 text-[#1C5FBE]" />
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             Mức tiền thưởng — TT 28/2025/TT-BTC &amp; NĐ 152/2025/NĐ-CP
           </span>
-          <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-            {REWARD_CATALOG.length} hình thức
+          <span className="ml-2 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+            {REWARD_CATALOG.length + customItems.length} hình thức
           </span>
+          <button
+            onClick={startAdd}
+            className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px] text-[13px] text-white transition-opacity hover:opacity-90"
+            style={{ background: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 600 }}
+          >
+            <Plus className="size-3.5" />
+            Thêm hình thức
+          </button>
         </div>
         <div className="flex-1 overflow-y-auto">
           <table className="w-full text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
             <thead>
               <tr style={{ background: "#f4f7fb" }}>
                 {["Hình thức khen thưởng", "Cấp", "Tiền thưởng", "Nguồn KP", "Căn cứ tiền"].map(h => (
-                  <th key={h} className="text-left px-3 py-2 text-[#0b1426]" style={{ fontWeight: 700 }}>{h}</th>
+                  <th key={h} className="text-left px-3 py-2 text-slate-900" style={{ fontWeight: 700 }}>{h}</th>
                 ))}
                 <th className="px-3 py-2" />
               </tr>
@@ -571,7 +628,7 @@ function KinhPhiTab() {
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-2">
                         {isChanged && <span className="size-1.5 rounded-full bg-[#b45309] shrink-0" title="Đã thay đổi" />}
-                        <span className="text-[13px] text-[#0b1426]" style={{ fontWeight: isSel ? 700 : 400 }}>{r.ten}</span>
+                        <span className="text-[13px] text-slate-900" style={{ fontWeight: isSel ? 700 : 400 }}>{r.ten}</span>
                       </div>
                     </td>
                     <td className="px-3 py-2.5">
@@ -582,13 +639,13 @@ function KinhPhiTab() {
                         ? <span className="text-[13px] font-mono" style={{ color: "#1C5FBE", fontWeight: 700 }}>
                             {formatTienThuong(eff.tienThuong)}
                           </span>
-                        : <span className="text-[13px] text-[#6b5e47]">Không có</span>
+                        : <span className="text-[13px] text-slate-600">Không có</span>
                       }
                     </td>
                     <td className="px-3 py-2.5">
                       <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: nc.bg, color: nc.color }}>{nc.label}</span>
                     </td>
-                    <td className="px-3 py-2.5 text-[13px] text-[#635647] max-w-[150px] truncate">{r.canCuTien}</td>
+                    <td className="px-3 py-2.5 text-[13px] text-slate-700 max-w-[150px] truncate">{r.canCuTien}</td>
                     <td className="px-3 py-2.5">
                       <button
                         onClick={e => { e.stopPropagation(); openEdit(r); }}
@@ -601,6 +658,55 @@ function KinhPhiTab() {
                 );
               })}
             </tbody>
+
+            {/* ── Custom / internal items ──────────────────────────── */}
+            {customItems.length > 0 && (
+              <tbody>
+                <tr>
+                  <td colSpan={6} className="px-3 py-1.5 border-t border-b" style={{ background: "#fffbeb", borderColor: "#fde68a" }}>
+                    <span className="text-[12px] font-semibold" style={{ color: "#92400e", fontFamily: "var(--font-sans)" }}>
+                      Hình thức nội bộ ({customItems.length})
+                    </span>
+                  </td>
+                </tr>
+                {customItems.map((r, i) => {
+                  const lc = LEVEL_CFG2[r.level];
+                  const nc = NGUON_CFG[r.nguonKinhPhi];
+                  return (
+                    <tr key={r.id}
+                      className="border-t border-[#e2e8f0]"
+                      style={{ background: i % 2 === 0 ? "#fffdf5" : "#fffbeb" }}>
+                      <td className="px-3 py-2.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] px-1.5 py-0.5 rounded font-semibold shrink-0"
+                            style={{ background: "#fef3c7", color: "#92400e", fontFamily: "var(--font-sans)" }}>Nội bộ</span>
+                          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{r.ten}</span>
+                        </div>
+                      </td>
+                      <td className="px-3 py-2.5">
+                        <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: lc.bg, color: lc.color, fontFamily: "var(--font-sans)" }}>{lc.label}</span>
+                      </td>
+                      <td className="px-3 py-2.5">
+                        <span className="text-[13px] font-mono font-bold" style={{ color: "#1C5FBE" }}>{formatTienThuong(r.tienThuong)}</span>
+                      </td>
+                      <td className="px-3 py-2.5">
+                        <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background: nc.bg, color: nc.color, fontFamily: "var(--font-sans)" }}>{nc.label}</span>
+                      </td>
+                      <td className="px-3 py-2.5 text-[13px] text-slate-700 max-w-[150px] truncate" style={{ fontFamily: "var(--font-sans)" }}>{r.canCu}</td>
+                      <td className="px-3 py-2.5">
+                        <button
+                          onClick={() => deleteCustom(r.id)}
+                          className="size-6 flex items-center justify-center rounded hover:bg-[#fee2e2] transition-colors"
+                          title="Xóa hình thức nội bộ"
+                        >
+                          <Trash2 className="size-3 text-[#c8102e]" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
           </table>
         </div>
         {/* Footer — nguon totals */}
@@ -610,59 +716,173 @@ function KinhPhiTab() {
             return (
               <div key={nguon} className="flex items-center gap-1.5 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                 <span className="size-2 rounded-full" style={{ background: nc.color }} />
-                <span style={{ color: "#635647" }}>{nc.label}:</span>
+                <span style={{ color: "#334155" }}>{nc.label}:</span>
                 <span style={{ color: nc.color, fontWeight: 700 }}>{formatTienThuong(amt)}</span>
               </div>
             );
           })}
-          <span className="ml-auto text-[13px] text-[#6b5e47]">* Hiển thị tổng tiền thưởng/người theo từng nguồn</span>
+          <span className="ml-auto text-[13px] text-slate-600">* Hiển thị tổng tiền thưởng/người theo từng nguồn</span>
         </div>
       </div>
 
-      {/* ── Right: edit panel ────────────────────────────────────── */}
+      {/* ── Right panel — 3 modes: add / edit / idle ─────────────── */}
       <div className="col-span-2 rounded-[10px] border border-[#e2e8f0] overflow-hidden flex flex-col">
-        <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
-          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-            Cấu hình Kinh phí
+        <div className="px-4 py-3 border-b border-[#e2e8f0] flex items-center gap-2" style={{ background: "#f4f7fb" }}>
+          <span className="text-[13px] text-slate-900 flex-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            {rightMode === "add" ? "Thêm hình thức nội bộ" : rightMode === "edit" && sel ? sel.ten : "Cấu hình Kinh phí"}
           </span>
+          {rightMode === "add" && (
+            <button onClick={() => setRightMode("idle")} className="size-6 flex items-center justify-center rounded hover:bg-[#e2e8f0]">
+              <X className="size-4 text-slate-700" />
+            </button>
+          )}
         </div>
-        {sel ? (
+
+        {/* ── ADD FORM ──────────────────────────────────────────── */}
+        {rightMode === "add" && (
           <div className="p-4 flex-1 overflow-y-auto space-y-4">
-            {/* title */}
             <div>
-              <p className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-                {sel.ten}
-              </p>
-              <p className="text-[13px] text-[#635647] mt-0.5">{sel.canCuThuong}</p>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Tên hình thức khen thưởng *
+              </label>
+              <input
+                type="text"
+                value={addForm.ten}
+                onChange={e => { setAddForm(p => ({ ...p, ten: e.target.value })); setAddErrors(p => ({ ...p, ten: undefined })); }}
+                placeholder="VD: Giấy khen đặc biệt Tỉnh ủy"
+                className="w-full px-3 border rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
+                style={{ height: 36, fontFamily: "var(--font-sans)", borderColor: addErrors.ten ? "#f87171" : "#e2e8f0" }}
+              />
+              {addErrors.ten && <p className="text-[12px] text-[#c8102e] mt-1">{addErrors.ten}</p>}
             </div>
 
-            {/* tiền thưởng */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-                Mức tiền thưởng (VNĐ/người)
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Cấp khen thưởng
+              </label>
+              <div className="grid grid-cols-3 gap-1.5">
+                {(Object.entries(LEVEL_CFG2) as [string, typeof LEVEL_CFG2[string]][]).map(([k, v]) => (
+                  <button key={k}
+                    onClick={() => setAddForm(p => ({ ...p, level: k as RewardLevel }))}
+                    className="px-2 py-1.5 rounded-[6px] text-[12px] border transition-all text-center"
+                    style={{
+                      background: addForm.level === k ? v.bg : "white",
+                      borderColor: addForm.level === k ? v.color : "#e2e8f0",
+                      color: addForm.level === k ? v.color : "#635647",
+                      fontFamily: "var(--font-sans)", fontWeight: addForm.level === k ? 600 : 400,
+                    }}>
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Mức tiền thưởng (VNĐ/người) *
               </label>
               <div className="flex items-center gap-2">
                 <input
                   type="text"
-                  value={editTien}
+                  value={addForm.tienThuong}
+                  onChange={e => { setAddForm(p => ({ ...p, tienThuong: e.target.value.replace(/\D/g, "") })); setAddErrors(p => ({ ...p, tienThuong: undefined })); }}
+                  placeholder="0"
+                  className="flex-1 px-3 border rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
+                  style={{ height: 36, fontFamily: "JetBrains Mono, monospace", color: "#1C5FBE", borderColor: addErrors.tienThuong ? "#f87171" : "#93c5fd" }}
+                />
+                <span className="text-[13px] text-slate-700 shrink-0">đồng</span>
+              </div>
+              {addErrors.tienThuong && <p className="text-[12px] text-[#c8102e] mt-1">{addErrors.tienThuong}</p>}
+              {!addErrors.tienThuong && parseInt(addForm.tienThuong || "0", 10) > 0 && (
+                <p className="text-[12px] text-[#166534] mt-1">≈ {formatTienThuong(parseInt(addForm.tienThuong, 10))}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Nguồn kinh phí
+              </label>
+              <div className="space-y-2">
+                {(Object.entries(NGUON_CFG) as [NguonKinhPhi, typeof NGUON_CFG[NguonKinhPhi]][]).map(([k, v]) => (
+                  <label key={k} className="flex items-center gap-3 p-2.5 rounded-[8px] cursor-pointer border transition-all" style={{
+                    background: addForm.nguonKinhPhi === k ? v.bg : "white",
+                    borderColor: addForm.nguonKinhPhi === k ? v.color + "40" : "#e2e8f0",
+                  }}>
+                    <input type="radio" name="add_nguon" value={k}
+                      checked={addForm.nguonKinhPhi === k}
+                      onChange={() => setAddForm(p => ({ ...p, nguonKinhPhi: k }))}
+                      className="accent-[#1C5FBE]"
+                    />
+                    <div>
+                      <span className="text-[13px]" style={{ color: v.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v.label}</span>
+                      <p className="text-[12px] text-slate-700">
+                        {k === "ngan_sach_nn"  && "Từ Ngân sách Nhà nước"}
+                        {k === "quy_thi_dua"   && "Từ Quỹ Thi đua Khen thưởng"}
+                        {k === "don_vi_tu_chi" && "Đơn vị tự chi từ kinh phí hoạt động"}
+                      </p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Căn cứ pháp lý *
+              </label>
+              <input
+                type="text"
+                value={addForm.canCu}
+                onChange={e => { setAddForm(p => ({ ...p, canCu: e.target.value })); setAddErrors(p => ({ ...p, canCu: undefined })); }}
+                placeholder="VD: Quy chế số 123/QC-TU ngày 01/01/2026"
+                className="w-full px-3 border rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
+                style={{ height: 36, fontFamily: "var(--font-sans)", borderColor: addErrors.canCu ? "#f87171" : "#e2e8f0" }}
+              />
+              {addErrors.canCu && <p className="text-[12px] text-[#c8102e] mt-1">{addErrors.canCu}</p>}
+            </div>
+
+            <div className="flex gap-2 pt-2 border-t border-[#e2e8f0]">
+              <button onClick={confirmAdd}
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white"
+                style={{ background: addSaved ? "#166534" : "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+                {addSaved ? <><CheckCircle2 className="size-3.5" />Đã thêm!</> : <><Plus className="size-3.5" />Thêm hình thức</>}
+              </button>
+              <button onClick={() => setRightMode("idle")}
+                className="px-3 py-2 rounded-[6px] text-[13px] border border-[#e2e8f0] text-slate-700"
+                style={{ fontFamily: "var(--font-sans)" }}>
+                Hủy
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── EDIT FORM (catalog item) ───────────────────────────── */}
+        {rightMode === "edit" && sel && (
+          <div className="p-4 flex-1 overflow-y-auto space-y-4">
+            <div>
+              <p className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{sel.ten}</p>
+              <p className="text-[13px] text-slate-700 mt-0.5">{sel.canCuThuong}</p>
+            </div>
+
+            <div>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                Mức tiền thưởng (VNĐ/người)
+              </label>
+              <div className="flex items-center gap-2">
+                <input type="text" value={editTien}
                   onChange={e => setEditTien(e.target.value.replace(/\D/g, ""))}
                   className="flex-1 px-3 border rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
                   style={{ height: 36, fontFamily: "JetBrains Mono, monospace", color: "#1C5FBE", borderColor: tienError ? "#f87171" : "#93c5fd" }}
                   placeholder="0"
                 />
-                <span className="text-[13px] text-[#635647] shrink-0">đồng</span>
+                <span className="text-[13px] text-slate-700 shrink-0">đồng</span>
               </div>
-              {tienError && <p className="text-[13px] text-[#c8102e] mt-1" style={{ fontFamily: "var(--font-sans)" }}>{tienError}</p>}
-              {!tienError && tienVal > 0 && (
-                <p className="text-[13px] text-[#166534] mt-1">
-                  ≈ {formatTienThuong(tienVal)}
-                </p>
-              )}
+              {tienError && <p className="text-[13px] text-[#c8102e] mt-1">{tienError}</p>}
+              {!tienError && tienVal > 0 && <p className="text-[13px] text-[#166534] mt-1">≈ {formatTienThuong(tienVal)}</p>}
             </div>
 
-            {/* nguon kinh phi */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+              <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Nguồn kinh phí
               </label>
               <div className="space-y-2">
@@ -671,20 +891,13 @@ function KinhPhiTab() {
                     background: editNguon === k ? v.bg : "white",
                     borderColor: editNguon === k ? v.color + "40" : "#e2e8f0",
                   }}>
-                    <input
-                      type="radio"
-                      name="nguon"
-                      value={k}
-                      checked={editNguon === k}
-                      onChange={() => setEditNguon(k)}
-                      className="accent-[#1C5FBE]"
-                    />
+                    <input type="radio" name="nguon" value={k} checked={editNguon === k} onChange={() => setEditNguon(k)} className="accent-[#1C5FBE]" />
                     <div>
                       <span className="text-[13px]" style={{ color: v.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>{v.label}</span>
-                      <p className="text-[13px] text-[#635647]">
-                        {k === "ngan_sach_nn"   && "Từ Ngân sách Nhà nước — TT 28/2025/TT-BTC"}
-                        {k === "quy_thi_dua"    && "Từ Quỹ Thi đua Khen thưởng đơn vị"}
-                        {k === "don_vi_tu_chi"  && "Đơn vị tự chi từ kinh phí hoạt động"}
+                      <p className="text-[13px] text-slate-700">
+                        {k === "ngan_sach_nn"  && "Từ Ngân sách Nhà nước — TT 28/2025/TT-BTC"}
+                        {k === "quy_thi_dua"   && "Từ Quỹ Thi đua Khen thưởng đơn vị"}
+                        {k === "don_vi_tu_chi" && "Đơn vị tự chi từ kinh phí hoạt động"}
                       </p>
                     </div>
                   </label>
@@ -692,60 +905,58 @@ function KinhPhiTab() {
               </div>
             </div>
 
-            {/* can cu */}
             <div className="p-3 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#f4f7fb" }}>
-              <div className="text-[13px] uppercase tracking-wider text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Căn cứ tiền thưởng</div>
-              <p className="text-[13px] text-[#5a5040]">{sel.canCuTien}</p>
+              <div className="text-[13px] uppercase tracking-wider text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Căn cứ tiền thưởng</div>
+              <p className="text-[13px] text-slate-700">{sel.canCuTien}</p>
             </div>
 
-            {/* default value notice */}
             {overrides[sel.id] && (
               <div className="flex items-start gap-2 p-3 rounded-[8px] border border-[#fde68a]" style={{ background: "#fffbeb" }}>
                 <AlertTriangle className="size-3.5 text-[#b45309] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-[13px] text-[#92400e]" style={{ fontWeight: 600 }}>Đã thay đổi so với mặc định</p>
-                  <p className="text-[13px] text-[#635647]">Mặc định: {formatTienThuong(sel.tienThuong)} · {NGUON_CFG[sel.nguonKinhPhi].label}</p>
+                  <p className="text-[13px] text-slate-700">Mặc định: {formatTienThuong(sel.tienThuong)} · {NGUON_CFG[sel.nguonKinhPhi].label}</p>
                 </div>
               </div>
             )}
 
-            {/* actions */}
             <div className="flex gap-2 pt-2 border-t border-[#e2e8f0]">
-              <button
-                onClick={saveEdit}
-                disabled={!!tienError}
+              <button onClick={saveEdit} disabled={!!tienError}
                 className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-[6px] text-[13px] text-white transition-opacity"
-                style={{ background: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 600, opacity: tienError ? 0.5 : 1, cursor: tienError ? "not-allowed" : "pointer" }}
-              >
+                style={{ background: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 600, opacity: tienError ? 0.5 : 1, cursor: tienError ? "not-allowed" : "pointer" }}>
                 {saved[sel.id] ? <><CheckCircle2 className="size-3.5" />Đã lưu</> : <><Save className="size-3.5" />Lưu thay đổi</>}
               </button>
               {overrides[sel.id] && (
                 <button
-                  onClick={() => {
-                    setOverrides(p => { const n = { ...p }; delete n[sel.id]; return n; });
-                    setEditTien(String(sel.tienThuong));
-                    setEditNguon(sel.nguonKinhPhi);
-                    setSaved(p => ({ ...p, [sel.id]: false }));
-                  }}
+                  onClick={() => { setOverrides(p => { const n = { ...p }; delete n[sel.id]; return n; }); setEditTien(String(sel.tienThuong)); setEditNguon(sel.nguonKinhPhi); setSaved(p => ({ ...p, [sel.id]: false })); }}
                   className="px-3 py-2 rounded-[6px] text-[13px] border border-[#fca5a5] text-[#c8102e]"
-                  style={{ fontFamily: "var(--font-sans)" }}
-                  title="Đặt lại về giá trị mặc định theo TT 28/2025"
-                >
+                  style={{ fontFamily: "var(--font-sans)" }} title="Đặt lại về giá trị mặc định theo TT 28/2025">
                   Đặt lại
                 </button>
               )}
-              <button onClick={() => setSel(null)} className="px-3 py-2 rounded-[6px] text-[13px] border border-[#e2e8f0] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+              <button onClick={() => { setSel(null); setRightMode("idle"); }}
+                className="px-3 py-2 rounded-[6px] text-[13px] border border-[#e2e8f0] text-slate-700"
+                style={{ fontFamily: "var(--font-sans)" }}>
                 Đóng
               </button>
             </div>
           </div>
-        ) : (
+        )}
+
+        {/* ── IDLE (empty state) ─────────────────────────────────── */}
+        {rightMode === "idle" && (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center p-8">
             <div className="size-12 rounded-full flex items-center justify-center" style={{ background: "#ddeafc" }}>
               <DollarSign className="size-6 text-[#1C5FBE]" />
             </div>
-            <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Chọn hình thức khen để cấu hình</p>
-            <p className="text-[13px] text-[#635647]">Mức tiền thưởng và nguồn kinh phí theo TT 28/2025/TT-BTC</p>
+            <p className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Chọn hình thức khen để chỉnh sửa</p>
+            <p className="text-[13px] text-slate-700">hoặc nhấn "+ Thêm hình thức" để tạo mới</p>
+            <button onClick={startAdd}
+              className="mt-1 flex items-center gap-1.5 px-3 py-2 rounded-[8px] text-[13px] text-white"
+              style={{ background: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <Plus className="size-3.5" />
+              Thêm hình thức nội bộ
+            </button>
           </div>
         )}
       </div>
@@ -775,7 +986,7 @@ function GeneralTab() {
         {/* Feature toggles */}
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Tính năng Hệ thống</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Tính năng Hệ thống</span>
           </div>
           <div className="p-4 space-y-3">
             {[
@@ -788,8 +999,8 @@ function GeneralTab() {
               return (
                 <div key={f.key} className="flex items-center gap-3 p-3 rounded-[8px] border border-[#e2e8f0]">
                   <div className="flex-1">
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{f.label}</div>
-                    <div className="text-[13px] text-[#635647]">{f.desc}</div>
+                    <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>{f.label}</div>
+                    <div className="text-[13px] text-slate-700">{f.desc}</div>
                   </div>
                   <button onClick={()=>toggle(f.key)} className="shrink-0">
                     {on ? <ToggleRight className="size-6 text-[#1C5FBE]"/> : <ToggleLeft className="size-6 text-[#d1d5db]"/>}
@@ -802,7 +1013,7 @@ function GeneralTab() {
         {/* System params */}
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <div className="px-4 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông số Hệ thống</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Thông số Hệ thống</span>
           </div>
           <div className="p-4 space-y-3">
             {[
@@ -815,7 +1026,7 @@ function GeneralTab() {
               const err = fieldErrors[f.key];
               return (
                 <div key={f.key} className="flex items-start gap-3">
-                  <span className="text-[13px] text-[#5a5040] w-[160px] shrink-0 pt-[10px]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <span className="text-[13px] text-slate-700 w-[160px] shrink-0 pt-[10px]" style={{ fontFamily: "var(--font-sans)" }}>
                     {f.label}<span style={{ color:"#c8102e" }}> *</span>
                   </span>
                   <div className="flex-1">
@@ -824,7 +1035,7 @@ function GeneralTab() {
                         onChange={e=>setSettings(p=>({...p,[f.key]:e.target.value}))}
                         className="flex-1 px-3 border rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
                         style={{ height:36,fontFamily: "var(--font-sans)",borderColor:err?"#f87171":"#d1d5db" }}/>
-                      {f.suffix&&<span className="text-[13px] text-[#635647]">{f.suffix}</span>}
+                      {f.suffix&&<span className="text-[13px] text-slate-700">{f.suffix}</span>}
                     </div>
                     {err&&<p className="text-[13px] text-[#c8102e] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{err}</p>}
                   </div>
@@ -841,7 +1052,7 @@ function GeneralTab() {
           style={{ background:"#1C5FBE",fontFamily: "var(--font-sans)",fontWeight:600,opacity:canSave?1:0.5,cursor:canSave?"pointer":"not-allowed" }}>
           <Save className="size-4"/>Lưu tất cả thay đổi
         </button>
-        <button className="flex items-center gap-2 px-5 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+        <button className="flex items-center gap-2 px-5 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
           Khôi phục mặc định
         </button>
       </div>
@@ -944,7 +1155,7 @@ function PhongTraoBypassTab() {
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
             <Settings2 className="size-4 text-[#1C5FBE]"/>
-            <span className="text-[13px] font-bold text-[#0b1426]">Mẫu cấu hình nhanh</span>
+            <span className="text-[13px] font-bold text-slate-900">Mẫu cấu hình nhanh</span>
             <span className="ml-auto text-[13px] font-semibold" style={{ color: soBoQua > 0 ? "#b45309" : "#166534" }}>
               {soBoQua > 0
                 ? `Đang bỏ qua ${soBoQua} bước · Còn lại ${12 - soBoQua} bước`
@@ -976,7 +1187,7 @@ function PhongTraoBypassTab() {
                         </span>
                       )}
                     </div>
-                    <p className="text-[13px] text-[#635647] leading-snug mb-2">{p.desc}</p>
+                    <p className="text-[13px] text-slate-700 leading-snug mb-2">{p.desc}</p>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-[12px] px-2 py-0.5 rounded font-semibold" style={{ background:"#dcfce7", color:"#166534" }}>
                         Thực hiện {12 - soBoQuaMau} bước
@@ -998,8 +1209,8 @@ function PhongTraoBypassTab() {
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
             <Zap className="size-4 text-[#7c3aed]"/>
-            <span className="text-[13px] font-bold text-[#0b1426]">Cấu hình chi tiết từng bước</span>
-            <span className="ml-auto text-[13px] text-[#635647]">Bật/tắt để cho phép bỏ qua từng bước</span>
+            <span className="text-[13px] font-bold text-slate-900">Cấu hình chi tiết từng bước</span>
+            <span className="ml-auto text-[13px] text-slate-700">Bật/tắt để cho phép bỏ qua từng bước</span>
           </div>
 
           {PT_PHASES.map(phase => {
@@ -1061,12 +1272,12 @@ function PhongTraoBypassTab() {
                               </span>
                             )}
                           </div>
-                          <p className="text-[13px] text-[#635647] leading-snug">
+                          <p className="text-[13px] text-slate-700 leading-snug">
                             {s.bypassable ? s.reason : (s.canCu ?? "Bắt buộc theo quy định pháp luật")}
                           </p>
                           {!dangBoQua && s.bypassable && s.roles && (
                             <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                              <span className="text-[12px] text-[#635647]">Vai trò được phép bỏ qua:</span>
+                              <span className="text-[12px] text-slate-700">Vai trò được phép bỏ qua:</span>
                               {s.roles.map(r => (
                                 <span key={r} className="text-[12px] font-semibold px-2 py-0.5 rounded" style={{ background:"#f4f7fb", color:"#0b1426" }}>
                                   {r}
@@ -1108,8 +1319,8 @@ function PhongTraoBypassTab() {
         <div className="rounded-[10px] border border-[#e2e8f0] overflow-hidden">
           <div className="flex items-center gap-2 px-5 py-3 border-b border-[#e2e8f0]" style={{ background:"#f4f7fb" }}>
             <CheckCircle2 className="size-4 text-[#166534]"/>
-            <span className="text-[13px] font-bold text-[#0b1426]">Quy trình hiệu lực sau khi áp dụng cấu hình</span>
-            <span className="ml-auto text-[13px] text-[#635647]">{effective.length} / {PT_STATES.length} bước</span>
+            <span className="text-[13px] font-bold text-slate-900">Quy trình hiệu lực sau khi áp dụng cấu hình</span>
+            <span className="ml-auto text-[13px] text-slate-700">{effective.length} / {PT_STATES.length} bước</span>
           </div>
           <div className="px-5 py-4 flex items-center flex-wrap gap-y-2 gap-x-0.5">
             {effective.map((s, idx) => {
@@ -1136,7 +1347,7 @@ function PhongTraoBypassTab() {
           </button>
           <button
             onClick={() => { setBypasses(Object.fromEntries(PT_BYPASS_KEYS.map(k=>[k,false]))); setSavedAt(null); }}
-            className="px-4 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] text-[#5a5040]">
+            className="px-4 py-2.5 rounded-[8px] text-[13px] border border-[#e2e8f0] text-slate-700">
             Đặt lại mặc định
           </button>
           {savedAt && (
@@ -1170,8 +1381,8 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4 p-16 text-center" style={{ background:"#ffffff" }}>
         <Shield className="size-16 text-[#d1d5db]"/>
-        <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Không có quyền truy cập</h2>
-        <p className="text-[14px] text-[#635647]">Trang Cấu hình hệ thống yêu cầu vai trò Admin, Lãnh đạo cấp cao hoặc Lãnh đạo đơn vị.</p>
+        <h2 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Không có quyền truy cập</h2>
+        <p className="text-[14px] text-slate-700">Trang Cấu hình hệ thống yêu cầu vai trò Admin, Lãnh đạo cấp cao hoặc Lãnh đạo đơn vị.</p>
       </div>
     );
   }
@@ -1184,8 +1395,8 @@ export function CauHinhDonViPage({ user }: { user: LoginUser }) {
             <Settings2 className="size-5 text-[#8a6400]"/>
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426] leading-tight" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình Hệ thống</h1>
-            <p className="text-[13px] text-[#635647]">Multi-tenant · Danh hiệu & Thẩm quyền theo QĐ 34/2021 + NĐ 152/2025/NĐ-CP · SLA theo TT 15/2025</p>
+            <h1 className="text-[18px] text-slate-900 leading-tight" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Cấu hình Hệ thống</h1>
+            <p className="text-[13px] text-slate-700">Multi-tenant · Danh hiệu & Thẩm quyền theo QĐ 34/2021 + NĐ 152/2025/NĐ-CP · SLA theo TT 15/2025</p>
           </div>
           <div className="ml-auto flex items-center gap-2 px-3 py-1.5 rounded-[8px]" style={{ background:"#dcfce7",border:"1px solid #86efac" }}>
             <CheckCircle2 className="size-4 text-[#166534]"/>

@@ -31,7 +31,7 @@ interface Nomination {
 
 /* ─── Status config ──────────────────────────────────────────────── */
 const SC: Record<NomStatus, { label: string; color: string; bg: string; dot: string }> = {
-  nhap:            { label: "Bản nháp",           color: "#5a5040", bg: "#eef2f8", dot: "#635647" },
+  nhap:            { label: "Bản nháp",           color: "#334155", bg: "#eef2f8", dot: "#635647" },
   cho_duyet:       { label: "Chờ đơn vị duyệt",   color: "#0e7490", bg: "#e0f2fe", dot: "#0891b2" },
   da_gui_phong:    { label: "Đã gửi Phòng TĐKT",  color: "#4338ca", bg: "#e0e7ff", dot: "#4f46e5" },
   dang_tham_dinh:  { label: "Đang thẩm định",      color: "#b45309", bg: "#fef3c7", dot: "#b45309" },
@@ -133,12 +133,12 @@ function WorkflowStepper({ status }: { status: NomStatus }) {
               <div className={`size-5 rounded-full flex items-center justify-center text-[13px] font-bold transition-colors
                 ${rejected ? "bg-[#fee2e2] text-[#e11d48] border border-[#fca5a5]"
                   : done ? "bg-[#166534] text-white"
-                  : active ? "border-2 text-white" : "bg-[#eef2f8] text-[#635647] border border-[#e2e8f0]"}`}
+                  : active ? "border-2 text-white" : "bg-[#eef2f8] text-slate-700 border border-[#e2e8f0]"}`}
                 style={active && !rejected ? { background: "var(--color-primary-btn)", borderColor: "transparent" } : undefined}>
                 {done ? <CheckCheck className="size-2.5" /> : i + 1}
               </div>
               <span className={`text-[13px] mt-1 w-14 text-center leading-tight
-                ${active ? "font-semibold" : "text-[#635647]"}`}
+                ${active ? "font-semibold" : "text-slate-700"}`}
                 style={active ? { color: "var(--color-primary-btn)" } : undefined}>
                 {step}
               </span>
@@ -175,7 +175,7 @@ function ActionBar({
       className={`flex items-center gap-1.5 px-3 h-9 rounded-lg text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed
         ${variant === "primary" ? "text-white" : variant === "danger" ? "bg-[#fee2e2] text-[#c8102e] hover:bg-[#fecaca]"
           : variant === "warn" ? "bg-[#fef3c7] text-[#92400e] hover:bg-[#fde68a]"
-          : "bg-[#f4f7fb] text-[#0b1426] hover:bg-[#ece6d6]"}`}
+          : "bg-[#f4f7fb] text-slate-900 hover:bg-[#ece6d6]"}`}
       style={variant === "primary" && !disabled ? { background: theme.primary } : undefined}
     >
       {Icon && <Icon className="size-3.5" />} {label}
@@ -354,7 +354,7 @@ function DetailPanel({
       <div className="px-5 py-4 border-b border-[#eef2f8] bg-[#ffffff] flex items-start justify-between">
         <div className="flex-1 min-w-0 pr-3">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="text-[13px] font-mono text-[#635647]">{nom.code}</span>
+            <span className="text-[13px] font-mono text-slate-700">{nom.code}</span>
             {nom.urgent && (
               <span className="px-1.5 py-px bg-[#fee2e2] text-[#c8102e] rounded text-[13px] font-semibold">Khẩn</span>
             )}
@@ -365,12 +365,12 @@ function DetailPanel({
               </span>
             )}
           </div>
-          <h3 className="text-[14px] font-semibold text-[#0b1426] leading-tight" style={{ fontFamily: "var(--font-sans)" }}>
+          <h3 className="text-[14px] font-semibold text-slate-900 leading-tight" style={{ fontFamily: "var(--font-sans)" }}>
             {nom.subject}
           </h3>
           <div className="flex items-center gap-1.5 mt-1">
-            {nom.type === "ca_nhan" ? <User className="size-3 text-[#635647]" /> : <Users className="size-3 text-[#635647]" />}
-            <span className="text-[13px] text-[#635647]">{nom.position ?? "Tập thể"} · {nom.unit}</span>
+            {nom.type === "ca_nhan" ? <User className="size-3 text-slate-700" /> : <Users className="size-3 text-slate-700" />}
+            <span className="text-[13px] text-slate-700">{nom.position ?? "Tập thể"} · {nom.unit}</span>
           </div>
           <div className="mt-2"><StatusBadge status={nom.status} /></div>
         </div>
@@ -389,7 +389,7 @@ function DetailPanel({
         {(["info","docs","history"] as const).map(t => (
           <button key={t}
             onClick={() => setTab(t)}
-            className={`py-2.5 text-[13px] border-b-2 transition-colors ${tab === t ? "border-current font-semibold" : "border-transparent text-[#635647] hover:text-[#0b1426]"}`}
+            className={`py-2.5 text-[13px] border-b-2 transition-colors ${tab === t ? "border-current font-semibold" : "border-transparent text-slate-700 hover:text-slate-900"}`}
             style={tab === t ? { color: "var(--color-primary-btn)", borderColor: "var(--color-primary-btn)" } : undefined}>
             { t === "info" ? "Thông tin" : t === "docs" ? `Tài liệu (${nom.documents.length})` : (
               <span className="flex items-center gap-1">
@@ -418,18 +418,18 @@ function DetailPanel({
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-3">
                   <div className="size-7 rounded-md bg-[#f4f7fb] grid place-items-center shrink-0 mt-0.5">
-                    <Icon className="size-3.5 text-[#635647]" />
+                    <Icon className="size-3.5 text-slate-700" />
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647]">{label}</p>
-                    <p className="text-[13px] text-[#0b1426] font-medium">{value}</p>
+                    <p className="text-[13px] text-slate-700">{label}</p>
+                    <p className="text-[13px] text-slate-900 font-medium">{value}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="rounded-lg bg-[#f4f7fb] p-3">
-              <p className="text-[13px] text-[#635647] mb-1 uppercase tracking-wide">Tóm tắt thành tích</p>
-              <p className="text-[13px] text-[#0b1426] leading-relaxed">{nom.achievements}</p>
+              <p className="text-[13px] text-slate-700 mb-1 uppercase tracking-wide">Tóm tắt thành tích</p>
+              <p className="text-[13px] text-slate-900 leading-relaxed">{nom.achievements}</p>
             </div>
             <div className="flex items-start gap-2 rounded-lg bg-[#fdf3d9] border border-[#f0dba0] p-3">
               <Sparkles className="size-3.5 text-[#b45309] mt-0.5 shrink-0" />
@@ -442,18 +442,18 @@ function DetailPanel({
         {tab === "docs" && (
           <div className="space-y-2">
             {nom.documents.length === 0 ? (
-              <div className="text-center py-8 text-[13px] text-[#635647]">Chưa có tài liệu đính kèm</div>
+              <div className="text-center py-8 text-[13px] text-slate-700">Chưa có tài liệu đính kèm</div>
             ) : nom.documents.map(doc => (
               <div key={doc} className="flex items-center gap-3 p-3 rounded-lg border border-[#e2e8f0] hover:bg-[#ffffff] transition-colors">
                 <div className="size-8 rounded-md bg-[#fee2e2] grid place-items-center shrink-0">
                   <FileText className="size-4 text-[#c8102e]" />
                 </div>
-                <span className="flex-1 text-[13px] text-[#0b1426] truncate">{doc}</span>
+                <span className="flex-1 text-[13px] text-slate-900 truncate">{doc}</span>
                 <button className="btn-icon size-7"><Download className="size-3.5" /></button>
               </div>
             ))}
             {(["cá nhân","lãnh đạo đơn vị","quản trị hệ thống"].includes(user.role)) && (
-              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e2e8f0] rounded-lg text-[13px] text-[#635647] hover:border-[#c9bfa6] hover:bg-[#ffffff] transition-colors flex items-center justify-center gap-2">
+              <button className="w-full mt-2 h-10 border-2 border-dashed border-[#e2e8f0] rounded-lg text-[13px] text-slate-700 hover:border-[#c9bfa6] hover:bg-[#ffffff] transition-colors flex items-center justify-center gap-2">
                 <Upload className="size-4" /> Thêm tài liệu
               </button>
             )}
@@ -462,7 +462,7 @@ function DetailPanel({
         {tab === "history" && (
           <div className="space-y-3">
             {nom.comments.length === 0 && (
-              <div className="text-center py-6 text-[13px] text-[#635647]">
+              <div className="text-center py-6 text-[13px] text-slate-700">
                 <MessageSquare className="size-7 mx-auto mb-2 opacity-30" />
                 Chưa có nhận xét
               </div>
@@ -475,11 +475,11 @@ function DetailPanel({
                 </div>
                 <div className="flex-1 rounded-lg bg-[#f4f7fb] px-3 py-2">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[13px] font-semibold text-[#0b1426]">{c.by}</span>
-                    <span className="text-[13px] text-[#635647]">· {c.role}</span>
-                    <span className="ml-auto text-[13px] text-[#635647]">{c.time}</span>
+                    <span className="text-[13px] font-semibold text-slate-900">{c.by}</span>
+                    <span className="text-[13px] text-slate-700">· {c.role}</span>
+                    <span className="ml-auto text-[13px] text-slate-700">{c.time}</span>
                   </div>
-                  <p className="text-[13px] text-[#0b1426] leading-relaxed">{c.text}</p>
+                  <p className="text-[13px] text-slate-900 leading-relaxed">{c.text}</p>
                 </div>
               </div>
             ))}
@@ -543,8 +543,8 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[600px] overflow-hidden">
         <div className="px-6 py-5 border-b border-[#eef2f8] bg-[#ffffff] flex items-center justify-between">
           <div>
-            <h2 className="text-[14px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Tạo đề nghị khen thưởng mới</h2>
-            <p className="text-[13px] text-[#635647] mt-0.5">Điền đầy đủ thông tin để lập hồ sơ đề nghị</p>
+            <h2 className="text-[14px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Tạo đề nghị khen thưởng mới</h2>
+            <p className="text-[13px] text-slate-700 mt-0.5">Điền đầy đủ thông tin để lập hồ sơ đề nghị</p>
           </div>
           <button onClick={onClose} className="btn-icon"><X className="size-4" /></button>
         </div>
@@ -556,7 +556,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
                 <button key={t}
                   onClick={() => set("type", t)}
                   className="flex-1 h-10 rounded-lg border-2 text-[13px] font-medium transition-colors"
-                  style={form.type === t ? { borderColor: theme.primary, color: theme.primary, background: theme.tint } : { borderColor: "#e2e8f0", color: "#5a5040" }}>
+                  style={form.type === t ? { borderColor: theme.primary, color: theme.primary, background: theme.tint } : { borderColor: "#e2e8f0", color: "#334155" }}>
                   {t === "ca_nhan" ? "👤 Cá nhân" : "👥 Tập thể"}
                 </button>
               ))}
@@ -613,7 +613,7 @@ function CreateModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (da
                 ? <p className="text-[13px] text-[#c8102e]">{fieldErr("achievements")}</p>
                 : <span />
               }
-              <span className="text-[13px] text-[#635647] ml-auto">{form.achievements.trim().length}/20</span>
+              <span className="text-[13px] text-slate-700 ml-auto">{form.achievements.trim().length}/20</span>
             </div>
           </div>
         </div>
@@ -763,14 +763,14 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         <div className="px-6 pt-6 pb-0 bg-white border-b border-[#eef2f8]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <h2 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 Đề nghị Khen thưởng
               </h2>
-              <p className="text-[13px] text-[#635647] mt-0.5">Năm công tác 2026 · Tỉnh Đồng Nai</p>
+              <p className="text-[13px] text-slate-700 mt-0.5">Năm công tác 2026 · Tỉnh Đồng Nai</p>
             </div>
             <div className="flex items-center gap-5">
               {[
-                { label: "Tổng hồ sơ",  v: statusCounts.total,   color: "#0b1426" },
+                { label: "Tổng hồ sơ",  v: statusCounts.total,   color: "#0f172a" },
                 { label: "Đang xử lý",  v: statusCounts.pending, color: theme.primary },
                 { label: "Hoàn thành",  v: statusCounts.done,    color: "#166534" },
                 { label: "Khẩn cấp",   v: statusCounts.urgent,  color: "#c8102e" },
@@ -778,7 +778,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
               ].map(s => (
                 <div key={s.label} className="text-center">
                   <div className="text-[18px] leading-none font-bold" style={{ fontFamily: "var(--font-sans)", color: s.color }}>{s.v}</div>
-                  <div className="text-[13px] text-[#635647] mt-0.5">{s.label}</div>
+                  <div className="text-[13px] text-slate-700 mt-0.5">{s.label}</div>
                 </div>
               ))}
               {(user.role === "cá nhân" || user.role === "lãnh đạo đơn vị" || user.role === "quản trị hệ thống") && (
@@ -793,7 +793,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
             {tabs.map(t => (
               <button key={t}
                 onClick={() => { setActiveTab(t); setSelectedId(null); setStatusFilter("all"); }}
-                className={`px-4 h-10 text-[13px] font-medium border-b-2 transition-colors rounded-t-lg ${activeTab === t ? "" : "border-transparent text-[#635647] hover:text-[#0b1426] hover:bg-[#f4f7fb]"}`}
+                className={`px-4 h-10 text-[13px] font-medium border-b-2 transition-colors rounded-t-lg ${activeTab === t ? "" : "border-transparent text-slate-700 hover:text-slate-900 hover:bg-[#f4f7fb]"}`}
                 style={activeTab === t ? { borderColor: theme.primary, color: theme.primary } : undefined}>
                 {t}
               </button>
@@ -805,20 +805,20 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
         <div className="px-6 py-3 bg-white border-b border-[#eef2f8] flex items-center gap-3">
           <div className="flex-1 max-w-sm">
             <label className="flex items-center gap-2 h-9 px-3 rounded-lg bg-[#f4f7fb] border border-[#e2e8f0] focus-within:border-[var(--color-primary-btn)] transition">
-              <Search className="size-3.5 text-[#635647]" />
+              <Search className="size-3.5 text-slate-700" />
               <input value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Tìm theo tên, đơn vị, mã HS…"
-                className="bg-transparent outline-none text-[13px] flex-1 text-[#0b1426] placeholder:text-[#635647]" />
+                className="bg-transparent outline-none text-[13px] flex-1 text-slate-900 placeholder:text-slate-700" />
             </label>
           </div>
           <FilterDropdown value={statusFilter} onChange={setStatusFilter} />
           {statusFilter !== "all" && (
             <button onClick={() => setStatusFilter("all")}
-              className="flex items-center gap-1 text-[13px] text-[#635647] hover:text-[#0b1426]">
+              className="flex items-center gap-1 text-[13px] text-slate-700 hover:text-slate-900">
               <X className="size-3" /> Xóa lọc
             </button>
           )}
-          <span className="text-[13px] text-[#635647] ml-auto">{visible.length} kết quả</span>
+          <span className="text-[13px] text-slate-700 ml-auto">{visible.length} kết quả</span>
         </div>
 
         {/* Table */}
@@ -827,7 +827,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
             <thead>
               <tr className="border-b border-[#eef2f8] bg-[#ffffff] sticky top-0">
                 {["Mã HS","Đối tượng","Hình thức khen thưởng","Trạng thái","SLA","Ngày đề nghị",""].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-[13px] font-semibold text-[#635647] uppercase tracking-wider whitespace-nowrap">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-[13px] font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -837,7 +837,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
                   onClick={() => setSelectedId(n.id === selectedId ? null : n.id)}
                   className={`border-b border-[#eef2f8] cursor-pointer transition-colors
                     ${n.id === selectedId ? "bg-[var(--color-primary-tint)]" : "hover:bg-[#ffffff]"}`}>
-                  <td className="px-4 py-3 text-[13px] font-mono text-[#635647] whitespace-nowrap">
+                  <td className="px-4 py-3 text-[13px] font-mono text-slate-700 whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       {n.urgent && <span className="size-1.5 rounded-full bg-[#c8102e] shrink-0" />}
                       {n.code}
@@ -850,8 +850,8 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
                         {n.type === "tap_the" ? <Users className="size-3.5" /> : n.subject.split(" ").pop()?.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[13px] text-[#0b1426] font-medium truncate max-w-[180px]">{n.subject}</p>
-                        <p className="text-[13px] text-[#635647] truncate max-w-[180px]">{n.unit}</p>
+                        <p className="text-[13px] text-slate-900 font-medium truncate max-w-[180px]">{n.subject}</p>
+                        <p className="text-[13px] text-slate-700 truncate max-w-[180px]">{n.unit}</p>
                       </div>
                     </div>
                   </td>
@@ -860,7 +860,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
                   </td>
                   <td className="px-4 py-3"><StatusBadge status={n.status} /></td>
                   <td className="px-4 py-3"><SlaChip nom={n} /></td>
-                  <td className="px-4 py-3 text-[13px] text-[#635647] whitespace-nowrap">{n.submittedDate}</td>
+                  <td className="px-4 py-3 text-[13px] text-slate-700 whitespace-nowrap">{n.submittedDate}</td>
                   <td className="px-4 py-3">
                     <button className="btn-icon size-7" onClick={e => { e.stopPropagation(); setSelectedId(n.id); }}>
                       <ChevronRight className="size-4" />
@@ -869,7 +869,7 @@ export function DeNghiKhenThuongPage({ user }: { user: LoginUser }) {
                 </tr>
               ))}
               {visible.length === 0 && (
-                <tr><td colSpan={7} className="text-center py-16 text-[13px] text-[#635647]">
+                <tr><td colSpan={7} className="text-center py-16 text-[13px] text-slate-700">
                   <Eye className="size-8 mx-auto mb-2 opacity-30" /> Không có hồ sơ nào
                 </td></tr>
               )}

@@ -122,11 +122,11 @@ function WorkflowStepper({ currentStep }: { currentStep: number }) {
               </div>
               {/* Label */}
               <div className="text-center">
-                <div className={`text-[13px] leading-tight ${active ? "text-[#1C5FBE]" : done ? "text-[#166534]" : "text-[#635647]"}`}
+                <div className={`text-[13px] leading-tight ${active ? "text-[#1C5FBE]" : done ? "text-[#166534]" : "text-slate-700"}`}
                   style={{ fontFamily: "var(--font-sans)", fontWeight: active || done ? 700 : 400 }}>
                   {s.label}
                 </div>
-                <div className="text-[13px] text-[#6b5e47] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{s.sublabel}</div>
+                <div className="text-[13px] text-slate-600 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{s.sublabel}</div>
               </div>
             </div>
             {/* Connector */}
@@ -167,10 +167,10 @@ function AIPanel({ hs }: { hs: HoSoMeta }) {
           </div>
         </div>
         <div>
-          <div className="text-[13px] text-[#0b1426] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
+          <div className="text-[13px] text-slate-900 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
             {hs.aiEligible ? "✅ Đủ điều kiện" : "❌ Chưa đủ điều kiện"}
           </div>
-          <div className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Đối chiếu Luật TĐKT 2022, Điều 23-28; NĐ 152/2025/NĐ-CP, Điều 11
           </div>
         </div>
@@ -255,16 +255,16 @@ export function HoSoDetailDrawer({
                   ⏱ {hs.slaRemain}
                 </span>
               </div>
-              <h2 className="text-[18px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{hs.ten}</h2>
-              <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{hs.danhHieu}</p>
+              <h2 className="text-[18px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{hs.ten}</h2>
+              <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{hs.danhHieu}</p>
             </div>
             <button onClick={onClose} className="size-8 rounded-lg flex items-center justify-center hover:bg-[#f4f7fb] shrink-0 transition-colors">
-              <X className="size-4 text-[#635647]"/>
+              <X className="size-4 text-slate-700"/>
             </button>
           </div>
 
           {/* Meta row */}
-          <div className="flex items-center gap-4 mt-3 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="flex items-center gap-4 mt-3 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <span className="flex items-center gap-1"><Building2 className="size-3.5"/>{hs.donVi.split(" ").slice(0,4).join(" ")}…</span>
             <span className="flex items-center gap-1"><Calendar className="size-3.5"/>Năm {hs.namDeNghi}</span>
             <span className="flex items-center gap-1"><TrendingUp className="size-3.5"/>AI: {hs.aiScore}/100</span>
@@ -305,7 +305,7 @@ export function HoSoDetailDrawer({
             <div className="p-5 space-y-5">
               {/* Workflow */}
               <div>
-                <h3 className="text-[13px] uppercase tracking-wider text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Quy trình xử lý</h3>
+                <h3 className="text-[13px] uppercase tracking-wider text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Quy trình xử lý</h3>
                 <WorkflowStepper currentStep={hs.currentStep} />
               </div>
 
@@ -323,10 +323,10 @@ export function HoSoDetailDrawer({
                   return (
                     <div key={f.label} className="p-3 rounded-[8px]" style={{ background:"#ffffff", border:"1px solid #e2e8f0" }}>
                       <div className="flex items-center gap-1.5 mb-1">
-                        <Icon className="size-3.5 text-[#635647]"/>
-                        <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{f.label}</span>
+                        <Icon className="size-3.5 text-slate-700"/>
+                        <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{f.label}</span>
                       </div>
-                      <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{f.value}</div>
+                      <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{f.value}</div>
                     </div>
                   );
                 })}
@@ -372,11 +372,11 @@ export function HoSoDetailDrawer({
                         {ev.type==="vote"   && <ThumbsUp className="size-3.5 text-[#7c3aed]"/>}
                         {ev.type==="ai"     && <Sparkles className="size-3.5 text-[#7c3aed]"/>}
                         {ev.type==="submit" && <ArrowRight className="size-3.5 text-[#1C5FBE]"/>}
-                        {ev.type==="create" && <Edit3 className="size-3.5 text-[#635647]"/>}
+                        {ev.type==="create" && <Edit3 className="size-3.5 text-slate-700"/>}
                       </div>
                       <div className="flex-1 pb-4">
-                        <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{ev.action}</div>
-                        <div className="text-[13px] text-[#635647] mt-0.5">
+                        <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{ev.action}</div>
+                        <div className="text-[13px] text-slate-700 mt-0.5">
                           <span>{ev.actor}</span>
                           <span className="mx-1.5">·</span>
                           <span style={{ fontFamily:"JetBrains Mono,monospace" }}>{ev.time}</span>
@@ -392,7 +392,7 @@ export function HoSoDetailDrawer({
           {/* FILES TAB */}
           {activeTab === "files" && (
             <div className="p-5 space-y-2">
-              <p className="text-[13px] text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)" }}>
                 {ATTACHMENTS.length} tài liệu đính kèm · Tổng dung lượng ~2.6 MB
               </p>
               {ATTACHMENTS.map((f,i) => (
@@ -404,20 +404,20 @@ export function HoSoDetailDrawer({
                     {f.type.toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{f.name}</div>
-                    <div className="text-[13px] text-[#635647]">{f.size}</div>
+                    <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{f.name}</div>
+                    <div className="text-[13px] text-slate-700">{f.size}</div>
                   </div>
                   <div className="flex gap-2">
                     <button className="size-7 rounded flex items-center justify-center hover:bg-[#e2e8f0] transition-colors">
-                      <Eye className="size-3.5 text-[#635647]"/>
+                      <Eye className="size-3.5 text-slate-700"/>
                     </button>
                     <button className="size-7 rounded flex items-center justify-center hover:bg-[#e2e8f0] transition-colors">
-                      <Download className="size-3.5 text-[#635647]"/>
+                      <Download className="size-3.5 text-slate-700"/>
                     </button>
                   </div>
                 </div>
               ))}
-              <button className="mt-2 w-full flex items-center justify-center gap-2 p-3 rounded-[8px] border-2 border-dashed border-[#d1d5db] text-[13px] text-[#635647] hover:border-[#1C5FBE] hover:text-[#1C5FBE] transition-colors"
+              <button className="mt-2 w-full flex items-center justify-center gap-2 p-3 rounded-[8px] border-2 border-dashed border-[#d1d5db] text-[13px] text-slate-700 hover:border-[#1C5FBE] hover:text-[#1C5FBE] transition-colors"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 + Đính kèm tài liệu
               </button>
@@ -436,11 +436,11 @@ export function HoSoDetailDrawer({
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{c.author}</span>
+                        <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>{c.author}</span>
                         <span className="text-[13px] px-1.5 py-0.5 rounded" style={{ background:"#f0f4ff", color:"#1C5FBE", fontFamily: "var(--font-sans)" }}>{c.role}</span>
-                        <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily:"JetBrains Mono,monospace" }}>{c.time}</span>
+                        <span className="text-[13px] text-slate-600" style={{ fontFamily:"JetBrains Mono,monospace" }}>{c.time}</span>
                       </div>
-                      <div className="text-[13px] text-[#5a5040] leading-relaxed p-2.5 rounded-[8px]"
+                      <div className="text-[13px] text-slate-700 leading-relaxed p-2.5 rounded-[8px]"
                         style={{ background:"#ffffff", border:"1px solid #e2e8f0", fontFamily: "var(--font-sans)" }}>
                         {c.text}
                       </div>
@@ -459,7 +459,7 @@ export function HoSoDetailDrawer({
                     onKeyDown={e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitComment();}}}
                     placeholder="Ghi chú, bình luận… (Enter để gửi)"
                     rows={2}
-                    className="flex-1 resize-none border border-[#d1d5db] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] transition-colors"
+                    className="flex-1 resize-none border border-[#d1d5db] rounded-[8px] px-3 py-2 text-[13px] text-slate-900 outline-none focus:border-[#1C5FBE] transition-colors"
                     style={{ fontFamily: "var(--font-sans)" }}/>
                   <button onClick={submitComment} disabled={!comment.trim()}
                     className="size-9 rounded-[8px] flex items-center justify-center shrink-0 transition-all disabled:opacity-40"

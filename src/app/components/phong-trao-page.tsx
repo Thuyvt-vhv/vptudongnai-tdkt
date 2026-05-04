@@ -11,6 +11,7 @@ import {
   ListChecks, Sparkles, CircleDot, Stamp, X, Check,
   ClipboardList, BarChart3, Filter, Paperclip, UploadCloud,
   ShieldAlert, Columns, Minus,
+  LayoutGrid, Table2,
 } from "lucide-react";
 import type { LoginUser } from "./login-page";
 import { useTheme } from "./theme-context";
@@ -22,6 +23,7 @@ import { getRequirementsForSubject, createEmptyMinhChung, validateMinhChung, NHO
 import { detectExpiredDocs, getReplacementDoc, suggestLegalBases } from "@/app/data/legal-registry";
 import { REWARD_CATALOG, getRewardByName, formatTienThuong, getNguonKinhPhiLabel } from "@/app/data/reward-catalog";
 import type { NguonKinhPhi } from "@/app/data/reward-catalog";
+import type { PhieuChi } from "./quy-tdkt-page";
 
 /* ═══════════════════════════════════════════════════════════════════
    TYPES
@@ -544,7 +546,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
       <div className="flex items-center gap-2 pr-4 border-r mr-4 shrink-0" style={{ borderColor:"#e2e8f0" }}>
         <div className="size-2 rounded-full animate-pulse" style={{ background:scfg.color, animationPlayState: c.state === "active" ? "running" : "paused" }} />
         <span className="text-[13px] font-semibold" style={{ color:scfg.color, fontFamily: "var(--font-sans)" }}>{scfg.short}</span>
-        <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>· {scfg.canCu}</span>
+        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>· {scfg.canCu}</span>
       </div>
       {/* KPI items */}
       {items.map((item, i) => (
@@ -553,7 +555,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-[14px] font-bold" style={{ color:item.color, fontFamily: "var(--font-sans)" }}>{item.value}</span>
-              <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{item.sub}</span>
+              <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{item.sub}</span>
             </div>
             <div className="flex items-center gap-2 mt-1">
               {item.pct !== null && (
@@ -561,7 +563,7 @@ function CampaignStatsBar({ c }: { c: Campaign }) {
                   <div className="h-full rounded-full transition-all" style={{ width:`${item.pct}%`, background:item.color }} />
                 </div>
               )}
-              <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>{item.label}</span>
+              <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>{item.label}</span>
             </div>
           </div>
         </div>
@@ -652,7 +654,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
         style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
         <div className="flex items-center gap-3">
           <Building2 className="size-4 text-[#166534]" />
-          <span className="text-[13px] text-[#0b1426]"
+          <span className="text-[13px] text-slate-900"
             style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
             Theo dõi nộp hồ sơ — {units.length} đơn vị
           </span>
@@ -663,7 +665,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
         </div>
         <div className="flex items-center gap-2">
           <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-[#635647]" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-slate-700" />
             <input
               className="h-8 pl-7 pr-3 rounded-[6px] border text-[13px] outline-none focus:border-[#1C5FBE]"
               style={{ borderColor:"var(--color-line)", fontFamily: "var(--font-sans)", width:160 }}
@@ -704,7 +706,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
             </button>
           );
         })}
-        <span className="ml-auto text-[13px] text-[#635647] pb-2" style={{ fontFamily: "var(--font-sans)" }}>
+        <span className="ml-auto text-[13px] text-slate-700 pb-2" style={{ fontFamily: "var(--font-sans)" }}>
           Hạn: {fmtDate(deadline)}
         </span>
       </div>
@@ -712,25 +714,25 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
       {/* Table */}
       <div className="divide-y flex-1 overflow-y-auto" style={{ divideColor:"#eef2f8" }}>
         {paged.length === 0 ? (
-          <div className="py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="py-8 text-center text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Không tìm thấy đơn vị nào
           </div>
         ) : paged.map((u, i) => {
           const scfg = UNIT_STATUS_CFG[u.status];
           return (
             <div key={u.id} className="px-5 py-3 flex items-center gap-4 hover:bg-[#fafaf9] transition-colors">
-              <div className="w-6 text-[13px] text-[#6b5e47] text-center shrink-0"
+              <div className="w-6 text-[13px] text-slate-600 text-center shrink-0"
                 style={{ fontFamily: "var(--font-sans)" }}>{page * PAGE_SIZE + i + 1}</div>
               <div className="size-7 rounded-full flex items-center justify-center shrink-0 text-[13px] font-bold"
                 style={{ background:scfg.bg, color:scfg.color }}>
                 {u.name.charAt(0)}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{u.name}</div>
-                {u.ngayNop && <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Nộp: {fmtDate(u.ngayNop)}</div>}
+                <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{u.name}</div>
+                {u.ngayNop && <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Nộp: {fmtDate(u.ngayNop)}</div>}
               </div>
               {u.soHoSo > 0 && (
-                <div className="text-[13px] text-[#5a5040] shrink-0" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700 shrink-0" style={{ fontFamily: "var(--font-sans)" }}>
                   {u.soHoSo} hồ sơ
                 </div>
               )}
@@ -753,7 +755,7 @@ function UnitSubmissionTracker({ c, deadline }: { c: Campaign; deadline: string 
       {totalPages > 1 && (
         <div className="px-5 py-3 border-t flex items-center justify-between"
           style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, filtered.length)} / {filtered.length}
           </span>
           <div className="flex gap-1">
@@ -930,11 +932,11 @@ function OverviewTab({ c }: { c: Campaign }) {
           <div className="px-5 py-3 border-b flex items-center gap-2"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
             <Target className="size-4" style={{ color:theme.primary }} />
-            <span className="text-[14px] text-[#0b1426]"
+            <span className="text-[14px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Mục tiêu phong trào</span>
           </div>
           <div className="px-5 py-4">
-            <p className="text-[14px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[14px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
               {c.mucTieu}
             </p>
           </div>
@@ -945,13 +947,13 @@ function OverviewTab({ c }: { c: Campaign }) {
           <div className="px-5 py-3 border-b flex items-center gap-2"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
             <Users className="size-4" style={{ color:theme.primary }} />
-            <span className="text-[14px] text-[#0b1426]"
+            <span className="text-[14px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Đối tượng tham gia</span>
-            <span className="ml-auto text-[13px] px-2 py-0.5 rounded bg-[#eef2f8] text-[#5a5040]"
+            <span className="ml-auto text-[13px] px-2 py-0.5 rounded bg-[#eef2f8] text-slate-700"
               style={{ fontFamily: "var(--font-sans)" }}>{SUBJECT_LABELS[c.subjectType]}</span>
           </div>
           <div className="px-5 py-4">
-            <p className="text-[14px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[14px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
               {c.doiTuong}
             </p>
           </div>
@@ -964,7 +966,7 @@ function OverviewTab({ c }: { c: Campaign }) {
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}
             onClick={() => setExpandCriteria(!expandCriteria)}>
             <Scale className="size-4" style={{ color:theme.primary }} />
-            <span className="text-[14px] text-[#0b1426]"
+            <span className="text-[14px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               Bộ tiêu chí chấm điểm
             </span>
@@ -979,8 +981,8 @@ function OverviewTab({ c }: { c: Campaign }) {
               Tổng {c.tieuChi.reduce((s,t)=>s+t.maxScore,0)} điểm
             </span>
             {expandCriteria
-              ? <ChevronUp className="size-4 text-[#635647] ml-1" />
-              : <ChevronDown className="size-4 text-[#635647] ml-1" />}
+              ? <ChevronUp className="size-4 text-slate-700 ml-1" />
+              : <ChevronDown className="size-4 text-slate-700 ml-1" />}
           </button>
           {expandCriteria && (
             <div className="divide-y" style={{ borderColor:"var(--color-line)" }}>
@@ -994,9 +996,9 @@ function OverviewTab({ c }: { c: Campaign }) {
                       {t.maxScore}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-[13px] text-[#0b1426]"
+                      <div className="text-[13px] text-slate-900"
                         style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{t.name}</div>
-                      <div className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+                      <div className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
                         {t.mota}
                       </div>
                     </div>
@@ -1021,7 +1023,7 @@ function OverviewTab({ c }: { c: Campaign }) {
                       style={{ background:col, fontFamily: "var(--font-sans)", fontWeight:700 }}>
                       {t.maxScore}
                     </div>
-                    <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{t.name}</span>
+                    <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{t.name}</span>
                   </div>
                 );
               })}
@@ -1034,7 +1036,7 @@ function OverviewTab({ c }: { c: Campaign }) {
           <div className="px-5 py-3 border-b flex items-center gap-2"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
             <Trophy className="size-4" style={{ color:"#8a6400" }} />
-            <span className="text-[14px] text-[#0b1426]"
+            <span className="text-[14px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Hình thức khen thưởng dự kiến</span>
           </div>
           <div className="px-5 py-4 flex flex-wrap gap-2.5">
@@ -1062,7 +1064,7 @@ function OverviewTab({ c }: { c: Campaign }) {
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <div className="px-4 py-3 border-b"
             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-            <span className="text-[13px] text-[#0b1426]"
+            <span className="text-[13px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Tiến độ tham gia</span>
           </div>
           <div className="px-4 py-5 flex flex-col items-center">
@@ -1082,15 +1084,15 @@ function OverviewTab({ c }: { c: Campaign }) {
                     color:joinPct===100?"#16a34a":theme.primary, lineHeight:1 }}>
                   {joinPct}%
                 </div>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>tham gia</div>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>tham gia</div>
               </div>
             </div>
             <div className="mt-3 text-center">
-              <div className="text-[18px] text-[#0b1426]"
+              <div className="text-[18px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                 {c.joinedUnits}/{c.totalUnits}
               </div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 đơn vị/cá nhân đã tham gia
               </div>
             </div>
@@ -1100,7 +1102,7 @@ function OverviewTab({ c }: { c: Campaign }) {
         {/* Timeline info */}
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <div className="px-4 py-3 border-b" style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               Thời gian
             </span>
           </div>
@@ -1118,8 +1120,8 @@ function OverviewTab({ c }: { c: Campaign }) {
                     <Icon className="size-3.5" style={{ color:row.color }} />
                   </div>
                   <div className="flex-1">
-                    <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{row.label}</div>
-                    <div className="text-[13px] text-[#0b1426]"
+                    <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{row.label}</div>
+                    <div className="text-[13px] text-slate-900"
                       style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{row.v}</div>
                   </div>
                 </div>
@@ -1142,19 +1144,19 @@ function OverviewTab({ c }: { c: Campaign }) {
         {/* Meta info */}
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <div className="px-4 py-3 border-b" style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               Đơn vị phụ trách
             </span>
           </div>
           <div className="p-4 space-y-2">
             <div className="flex items-center gap-2">
-              <User className="size-3.5 text-[#635647]" />
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
+              <User className="size-3.5 text-slate-700" />
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
                 {c.leader}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Building2 className="size-3.5 text-[#635647]" />
+              <Building2 className="size-3.5 text-slate-700" />
               <span className="text-[13px] text-[#4a5568]" style={{ fontFamily: "var(--font-sans)" }}>
                 {c.donViPhuTrach}
               </span>
@@ -1242,12 +1244,12 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
             <FileCheck className="size-4 text-[#1a4fa0]" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-[14px] font-semibold text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
-            <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="text-[14px] font-semibold text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
+            <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               {p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"} · TT 12/2019 + TT 15/2025/TT-BNV
             </div>
           </div>
-          <button className="size-7 rounded-[4px] flex items-center justify-center hover:bg-[#eef2f8] text-[#635647]" onClick={onClose}>
+          <button className="size-7 rounded-[4px] flex items-center justify-center hover:bg-[#eef2f8] text-slate-700" onClick={onClose}>
             <X className="size-4" />
           </button>
         </div>
@@ -1255,8 +1257,8 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
         {/* Validation summary */}
         <div className="px-5 py-3 border-b space-y-2" style={{ borderColor: "var(--color-line)" }}>
           <div className="flex items-center justify-between text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-            <span className="text-[#0b1426] font-semibold">Bắt buộc: {batBuocNop}/{batBuocAll}</span>
-            <span className="text-[#635647]">Tổng đã nộp: {nopCount}/{docs.length}</span>
+            <span className="text-slate-900 font-semibold">Bắt buộc: {batBuocNop}/{batBuocAll}</span>
+            <span className="text-slate-700">Tổng đã nộp: {nopCount}/{docs.length}</span>
             <span className={`font-semibold ${validation.valid ? "text-[#166534]" : "text-[#c2410c]"}`}>
               {pct}% hoàn chỉnh
             </span>
@@ -1293,7 +1295,7 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
                 <span className="text-[13px] font-semibold uppercase tracking-wide"
                   style={{ color: nhomColors[g.key], fontFamily: "var(--font-sans)" }}>{g.label}</span>
                 <div className="flex-1 h-px" style={{ background: nhomColors[g.key] + "30" }} />
-                <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {g.items.filter(d => d.daNop).length}/{g.items.length}
                 </span>
               </div>
@@ -1308,7 +1310,7 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
                         style={{ accentColor: nhomColors[g.key] }} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: d.batBuoc ? 600 : 400 }}>
+                          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: d.batBuoc ? 600 : 400 }}>
                             {d.ten}
                           </span>
                           {req.tenMau && (
@@ -1322,12 +1324,12 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
                               style={{ fontFamily: "var(--font-sans)" }}>bắt buộc</span>
                           )}
                         </div>
-                        <div className="text-[13px] text-[#635647] mt-0.5 leading-snug" style={{ fontFamily: "var(--font-sans)" }}>
+                        <div className="text-[13px] text-slate-700 mt-0.5 leading-snug" style={{ fontFamily: "var(--font-sans)" }}>
                           {req.moTa}
                         </div>
                         <div className="flex items-center gap-1 mt-1">
-                          <BookOpen className="size-3 text-[#635647]" />
-                          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{req.canCu}</span>
+                          <BookOpen className="size-3 text-slate-700" />
+                          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{req.canCu}</span>
                         </div>
                         {d.daNop && d.ngayNop && (
                           <span className="text-[13px] text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>
@@ -1345,7 +1347,7 @@ function HoSoDrawer({ p, onClose }: { p: Participant; onClose: () => void }) {
 
         {/* Footer */}
         <div className="px-5 py-3 border-t flex items-center justify-between" style={{ borderColor: "var(--color-line)", background: "var(--color-paper)" }}>
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Căn cứ: TT 12/2019/TT-BNV · TT 15/2025/TT-BNV · TT 08/2017/TT-BNV
           </span>
           <button className="btn btn-secondary btn-sm" onClick={onClose}>Đóng</button>
@@ -1378,7 +1380,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
   if (!c.participants.length) return (
     <div className="flex flex-col items-center gap-3 py-24 text-center">
       <Users className="size-12 text-[#e2e8f0]" />
-      <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
         Chưa có hồ sơ tham gia. Phong trào sẽ mở nhận hồ sơ khi được phát động chính thức.
       </p>
     </div>
@@ -1429,7 +1431,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
           <thead>
             <tr style={{ background:"var(--color-paper)" }}>
               {["Hạng","Tên cá nhân / tập thể","Đơn vị","Loại","Nộp lúc","Điểm","Trạng thái",""].map(h => (
-                <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-[#635647] border-b"
+                <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-slate-700 border-b"
                   style={{ borderColor:"var(--color-line)", fontFamily: "var(--font-sans)" }}>{h}</th>
               ))}
             </tr>
@@ -1450,13 +1452,13 @@ function ParticipantsTab({ c }: { c: Campaign }) {
                           fontFamily: "var(--font-sans)", fontWeight:700 }}>
                         {p.rank}
                       </div>
-                    ) : <span className="text-[13px] text-[#635647]">–</span>}
+                    ) : <span className="text-[13px] text-slate-700">–</span>}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="text-[13px] text-[#0b1426]"
+                    <div className="text-[13px] text-slate-900"
                       style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{p.name}</div>
                     {p.position && (
-                      <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{p.position}</div>
+                      <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{p.position}</div>
                     )}
                   </td>
                   <td className="px-4 py-3 text-[13px] text-[#4a5568]" style={{ fontFamily: "var(--font-sans)" }}>
@@ -1471,7 +1473,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
                       {p.type==="ca_nhan" ? "Cá nhân" : "Tập thể"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <td className="px-4 py-3 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     {p.nopLuc ? fmtDate(p.nopLuc) : "–"}
                   </td>
                   <td className="px-4 py-3">
@@ -1488,7 +1490,7 @@ function ParticipantsTab({ c }: { c: Campaign }) {
                               background:p.score>=90?"#16a34a":p.score>=75?theme.primary:"#dc2626" }} />
                         </div>
                       </div>
-                    ) : <span className="text-[13px] text-[#635647]">–</span>}
+                    ) : <span className="text-[13px] text-slate-700">–</span>}
                   </td>
                   <td className="px-4 py-3">
                     <span className="text-[13px] px-2 py-0.5 rounded border"
@@ -1529,7 +1531,7 @@ function ScoringTab({ c }: { c: Campaign }) {
   if (!c.unitScores.length) return (
     <div className="flex flex-col items-center gap-3 py-24 text-center">
       <BarChart2 className="size-12 text-[#e2e8f0]" />
-      <p className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
         Chưa có dữ liệu chấm điểm. Giai đoạn này sẽ bắt đầu sau khi hội đồng xét duyệt.
       </p>
     </div>
@@ -1543,7 +1545,7 @@ function ScoringTab({ c }: { c: Campaign }) {
       <div className="rounded-[10px] border p-4" style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
         <div className="flex items-center gap-2 mb-3">
           <Scale className="size-4" style={{ color:theme.primary }} />
-          <span className="text-[13px] text-[#0b1426]"
+          <span className="text-[13px] text-slate-900"
             style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
             Bộ tiêu chí — Tổng {maxScore} điểm (Điều 10 NĐ 152/2025/NĐ-CP)
           </span>
@@ -1556,7 +1558,7 @@ function ScoringTab({ c }: { c: Campaign }) {
                 style={{ background:criteriaColors[i], fontFamily: "var(--font-sans)", fontWeight:700 }}>
                 {t.maxScore}
               </div>
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{t.name}</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{t.name}</span>
             </div>
           ))}
         </div>
@@ -1589,7 +1591,7 @@ function ScoringTab({ c }: { c: Campaign }) {
                 {/* Name + bars */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-[14px] text-[#0b1426]"
+                    <span className="text-[14px] text-slate-900"
                       style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{u.unitName}</span>
                     {u.status==="chua_cham" && (
                       <span className="text-[13px] px-2 py-0.5 rounded bg-[#fef3c7] text-[#92400e] border border-[#fcd34d]"
@@ -1630,13 +1632,13 @@ function ScoringTab({ c }: { c: Campaign }) {
                       </div>
                     </>
                   ) : (
-                    <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>–</span>
+                    <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>–</span>
                   )}
                 </div>
 
                 {isOpen
-                  ? <ChevronUp className="size-4 text-[#635647] shrink-0" />
-                  : <ChevronDown className="size-4 text-[#635647] shrink-0" />}
+                  ? <ChevronUp className="size-4 text-slate-700 shrink-0" />
+                  : <ChevronDown className="size-4 text-slate-700 shrink-0" />}
               </button>
 
               {/* Expanded detail */}
@@ -1650,14 +1652,14 @@ function ScoringTab({ c }: { c: Campaign }) {
                       return (
                         <div key={t.id} className="rounded-[8px] border p-3 text-center"
                           style={{ borderColor:cc+"30", background:cc+"05" }}>
-                          <div className="text-[13px] text-[#635647] mb-2 leading-tight"
+                          <div className="text-[13px] text-slate-700 mb-2 leading-tight"
                             style={{ fontFamily: "var(--font-sans)" }}>{t.name}</div>
                           <div className="text-[18px]"
                             style={{ fontFamily: "var(--font-sans)", fontWeight:700,
                               color:p>=0.9?"#0f7a3e":p>=0.75?cc:"#c2410c", lineHeight:1 }}>
                             {val}
                           </div>
-                          <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>/{t.maxScore}</div>
+                          <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>/{t.maxScore}</div>
                           <div className="mt-2 h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
                             <div className="h-full rounded-full" style={{ width:`${p*100}%`, background:cc }} />
                           </div>
@@ -1666,7 +1668,7 @@ function ScoringTab({ c }: { c: Campaign }) {
                     })}
                   </div>
                   {u.ghiChu && (
-                    <p className="mt-3 text-[13px] text-[#635647] italic" style={{ fontFamily: "var(--font-sans)" }}>
+                    <p className="mt-3 text-[13px] text-slate-700 italic" style={{ fontFamily: "var(--font-sans)" }}>
                       Ghi chú: {u.ghiChu}
                     </p>
                   )}
@@ -1696,7 +1698,7 @@ function HistoryTab({ c }: { c: Campaign }) {
       {!c.auditLog.length ? (
         <div className="flex flex-col items-center gap-3 py-16 text-center">
           <FileText className="size-10 text-[#e2e8f0]" />
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chưa có lịch sử hoạt động</p>
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Chưa có lịch sử hoạt động</p>
         </div>
       ) : (
         <div className="relative pl-6 max-w-3xl">
@@ -1717,7 +1719,7 @@ function HistoryTab({ c }: { c: Campaign }) {
                   <div className="px-4 py-3 flex items-start gap-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="text-[14px] text-[#0b1426]"
+                        <span className="text-[14px] text-slate-900"
                           style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{e.action}</span>
                         <span className="text-[13px] px-2 py-0.5 rounded border"
                           style={{ color:sc.color, background:sc.bg, borderColor:sc.border, fontFamily: "var(--font-sans)", fontWeight:500 }}>
@@ -1733,12 +1735,12 @@ function HistoryTab({ c }: { c: Campaign }) {
                       </p>
                     </div>
                     <div className="shrink-0 text-right">
-                      <div className="text-[13px] text-[#0b1426]"
+                      <div className="text-[13px] text-slate-900"
                         style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{e.actor}</div>
-                      <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                      <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                         {e.role}
                       </div>
-                      <div className="text-[13px] text-[#635647] mt-1" style={{ fontFamily: "var(--font-sans)" }}>
+                      <div className="text-[13px] text-slate-700 mt-1" style={{ fontFamily: "var(--font-sans)" }}>
                         {e.time}
                       </div>
                     </div>
@@ -1767,8 +1769,8 @@ function SectionHeader({ icon: Icon, title, sub, color }: {
         <Icon className="size-5" style={{ color }} />
       </div>
       <div>
-        <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{title}</h2>
-        {sub && <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{sub}</p>}
+        <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{title}</h2>
+        {sub && <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{sub}</p>}
       </div>
     </div>
   );
@@ -1795,7 +1797,7 @@ function InfoCard({ label, value, icon: Icon, color }: { label: string; value: s
         <Icon className="size-3.5" style={{ color }} />
         <span className="text-[13px] uppercase tracking-wide" style={{ color, fontWeight: 700, fontFamily: "var(--font-sans)" }}>{label}</span>
       </div>
-      <div className="text-[18px]" style={{ color: "#0b1426", fontFamily: "var(--font-sans)", fontWeight: 700 }}>{value}</div>
+      <div className="text-[18px]" style={{ color: "#0f172a", fontFamily: "var(--font-sans)", fontWeight: 700 }}>{value}</div>
     </div>
   );
 }
@@ -1892,8 +1894,8 @@ function PersonalStatusBanner({ c, myP, danh_hieu, hoTen, indivDone }: {
         </div>
         {/* Info row */}
         <div className="flex flex-wrap gap-4 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-          <span className="text-[#635647]">Danh hiệu: <strong className="text-[#0b1426]">{danh_hieu}</strong></span>
-          {myP && <span className="text-[#635647]">Đơn vị: <strong className="text-[#0b1426]">{myP.donVi}</strong></span>}
+          <span className="text-slate-700">Danh hiệu: <strong className="text-slate-900">{danh_hieu}</strong></span>
+          {myP && <span className="text-slate-700">Đơn vị: <strong className="text-slate-900">{myP.donVi}</strong></span>}
           {myP?.score !== undefined && (
             <span style={{ color: myP.score >= 90 ? "#0f7a3e" : "#b45309" }}>
               Điểm: <strong>{myP.score}</strong>
@@ -1977,8 +1979,8 @@ function UnitLeaderContextPanel({ c, user, unitDecisions }: {
                 {p.name.slice(0, 2)}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] font-semibold text-[#0b1426] truncate">{p.name}</div>
-                <div className="text-[13px] text-[#635647]">{p.hinhThucDeNghi || "CSTĐCS"}</div>
+                <div className="text-[13px] font-semibold text-slate-900 truncate">{p.name}</div>
+                <div className="text-[13px] text-slate-700">{p.hinhThucDeNghi || "CSTĐCS"}</div>
               </div>
               {p.score !== undefined && (
                 <span className="text-[13px] font-bold shrink-0" style={{ color: p.score >= 90 ? "#0f7a3e" : "#b45309", fontFamily: "var(--font-sans)" }}>{p.score}</span>
@@ -2012,7 +2014,7 @@ function AdminHealthBar({ c }: { c: Campaign }) {
         { label: "Code",      val: c.code ?? "—", color: "#0891b2" },
       ].map(k => (
         <div key={k.label} className="text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-          <span className="text-[#635647]">{k.label}: </span>
+          <span className="text-slate-700">{k.label}: </span>
           <span className="font-bold" style={{ color: k.color }}>{k.val}</span>
         </div>
       ))}
@@ -2282,7 +2284,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
               <div className="flex items-center gap-2">
                 <ListChecks className="size-4" style={{ color: ready ? "#166534" : "#b45309" }} />
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
                   Checklist soạn thảo
                 </span>
               </div>
@@ -2325,7 +2327,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             {/* Campaign snapshot */}
             <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
               <div className="px-5 py-3.5 border-b" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
                   Thông tin phong trào
                 </span>
               </div>
@@ -2391,7 +2393,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             {/* Note textarea */}
             <div className="rounded-[12px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
               <div className="px-5 py-3.5 border-b" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
                   Ghi chú khi trình duyệt
                 </span>
               </div>
@@ -2425,7 +2427,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <span className="text-[13px]" style={{ fontWeight:600, color:s.color, fontFamily:"var(--font-sans)" }}>
                         {s.step}
                       </span>
-                      <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}> — {s.desc}</span>
+                      <span className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}> — {s.desc}</span>
                     </div>
                   </div>
                 ))}
@@ -2461,7 +2463,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               <FileText className="size-5 text-white" />
             </div>
             <div>
-              <div className="text-[14px] text-[#0b1426] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>Kế hoạch phong trào đã được trình</div>
+              <div className="text-[14px] text-slate-900 font-semibold" style={{ fontFamily: "var(--font-sans)" }}>Kế hoạch phong trào đã được trình</div>
               <div className="text-[13px] text-[#0e7490]" style={{ fontFamily: "var(--font-sans)" }}>
                 {c.auditLog.find(a => a.state === "submitted")?.time || "Chưa rõ"} · {c.auditLog.find(a => a.state === "submitted")?.actor || "—"}
               </div>
@@ -2475,10 +2477,10 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           </div>
           <div className="p-5">
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div><span className="text-[13px] text-[#635647] uppercase tracking-wide font-bold">Tên phong trào</span><p className="text-[13px] text-[#0b1426] mt-0.5 font-semibold">{c.name}</p></div>
-              <div><span className="text-[13px] text-[#635647] uppercase tracking-wide font-bold">Cấp độ</span><p className="text-[13px] text-[#0b1426] mt-0.5">{c.level}</p></div>
-              <div><span className="text-[13px] text-[#635647] uppercase tracking-wide font-bold">Thời gian</span><p className="text-[13px] text-[#0b1426] mt-0.5">{c.period}</p></div>
-              <div><span className="text-[13px] text-[#635647] uppercase tracking-wide font-bold">Người phụ trách</span><p className="text-[13px] text-[#0b1426] mt-0.5">{c.leader}</p></div>
+              <div><span className="text-[13px] text-slate-700 uppercase tracking-wide font-bold">Tên phong trào</span><p className="text-[13px] text-slate-900 mt-0.5 font-semibold">{c.name}</p></div>
+              <div><span className="text-[13px] text-slate-700 uppercase tracking-wide font-bold">Cấp độ</span><p className="text-[13px] text-slate-900 mt-0.5">{c.level}</p></div>
+              <div><span className="text-[13px] text-slate-700 uppercase tracking-wide font-bold">Thời gian</span><p className="text-[13px] text-slate-900 mt-0.5">{c.period}</p></div>
+              <div><span className="text-[13px] text-slate-700 uppercase tracking-wide font-bold">Người phụ trách</span><p className="text-[13px] text-slate-900 mt-0.5">{c.leader}</p></div>
             </div>
             <div className="flex flex-wrap gap-2">
               {c.canCuPhapLy.map(p => (
@@ -2499,46 +2501,46 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 className="w-full px-5 py-3.5 border-b flex items-center gap-2 text-left transition-colors hover:bg-[#f8f9fc]"
                 style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}
                 onClick={() => setPlanPreviewExpanded(v => !v)}>
-                <Eye className="size-4 text-[#635647]" />
-                <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily:"var(--font-sans)" }}>
+                <Eye className="size-4 text-slate-700" />
+                <span className="text-[13px] font-semibold text-slate-900" style={{ fontFamily:"var(--font-sans)" }}>
                   Xem toàn văn kế hoạch phong trào
                 </span>
-                <span className="ml-auto text-[13px] text-[#635647]">{planPreviewExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
+                <span className="ml-auto text-[13px] text-slate-700">{planPreviewExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
               </button>
               {planPreviewExpanded && (
                 <div className="p-5 space-y-5" style={{ fontFamily:"var(--font-sans)" }}>
                   <div className="grid grid-cols-2 gap-4">
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Tên phong trào</p><p className="text-[13px] text-[#0b1426] font-semibold">{c.name}</p></div>
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Cấp độ</p><p className="text-[13px] text-[#0b1426]">{c.level}</p></div>
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Thời gian</p><p className="text-[13px] text-[#0b1426]">{c.ngayBatDau} → {c.ngayKetThuc}</p></div>
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Hạn nộp hồ sơ</p><p className="text-[13px] text-[#0b1426]">{c.ngayNopHoSo || "—"}</p></div>
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Người phụ trách</p><p className="text-[13px] text-[#0b1426]">{c.leader}</p></div>
-                    <div><p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Đơn vị phụ trách</p><p className="text-[13px] text-[#0b1426]">{c.donViPhuTrach || "—"}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Tên phong trào</p><p className="text-[13px] text-slate-900 font-semibold">{c.name}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Cấp độ</p><p className="text-[13px] text-slate-900">{c.level}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Thời gian</p><p className="text-[13px] text-slate-900">{c.ngayBatDau} → {c.ngayKetThuc}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Hạn nộp hồ sơ</p><p className="text-[13px] text-slate-900">{c.ngayNopHoSo || "—"}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Người phụ trách</p><p className="text-[13px] text-slate-900">{c.leader}</p></div>
+                    <div><p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Đơn vị phụ trách</p><p className="text-[13px] text-slate-900">{c.donViPhuTrach || "—"}</p></div>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Mục tiêu</p>
-                    <p className="text-[13px] text-[#0b1426] leading-relaxed">{c.mucTieu || "—"}</p>
+                    <p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Mục tiêu</p>
+                    <p className="text-[13px] text-slate-900 leading-relaxed">{c.mucTieu || "—"}</p>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-1">Đối tượng tham gia</p>
-                    <p className="text-[13px] text-[#0b1426]">{c.doiTuong || "—"}</p>
+                    <p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-1">Đối tượng tham gia</p>
+                    <p className="text-[13px] text-slate-900">{c.doiTuong || "—"}</p>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Tiêu chí chấm điểm ({c.tieuChi.length} tiêu chí)</p>
+                    <p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-2">Tiêu chí chấm điểm ({c.tieuChi.length} tiêu chí)</p>
                     <div className="space-y-1.5">
                       {c.tieuChi.map((tc, i) => (
                         <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-[8px] border text-[13px]"
                           style={{ borderColor:"var(--color-line)", background:"#fafaf9" }}>
                           <span className="size-5 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0"
                             style={{ background:theme.primary }}>{i+1}</span>
-                          <span className="flex-1 text-[#0b1426]">{tc.name}</span>
+                          <span className="flex-1 text-slate-900">{tc.name}</span>
                           <span className="font-semibold" style={{ color:theme.primary }}>{tc.maxScore} điểm</span>
                         </div>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Hình thức khen thưởng</p>
+                    <p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-2">Hình thức khen thưởng</p>
                     <div className="flex flex-wrap gap-2">
                       {c.awards.map(a => (
                         <span key={a} className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[13px] border"
@@ -2549,7 +2551,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     </div>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] font-semibold uppercase tracking-wide mb-2">Căn cứ pháp lý</p>
+                    <p className="text-[13px] text-slate-700 font-semibold uppercase tracking-wide mb-2">Căn cứ pháp lý</p>
                     <div className="flex flex-wrap gap-2">
                       {c.canCuPhapLy.map(p => (
                         <span key={p} className="flex items-center gap-1 px-2 py-1 rounded-[6px] text-[13px]"
@@ -2581,7 +2583,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               ].map((item, i) => <CheckRow key={i} done={true} text={item} />)}
 
               <div className="pt-3">
-                <label className="text-[13px] font-semibold text-[#0b1426] block mb-2" style={{ fontFamily: "var(--font-sans)" }}>Ý kiến Hội đồng</label>
+                <label className="text-[13px] font-semibold text-slate-900 block mb-2" style={{ fontFamily: "var(--font-sans)" }}>Ý kiến Hội đồng</label>
                 <textarea className="ds-input w-full" rows={3} style={{ padding: "10px 12px", fontSize: 13, resize: "vertical" }}
                   placeholder="Ghi nhận ý kiến, điều kiện kèm theo (nếu có)..."
                   value={note} onChange={e => setNote(e.target.value)} />
@@ -2613,7 +2615,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
               </div>
               <div className="px-6 py-5 space-y-3">
-                <label className="block text-[13px] font-semibold text-[#0b1426]">
+                <label className="block text-[13px] font-semibold text-slate-900">
                   Lý do trả về <span className="text-[#c2410c]">*</span>
                 </label>
                 <textarea
@@ -2709,17 +2711,17 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 {/* Dự toán từ wizard */}
                 {(tongKinhPhi > 0 || mapped.some(m => m.sl > 0)) ? (
                   <div className="space-y-1.5">
-                    <p className="text-[13px] text-[#635647] font-semibold" style={{ fontFamily: "var(--font-sans)" }}>DỰ TOÁN SƠ BỘ (từ kế hoạch)</p>
+                    <p className="text-[13px] text-slate-700 font-semibold" style={{ fontFamily: "var(--font-sans)" }}>DỰ TOÁN SƠ BỘ (từ kế hoạch)</p>
                     {mapped.map(({ name, r, sl }) => r ? (
                       <div key={name} className="flex items-center gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-                        <span className="flex-1 text-[#0b1426]">{name}</span>
-                        <span className="text-[#635647]">{sl} người ×</span>
-                        <span className="text-[#635647]">{formatTienThuong(r.tienThuong)}</span>
+                        <span className="flex-1 text-slate-900">{name}</span>
+                        <span className="text-slate-700">{sl} người ×</span>
+                        <span className="text-slate-700">{formatTienThuong(r.tienThuong)}</span>
                         <span className="font-semibold text-[#0f7a3e] w-28 text-right">{formatTienThuong(r.tienThuong * sl)}</span>
                       </div>
                     ) : null)}
                     <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: "var(--color-line)" }}>
-                      <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Tổng dự toán:</span>
+                      <span className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Tổng dự toán:</span>
                       <span className="text-[14px] font-bold text-[#0f7a3e]" style={{ fontFamily: "var(--font-sans)" }}>{formatTienThuong(tongKinhPhi)}</span>
                     </div>
                   </div>
@@ -2731,14 +2733,14 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 {/* Chọn nguồn kinh phí */}
                 {canMove && !budgetApproved && (
                   <div className="space-y-2 pt-2">
-                    <p className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Nguồn kinh phí được phê duyệt:</p>
+                    <p className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Nguồn kinh phí được phê duyệt:</p>
                     <div className="grid grid-cols-3 gap-2">
                       {nguonOpts.map(o => (
                         <label key={o.value} className="flex items-center gap-2 p-2.5 rounded-[6px] border cursor-pointer transition-colors"
                           style={{ borderColor: budgetNguon === o.value ? theme.primary : "var(--color-line)", background: budgetNguon === o.value ? theme.tint : "#fff" }}>
                           <input type="radio" name="nguon" checked={budgetNguon === o.value}
                             onChange={() => setBudgetNguon(o.value)} className="size-3.5" style={{ accentColor: theme.primary }} />
-                          <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{o.label}</span>
+                          <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{o.label}</span>
                         </label>
                       ))}
                     </div>
@@ -2755,7 +2757,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     <span className="text-[13px] text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>
                       Nguồn: <strong>{nguonOpts.find(o => o.value === budgetNguon)?.label}</strong> — Căn cứ: Điều 4 TT 28/2025/TT-BTC
                     </span>
-                    <button className="ml-auto text-[13px] text-[#635647] underline" onClick={() => setBudgetApproved(false)}
+                    <button className="ml-auto text-[13px] text-slate-700 underline" onClick={() => setBudgetApproved(false)}
                       style={{ fontFamily: "var(--font-sans)" }}>Sửa</button>
                   </div>
                 )}
@@ -2767,7 +2769,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
         <div className="grid grid-cols-2 gap-5">
           <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
             <div className="px-4 py-3 border-b" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Checklist trước ban hành</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Checklist trước ban hành</span>
             </div>
             <div className="px-4 py-2">
               {[
@@ -2784,7 +2786,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
           <div className="space-y-4">
             <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
               <div className="px-4 py-3 border-b" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-                <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Kênh thông báo khi ban hành</span>
+                <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Kênh thông báo khi ban hành</span>
               </div>
               <div className="p-4 space-y-2">
                 {[
@@ -2799,8 +2801,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <input type="checkbox" checked={notifChannels[i]}
                         onChange={e => setNotifChannels(prev => prev.map((v, j) => j === i ? e.target.checked : v))}
                         className="size-4" style={{ accentColor: theme.primary }} />
-                      <Icon className="size-3.5 text-[#635647]" />
-                      <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{ch.label}</span>
+                      <Icon className="size-3.5 text-slate-700" />
+                      <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{ch.label}</span>
                     </label>
                   );
                 })}
@@ -2890,23 +2892,23 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             style={{ background:"var(--color-paper)", fontFamily:"var(--font-sans)" }}
             onClick={() => setVanBanExpanded(v => !v)}>
             <FileText className="size-4 text-[#4338ca]" />
-            <span className="text-[13px] font-semibold text-[#0b1426]">Dự thảo Văn bản Phát động</span>
+            <span className="text-[13px] font-semibold text-slate-900">Dự thảo Văn bản Phát động</span>
             <span className="ml-2 text-[13px] px-2 py-0.5 rounded-full"
               style={{ background:"#e0e7ff", color:"#3730a3", fontWeight:600 }}>DRAFT</span>
-            <span className="ml-auto text-[13px] text-[#635647]">{vanBanExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
+            <span className="ml-auto text-[13px] text-slate-700">{vanBanExpanded ? "▲ Thu gọn" : "▼ Mở rộng"}</span>
           </button>
           {vanBanExpanded && (
             <div className="px-6 py-5 border-t space-y-4" style={{ borderColor:"var(--color-line)", fontFamily:"var(--font-sans)" }}>
               {/* Document header */}
               <div className="text-center space-y-1 pb-4 border-b" style={{ borderColor:"var(--color-line)" }}>
-                <p className="text-[13px] font-semibold text-[#0b1426] uppercase tracking-wide">ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI</p>
-                <p className="text-[13px] text-[#635647]">VĂN PHÒNG</p>
+                <p className="text-[13px] font-semibold text-slate-900 uppercase tracking-wide">ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI</p>
+                <p className="text-[13px] text-slate-700">VĂN PHÒNG</p>
                 <div className="mt-3">
-                  <p className="text-[13px] text-[#635647]">Số: {c.code?.replace("PT-","") ?? "—"}/KH-VPTU</p>
-                  <p className="text-[13px] text-[#635647]">Đồng Nai, ngày {new Date().toLocaleDateString("vi-VN")}</p>
+                  <p className="text-[13px] text-slate-700">Số: {c.code?.replace("PT-","") ?? "—"}/KH-VPTU</p>
+                  <p className="text-[13px] text-slate-700">Đồng Nai, ngày {new Date().toLocaleDateString("vi-VN")}</p>
                 </div>
-                <p className="text-[15px] font-bold text-[#0b1426] mt-3 uppercase">KẾ HOẠCH</p>
-                <p className="text-[13px] font-semibold text-[#0b1426]">Phát động phong trào thi đua</p>
+                <p className="text-[15px] font-bold text-slate-900 mt-3 uppercase">KẾ HOẠCH</p>
+                <p className="text-[13px] font-semibold text-slate-900">Phát động phong trào thi đua</p>
                 <p className="text-[14px] font-bold text-[#4338ca] mt-1">"{c.name}"</p>
               </div>
               {/* Body */}
@@ -2925,9 +2927,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               {/* Signature block */}
               <div className="flex justify-end pt-4 border-t" style={{ borderColor:"var(--color-line)" }}>
                 <div className="text-center text-[13px] space-y-1">
-                  <p className="text-[#635647]">TL. CHỦ TỊCH UBND TỈNH</p>
-                  <p className="font-semibold text-[#0b1426]">CHÁNH VĂN PHÒNG</p>
-                  <p className="text-[#635647] mt-4">{c.leader}</p>
+                  <p className="text-slate-700">TL. CHỦ TỊCH UBND TỈNH</p>
+                  <p className="font-semibold text-slate-900">CHÁNH VĂN PHÒNG</p>
+                  <p className="text-slate-700 mt-4">{c.leader}</p>
                 </div>
               </div>
               <div className="flex gap-2 pt-1">
@@ -3058,13 +3060,13 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       {regTouched.ly_do && regErrs.ly_do
                         ? <p className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)" }}>{regErrs.ly_do}</p>
                         : <span />}
-                      <span className="text-[13px] text-[#635647] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
+                      <span className="text-[13px] text-slate-700 ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
                     </div>
                   </div>
                   {/* Đính kèm tài liệu — đơn vị */}
                   <div className="space-y-2">
                     <label className="ds-input-label flex items-center gap-1.5">
-                      <Paperclip className="size-3.5 text-[#635647]" />Đính kèm tài liệu
+                      <Paperclip className="size-3.5 text-slate-700" />Đính kèm tài liệu
                       <span className="text-[12px] text-[#9ca3af] font-normal">(tùy chọn)</span>
                     </label>
                     <button type="button"
@@ -3082,7 +3084,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             <FileText className="size-3 shrink-0" />
                             <span className="max-w-[160px] truncate">{f.name}</span>
                             <button type="button" onClick={() => setRegFiles(p => p.filter((_,j) => j !== i))}>
-                              <X className="size-3 text-[#635647] hover:text-[#c8102e]" />
+                              <X className="size-3 text-slate-700 hover:text-[#c8102e]" />
                             </button>
                           </div>
                         ))}
@@ -3159,13 +3161,13 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       {regTouched.ly_do && regErrs.ly_do
                         ? <p className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)" }}>{regErrs.ly_do}</p>
                         : <span />}
-                      <span className="text-[13px] text-[#635647] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
+                      <span className="text-[13px] text-slate-700 ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{regForm.ly_do.trim().length}/20</span>
                     </div>
                   </div>
                   {/* Đính kèm tài liệu — cá nhân */}
                   <div className="space-y-2">
                     <label className="ds-input-label flex items-center gap-1.5">
-                      <Paperclip className="size-3.5 text-[#635647]" />Đính kèm tài liệu
+                      <Paperclip className="size-3.5 text-slate-700" />Đính kèm tài liệu
                       <span className="text-[12px] text-[#9ca3af] font-normal">(tùy chọn)</span>
                     </label>
                     <button type="button"
@@ -3183,7 +3185,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             <FileText className="size-3 shrink-0" />
                             <span className="max-w-[160px] truncate">{f.name}</span>
                             <button type="button" onClick={() => setRegFiles(p => p.filter((_,j) => j !== i))}>
-                              <X className="size-3 text-[#635647] hover:text-[#c8102e]" />
+                              <X className="size-3 text-slate-700 hover:text-[#c8102e]" />
                             </button>
                           </div>
                         ))}
@@ -3228,20 +3230,20 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   { label:"Phong trào", value: c.name },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-start gap-3 py-2 border-b" style={{ borderColor:"var(--color-line)" }}>
-                    <span className="text-[13px] text-[#635647] w-36 shrink-0">{label}</span>
-                    <span className="text-[13px] text-[#0b1426] font-semibold flex-1">{value}</span>
+                    <span className="text-[13px] text-slate-700 w-36 shrink-0">{label}</span>
+                    <span className="text-[13px] text-slate-900 font-semibold flex-1">{value}</span>
                   </div>
                 ))}
                 <div className="pt-1">
-                  <p className="text-[13px] text-[#635647] mb-1">Lý do đề nghị / Thành tích</p>
-                  <p className="text-[13px] text-[#0b1426] leading-relaxed px-3 py-2 rounded-[8px]"
+                  <p className="text-[13px] text-slate-700 mb-1">Lý do đề nghị / Thành tích</p>
+                  <p className="text-[13px] text-slate-900 leading-relaxed px-3 py-2 rounded-[8px]"
                     style={{ background:"#fafaf9", border:"1px solid var(--color-line)" }}>
                     {regForm.ly_do}
                   </p>
                 </div>
                 {regFiles.length > 0 && (
                   <div className="pt-1">
-                    <p className="text-[13px] text-[#635647] mb-2 flex items-center gap-1.5">
+                    <p className="text-[13px] text-slate-700 mb-2 flex items-center gap-1.5">
                       <Paperclip className="size-3.5" />Tài liệu đính kèm ({regFiles.length} file)
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -3299,7 +3301,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
         <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
           <div className="px-4 py-3 border-b" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Tổng kết giai đoạn đăng ký</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Tổng kết giai đoạn đăng ký</span>
           </div>
           <div className="px-4 py-3 space-y-2">
             {[
@@ -3326,10 +3328,10 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               <div className="px-4 py-3 border-b flex items-center gap-2"
                 style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
                 <ListChecks className="size-4 text-[#7c3aed]" />
-                <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                   Kiểm tra thành phần hồ sơ trước thẩm định
                 </span>
-                <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   Căn cứ: TT 12/2019/TT-BNV · TT 15/2025/TT-BNV
                 </span>
               </div>
@@ -3417,8 +3419,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
         <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
           <div className="px-4 py-3 border-b flex items-center justify-between" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách hồ sơ thẩm định</span>
-            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: Khoản 2 Điều 55 Luật TĐKT</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Danh sách hồ sơ thẩm định</span>
+            <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: Khoản 2 Điều 55 Luật TĐKT</span>
           </div>
           <div className="divide-y" style={{ borderColor: "#eef2f8" }}>
             {displayList.map(p => {
@@ -3435,8 +3437,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     {p.name.slice(0, 2)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] text-[#0b1426] font-semibold truncate">{p.name}</div>
-                    <div className="text-[13px] text-[#635647]">{p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"}</div>
+                    <div className="text-[13px] text-slate-900 font-semibold truncate">{p.name}</div>
+                    <div className="text-[13px] text-slate-700">{p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"}</div>
                   </div>
                   {p.score !== undefined && (
                     <div className="text-[14px] font-bold" style={{ color: p.score >= 90 ? "#0f7a3e" : "#b45309", fontFamily: "var(--font-sans)" }}>{p.score}</div>
@@ -3492,7 +3494,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   ? `✅ Đã thẩm định xong ${localTotal} hồ sơ — ${localApproved} duyệt / ${localTotal - localApproved} trả lại`
                   : `⏳ Còn ${pendingCount} hồ sơ chưa thẩm định`}
               </div>
-              {!allReviewed && <span className="text-[13px] text-[#635647]">Vui lòng thẩm định hết trước khi chuyển bước</span>}
+              {!allReviewed && <span className="text-[13px] text-slate-700">Vui lòng thẩm định hết trước khi chuyển bước</span>}
             </div>
           )}
         </div>
@@ -3517,7 +3519,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <div className="text-[13px] font-semibold" style={{ color: hdAllDone ? "#166534" : "#b45309", fontFamily: "var(--font-sans)" }}>
                     Bước 9-10 — Hội đồng Thư ký tiếp nhận & phân loại
                   </div>
-                  <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+                  <div className="text-[13px]" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>
                     {hdAllDone ? "Hoàn tất — sẵn sàng mở lấy ý kiến công khai" : `${hdChecks.size}/${HD_CHECKS.length} mục đã xác nhận`}
                   </div>
                 </div>
@@ -3540,7 +3542,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-[13px] font-medium" style={{ color: checked ? "#166534" : "#0b1426", fontFamily: "var(--font-sans)" }}>{item.label}</div>
-                        <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>{item.sub}</div>
+                        <div className="text-[13px]" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>{item.sub}</div>
                       </div>
                     </button>
                   );
@@ -3601,13 +3603,13 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 style={{ color: timerDone ? "#0e7490" : "#b45309", fontFamily: "var(--font-sans)" }}>
                 {timerDone ? "Đã đủ thời gian lấy ý kiến công khai" : `Còn ${daysRemain} ngày lấy ý kiến công khai`}
               </div>
-              <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px]" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>
                 Bắt đầu: {fmtDate(c.consultationStartedAt ?? new Date().toISOString().slice(0,10))} · {daysElapsed}/{30} ngày đã trôi qua · Căn cứ: Điều 56 Luật TĐKT 2022
               </div>
             </div>
             <div className="text-right shrink-0">
               <div className="text-[22px] font-bold" style={{ color: timerDone ? "#0e7490" : "#b45309", fontFamily: "var(--font-sans)" }}>{timerPct}%</div>
-              <div className="text-[11px] text-[#635647]">hoàn thành</div>
+              <div className="text-[11px] text-slate-700">hoàn thành</div>
             </div>
           </div>
           <div className="px-5 pt-3 pb-4" style={{ background: "white" }}>
@@ -3661,7 +3663,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
           <div className="divide-y" style={{ borderColor: "#e0f2fe" }}>
             {publicComments.length === 0 && (
-              <div className="px-5 py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="px-5 py-8 text-center text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Chưa có ý kiến nào được gửi
               </div>
             )}
@@ -3673,7 +3675,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{cm.author}</span>
+                    <span className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{cm.author}</span>
                     <span className="text-[13px] px-1.5 py-0.5 rounded text-[#0e7490] bg-[#e0f2fe]" style={{ fontFamily: "var(--font-sans)" }}>{cm.unit}</span>
                     <span className="text-[13px] text-[#4f5d6e] ml-auto" style={{ fontFamily: "var(--font-sans)" }}>{cm.time}</span>
                   </div>
@@ -3742,12 +3744,12 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
                 <div className="px-6 py-5 space-y-4">
                   <div>
-                    <p className="text-[13px] text-[#635647] mb-1">Người gửi</p>
-                    <p className="text-[13px] font-semibold text-[#0b1426]">{user.name || "Người dùng"} · {user.unit || "Đơn vị"}</p>
+                    <p className="text-[13px] text-slate-700 mb-1">Người gửi</p>
+                    <p className="text-[13px] font-semibold text-slate-900">{user.name || "Người dùng"} · {user.unit || "Đơn vị"}</p>
                   </div>
                   <div>
-                    <p className="text-[13px] text-[#635647] mb-1">Nội dung ý kiến</p>
-                    <div className="px-3 py-2.5 rounded-[8px] border text-[13px] leading-relaxed text-[#0b1426]"
+                    <p className="text-[13px] text-slate-700 mb-1">Nội dung ý kiến</p>
+                    <div className="px-3 py-2.5 rounded-[8px] border text-[13px] leading-relaxed text-slate-900"
                       style={{ background:"#f0fdfe", borderColor:"#67e8f9" }}>
                       {commentInput}
                     </div>
@@ -3784,7 +3786,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               <div className="text-[13px] font-semibold text-[#0e7490] mb-2" style={{ fontFamily: "var(--font-sans)" }}>
                 Xử lý phản ánh (Lãnh đạo cấp cao)
               </div>
-              <p className="text-[13px] text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)" }}>
                 Nếu có phản ánh hợp lệ ảnh hưởng đến danh sách, có thể trả hồ sơ về bước thẩm định để rà soát lại.
               </p>
               <DsButton variant="ghost" size="sm"
@@ -3958,7 +3960,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             {/* Members */}
             <div className="px-3 pt-3 pb-2">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] uppercase tracking-wide text-[#635647]"
+                <span className="text-[11px] uppercase tracking-wide text-slate-700"
                   style={{ fontFamily:"var(--font-sans)" }}>
                   Thành viên HĐ ({councilMembers.filter(m => m.present).length}/{councilMembers.length})
                 </span>
@@ -3982,7 +3984,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <div className="size-6 rounded-full flex items-center justify-center text-white text-[11px] shrink-0"
                         style={{ background:m.avatarColor }}>{m.name.charAt(0)}</div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-[12px] text-[#0b1426] truncate"
+                        <div className="text-[12px] text-slate-900 truncate"
                           style={{ fontFamily:"var(--font-sans)", fontWeight:isMe?600:400 }}>
                           {m.name.split(" ").slice(-1)[0]}{isMe ? " (bạn)" : ""}
                           {m.isChair && <span className="text-[10px] text-[#b45309] ml-1">Chủ tịch</span>}
@@ -4007,7 +4009,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             {/* COI legend */}
             <div className="px-3 pb-2">
               <div className="rounded-[6px] p-2 bg-white border" style={{ borderColor:"#e5e7eb" }}>
-                <div className="text-[11px] uppercase tracking-wide text-[#635647] mb-1.5"
+                <div className="text-[11px] uppercase tracking-wide text-slate-700 mb-1.5"
                   style={{ fontFamily:"var(--font-sans)" }}>Chú thích</div>
                 {[
                   { icon:CheckCircle2, color:"#0f7a3e", label:"Đã chấm" },
@@ -4022,7 +4024,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     </div>
                   );
                 })}
-                <div className="mt-1 pt-1 border-t text-[11px] text-[#635647]"
+                <div className="mt-1 pt-1 border-t text-[11px] text-slate-700"
                   style={{ borderColor:"#e5e7eb", fontFamily:"var(--font-sans)" }}>
                   Khoản 4 Điều 56 Luật TĐKT 2022
                 </div>
@@ -4033,7 +4035,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
             {/* Nomination queue */}
             <div className="px-3 pt-2 pb-1">
-              <span className="text-[11px] uppercase tracking-wide text-[#635647]"
+              <span className="text-[11px] uppercase tracking-wide text-slate-700"
                 style={{ fontFamily:"var(--font-sans)" }}>
                 Hồ sơ xét duyệt ({candidates.length})
               </span>
@@ -4064,7 +4066,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         : myDone
                         ? <CheckCircle2 className="size-3 text-[#0f7a3e] shrink-0" />
                         : <Clock className="size-3 text-[#9ca3af] shrink-0" />}
-                      <span className="text-[12px] text-[#0b1426] flex-1 truncate"
+                      <span className="text-[12px] text-slate-900 flex-1 truncate"
                         style={{ fontFamily:"var(--font-sans)", fontWeight:isSel?600:500 }}>
                         {cand.name}
                       </span>
@@ -4076,7 +4078,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       )}
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="text-[11px] text-[#635647] flex-1 truncate" style={{ fontFamily:"var(--font-sans)" }}>
+                      <span className="text-[11px] text-slate-700 flex-1 truncate" style={{ fontFamily:"var(--font-sans)" }}>
                         {cand.donVi}
                       </span>
                       {voteDecCfg && (
@@ -4143,7 +4145,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         <div className="size-16 rounded-full flex items-center justify-center" style={{ background:"#f5f3ff" }}>
                           <Gavel className="size-7 text-[#7c3aed]" />
                         </div>
-                        <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                        <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                           Chọn hồ sơ ở cột bên trái để bắt đầu chấm điểm
                         </p>
                       </div>
@@ -4160,9 +4162,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                 : <Users className="size-4 text-[#92400e]" />}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h3 className="text-[14px] text-[#0b1426]"
+                              <h3 className="text-[14px] text-slate-900"
                                 style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>{selectedCand.name}</h3>
-                              <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                              <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                                 {selectedCand.donVi}
                                 {selectedCand.hinhThucDeNghi ? ` · ${selectedCand.hinhThucDeNghi}` : ""}
                               </p>
@@ -4173,7 +4175,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                   style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:hdScoreColor(avgForCand(selectedCand.id)/maxTotalFn) }}>
                                   {avgForCand(selectedCand.id)}
                                 </div>
-                                <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Điểm TB</div>
+                                <div className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>Điểm TB</div>
                               </div>
                             )}
                           </div>
@@ -4181,9 +4183,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         {selectedCand.baoHoaThanhTich && (
                           <div className="p-4">
                             <div className="rounded-[6px] p-3 bg-white border" style={{ borderColor:"var(--color-line)" }}>
-                              <div className="text-[12px] uppercase tracking-wide text-[#635647] mb-1"
+                              <div className="text-[12px] uppercase tracking-wide text-slate-700 mb-1"
                                 style={{ fontFamily:"var(--font-sans)" }}>Tóm tắt thành tích</div>
-                              <p className="text-[13px] text-[#0b1426] leading-relaxed"
+                              <p className="text-[13px] text-slate-900 leading-relaxed"
                                 style={{ fontFamily:"var(--font-sans)" }}>{selectedCand.baoHoaThanhTich}</p>
                             </div>
                           </div>
@@ -4217,11 +4219,11 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
                             <div className="flex items-center gap-2">
                               <Gavel className="size-4 text-[#7c3aed]" />
-                              <span className="text-[13px] text-[#0b1426]"
+                              <span className="text-[13px] text-slate-900"
                                 style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
                                 {alreadyScored ? "Điểm đã nộp" : "Phiếu chấm điểm"}
                               </span>
-                              <span className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                              <span className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                                 {currentMember.name}
                               </span>
                             </div>
@@ -4255,9 +4257,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                   style={{ borderColor: val > 0 ? "#a78bfa40" : "var(--color-line)", background:"#fff" }}>
                                   <div className="flex items-center justify-between mb-2">
                                     <div>
-                                      <div className="text-[13px] text-[#0b1426]"
+                                      <div className="text-[13px] text-slate-900"
                                         style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>{tc.name}</div>
-                                      <div className="text-[12px] text-[#635647]"
+                                      <div className="text-[12px] text-slate-700"
                                         style={{ fontFamily:"var(--font-sans)" }}>Tối đa: {tc.maxScore} điểm</div>
                                     </div>
                                     <div className="text-[16px]"
@@ -4292,9 +4294,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             <div className="rounded-[8px] p-4 border-2 flex items-center justify-between"
                               style={{ borderColor:hdScoreColor(localPct) + "60", background:"#ffffff" }}>
                               <div>
-                                <div className="text-[13px] uppercase tracking-wide text-[#635647]"
+                                <div className="text-[13px] uppercase tracking-wide text-slate-700"
                                   style={{ fontFamily:"var(--font-sans)" }}>Tổng điểm</div>
-                                <div className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                <div className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                                   Tối đa: {maxTotalFn} điểm
                                 </div>
                               </div>
@@ -4315,7 +4317,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             {/* Comment */}
                             {!alreadyScored ? (
                               <div className="space-y-1.5">
-                                <label className="text-[13px] text-[#0b1426]"
+                                <label className="text-[13px] text-slate-900"
                                   style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
                                   Ý kiến nhận xét <span className="text-[#c8102e]">*</span>
                                 </label>
@@ -4333,10 +4335,10 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                               </div>
                             ) : (
                               <div className="rounded-[6px] p-3 bg-white border" style={{ borderColor:"var(--color-line)" }}>
-                                <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                                <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily:"var(--font-sans)" }}>
                                   Nhận xét đã nộp
                                 </div>
-                                <p className="text-[13px] text-[#0b1426] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                                <p className="text-[13px] text-slate-900 italic" style={{ fontFamily:"var(--font-sans)" }}>
                                   "{candidateScores[selectedCand.id]?.comment}"
                                 </p>
                               </div>
@@ -4346,7 +4348,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                               <div className="flex items-center gap-3 pt-1">
                                 <div className="flex-1">
                                   {!scoreReady && (
-                                    <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+                                    <div className="flex items-center gap-1.5 text-[13px] text-slate-700"
                                       style={{ fontFamily:"var(--font-sans)" }}>
                                       <AlertCircle className="size-3.5" />
                                       {c.tieuChi.some(tc => localScores[tc.id] === undefined)
@@ -4375,7 +4377,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         <div className="rounded-[8px] p-4 text-center"
                           style={{ background:"#f4f7fb", border:"1px solid #e2e8f0" }}>
                           <Lock className="size-8 mx-auto mb-2 text-[#e2e8f0]" />
-                          <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                          <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                             Bạn không thể chấm điểm hồ sơ này do xung đột lợi ích.
                           </p>
                         </div>
@@ -4411,7 +4413,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                               }}>
                               <div className="flex items-center gap-2">
                                 <Gavel className="size-4 text-[#7c3aed]" />
-                                <span className="text-[13px] text-[#0b1426]"
+                                <span className="text-[13px] text-slate-900"
                                   style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>Biểu quyết</span>
                                 {myCoi2.level === "hard" && (
                                   <span className="text-[12px] px-1.5 py-0.5 rounded border flex items-center gap-1"
@@ -4494,7 +4496,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             {/* My vote buttons */}
                             {!finalized && myCoi2.level !== "hard" && (
                               <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
-                                <div className="text-[12px] text-[#635647] mb-2"
+                                <div className="text-[12px] text-slate-700 mb-2"
                                   style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
                                   Phiếu của bạn{myVote2 ? " — click lại để thay đổi" : ""}:
                                 </div>
@@ -4541,7 +4543,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                   value={hdChairNotes[selectedCand.id] ?? ""}
                                   onChange={e => setHdChairNotes(prev => ({ ...prev, [selectedCand.id]: e.target.value }))} />
                                 <div className="flex items-center gap-2">
-                                  <span className="text-[12px] text-[#635647]"
+                                  <span className="text-[12px] text-slate-700"
                                     style={{ fontFamily:"var(--font-sans)" }}>Xác nhận:</span>
                                   {(["pass", "reject", "defer"] as HdVC[]).map(choice => {
                                     const cfg = HD_VC[choice];
@@ -4582,8 +4584,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             {finalized && vDec!.chairNote && (
                               <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
                                 style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
-                                <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
-                                <span className="text-[13px] text-[#635647] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                                <Gavel className="size-3.5 text-slate-700 shrink-0 mt-0.5" />
+                                <span className="text-[13px] text-slate-700 italic" style={{ fontFamily:"var(--font-sans)" }}>
                                   Kết luận Chủ tịch: {vDec!.chairNote}
                                 </span>
                               </div>
@@ -4597,7 +4599,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
                   {/* RIGHT: Member scores panel */}
                   <div className="w-[260px] shrink-0 space-y-3">
-                    <div className="text-[12px] uppercase tracking-wide text-[#635647]"
+                    <div className="text-[12px] uppercase tracking-wide text-slate-700"
                       style={{ fontFamily:"var(--font-sans)" }}>
                       Điểm các thành viên HĐ
                     </div>
@@ -4609,7 +4611,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         <>
                           <div className="rounded-[8px] p-4 border-2 text-center"
                             style={{ borderColor:"#a78bfa40", background:"#f5f3ff" }}>
-                            <div className="text-[12px] text-[#635647] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                            <div className="text-[12px] text-slate-700 mb-1" style={{ fontFamily:"var(--font-sans)" }}>
                               Điểm trung bình ({validCount} thành viên)
                             </div>
                             <div className="text-[36px]"
@@ -4638,13 +4640,13 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                     <div className="size-7 rounded-full flex items-center justify-center text-white text-[11px] shrink-0"
                                       style={{ background:m.avatarColor }}>{m.name.charAt(0)}</div>
                                     <div className="flex-1 min-w-0">
-                                      <div className="text-[13px] text-[#0b1426] truncate"
+                                      <div className="text-[13px] text-slate-900 truncate"
                                         style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
                                         {m.name}
                                         {isMe3 && <span className="text-[12px] ml-1 opacity-70">(bạn)</span>}
                                         {m.isChair && <span className="text-[12px] ml-1 text-[#b45309]">Chủ tịch</span>}
                                       </div>
-                                      <div className="text-[12px] text-[#635647] truncate" style={{ fontFamily:"var(--font-sans)" }}>
+                                      <div className="text-[12px] text-slate-700 truncate" style={{ fontFamily:"var(--font-sans)" }}>
                                         {m.donVi}
                                       </div>
                                     </div>
@@ -4659,7 +4661,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                         {total2}
                                       </div>
                                     ) : (
-                                      <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Chờ...</span>
+                                      <span className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>Chờ...</span>
                                     )}
                                   </div>
                                   {total2 !== null && (
@@ -4675,7 +4677,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                     </div>
                                   )}
                                   {entry?.comment && (
-                                    <p className="text-[13px] text-[#635647] mt-1.5 italic leading-relaxed line-clamp-2"
+                                    <p className="text-[13px] text-slate-700 mt-1.5 italic leading-relaxed line-clamp-2"
                                       style={{ fontFamily:"var(--font-sans)" }}>"{entry.comment}"</p>
                                   )}
                                 </div>
@@ -4712,7 +4714,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 return (
                   <div className="space-y-4">
                     <div>
-                      <div className="text-[13px] text-[#635647] mb-2 flex items-center gap-1.5"
+                      <div className="text-[13px] text-slate-700 mb-2 flex items-center gap-1.5"
                         style={{ fontFamily:"var(--font-sans)" }}>
                         <Columns className="size-3.5" />Chọn tối đa 3 hồ sơ để so sánh
                       </div>
@@ -4737,7 +4739,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     {compared.length < 2 ? (
                       <div className="flex flex-col items-center gap-3 py-16 text-center">
                         <Columns className="size-10 text-[#e2e8f0]" />
-                        <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                        <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                           Chọn ít nhất 2 hồ sơ để so sánh
                         </p>
                       </div>
@@ -4745,13 +4747,13 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
                         <div className="grid border-b"
                           style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`, borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
-                          <div className="px-4 py-3 text-[12px] text-[#635647] uppercase tracking-wide"
+                          <div className="px-4 py-3 text-[12px] text-slate-700 uppercase tracking-wide"
                             style={{ fontFamily:"var(--font-sans)" }}>Tiêu chí</div>
                           {compAvgs.map(a => (
                             <div key={a.cand.id} className="px-4 py-3 border-l" style={{ borderColor:"var(--color-line)" }}>
-                              <div className="text-[13px] text-[#0b1426]"
+                              <div className="text-[13px] text-slate-900"
                                 style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>{a.cand.name}</div>
-                              <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                              <div className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                                 {a.cand.donVi}
                               </div>
                             </div>
@@ -4765,9 +4767,9 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                               <div className="px-4 py-3 flex items-center gap-1.5">
                                 <div className="size-2 rounded-full shrink-0" style={{ background:"#7c3aed" }} />
                                 <div>
-                                  <div className="text-[13px] text-[#0b1426]"
+                                  <div className="text-[13px] text-slate-900"
                                     style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>{tc.name}</div>
-                                  <div className="text-[12px] text-[#635647]"
+                                  <div className="text-[12px] text-slate-700"
                                     style={{ fontFamily:"var(--font-sans)" }}>/{tc.maxScore}đ</div>
                                 </div>
                               </div>
@@ -4795,7 +4797,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         <div className="grid"
                           style={{ gridTemplateColumns:`160px repeat(${compared.length}, 1fr)` }}>
                           <div className="px-4 py-3">
-                            <div className="text-[13px] text-[#0b1426]"
+                            <div className="text-[13px] text-slate-900"
                               style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>TỔNG ĐIỂM</div>
                           </div>
                           {compAvgs.map(a => {
@@ -4811,7 +4813,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                                   </div>
                                   {isBest && <Trophy className="size-4 text-[#8a6400]" />}
                                 </div>
-                                <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                                <div className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                                   / {maxTotalFn} · {maxTotalFn>0?Math.round(a.avg/maxTotalFn*100):0}%
                                 </div>
                               </div>
@@ -4830,7 +4832,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <FileText className="size-4 text-[#7c3aed]" />
-                      <span className="text-[13px] text-[#0b1426]"
+                      <span className="text-[13px] text-slate-900"
                         style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>
                         Dự thảo Biên bản họp Hội đồng TĐKT
                       </span>
@@ -4845,14 +4847,14 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     <div className="rounded-[10px] border p-4 space-y-3" style={{ borderColor:"var(--color-line)" }}>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="text-[12px] text-[#635647] mb-1 block"
+                          <label className="text-[12px] text-slate-700 mb-1 block"
                             style={{ fontFamily:"var(--font-sans)" }}>Chủ tọa</label>
                           <input className="ds-input w-full" value={minutesForm.chuToa}
                             onChange={e => setMinutesForm(f => ({ ...f, chuToa:e.target.value }))}
                             placeholder={hdChair?.name ?? "Họ tên chủ tọa..."} />
                         </div>
                         <div>
-                          <label className="text-[12px] text-[#635647] mb-1 block"
+                          <label className="text-[12px] text-slate-700 mb-1 block"
                             style={{ fontFamily:"var(--font-sans)" }}>Thư ký</label>
                           <input className="ds-input w-full" value={minutesForm.thuKy}
                             onChange={e => setMinutesForm(f => ({ ...f, thuKy:e.target.value }))}
@@ -4860,7 +4862,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         </div>
                       </div>
                       <div>
-                        <label className="text-[12px] text-[#635647] mb-1 block"
+                        <label className="text-[12px] text-slate-700 mb-1 block"
                           style={{ fontFamily:"var(--font-sans)" }}>Địa điểm</label>
                         <input className="ds-input w-full" value={minutesForm.diaDiem}
                           onChange={e => setMinutesForm(f => ({ ...f, diaDiem:e.target.value }))} />
@@ -4872,35 +4874,35 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
                     <div className="px-8 py-6 space-y-5 bg-white" style={{ fontFamily:"var(--font-sans)" }}>
                       <div className="text-center space-y-1 border-b pb-5" style={{ borderColor:"var(--color-line)" }}>
-                        <div className="text-[12px] uppercase tracking-widest text-[#635647]">
+                        <div className="text-[12px] uppercase tracking-widest text-slate-700">
                           ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI
                         </div>
-                        <div className="text-[12px] uppercase tracking-widest text-[#635647]">
+                        <div className="text-[12px] uppercase tracking-widest text-slate-700">
                           HỘI ĐỒNG THI ĐUA – KHEN THƯỞNG
                         </div>
                         <div className="h-px bg-[#e2e8f0] my-2" />
-                        <h2 className="text-[18px] text-[#0b1426]"
+                        <h2 className="text-[18px] text-slate-900"
                           style={{ fontFamily:"var(--font-sans)", fontWeight:700 }}>
                           BIÊN BẢN HỌP HỘI ĐỒNG XÉT DUYỆT
                         </h2>
-                        <p className="text-[14px] text-[#0b1426]">
+                        <p className="text-[14px] text-slate-900">
                           Phong trào: <strong>{c.name}</strong>
                         </p>
-                        <p className="text-[13px] text-[#635647]">
+                        <p className="text-[13px] text-slate-700">
                           {minutesForm.ngayHop ? `Ngày ${minutesForm.ngayHop.split("-").reverse().join("/")}` : ""}
                           {minutesForm.diaDiem ? ` · ${minutesForm.diaDiem}` : ""}
                         </p>
                       </div>
 
                       <div>
-                        <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontWeight:700 }}>
+                        <div className="text-[13px] text-slate-900 mb-2" style={{ fontWeight:700 }}>
                           I. THÀNH PHẦN THAM DỰ
                         </div>
                         <table className="w-full text-[13px] border-collapse">
                           <thead>
                             <tr style={{ background:"var(--color-paper)" }}>
                               {["STT","Họ và tên","Chức danh","Đơn vị","Có mặt"].map(h => (
-                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-[#635647] uppercase tracking-wide"
+                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-slate-700 uppercase tracking-wide"
                                   style={{ borderColor:"var(--color-line)" }}>{h}</th>
                               ))}
                             </tr>
@@ -4923,7 +4925,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                             ))}
                           </tbody>
                         </table>
-                        <p className="text-[13px] text-[#635647] mt-2">
+                        <p className="text-[13px] text-slate-700 mt-2">
                           Có mặt: <strong>{councilMembers.filter(m=>m.present).length}</strong> thành viên.
                           Vắng mặt: <strong>{councilMembers.filter(m=>!m.present).length}</strong>
                           {councilMembers.filter(m=>!m.present).length > 0
@@ -4933,14 +4935,14 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       </div>
 
                       <div>
-                        <div className="text-[13px] text-[#0b1426] mb-3" style={{ fontWeight:700 }}>
+                        <div className="text-[13px] text-slate-900 mb-3" style={{ fontWeight:700 }}>
                           II. KẾT QUẢ CHẤM ĐIỂM VÀ BIỂU QUYẾT
                         </div>
                         <table className="w-full text-[13px] border-collapse">
                           <thead>
                             <tr style={{ background:"var(--color-paper)" }}>
                               {["STT","Tên cá nhân/tập thể","Đơn vị","Hình thức KT","Điểm TB","Kết quả"].map(h => (
-                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-[#635647] uppercase tracking-wide"
+                                <th key={h} className="text-left px-3 py-2 border text-[12px] text-slate-700 uppercase tracking-wide"
                                   style={{ borderColor:"var(--color-line)" }}>{h}</th>
                               ))}
                             </tr>
@@ -4977,7 +4979,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       </div>
 
                       <div>
-                        <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontWeight:700 }}>
+                        <div className="text-[13px] text-slate-900 mb-2" style={{ fontWeight:700 }}>
                           III. KẾT LUẬN VÀ KIẾN NGHỊ
                         </div>
                         <p className="text-[13px] text-[#4a5568] leading-relaxed">
@@ -4990,15 +4992,15 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       <div className="grid grid-cols-2 gap-8 pt-4 border-t" style={{ borderColor:"var(--color-line)" }}>
                         <div className="text-center space-y-12">
                           <div>
-                            <div className="text-[12px] text-[#635647] uppercase tracking-wide">Thư ký Hội đồng</div>
-                            <div className="text-[13px] text-[#0b1426] mt-8"
+                            <div className="text-[12px] text-slate-700 uppercase tracking-wide">Thư ký Hội đồng</div>
+                            <div className="text-[13px] text-slate-900 mt-8"
                               style={{ fontWeight:600 }}>{minutesForm.thuKy || hdSecy?.name}</div>
                           </div>
                         </div>
                         <div className="text-center space-y-12">
                           <div>
-                            <div className="text-[12px] text-[#635647] uppercase tracking-wide">Chủ tịch Hội đồng</div>
-                            <div className="text-[13px] text-[#0b1426] mt-8"
+                            <div className="text-[12px] text-slate-700 uppercase tracking-wide">Chủ tịch Hội đồng</div>
+                            <div className="text-[13px] text-slate-900 mt-8"
                               style={{ fontWeight:600 }}>{minutesForm.chuToa || hdChair?.name}</div>
                           </div>
                         </div>
@@ -5091,8 +5093,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   {i + 1}
                 </div>
                 <div className="flex-1">
-                  <div className="text-[13px] text-[#0b1426] font-semibold">{p.name}</div>
-                  <div className="text-[13px] text-[#635647]">{p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"}</div>
+                  <div className="text-[13px] text-slate-900 font-semibold">{p.name}</div>
+                  <div className="text-[13px] text-slate-700">{p.donVi} · {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"}</div>
                 </div>
                 {p.score && <div className="text-[14px] font-bold text-[#0f7a3e]" style={{ fontFamily: "var(--font-sans)" }}>{p.score} điểm</div>}
               </div>
@@ -5107,7 +5109,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
         {/* Checklist chuẩn bị ban hành QĐ */}
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <div className="px-4 py-3 border-b" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Checklist trước ban hành Quyết định</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>Checklist trước ban hành Quyết định</span>
           </div>
           <div className="px-4 py-2">
             {[
@@ -5168,8 +5170,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       { label: "Thuật toán",val: "RSA-2048 · SHA-256" },
                     ].map(f => (
                       <div key={f.label} className="p-2.5 rounded-[8px]" style={{ background: "white", border: "1px solid #ede9fe" }}>
-                        <div className="text-[13px] text-[#635647] uppercase tracking-wider mb-0.5">{f.label}</div>
-                        <div className="text-[13px] text-[#0b1426] font-semibold">{f.val}</div>
+                        <div className="text-[13px] text-slate-700 uppercase tracking-wider mb-0.5">{f.label}</div>
+                        <div className="text-[13px] text-slate-900 font-semibold">{f.val}</div>
                       </div>
                     ))}
                   </div>
@@ -5196,7 +5198,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         Xác thực
                       </button>
                     </div>
-                    <p className="text-[13px] text-[#635647] mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>
+                    <p className="text-[13px] text-slate-700 mt-1.5" style={{ fontFamily: "var(--font-sans)" }}>
                       Nhập 4–6 chữ số PIN từ thiết bị CA Token của bạn. Demo: nhập bất kỳ 4+ số.
                     </p>
                   </div>
@@ -5277,7 +5279,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             </div>
           </div>
           <div className="p-5 space-y-3">
-            <div className="text-[13px] text-[#0b1426] font-semibold mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+            <div className="text-[13px] text-slate-900 font-semibold mb-2" style={{ fontFamily: "var(--font-sans)" }}>
               Danh sách được khen thưởng ({c.participants.filter(p => p.hoSoStatus === "da_duyet").length} cá nhân/tập thể)
             </div>
             {c.participants.filter(p => p.hoSoStatus === "da_duyet").slice(0, 3).map((p, i) => (
@@ -5285,8 +5287,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 style={{ background: i === 0 ? "#fdf3d9" : "#f0fdf4", border: `1px solid ${i === 0 ? "#f0dba0" : "#bbf7d0"}` }}>
                 <Award className="size-5 shrink-0" style={{ color: ["#8a6400", "#4f5d6e", "#cd7c3b"][i] }} />
                 <div className="flex-1">
-                  <div className="text-[13px] text-[#0b1426] font-semibold">{p.name}</div>
-                  <div className="text-[13px] text-[#635647]">{p.donVi}</div>
+                  <div className="text-[13px] text-slate-900 font-semibold">{p.name}</div>
+                  <div className="text-[13px] text-slate-700">{p.donVi}</div>
                 </div>
                 <span className="text-[13px] px-2 py-0.5 rounded-full" style={{ background: "#dcfce7", color: "#166534", fontWeight: 600 }}>
                   {c.awards[i] ?? "Bằng khen"}
@@ -5339,7 +5341,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
               </div>
               <div className="p-5 space-y-3">
-                <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                   Vui lòng tải Quyết định khen thưởng và xác nhận đã nhận để hoàn tất thủ tục.
                 </p>
                 <div className="flex gap-3">
@@ -5389,7 +5391,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               </div>
               <div className="divide-y" style={{ borderColor: "var(--color-line)" }}>
                 {winners.length === 0 ? (
-                  <div className="px-5 py-4 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Chưa có người được khen thưởng</div>
+                  <div className="px-5 py-4 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Chưa có người được khen thưởng</div>
                 ) : winners.map(p => {
                   const r = p.hinhThucDeNghi ? getRewardByName(p.hinhThucDeNghi) : getRewardByName(c.awards[0] ?? "");
                   const tien = r?.tienThuong ?? 0;
@@ -5398,8 +5400,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     <div key={p.id} className="px-5 py-3 flex items-center gap-3 transition-colors"
                       style={{ background: paid ? "#f0fdf4" : "white" }}>
                       <div className="flex-1">
-                        <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
-                        <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{p.donVi} · {r?.tenViet ?? c.awards[0] ?? "—"}</div>
+                        <div className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
+                        <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{p.donVi} · {r?.tenViet ?? c.awards[0] ?? "—"}</div>
                       </div>
                       <span className="text-[14px] font-bold shrink-0"
                         style={{ fontFamily: "var(--font-sans)", color: tien > 0 ? "#0f7a3e" : "#4f5d6e" }}>
@@ -5422,7 +5424,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               {winners.length > 0 && (
                 <div className="px-5 py-2.5 border-t flex items-center gap-2"
                   style={{ borderColor: "var(--color-line)", background: "var(--color-paper)" }}>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     Căn cứ: Điều 7 TT 28/2025/TT-BTC · Điều 10 TT 118/2025/TT-BTC
                   </span>
                   {!allPaid && canMove && (
@@ -5442,8 +5444,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
         <div className="rounded-[10px] border overflow-hidden" style={{ borderColor:"var(--color-line)" }}>
           <div className="px-5 py-3 border-b flex items-center gap-2" style={{ background:"var(--color-paper)", borderColor:"var(--color-line)" }}>
             <Send className="size-4 text-[#0f7a3e]" />
-            <span className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Phát hành & Thông báo Quyết định</span>
-            <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: Điều 44 NĐ 152/2025/NĐ-CP</span>
+            <span className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Phát hành & Thông báo Quyết định</span>
+            <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Căn cứ: Điều 44 NĐ 152/2025/NĐ-CP</span>
           </div>
           <div className="px-5 py-3 grid grid-cols-2 gap-3">
             {[
@@ -5458,7 +5460,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   style={{ borderColor:ch.done?"#86efac":"#e5e7eb", background:ch.done?"#f0fdf4":"#f9fafb" }}>
                   <Icon className="size-4 shrink-0" style={{ color:ch.done?"#166534":"#4f5d6e" }} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{ch.label}</div>
+                    <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)" }}>{ch.label}</div>
                   </div>
                   <span className="text-[13px] px-1.5 py-0.5 rounded-full font-semibold shrink-0"
                     style={{ background:ch.done?"#dcfce7":"#f3f4f6", color:ch.done?"#166534":"#4f5d6e", fontFamily: "var(--font-sans)" }}>
@@ -5507,12 +5509,12 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             <div className="grid grid-cols-4 gap-3">
               <div className="text-center p-3 rounded-[10px] border" style={{ borderColor: "#e5e7eb", background: "#f9fafb" }}>
                 <div className="text-[13px] text-[#6b7280] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Đơn vị tham gia</div>
-                <div className="text-[18px] font-bold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{c.joinedUnits}<span className="text-[14px] text-[#6b7280]">/{c.totalUnits}</span></div>
+                <div className="text-[18px] font-bold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{c.joinedUnits}<span className="text-[14px] text-[#6b7280]">/{c.totalUnits}</span></div>
                 <div className="text-[13px] text-[#0e7490] font-semibold mt-0.5">{tyLeHoanthanh}% hoàn thành</div>
               </div>
               <div className="text-center p-3 rounded-[10px] border" style={{ borderColor: "#e5e7eb", background: "#f9fafb" }}>
                 <div className="text-[13px] text-[#6b7280] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Hồ sơ đã nộp</div>
-                <div className="text-[18px] font-bold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{totalNop}</div>
+                <div className="text-[18px] font-bold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{totalNop}</div>
                 <div className="text-[13px] text-[#166534] font-semibold mt-0.5">{c.participants.length} đăng ký</div>
               </div>
               <div className="text-center p-3 rounded-[10px] border" style={{ borderColor: "#e5e7eb", background: "#f9fafb" }}>
@@ -5570,12 +5572,12 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                     {i + 1}
                   </div>
                   <div className="flex-1">
-                    <div className="text-[14px] text-[#0b1426] font-bold">{p.name}</div>
-                    <div className="text-[13px] text-[#635647]">{p.donVi} · {p.position ?? (p.type === "tap_the" ? "Tập thể" : "Cá nhân")}</div>
+                    <div className="text-[14px] text-slate-900 font-bold">{p.name}</div>
+                    <div className="text-[13px] text-slate-700">{p.donVi} · {p.position ?? (p.type === "tap_the" ? "Tập thể" : "Cá nhân")}</div>
                   </div>
                   <div className="text-right">
                     {p.score && <div className="text-[18px] font-bold text-[#0f7a3e]" style={{ fontFamily: "var(--font-sans)" }}>{p.score} điểm</div>}
-                    <div className="text-[13px] text-[#635647]">{c.awards[i] ?? "Bằng khen"}</div>
+                    <div className="text-[13px] text-slate-700">{c.awards[i] ?? "Bằng khen"}</div>
                   </div>
                   <DsButton variant="secondary" size="sm"><Download className="size-3" />Giấy khen</DsButton>
                 </div>
@@ -5599,10 +5601,10 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   <CheckCheck className="size-4 text-white" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[13px] font-semibold" style={{ color: "#0b1426", fontFamily: "var(--font-sans)" }}>
+                  <div className="text-[13px] font-semibold" style={{ color: "#0f172a", fontFamily: "var(--font-sans)" }}>
                     Bước 17 — Xác nhận nhận Quyết định khen thưởng
                   </div>
-                  <div className="text-[13px]" style={{ color: "#635647", fontFamily: "var(--font-sans)" }}>
+                  <div className="text-[13px]" style={{ color: "#334155", fontFamily: "var(--font-sans)" }}>
                     {confirmedCount}/{winners.length} người đã xác nhận · {pendingCount} chưa xác nhận · Đồng bộ hồ sơ cán bộ điện tử (mock)
                   </div>
                 </div>
@@ -5618,7 +5620,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                         <div className="text-[13px] font-semibold text-[#166534]" style={{ fontFamily: "var(--font-sans)" }}>
                           Đã xác nhận nhận Quyết định khen thưởng
                         </div>
-                        <div className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+                        <div className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
                           Hồ sơ cán bộ điện tử đang được cập nhật tự động · <span style={{ color: "#b45309" }}>[Mock — chưa tích hợp module HSCB]</span>
                         </div>
                       </div>
@@ -5626,10 +5628,10 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                   ) : (
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                        <div className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                           {myWinner.name} — {c.awards[winners.indexOf(myWinner)] ?? "Bằng khen"}
                         </div>
-                        <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Nhấn xác nhận để ghi nhận đã nhận QĐ khen thưởng</div>
+                        <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Nhấn xác nhận để ghi nhận đã nhận QĐ khen thưởng</div>
                       </div>
                       <DsButton variant="primary" size="sm" onClick={() => setReceiptConfirmed(true)}>
                         <CheckCircle2 className="size-3.5" />Xác nhận đã nhận
@@ -5639,7 +5641,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
               )}
               {isIndividual && !myWinner && (
-                <div className="px-5 py-4 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="px-5 py-4 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   Tài khoản của bạn không có trong danh sách được khen thưởng đợt này.
                 </div>
               )}
@@ -5657,8 +5659,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                           {p.name.slice(0, 2)}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-[13px] font-semibold text-[#0b1426] truncate">{p.name}</div>
-                          <div className="text-[13px] text-[#635647]">{p.donVi}</div>
+                          <div className="text-[13px] font-semibold text-slate-900 truncate">{p.name}</div>
+                          <div className="text-[13px] text-slate-700">{p.donVi}</div>
                         </div>
                         <span className="text-[13px] px-2 py-0.5 rounded-full shrink-0"
                           style={{ background: confirmed ? "#dcfce7" : "#fef3c7", color: confirmed ? "#166534" : "#b45309", fontWeight: 600 }}>
@@ -5753,15 +5755,15 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
               <div className="px-5 py-4 space-y-3">
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 rounded-[8px] border" style={{ borderColor: "#e5e7eb" }}>
-                    <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Số người được khen</div>
-                    <div className="text-[18px] font-bold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{winners.length}</div>
+                    <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>Số người được khen</div>
+                    <div className="text-[18px] font-bold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{winners.length}</div>
                   </div>
                   <div className="text-center p-3 rounded-[8px] border" style={{ borderColor: "#e5e7eb" }}>
-                    <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Tổng thực chi</div>
+                    <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>Tổng thực chi</div>
                     <div className="text-[14px] font-bold text-[#0f7a3e]" style={{ fontFamily: "var(--font-sans)" }}>{tongThucChi > 0 ? formatTienThuong(tongThucChi) : "—"}</div>
                   </div>
                   <div className="text-center p-3 rounded-[8px] border" style={{ borderColor: "#e5e7eb" }}>
-                    <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>So dự toán</div>
+                    <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>So dự toán</div>
                     <div className="text-[14px] font-bold text-[#1C5FBE]" style={{ fontFamily: "var(--font-sans)" }}>
                       {c.tongKinhPhi && c.tongKinhPhi > 0
                         ? (tongThucChi <= c.tongKinhPhi ? "✅ Đúng kế hoạch" : "⚠ Vượt dự toán")
@@ -5771,7 +5773,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                 </div>
                 {!quyetToanDone ? (
                   <div className="space-y-2">
-                    <p className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <p className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                       Xác nhận đã hoàn thành quyết toán, lưu chứng từ kế toán vào hồ sơ lưu trữ:
                     </p>
                     <button onClick={() => setQuyetToanDone(true)}
@@ -5779,7 +5781,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
                       style={{ borderColor: "#7c3aed", background: "#faf5ff", color: "#7c3aed", fontFamily: "var(--font-sans)" }}>
                       <Stamp className="size-4" />Xác nhận đã quyết toán
                     </button>
-                    <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                       Căn cứ: Điều 8 TT 28/2025/TT-BTC · Điều 10 TT 118/2025/TT-BTC · NĐ 30/2020/NĐ-CP
                     </p>
                   </div>
@@ -5869,7 +5871,7 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
 
         <div className="rounded-[12px] border overflow-hidden" style={{ borderColor: "var(--color-line)" }}>
           <div className="px-4 py-3 border-b" style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
-            <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Tài liệu lưu trữ</span>
+            <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Tài liệu lưu trữ</span>
           </div>
           <div className="p-4 space-y-2">
             {[
@@ -5882,8 +5884,8 @@ function StepWorkspacePanel({ c, user, onTransition, onBack, onAddParticipant }:
             ].map((f, i) => (
               <div key={i} className="flex items-center gap-3 p-3 rounded-[8px] border" style={{ borderColor: "#e5e7eb" }}>
                 <FileText className="size-4 text-[#6b7280] shrink-0" />
-                <span className="flex-1 text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{f.name}</span>
-                <span className="text-[13px] text-[#635647]">{f.size}</span>
+                <span className="flex-1 text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{f.name}</span>
+                <span className="text-[13px] text-slate-700">{f.size}</span>
                 <DsButton variant="secondary" size="sm"><Download className="size-3" /></DsButton>
               </div>
             ))}
@@ -5957,14 +5959,14 @@ function FinancialTab({ c }: { c: Campaign }) {
         <div className="px-5 py-3.5 border-b flex items-center gap-2"
           style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
           <Award className="size-4" style={{ color: theme.primary }} />
-          <span className="text-[14px] font-semibold text-[#0b1426]"
+          <span className="text-[14px] font-semibold text-slate-900"
             style={{ fontFamily: "var(--font-sans)" }}>Hình thức khen thưởng dự kiến</span>
-          <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="ml-auto text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Căn cứ: NĐ 152/2025/NĐ-CP · TT 28/2025/TT-BTC
           </span>
         </div>
         {mappedAwards.length === 0 ? (
-          <div className="px-5 py-8 text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="px-5 py-8 text-center text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Chưa chọn hình thức khen thưởng
           </div>
         ) : (
@@ -5975,7 +5977,7 @@ function FinancialTab({ c }: { c: Campaign }) {
               return (
                 <div key={name} className="px-5 py-3.5 flex items-center gap-4">
                   <div className="flex-1">
-                    <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <div className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>
                       {name}
                     </div>
                     {reward ? (
@@ -5984,7 +5986,7 @@ function FinancialTab({ c }: { c: Campaign }) {
                           style={{ color: nc.color, background: nc.bg, borderColor: nc.border, fontFamily: "var(--font-sans)" }}>
                           {getNguonKinhPhiLabel(reward.nguonKinhPhi)}
                         </span>
-                        <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                        <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                           {reward.canCuThuong}
                         </span>
                       </div>
@@ -5999,7 +6001,7 @@ function FinancialTab({ c }: { c: Campaign }) {
                       {reward ? formatTienThuong(reward.tienThuong) : "—"}
                     </div>
                     {reward?.canCuTien && (
-                      <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{reward.canCuTien}</div>
+                      <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{reward.canCuTien}</div>
                     )}
                   </div>
                 </div>
@@ -6015,14 +6017,14 @@ function FinancialTab({ c }: { c: Campaign }) {
           <div className="px-5 py-3.5 border-b flex items-center gap-2"
             style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
             <Users className="size-4" style={{ color: theme.primary }} />
-            <span className="text-[14px] font-semibold text-[#0b1426]"
+            <span className="text-[14px] font-semibold text-slate-900"
               style={{ fontFamily: "var(--font-sans)" }}>Dự toán kinh phí theo đối tượng</span>
           </div>
           <table className="w-full">
             <thead>
               <tr style={{ background: "var(--color-paper)" }}>
                 {["Tên cá nhân / tập thể", "Đơn vị", "Hình thức khen", "Nguồn KP", "Tiền thưởng"].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-[#635647] border-b"
+                  <th key={h} className="px-4 py-3 text-left text-[13px] uppercase tracking-wide text-slate-700 border-b"
                     style={{ borderColor: "var(--color-line)", fontFamily: "var(--font-sans)" }}>{h}</th>
                 ))}
               </tr>
@@ -6035,8 +6037,8 @@ function FinancialTab({ c }: { c: Campaign }) {
                   <tr key={p.id} className="border-b hover:bg-[#ffffff] transition-colors"
                     style={{ borderColor: "var(--color-line)" }}>
                     <td className="px-4 py-3">
-                      <div className="text-[13px] font-semibold text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
-                      {p.position && <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{p.position}</div>}
+                      <div className="text-[13px] font-semibold text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>{p.name}</div>
+                      {p.position && <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{p.position}</div>}
                     </td>
                     <td className="px-4 py-3 text-[13px] text-[#4a5568]" style={{ fontFamily: "var(--font-sans)" }}>{p.donVi}</td>
                     <td className="px-4 py-3">
@@ -6065,7 +6067,7 @@ function FinancialTab({ c }: { c: Campaign }) {
             </tbody>
             <tfoot>
               <tr style={{ background: "var(--color-paper)", borderTop: "2px solid var(--color-line)" }}>
-                <td colSpan={4} className="px-4 py-3 text-[13px] font-bold text-[#0b1426]"
+                <td colSpan={4} className="px-4 py-3 text-[13px] font-bold text-slate-900"
                   style={{ fontFamily: "var(--font-sans)" }}>TỔNG CỘNG</td>
                 <td className="px-4 py-3 text-right">
                   <span className="text-[14px] font-bold text-[#0f7a3e]"
@@ -6084,7 +6086,7 @@ function FinancialTab({ c }: { c: Campaign }) {
         <div className="px-5 py-3.5 border-b flex items-center gap-2"
           style={{ background: "var(--color-paper)", borderColor: "var(--color-line)" }}>
           <Hash className="size-4" style={{ color: theme.primary }} />
-          <span className="text-[14px] font-semibold text-[#0b1426]"
+          <span className="text-[14px] font-semibold text-slate-900"
             style={{ fontFamily: "var(--font-sans)" }}>Tổng hợp theo nguồn kinh phí</span>
         </div>
         <div className="px-5 py-4 grid grid-cols-3 gap-4">
@@ -6115,11 +6117,122 @@ function FinancialTab({ c }: { c: Campaign }) {
           })}
         </div>
         <div className="px-5 py-3 border-t flex items-center gap-2" style={{ borderColor: "var(--color-line)", background: "#ffffff" }}>
-          <BookOpen className="size-3.5 text-[#635647]" />
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <BookOpen className="size-3.5 text-slate-700" />
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Căn cứ: Chương VII NĐ 152/2025/NĐ-CP · Điều 3–8 TT 28/2025/TT-BTC · Điều 7–10 TT 118/2025/TT-BTC
           </span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PIPELINE TAB — Trạng thái hồ sơ theo luồng xét duyệt
+═══════════════════════════════════════════════════════════════════ */
+function PipelineTab({ c }: { c: Campaign }) {
+  const si     = stateIndex(c.state);
+  const issued = si >= stateIndex("decision_issued");
+
+  const reviewStageLabel =
+    si < stateIndex("unit_review")     ? "Đã nộp – Chờ thẩm định" :
+    c.state === "unit_review"          ? "Thẩm định cấp cơ sở" :
+    c.state === "public_consultation"  ? "Lấy ý kiến công khai" :
+    c.state === "council_review"       ? "Hội đồng xét duyệt" :
+    c.state === "final_approval"       ? "Trình lãnh đạo ký" :
+                                         "Đang xét duyệt";
+
+  type ColDef = { id: string; label: string; sublabel: string; color: string; bg: string; border: string; cards: Participant[] };
+  const cols: ColDef[] = [
+    {
+      id: "chua_nop",
+      label: "Chưa nộp",
+      sublabel: "Chưa đăng ký hồ sơ",
+      color: "#6b7280", bg: "#f9fafb", border: "#e5e7eb",
+      cards: c.participants.filter(p => p.hoSoStatus === "chua_nop"),
+    },
+    {
+      id: "da_nop",
+      label: reviewStageLabel,
+      sublabel: STATE_CFG[c.state].label,
+      color: "#1C5FBE", bg: "#eff6ff", border: "#bfdbfe",
+      cards: c.participants.filter(p => p.hoSoStatus === "da_nop"),
+    },
+    {
+      id: "da_duyet",
+      label: issued ? "Ban hành QĐ" : "Đề nghị khen thưởng",
+      sublabel: issued ? "Đã có quyết định khen thưởng" : "Đã qua xét duyệt HĐ",
+      color: issued ? "#7c3aed" : "#166534",
+      bg: issued ? "#faf5ff" : "#f0fdf4",
+      border: issued ? "#ddd6fe" : "#86efac",
+      cards: c.participants.filter(p => p.hoSoStatus === "da_duyet"),
+    },
+    {
+      id: "tra_lai",
+      label: "Trả lại",
+      sublabel: "Cần bổ sung / hoàn thiện hồ sơ",
+      color: "#dc2626", bg: "#fef2f2", border: "#fecaca",
+      cards: c.participants.filter(p => p.hoSoStatus === "tra_lai"),
+    },
+  ];
+
+  const scfg  = STATE_CFG[c.state];
+  const StIcon = scfg.icon;
+
+  return (
+    <div>
+      <div className="mb-4 flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px]"
+        style={{ background: scfg.bg, border: `1px solid ${scfg.border}`, color: scfg.color, fontFamily: "var(--font-sans)" }}>
+        <StIcon className="size-4 shrink-0" />
+        <span>Phong trào đang ở: <strong>{scfg.label}</strong></span>
+        <span className="ml-auto opacity-60">{c.participants.length} hồ sơ tổng</span>
+      </div>
+
+      <div className="grid grid-cols-4 gap-3">
+        {cols.map(col => (
+          <div key={col.id} className="flex flex-col rounded-xl overflow-hidden border"
+            style={{ borderColor: col.border, background: col.bg }}>
+            <div className="px-3 py-2.5 flex items-center justify-between border-b" style={{ borderColor: col.border }}>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] font-semibold truncate" style={{ color: col.color, fontFamily: "var(--font-sans)" }}>{col.label}</div>
+                <div className="text-[11px] opacity-55 mt-0.5 truncate" style={{ fontFamily: "var(--font-sans)" }}>{col.sublabel}</div>
+              </div>
+              <span className="ml-2 h-5 min-w-5 px-1.5 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
+                style={{ background: col.color }}>
+                {col.cards.length}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2 p-2 flex-1 min-h-[120px]">
+              {col.cards.length === 0 ? (
+                <div className="text-[12px] text-center py-6" style={{ color: "#9ca3af", fontFamily: "var(--font-sans)" }}>
+                  Không có hồ sơ
+                </div>
+              ) : col.cards.map(p => (
+                <div key={p.id} className="bg-white rounded-lg px-3 py-2.5 shadow-sm border" style={{ borderColor: col.border }}>
+                  <div className="text-[13px] font-semibold mb-0.5 truncate"
+                    style={{ color: "#1a2744", fontFamily: "var(--font-sans)" }}>{p.name}</div>
+                  <div className="text-[12px] opacity-55 truncate mb-2"
+                    style={{ fontFamily: "var(--font-sans)" }}>{p.donVi}</div>
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-[11px] px-1.5 py-0.5 rounded-full shrink-0"
+                      style={{
+                        background: p.type === "ca_nhan" ? "#dbeafe" : "#fce7f3",
+                        color: p.type === "ca_nhan" ? "#1d4ed8" : "#9d174d",
+                        fontFamily: "var(--font-sans)"
+                      }}>
+                      {p.type === "ca_nhan" ? "Cá nhân" : "Tập thể"}
+                    </span>
+                    {p.score !== undefined && (
+                      <span className="text-[12px] font-bold shrink-0" style={{ color: col.color, fontFamily: "var(--font-sans)" }}>
+                        {p.score}đ
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -6135,7 +6248,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
   onAddParticipant: (campaignId: string, p: Participant) => void;
 }) {
   const { theme } = useTheme();
-  const [tab, setTab] = useState<"overview"|"participants"|"scoring"|"kinh_phi"|"history">("overview");
+  const [tab, setTab] = useState<"overview"|"participants"|"pipeline"|"scoring"|"kinh_phi"|"history">("overview");
   const [confirming, setConfirming] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -6153,6 +6266,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
   const ALL_TABS = [
     { key:"overview" as const,     label:"Tổng quan",   icon:Info,      badge:null,                                    restricted:false },
     { key:"participants" as const, label:"Hồ sơ",        icon:Users,     badge:c.participants.length ? `${c.participants.length}` : null, restricted:false },
+    { key:"pipeline" as const,     label:"Pipeline",    icon:Columns,   badge:null,                                    restricted:false },
     { key:"scoring" as const,      label:"Xếp hạng",    icon:BarChart2, badge:null,                                    restricted:false },
     { key:"kinh_phi" as const,     label:"Kinh phí",    icon:Hash,      badge:null,                                    restricted:true  },
     { key:"history" as const,      label:"Lịch sử",     icon:FileText,  badge:`${c.auditLog.length}`,                  restricted:true  },
@@ -6216,7 +6330,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
         </span>
 
         <Trophy className="size-3.5 shrink-0" style={{ color:theme.primary }} />
-        <span className="text-[13px] text-[#0b1426] flex-1 min-w-0 truncate"
+        <span className="text-[13px] text-slate-900 flex-1 min-w-0 truncate"
           style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{c.name}</span>
 
         {/* Quick stats inline */}
@@ -6309,11 +6423,11 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
                   <div className="text-[13px] text-[#4f5d6e] leading-none mb-0.5" style={{ fontFamily: "var(--font-sans)" }}>
                     {c.code}
                   </div>
-                  <div className="text-[13px] text-[#0b1426] font-semibold leading-snug truncate"
+                  <div className="text-[13px] text-slate-900 font-semibold leading-snug truncate"
                     style={{ fontFamily: "var(--font-sans)" }}>{TYPE_LABELS[c.type]}</div>
                 </div>
               </div>
-              <h2 className="text-[12.5px] text-[#0b1426] leading-snug mb-3"
+              <h2 className="text-[12.5px] text-slate-900 leading-snug mb-3"
                 style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{c.name}</h2>
               <div className="space-y-1.5">
                 {[
@@ -6507,6 +6621,7 @@ function CampaignDetailView({ c, user, onBack, onTransition, onAddParticipant }:
           <div className="px-6 py-5 flex-1">
             {safeTab === "overview"     && <OverviewTab c={c} />}
             {safeTab === "participants" && <ParticipantsTab c={c} />}
+            {safeTab === "pipeline"     && <PipelineTab c={c} />}
             {safeTab === "scoring"      && <ScoringTab c={c} />}
             {safeTab === "kinh_phi"     && <FinancialTab c={c} />}
             {safeTab === "history"      && <HistoryTab c={c} />}
@@ -6574,11 +6689,11 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
                 {c.state==="active"&&<div className="size-1 rounded-full animate-pulse" style={{ background:scfg.color }} />}
                 {scfg.short}
               </span>
-              <span className="text-[13px] px-1.5 py-0.5 rounded bg-[#eef2f8] text-[#635647]"
+              <span className="text-[13px] px-1.5 py-0.5 rounded bg-[#eef2f8] text-slate-700"
                 style={{ fontFamily: "var(--font-sans)" }}>{TYPE_LABELS[c.type]}</span>
               {c.urgent&&<span className="text-[13px] text-[#c8102e]">🔴</span>}
             </div>
-            <h3 className="text-[16px] text-[#0b1426] leading-snug"
+            <h3 className="text-[16px] text-slate-900 leading-snug"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{c.name}</h3>
           </div>
         </div>
@@ -6586,7 +6701,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
         {/* Workflow progress */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-[14px]">
-            <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <span className="text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Giai đoạn: <span style={{ color:phase.color, fontWeight:600 }}>{phase.label}</span>
             </span>
             <span style={{ color:phase.color, fontFamily: "var(--font-sans)", fontWeight:600 }}>{phasePct}%</span>
@@ -6601,7 +6716,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
         {c.totalUnits > 0 && (
           <div className="space-y-1">
             <div className="flex items-center justify-between text-[14px]">
-              <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <span className="text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {c.joinedUnits}/{c.totalUnits} đơn vị tham gia
               </span>
               <span style={{ color:joinPct===100?"#0f7a3e":theme.primary, fontFamily: "var(--font-sans)", fontWeight:600 }}>
@@ -6617,7 +6732,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
 
         {/* Meta */}
         <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-[14px] text-[#635647]"
+          <div className="flex items-center gap-1.5 text-[14px] text-slate-700"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Calendar className="size-3 shrink-0" />{c.period}
           </div>
@@ -6627,7 +6742,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
               <Timer className="size-3 shrink-0" />Còn {left} ngày nộp hồ sơ
             </div>
           )}
-          <div className="flex items-center gap-1.5 text-[14px] text-[#635647]"
+          <div className="flex items-center gap-1.5 text-[14px] text-slate-700"
             style={{ fontFamily: "var(--font-sans)" }}>
             <User className="size-3 shrink-0" />{c.leader}
           </div>
@@ -6642,7 +6757,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
               {a.split(" ").slice(0,4).join(" ")}
             </span>
           ))}
-          {c.awards.length>2 && <span className="text-[13px] text-[#635647] self-center">+{c.awards.length-2}</span>}
+          {c.awards.length>2 && <span className="text-[13px] text-slate-700 self-center">+{c.awards.length-2}</span>}
         </div>
 
         {/* Footer — action call */}
@@ -6656,7 +6771,7 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <span className="text-[14px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
+              <span className="text-[14px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
               <span className="flex items-center gap-1 text-[14px] transition-colors group-hover:gap-1.5"
                 style={{ color:theme.primary, fontFamily: "var(--font-sans)", fontWeight:500 }}>
                 Xem chi tiết <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -6664,6 +6779,161 @@ function CampaignCard({ c, onClick, user }: { c: Campaign; onClick: () => void; 
             </div>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CAMPAIGN TABLE (table view)
+═══════════════════════════════════════════════════════════════════ */
+function CampaignTable({ campaigns, onOpen, user }: { campaigns: Campaign[]; onOpen: (c: Campaign) => void; user: LoginUser }) {
+  const { theme } = useTheme();
+
+  const TH = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+    <th className={`px-4 py-3 text-left text-[12px] font-semibold text-slate-700 whitespace-nowrap border-b border-[#e2e8f0] bg-[#f8f7f5] ${className}`}
+      style={{ fontFamily: "var(--font-sans)" }}>
+      {children}
+    </th>
+  );
+
+  return (
+    <div className="ds-card ds-card-default rounded-[12px] overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[900px] border-collapse">
+          <thead>
+            <tr>
+              <TH className="w-8 pl-4">#</TH>
+              <TH>Tên phong trào</TH>
+              <TH>Cấp / Loại</TH>
+              <TH>Trạng thái</TH>
+              <TH>Giai đoạn</TH>
+              <TH>Đơn vị tham gia</TH>
+              <TH>Thời gian</TH>
+              <TH>Hạn nộp HS</TH>
+              <TH className="pr-4"></TH>
+            </tr>
+          </thead>
+          <tbody>
+            {campaigns.map((c, idx) => {
+              const scfg    = STATE_CFG[c.state];
+              const phase   = getPhaseOf(c.state);
+              const left    = daysLeft(c.ngayKetThuc);
+              const joinPct = c.totalUnits ? Math.round(c.joinedUnits / c.totalUnits * 100) : 0;
+              const curIdx  = stateIndex(c.state);
+              const phasePct= Math.round((curIdx / (STATE_ORDER.length - 1)) * 100);
+              const cardAction = getCardAction(user, c);
+              const isEven = idx % 2 === 1;
+
+              return (
+                <tr key={c.id} onClick={() => onOpen(c)}
+                  className="cursor-pointer transition-colors hover:bg-[#f5f3f0] group"
+                  style={{ background: isEven ? "#fafaf9" : "white" }}>
+
+                  {/* # */}
+                  <td className="px-4 py-3 text-[13px] text-[#a09888] w-8" style={{ fontFamily: "var(--font-sans)" }}>
+                    {idx + 1}
+                  </td>
+
+                  {/* Tên */}
+                  <td className="px-4 py-3 max-w-[280px]">
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      {c.urgent && <span className="text-[11px] text-[#c8102e]">🔴</span>}
+                      <span className="text-[11px] font-medium text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{c.code}</span>
+                    </div>
+                    <p className="text-[13px] font-semibold text-slate-900 leading-snug line-clamp-2" style={{ fontFamily: "var(--font-sans)" }}>
+                      {c.name}
+                    </p>
+                    {c.leader && (
+                      <p className="text-[12px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>
+                        <User className="size-3 inline mr-1" />{c.leader}
+                      </p>
+                    )}
+                  </td>
+
+                  {/* Cấp / Loại */}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="text-[12px] px-2 py-0.5 rounded bg-[#eef2f8] text-slate-700"
+                      style={{ fontFamily: "var(--font-sans)" }}>
+                      {TYPE_LABELS[c.type]}
+                    </span>
+                  </td>
+
+                  {/* Trạng thái */}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[12px]"
+                      style={{ color: scfg.color, background: scfg.bg, borderColor: scfg.border, fontFamily: "var(--font-sans)", fontWeight: 500 }}>
+                      {c.state === "active" && <div className="size-1.5 rounded-full animate-pulse" style={{ background: scfg.color }} />}
+                      {scfg.short}
+                    </span>
+                  </td>
+
+                  {/* Giai đoạn + progress */}
+                  <td className="px-4 py-3 w-40">
+                    <div className="flex items-center justify-between text-[12px] mb-1">
+                      <span style={{ color: phase.color, fontFamily: "var(--font-sans)", fontWeight: 600 }}>{phase.label}</span>
+                      <span style={{ color: phase.color, fontFamily: "var(--font-sans)" }}>{phasePct}%</span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
+                      <div className="h-full rounded-full transition-all" style={{ width: `${phasePct}%`, background: phase.color }} />
+                    </div>
+                  </td>
+
+                  {/* Đơn vị tham gia */}
+                  <td className="px-4 py-3 w-36">
+                    {c.totalUnits > 0 ? (
+                      <>
+                        <div className="flex items-center justify-between text-[12px] mb-1">
+                          <span className="text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{c.joinedUnits}/{c.totalUnits}</span>
+                          <span style={{ color: joinPct === 100 ? "#0f7a3e" : theme.primary, fontFamily: "var(--font-sans)", fontWeight: 600 }}>{joinPct}%</span>
+                        </div>
+                        <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
+                          <div className="h-full rounded-full" style={{ width: `${joinPct}%`, background: joinPct === 100 ? "#16a34a" : theme.primary }} />
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-[12px] text-[#a09888]" style={{ fontFamily: "var(--font-sans)" }}>—</span>
+                    )}
+                  </td>
+
+                  {/* Thời gian */}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="text-[12px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+                      <Calendar className="size-3 inline mr-1" />{c.period}
+                    </span>
+                  </td>
+
+                  {/* Hạn nộp */}
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {(c.state === "active" || c.state === "submission_closed") && left > 0 ? (
+                      <span className="text-[12px] font-medium" style={{ fontFamily: "var(--font-sans)",
+                        color: left <= 7 ? "#c8102e" : left <= 14 ? "#b45309" : "#166534" }}>
+                        <Timer className="size-3 inline mr-1" />Còn {left} ngày
+                      </span>
+                    ) : (
+                      <span className="text-[12px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+                        {c.ngayNopHoSo ?? "—"}
+                      </span>
+                    )}
+                  </td>
+
+                  {/* Action */}
+                  <td className="px-4 py-3 pr-4 text-right whitespace-nowrap">
+                    {cardAction ? (
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-[6px] text-[12px] font-semibold border"
+                        style={{ background: cardAction.bg, color: cardAction.textColor, borderColor: cardAction.border ?? "transparent",
+                          fontFamily: "var(--font-sans)" }}>
+                        {cardAction.label}
+                      </span>
+                    ) : (
+                      <ChevronRight className="size-4 text-[#b0a899] inline group-hover:translate-x-0.5 transition-transform" />
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -6765,10 +7035,10 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
             <Trophy className="size-4" style={{ color:theme.primary }} />
           </div>
           <div className="flex-1">
-            <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
+            <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               Phát động Phong trào mới
             </h2>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Bước {step+1}/{STEPS.length} — {STEPS[step]}
             </p>
           </div>
@@ -6835,7 +7105,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                   {criteria.map(c => (
                     <div key={c.id} className="flex items-center gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                       <span className="size-5 rounded-full bg-[#1d4ed8] text-white flex items-center justify-center text-[13px] shrink-0">{c.maxScore}</span>
-                      <span className="text-[#0b1426] flex-1">{c.name}</span>
+                      <span className="text-slate-900 flex-1">{c.name}</span>
                       <span className="text-[#6b7280] text-[13px] shrink-0">{c.canCu.split(",").pop()?.trim()}</span>
                     </div>
                   ))}
@@ -6858,7 +7128,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
             </div>
             <label className="flex items-center gap-2.5 cursor-pointer">
               <input type="checkbox" className="size-4" style={{ accentColor:theme.primary }} checked={form.urgent} onChange={e=>setForm(p=>({...p,urgent:e.target.checked}))} />
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)" }}>Đánh dấu ưu tiên</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)" }}>Đánh dấu ưu tiên</span>
             </label>
           </>)}
           {step===1 && (<>
@@ -6869,7 +7139,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                 value={form.mucTieu} onChange={e=>setForm(p=>({...p,mucTieu:e.target.value}))} onBlur={()=>touch("mucTieu")} />
               <div className="flex items-center justify-between mt-1">
                 {fieldErr("mucTieu") ? <p className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)" }}>{fieldErr("mucTieu")}</p> : <span/>}
-                <span className="text-[13px] text-[#635647] ml-auto">{form.mucTieu.trim().length}/30</span>
+                <span className="text-[13px] text-slate-700 ml-auto">{form.mucTieu.trim().length}/30</span>
               </div>
             </div>
             <div className="ds-input-root">
@@ -6921,9 +7191,9 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                       style={{ borderColor:form.awards.includes(a)?theme.primary:"var(--color-line)", background:form.awards.includes(a)?theme.tint:"#fff" }}>
                       <input type="checkbox" className="size-4" style={{ accentColor:theme.primary }} checked={form.awards.includes(a)} onChange={()=>toggleAward(a)} />
                       <div className="flex-1 min-w-0">
-                        <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</div>
+                        <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</div>
                         {r && r.tienThuong > 0 && (
-                          <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{formatTienThuong(r.tienThuong)}/người</div>
+                          <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{formatTienThuong(r.tienThuong)}/người</div>
                         )}
                       </div>
                     </label>
@@ -6933,7 +7203,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
             </div>
             {form.awards.length > 0 && (<>
               <div className="border-t pt-3" style={{ borderColor:"var(--color-line)" }}>
-                <p className="text-[13px] font-semibold text-[#0b1426] mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+                <p className="text-[13px] font-semibold text-slate-900 mb-2" style={{ fontFamily: "var(--font-sans)" }}>
                   Dự toán sơ bộ — nhập số lượng dự kiến:
                 </p>
                 <div className="space-y-2">
@@ -6943,7 +7213,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     return (
                       <div key={a} className="flex items-center gap-3 px-3 py-2 rounded-[6px] border"
                         style={{ borderColor:"var(--color-line)", background:"#ffffff" }}>
-                        <span className="flex-1 text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</span>
+                        <span className="flex-1 text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)" }}>{a}</span>
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button className="size-6 rounded border text-[14px] flex items-center justify-center"
                             style={{ borderColor:"#e5e7eb" }}
@@ -6962,16 +7232,49 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     );
                   })}
                 </div>
-                <div className="flex items-center justify-between mt-3 pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tổng kinh phí dự kiến</span>
-                  <span className="text-[14px] font-bold text-[#0f7a3e]" style={{ fontFamily: "var(--font-sans)" }}>
-                    {formatTienThuong(form.awards.reduce((s, a) => {
-                      const r = getRewardByName(a);
-                      return s + (r?.tienThuong ?? 0) * (form.budget[a] ?? 0);
-                    }, 0))}
-                  </span>
-                </div>
-                <p className="text-[13px] text-[#635647] mt-1" style={{ fontFamily: "var(--font-sans)" }}>
+                {(() => {
+                  const byNguon: Record<NguonKinhPhi, number> = { quy_thi_dua:0, ngan_sach_nn:0, don_vi_tu_chi:0 };
+                  form.awards.forEach(a => {
+                    const r = getRewardByName(a);
+                    if (r && r.tienThuong > 0) byNguon[r.nguonKinhPhi] += r.tienThuong * (form.budget[a] ?? 0);
+                  });
+                  const total = Object.values(byNguon).reduce((s,v)=>s+v,0);
+                  const nguonCfg: { key: NguonKinhPhi; label: string; color: string; dot: string; note?: string }[] = [
+                    { key:"quy_thi_dua",   label:"Quỹ TĐKT",           color:"#0f7a3e", dot:"#16a34a", note:"Tự động tạo phiếu chi khi ban hành QĐ" },
+                    { key:"ngan_sach_nn",  label:"Ngân sách Nhà nước",  color:"#1e40af", dot:"#3b82f6" },
+                    { key:"don_vi_tu_chi", label:"Đơn vị tự chi",       color:"#b45309", dot:"#f59e0b" },
+                  ];
+                  return (
+                    <div className="mt-3 pt-3 border-t space-y-1.5" style={{ borderColor:"var(--color-line)" }}>
+                      <p className="text-[12px] font-semibold text-[#334155] mb-2" style={{ fontFamily:"var(--font-sans)" }}>Phân theo nguồn kinh phí:</p>
+                      {nguonCfg.map(n => byNguon[n.key] > 0 && (
+                        <div key={n.key}>
+                          <div className="flex items-center justify-between text-[13px]">
+                            <div className="flex items-center gap-1.5">
+                              <span className="size-2 rounded-full shrink-0" style={{ background:n.dot }}/>
+                              <span style={{ color:n.color, fontFamily:"var(--font-sans)" }}>{n.label}</span>
+                            </div>
+                            <span className="font-semibold" style={{ color:n.color, fontFamily:"var(--font-sans)" }}>
+                              {formatTienThuong(byNguon[n.key])}
+                            </span>
+                          </div>
+                          {n.note && (
+                            <p className="text-[11px] pl-3.5 mt-0.5" style={{ color:"#166534", fontFamily:"var(--font-sans)" }}>
+                              ✓ {n.note}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                      <div className="flex items-center justify-between text-[13px] pt-2 mt-1 border-t" style={{ borderColor:"var(--color-line)" }}>
+                        <span style={{ fontFamily:"var(--font-sans)", color:"#635647" }}>Tổng kinh phí dự kiến</span>
+                        <span className="text-[14px] font-bold text-[#0f7a3e]" style={{ fontFamily:"var(--font-sans)" }}>
+                          {formatTienThuong(total)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })()}
+                <p className="text-[13px] text-slate-700 mt-1" style={{ fontFamily: "var(--font-sans)" }}>
                   Căn cứ: Điều 3 TT 28/2025/TT-BTC · Chương VII NĐ 152/2025/NĐ-CP
                 </p>
               </div>
@@ -7010,8 +7313,8 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                     ["Dự toán KP", formatTienThuong(form.awards.reduce((s,a)=>s+(getRewardByName(a)?.tienThuong??0)*(form.budget[a]??0),0))],
                   ].map(([k,v])=>(
                     <div key={k} className="flex gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
-                      <span className="text-[#635647] w-28 shrink-0">{k}:</span>
-                      <span className="text-[#0b1426]">{v}</span>
+                      <span className="text-slate-700 w-28 shrink-0">{k}:</span>
+                      <span className="text-slate-900">{v}</span>
                     </div>
                   ))}
                 </div>
@@ -7025,7 +7328,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                   {suggestedBases.map(b => (
                     <div key={b} className="flex items-center gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                       <CheckCircle2 className="size-3.5 text-[#16a34a] shrink-0" />
-                      <span className="text-[#0b1426]">{b}</span>
+                      <span className="text-slate-900">{b}</span>
                     </div>
                   ))}
                 </div>
@@ -7039,7 +7342,7 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
                   {criteriaPreview.map(c => (
                     <div key={c.id} className="flex items-center gap-2 text-[13px]" style={{ fontFamily: "var(--font-sans)" }}>
                       <span className="size-5 rounded-full bg-[#7c3aed] text-white flex items-center justify-center text-[13px] shrink-0 font-bold">{c.maxScore}</span>
-                      <span className="text-[#0b1426] flex-1">{c.name}</span>
+                      <span className="text-slate-900 flex-1">{c.name}</span>
                     </div>
                   ))}
                 </div>
@@ -7071,12 +7374,13 @@ function CreateModal({ onClose, onCreate, user }: { onClose: ()=>void; onCreate:
 /* ═══════════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════════ */
-export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen, onDetailClose }: {
+export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen, onDetailClose, onPhieuChiCreate }: {
   user: LoginUser;
   campaigns: Campaign[];
   onCampaignsChange: React.Dispatch<React.SetStateAction<Campaign[]>>;
   onDetailOpen?: () => void;
   onDetailClose?: () => void;
+  onPhieuChiCreate?: (phieus: PhieuChi[]) => void;
 }) {
   const { theme } = useTheme();
   const setCampaigns = onCampaignsChange;
@@ -7091,6 +7395,7 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
   const [filterThamGia, setFilterThamGia]     = useState("all");
   const [filterType, setFilterType]           = useState("all");
   const [filterYear, setFilterYear]           = useState("all");
+  const [viewMode, setViewMode]               = useState<"grid"|"table">("grid");
 
   const canCreate = user.role === "hội đồng" || user.role === "quản trị hệ thống" || user.role === "lãnh đạo cấp cao" || user.role === "lãnh đạo đơn vị";
 
@@ -7115,6 +7420,34 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
   const clearFilters = () => { setSearch(""); setFilterToChuc("all"); setFilterThamGia("all"); setFilterType("all"); setFilterYear("all"); };
 
   const handleTransition = (id: string, newState: CampaignState, reason?: string) => {
+    // Auto-tạo phiếu chi từ Quỹ TĐKT khi ban hành Quyết định khen thưởng
+    if (newState === "decision_issued" && onPhieuChiCreate) {
+      const campaign = campaigns.find(c => c.id === id);
+      if (campaign) {
+        const year = new Date().getFullYear();
+        const ts   = Date.now();
+        const newPhieus: PhieuChi[] = campaign.participants
+          .filter(p => p.hoSoStatus === "da_duyet")
+          .flatMap((p, i) => {
+            const rewardName = p.hinhThucDeNghi ?? campaign.awards[0] ?? "";
+            const r = getRewardByName(rewardName);
+            if (!r || r.nguonKinhPhi !== "quy_thi_dua" || r.tienThuong === 0) return [];
+            return [{
+              id:        `pc-auto-${ts}-${i}`,
+              soPhieu:   `PC-${String(ts).slice(-4)}-${i+1}/${year}`,
+              ngay:      nowFmt(),
+              quyetDinhSo: `QĐ-${id.toUpperCase().slice(0,6)}/${year}`,
+              nguoiNhan:   p.name,
+              donVi:       p.donVi,
+              danhHieu:    rewardName,
+              soTien:      Math.round(r.tienThuong / 1_000_000),
+              trangThai:   "cho-giai-ngan" as const,
+            }];
+          });
+        if (newPhieus.length > 0) onPhieuChiCreate(newPhieus);
+      }
+    }
+
     setCampaigns(prev => prev.map(c => {
       if (c.id !== id) return c;
       const entry: AuditEntry = {
@@ -7128,9 +7461,9 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
         state:newState,
       };
       return {
-      ...c, state:newState, auditLog:[...c.auditLog, entry],
-      ...(newState === "public_consultation" ? { consultationStartedAt: new Date().toISOString().slice(0,10) } : {}),
-    };
+        ...c, state:newState, auditLog:[...c.auditLog, entry],
+        ...(newState === "public_consultation" ? { consultationStartedAt: new Date().toISOString().slice(0,10) } : {}),
+      };
     }));
   };
 
@@ -7170,7 +7503,7 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
             <Trophy className="size-5 text-[#8a6400]" />
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phong trào Thi đua</h1>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>Phong trào Thi đua</h1>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <DsButton variant="secondary" size="md"><Download className="size-4" />Báo cáo</DsButton>
@@ -7212,7 +7545,7 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
         {/* Filter bar */}
         <div className="flex items-center gap-2 flex-wrap">
           <div className="search-bar w-56" style={{ background:"white" }}>
-            <Search className="size-3.5 text-[#635647] shrink-0" />
+            <Search className="size-3.5 text-slate-700 shrink-0" />
             <input className="flex-1 bg-transparent outline-none text-[13px] placeholder:text-[#b8b0a0]"
               style={{ fontFamily: "var(--font-sans)" }}
               placeholder="Tìm kiếm phong trào..."
@@ -7244,9 +7577,23 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
               <X className="size-3.5" />Xóa bộ lọc
             </button>
           )}
-          <span className="ml-auto text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-            {filtered.length}/{campaigns.length} phong trào
-          </span>
+          <div className="ml-auto flex items-center gap-2.5 shrink-0">
+            <span className="text-[13px] text-slate-700 whitespace-nowrap" style={{ fontFamily: "var(--font-sans)" }}>
+              {filtered.length}/{campaigns.length} phong trào
+            </span>
+            <div className="flex items-center border border-[#e2e8f0] rounded-[7px] overflow-hidden">
+              <button title="Dạng lưới" onClick={() => setViewMode("grid")}
+                className="px-2.5 py-1.5 transition-colors"
+                style={{ background: viewMode === "grid" ? theme.primary : "white", color: viewMode === "grid" ? "white" : "#635647" }}>
+                <LayoutGrid className="size-4" />
+              </button>
+              <button title="Dạng bảng" onClick={() => setViewMode("table")}
+                className="px-2.5 py-1.5 transition-colors border-l border-[#e2e8f0]"
+                style={{ background: viewMode === "table" ? theme.primary : "white", color: viewMode === "table" ? "white" : "#635647" }}>
+                <Table2 className="size-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -7266,8 +7613,8 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
               style={{ borderColor:`${s.color}25`, background:s.bg, fontFamily:"var(--font-sans)" }}>
               <div>
                 <div className="text-[22px] font-bold" style={{ color:s.color }}>{s.value}</div>
-                <div className="text-[13px] font-semibold text-[#0b1426]">{s.label}</div>
-                <div className="text-[13px] text-[#635647]">{s.sub}</div>
+                <div className="text-[13px] font-semibold text-slate-900">{s.label}</div>
+                <div className="text-[13px] text-slate-700">{s.sub}</div>
               </div>
             </div>
           ))}
@@ -7296,10 +7643,10 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
                 }
               </div>
               <div>
-                <h3 className="text-[14px] font-semibold text-[#0b1426] mb-1" style={{ fontFamily:"var(--font-sans)" }}>
+                <h3 className="text-[14px] font-semibold text-slate-900 mb-1" style={{ fontFamily:"var(--font-sans)" }}>
                   {hasFilters ? "Không có phong trào phù hợp với bộ lọc" : "Chưa có phong trào nào"}
                 </h3>
-                <p className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                <p className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                   {hasFilters
                     ? `Tất cả ${campaigns.length} phong trào đều bị lọc ra`
                     : "Tạo phong trào đầu tiên để bắt đầu quản lý thi đua khen thưởng"
@@ -7322,12 +7669,14 @@ export function PhongTraoPage({ user, campaigns, onCampaignsChange, onDetailOpen
               )}
             </div>
           );
-        })() : (
+        })() : viewMode === "grid" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {filtered.map(c => (
               <CampaignCard key={c.id} c={c} user={user} onClick={() => openDetail(c)} />
             ))}
           </div>
+        ) : (
+          <CampaignTable campaigns={filtered} onOpen={openDetail} user={user} />
         )}
       </div>
 

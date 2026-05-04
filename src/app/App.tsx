@@ -42,11 +42,18 @@ import { ShortcutsOverlay } from "./components/shortcuts-overlay";
 import { LichCongTacPage } from "./components/lich-cong-tac-page";
 import { SoSanhPage } from "./components/so-sanh-page";
 import { PrintPreviewModal } from "./components/print-preview-modal";
-import { KanbanPage } from "./components/kanban-page";
 import { HelpCenterPage } from "./components/help-center-page";
 import { ActivityFeedPage } from "./components/activity-feed-page";
 import { LuongNghiepVuPage } from "./components/luong-nghiep-vu-page";
 import { BpmnPhongTraoPage } from "./components/bpmn-phong-trao-page";
+import { HoSoTapThePage } from "./components/ho-so-tap-the-page";
+import { SangKienPage } from "./components/sang-kien-page";
+import { GoiYDanhHieuPage } from "./components/goi-y-danh-hieu-page";
+import { XepLoaiVienChucPage } from "./components/xep-loai-vien-chuc-page";
+import { ThanhTichPage } from "./components/thanh-tich-page";
+import { ChiDaoTDKTPage } from "./components/chi-dao-tdkt-page";
+import { QuyTDKTPage, INIT_PHIEU_CHI } from "./components/quy-tdkt-page";
+import type { PhieuChi } from "./components/quy-tdkt-page";
 import { UserDashboard } from "./components/user-dashboard";
 import { UserHoSoTracker } from "./components/user-ho-so-tracker";
 import {
@@ -206,8 +213,9 @@ export default function App() {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [printOpen, setPrintOpen] = useState(false);
   const [hideSidebar, setHideSidebar] = useState(false);
-  const [campaigns, setCampaigns] = usePersistedState<Campaign[]>("campaigns", MOCK_CAMPAIGNS);
-  const [sessions, setSessions]   = usePersistedState<CouncilSession[]>("sessions", INIT_SESSIONS);
+  const [campaigns, setCampaigns]     = usePersistedState<Campaign[]>("campaigns", MOCK_CAMPAIGNS);
+  const [sessions, setSessions]       = usePersistedState<CouncilSession[]>("sessions", INIT_SESSIONS);
+  const [phieuChiQuy, setPhieuChiQuy] = usePersistedState<PhieuChi[]>("phieuChiQuy", INIT_PHIEU_CHI);
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -308,7 +316,7 @@ export default function App() {
       case "Ký số & Phê duyệt":     return <KySoPage user={currentUser} />;
       case "Lấy ý kiến công khai":  return <LayYKienPage user={currentUser} />;
       case "Hội đồng xét duyệt":    return <HoiDongPage user={currentUser} campaigns={campaigns} sessions={sessions} onSessionsChange={setSessions} />;
-      case "Phong trào thi đua":    return <PhongTraoPage user={currentUser} campaigns={campaigns} onCampaignsChange={setCampaigns} onDetailOpen={() => setHideSidebar(true)} onDetailClose={() => setHideSidebar(false)} />;
+      case "Phong trào thi đua":    return <PhongTraoPage user={currentUser} campaigns={campaigns} onCampaignsChange={setCampaigns} onDetailOpen={() => setHideSidebar(true)} onDetailClose={() => setHideSidebar(false)} onPhieuChiCreate={phieus => setPhieuChiQuy(prev => [...phieus, ...prev])} />;
       case "Chấm điểm & Bình xét":  return <ChamDiemPage user={currentUser} />;
       case "Quyết định khen thưởng":return <QuyetDinhPage user={currentUser} />;
       case "Hồ sơ cán bộ":          return <HoSoCanBoPage user={currentUser} />;
@@ -331,12 +339,18 @@ export default function App() {
       case "Thời gian hoạt động":   return <ThoiGianPage user={currentUser} />;
       case "Lịch công tác":         return <LichCongTacPage user={currentUser} />;
       case "So sánh hồ sơ":         return <SoSanhPage user={currentUser} />;
-      case "Kanban hồ sơ":          return <KanbanPage user={currentUser} />;
       case "Trung tâm hỗ trợ":      return <HelpCenterPage user={currentUser} />;
       case "Dòng thời gian":        return <ActivityFeedPage user={currentUser} />;
       case "Luồng nghiệp vụ":       return <LuongNghiepVuPage user={currentUser} />;
-      case "Sơ đồ BPMN":           return <BpmnPhongTraoPage user={currentUser} />;
+      case "Sơ đồ BPMN":             return <BpmnPhongTraoPage user={currentUser} />;
       case "Cài đặt tài khoản":     return <CaiDatPage user={currentUser} />;
+      case "Hồ sơ tập thể":         return <HoSoTapThePage user={currentUser} />;
+      case "Sáng kiến":             return <SangKienPage user={currentUser} />;
+      case "Gợi ý danh hiệu":       return <GoiYDanhHieuPage user={currentUser} />;
+      case "Xếp loại viên chức":    return <XepLoaiVienChucPage user={currentUser} onNavigate={navigate} />;
+      case "Thành tích khen thưởng":return <ThanhTichPage user={currentUser} />;
+      case "Chỉ đạo TĐKT":          return <ChiDaoTDKTPage user={currentUser} />;
+      case "Quỹ TĐKT":             return <QuyTDKTPage user={currentUser} phieuChiList={phieuChiQuy} onPhieuChiUpdate={setPhieuChiQuy} />;
       default:                      return <Dashboard user={currentUser} onNavigate={navigate} />;
     }
   };
@@ -347,7 +361,7 @@ export default function App() {
         style={{ background:"var(--color-paper)", fontFamily: "var(--font-sans)" }}>
         {!hideSidebar && <Sidebar user={currentUser} active={active} onSelect={navigateFromSidebar} />}
 
-        <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ background: "var(--color-paper)" }}>
+        <div className="relative z-[50] flex-1 min-w-0 flex flex-col overflow-hidden" style={{ background: "var(--color-paper)" }}>
           <Topbar
             user={currentUser}
             active={active}

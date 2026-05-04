@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import {
   Trophy, TrendingUp, TrendingDown, Minus, Star,
   ChevronDown, Users, User, Download, Search, Zap,
@@ -219,7 +219,7 @@ function RankRow({ entry }: { entry: RankEntry }) {
             {entry.name.charAt(0)}
           </div>
           <div>
-            <div className="font-semibold" style={{ fontSize: 13, color: "#0b1426", fontFamily: "var(--font-sans)" }}>{entry.name}</div>
+            <div className="font-semibold" style={{ fontSize: 13, color: "#0f172a", fontFamily: "var(--font-sans)" }}>{entry.name}</div>
             {entry.chucVu && <div style={{ fontSize: 12, color: "#94a3b8" }}>{entry.chucVu}</div>}
           </div>
         </div>
@@ -227,7 +227,7 @@ function RankRow({ entry }: { entry: RankEntry }) {
 
       {/* Unit */}
       <td className="px-3 py-3 max-w-[140px]">
-        <div className="flex items-center gap-1.5" style={{ fontSize: 12, color: "#5a6474" }}>
+        <div className="flex items-center gap-1.5" style={{ fontSize: 12, color: "#475569" }}>
           <Building2 className="size-3.5 shrink-0 text-[#94a3b8]" />
           <span className="truncate">{entry.unit}</span>
         </div>
@@ -322,7 +322,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
             </div>
 
             <div>
-              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 20, color: "#0b1426" }}>
+              <h1 style={{ fontFamily: "var(--font-sans)", fontWeight: 800, fontSize: 20, color: "#0f172a" }}>
                 Bảng Xếp hạng Thi đua
               </h1>
               <div className="mt-0.5" style={{ fontSize: 12, color: "#94a3b8" }}>
@@ -332,9 +332,9 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
 
             <div className="ml-auto flex items-center gap-2">
               <button className="flex items-center gap-1.5 h-8 px-3 rounded-[7px] text-[13px] transition-colors"
-                style={{ border: "1px solid #e2e8f0", color: "#5a6474", fontFamily: "var(--font-sans)" }}
+                style={{ border: "1px solid #e2e8f0", color: "#475569", fontFamily: "var(--font-sans)" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#1C5FBE"; (e.currentTarget as HTMLElement).style.color = "#1C5FBE"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#5a6474"; }}>
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; (e.currentTarget as HTMLElement).style.color = "#475569"; }}>
                 <Download className="size-3.5" /> Xuất Excel
               </button>
               <div className={`flex items-center gap-1.5 h-8 px-3 rounded-[7px] text-[13px] transition-all`}
@@ -356,7 +356,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
             <div className="relative">
               <select value={phongTrao} onChange={e => setPhongTrao(e.target.value as PhongTrao)}
                 className="pl-3 pr-8 border rounded-[7px] text-[13px] appearance-none outline-none transition-colors"
-                style={{ height: 34, borderColor: "#e2e8f0", background: "#f8faff", color: "#0b1426", fontFamily: "var(--font-sans)" }}>
+                style={{ height: 34, borderColor: "#e2e8f0", background: "#f8faff", color: "#0f172a", fontFamily: "var(--font-sans)" }}>
                 {PHONG_TRAO_LIST.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
               <ChevronDown className="size-3 absolute right-2.5 top-1/2 -translate-y-1/2 text-[#94a3b8] pointer-events-none" />
@@ -385,7 +385,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
               <Search className="size-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#94a3b8]" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm tên, đơn vị..."
                 className="pl-8 pr-3 rounded-[7px] text-[13px] outline-none transition-colors"
-                style={{ height: 34, width: 200, border: "1px solid #e2e8f0", background: "#f8faff", color: "#0b1426", fontFamily: "var(--font-sans)" }}
+                style={{ height: 34, width: 200, border: "1px solid #e2e8f0", background: "#f8faff", color: "#0f172a", fontFamily: "var(--font-sans)" }}
                 onFocus={e => { e.target.style.borderColor = "#1C5FBE"; e.target.style.boxShadow = "0 0 0 3px rgba(28,95,190,0.1)"; }}
                 onBlur={e => { e.target.style.borderColor = "#e2e8f0"; e.target.style.boxShadow = "none"; }} />
             </div>
@@ -439,7 +439,7 @@ export function BangXepHangPage({ user }: { user: LoginUser }) {
             { color: RANK_PALETTE[2].accent, label: "Hạng Nhì" },
             { color: RANK_PALETTE[3].accent, label: "Hạng Ba" },
           ].map(({ color, label }) => (
-            <div key={label} className="flex items-center gap-1.5" style={{ fontSize: 12, color: "#5a6474" }}>
+            <div key={label} className="flex items-center gap-1.5" style={{ fontSize: 12, color: "#475569" }}>
               <div className="size-3 rounded-full" style={{ background: color }} />{label}
             </div>
           ))}

@@ -121,7 +121,7 @@ function ActivityItem({ entry, isLast }: { entry: ActivityEntry; isLast: boolean
         <div className="flex items-start gap-2 mb-1">
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 {entry.title}
               </span>
               <span className="text-[13px] px-1.5 py-0.5 rounded"
@@ -131,18 +131,18 @@ function ActivityItem({ entry, isLast }: { entry: ActivityEntry; isLast: boolean
             </div>
           </div>
           <div className="text-right shrink-0">
-            <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
+            <div className="text-[13px] text-slate-900" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>
               {entry.time}
             </div>
             {entry.duration && (
-              <div className="text-[13px] text-[#6b5e47]">{entry.duration}</div>
+              <div className="text-[13px] text-slate-600">{entry.duration}</div>
             )}
           </div>
         </div>
-        <p className="text-[13px] text-[#5a5040] leading-relaxed mb-1" style={{ fontFamily: "var(--font-sans)" }}>
+        <p className="text-[13px] text-slate-700 leading-relaxed mb-1" style={{ fontFamily: "var(--font-sans)" }}>
           {entry.detail}
         </p>
-        <div className="flex items-center gap-3 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+        <div className="flex items-center gap-3 text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
           <span className="flex items-center gap-1"><Building2 className="size-3" />{entry.module}</span>
           {entry.ip && <span className="flex items-center gap-1"><Shield className="size-3" />IP: {entry.ip}</span>}
         </div>
@@ -164,12 +164,12 @@ function WeeklyHeatmap() {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Mức độ hoạt động trong tuần</span>
+        <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Mức độ hoạt động trong tuần</span>
       </div>
       <div className="flex gap-1">
         {/* Y-axis */}
         <div className="flex flex-col justify-between mr-1" style={{ height: 5 * 20 + 4 * 2 }}>
-          {days.map(d => <span key={d} className="text-[13px] text-[#6b5e47] h-5 flex items-center" style={{ fontFamily: "var(--font-sans)" }}>{d}</span>)}
+          {days.map(d => <span key={d} className="text-[13px] text-slate-600 h-5 flex items-center" style={{ fontFamily: "var(--font-sans)" }}>{d}</span>)}
         </div>
         {/* Grid */}
         <div className="flex gap-1 flex-col">
@@ -189,9 +189,9 @@ function WeeklyHeatmap() {
       </div>
       {/* X-axis */}
       <div className="flex gap-1 mt-1 ml-7">
-        {hours.map(h => <span key={h} className="text-[13px] text-[#6b5e47] w-5 text-center" style={{ fontFamily: "var(--font-sans)" }}>{h}</span>)}
+        {hours.map(h => <span key={h} className="text-[13px] text-slate-600 w-5 text-center" style={{ fontFamily: "var(--font-sans)" }}>{h}</span>)}
       </div>
-      <div className="flex items-center gap-2 mt-2 text-[13px] text-[#6b5e47]">
+      <div className="flex items-center gap-2 mt-2 text-[13px] text-slate-600">
         <span>Thấp</span>
         {["#eef2f8", "#93c5fd", "#3b82f6", "#1C5FBE"].map(c => <div key={c} className="size-3 rounded-[2px]" style={{ background: c }} />)}
         <span>Cao</span>
@@ -232,15 +232,15 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
             <Activity className="size-5 text-[#8a6400]" />
           </div>
           <div>
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Thời gian hoạt động
             </h1>
-            <p className="text-[13px] text-[#635647]">
+            <p className="text-[13px] text-slate-700">
               {user.name} · Hôm nay {sessionStart}–{sessionLast} · {entries.length} hoạt động ghi nhận
             </p>
           </div>
           <div className="ml-auto flex gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+            <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               <Download className="size-3.5" />Xuất lịch sử
             </button>
           </div>
@@ -263,7 +263,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
                 </div>
                 <div>
                   <div className="text-[18px] leading-none" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: s.c }}>{s.v}</div>
-                  <div className="text-[13px] uppercase tracking-wider text-[#635647]">{s.label}</div>
+                  <div className="text-[13px] uppercase tracking-wider text-slate-700">{s.label}</div>
                 </div>
               </div>
             );
@@ -273,7 +273,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
         {/* Filter row */}
         <div className="flex gap-2">
           <div className="relative">
-            <Search className="size-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#635647]" />
+            <Search className="size-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-700" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm hoạt động..."
               className="pl-7 pr-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none focus:border-[#1C5FBE]"
               style={{ height: 32, width: 200, fontFamily: "var(--font-sans)" }} />
@@ -311,17 +311,17 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
                   <Calendar className="size-4 text-[#8a6400]" />
                 </div>
                 <div>
-                  <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+                  <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                     Thứ Sáu, 25/04/2026
                   </div>
-                  <div className="text-[13px] text-[#635647]">{filtered.length} hoạt động · Phiên làm việc: {sessionStart} → {sessionLast}</div>
+                  <div className="text-[13px] text-slate-700">{filtered.length} hoạt động · Phiên làm việc: {sessionStart} → {sessionLast}</div>
                 </div>
               </div>
 
               {filtered.length === 0 ? (
                 <div className="flex flex-col items-center py-12 gap-2">
-                  <Clock className="size-10 text-[#d1ccc0]" />
-                  <p className="text-[13px] text-[#635647]">Không có hoạt động phù hợp</p>
+                  <Clock className="size-10 text-slate-400" />
+                  <p className="text-[13px] text-slate-700">Không có hoạt động phù hợp</p>
                 </div>
               ) : (
                 <div>
@@ -342,7 +342,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
 
             {/* Module breakdown */}
             <div>
-              <h3 className="text-[13px] uppercase tracking-wider text-[#635647] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+              <h3 className="text-[13px] uppercase tracking-wider text-slate-700 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 Phân bổ theo module
               </h3>
               {Object.entries(
@@ -355,8 +355,8 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
                 return (
                   <div key={mod} className="mb-2">
                     <div className="flex items-center justify-between mb-0.5">
-                      <span className="text-[13px] text-[#5a5040] truncate" style={{ fontFamily: "var(--font-sans)" }}>{mod}</span>
-                      <span className="text-[13px] text-[#0b1426] shrink-0" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>{cnt}</span>
+                      <span className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>{mod}</span>
+                      <span className="text-[13px] text-slate-900 shrink-0" style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 700 }}>{cnt}</span>
                     </div>
                     <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#eef2f8" }}>
                       <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "linear-gradient(to right,#1C5FBE,#4a90d9)" }} />
@@ -368,7 +368,7 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
 
             {/* Session info */}
             <div className="rounded-[10px] border border-[#e2e8f0] p-4 space-y-2.5" style={{ background: "#ffffff" }}>
-              <h3 className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên hiện tại</h3>
+              <h3 className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên hiện tại</h3>
               {[
                 ["Đăng nhập lúc", entries[0]?.time ?? "—"],
                 ["Hoạt động cuối", entries[entries.length - 1]?.time ?? "—"],
@@ -376,8 +376,8 @@ export function ThoiGianPage({ user }: { user: LoginUser }) {
                 ["Thiết bị", "Chrome 124, Windows 11"],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-start justify-between gap-2">
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
-                  <span className="text-[13px] text-[#0b1426] text-right" style={{ fontFamily: "JetBrains Mono, monospace" }}>{v}</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{k}</span>
+                  <span className="text-[13px] text-slate-900 text-right" style={{ fontFamily: "JetBrains Mono, monospace" }}>{v}</span>
                 </div>
               ))}
             </div>

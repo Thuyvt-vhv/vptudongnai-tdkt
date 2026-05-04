@@ -54,15 +54,15 @@ function ProfileTab({ user }: { user: LoginUser }) {
           </button>
         </div>
         <div>
-          <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{user.name}</h3>
-          <p className="text-[13px] text-[#635647] mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{user.title}</p>
+          <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{user.name}</h3>
+          <p className="text-[13px] text-slate-700 mt-0.5" style={{ fontFamily: "var(--font-sans)" }}>{user.title}</p>
           <span className="inline-flex items-center mt-1.5 px-2 py-0.5 rounded-full text-[13px]"
             style={{ background: user.roleBg, color: user.roleColor, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
             {user.roleLabel}
           </span>
         </div>
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[6px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-white transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Upload className="size-3.5" />Tải ảnh lên
           </button>
@@ -81,15 +81,15 @@ function ProfileTab({ user }: { user: LoginUser }) {
           const Icon = f.icon;
           return (
             <div key={f.label} className={f.full ? "col-span-2" : ""}>
-              <label className="block text-[13px] text-[#5a5040] mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
+              <label className="block text-[13px] text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 {f.label}
               </label>
               <div className="relative">
-                <Icon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]" />
+                <Icon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                 <input
                   value={f.value}
                   onChange={e => f.setter(e.target.value)}
-                  className="w-full pl-9 pr-3 border border-[#d1d5db] rounded-[8px] text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE] transition-colors"
+                  className="w-full pl-9 pr-3 border border-[#d1d5db] rounded-[8px] text-[13px] text-slate-900 outline-none focus:border-[#1C5FBE] transition-colors"
                   style={{ height: 40, fontFamily: "var(--font-sans)", background: "white" }}
                 />
               </div>
@@ -113,7 +113,7 @@ function ProfileTab({ user }: { user: LoginUser }) {
           {saved ? <CheckCircle2 className="size-4" /> : <Save className="size-4" />}
           {saved ? "Đã lưu!" : "Lưu thay đổi"}
         </button>
-        <button className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-[#f4f7fb] transition-colors"
+        <button className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-[#f4f7fb] transition-colors"
           style={{ fontFamily: "var(--font-sans)" }}>
           Huỷ
         </button>
@@ -141,7 +141,7 @@ function SecurityTab() {
     <div className="space-y-6">
       {/* Change password */}
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
-        <h3 className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đổi mật khẩu</h3>
+        <h3 className="text-[14px] text-slate-900 mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Đổi mật khẩu</h3>
         <div className="space-y-3 max-w-sm">
           {[
             { label: "Mật khẩu hiện tại", show: showOld, toggle: () => setShowOld(v => !v) },
@@ -149,13 +149,13 @@ function SecurityTab() {
             { label: "Xác nhận mật khẩu mới", show: showNew, toggle: () => setShowNew(v => !v) },
           ].map(f => (
             <div key={f.label}>
-              <label className="block text-[13px] text-[#5a5040] mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{f.label}</label>
+              <label className="block text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{f.label}</label>
               <div className="relative">
-                <KeyRound className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#635647]" />
+                <KeyRound className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                 <input type={f.show ? "text" : "password"} placeholder="••••••••"
                   className="w-full pl-9 pr-10 border border-[#d1d5db] rounded-[8px] text-[13px] outline-none focus:border-[#1C5FBE]"
                   style={{ height: 40, fontFamily: "var(--font-sans)" }} />
-                <button onClick={f.toggle} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#635647] hover:text-[#0b1426]">
+                <button onClick={f.toggle} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900">
                   {f.show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               </div>
@@ -183,8 +183,8 @@ function SecurityTab() {
               <Fingerprint className="size-5 text-[#166534]" />
             </div>
             <div>
-              <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xác thực 2 yếu tố (MFA)</h3>
-              <p className="text-[13px] text-[#635647]">Bảo vệ tài khoản bằng OTP</p>
+              <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xác thực 2 yếu tố (MFA)</h3>
+              <p className="text-[13px] text-slate-700">Bảo vệ tài khoản bằng OTP</p>
             </div>
           </div>
           <button onClick={() => setMfaEnabled(v => !v)}>
@@ -204,7 +204,7 @@ function SecurityTab() {
       {/* Active sessions */}
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên đăng nhập đang hoạt động</h3>
+          <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Phiên đăng nhập đang hoạt động</h3>
           <button className="text-[13px] text-[#c8102e] hover:underline" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Đăng xuất tất cả</button>
         </div>
         <div className="space-y-2">
@@ -213,10 +213,10 @@ function SecurityTab() {
               style={{ background: s.current ? "#f0f4ff" : "#ffffff", border: `1px solid ${s.current ? "#bfdbfe" : "#e2e8f0"}` }}>
               <Smartphone className="size-5 shrink-0" style={{ color: s.current ? "#1C5FBE" : "#635647" }} />
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: s.current ? 700 : 500 }}>
+                <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: s.current ? 700 : 500 }}>
                   {s.device} {s.current && <span className="ml-1 text-[13px] text-[#1C5FBE] bg-[#ddeafc] px-1.5 py-0.5 rounded">Hiện tại</span>}
                 </div>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {s.ip} · {s.location} · {s.time}
                 </div>
               </div>
@@ -253,15 +253,15 @@ function NotificationsTab() {
 
   return (
     <div className="space-y-4">
-      <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+      <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
         Cài đặt kênh nhận thông báo cho từng loại sự kiện.
       </p>
       <div className="rounded-[12px] border border-[#e2e8f0] overflow-hidden">
         {/* Header */}
         <div className="grid grid-cols-[1fr_80px_80px_80px] gap-0 px-4 py-2.5 border-b border-[#eef2f8]" style={{ background: "#ffffff" }}>
-          <span className="text-[13px] uppercase tracking-wider text-[#635647]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại thông báo</span>
+          <span className="text-[13px] uppercase tracking-wider text-slate-700" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Loại thông báo</span>
           {["Email", "Trình duyệt", "SMS"].map(h => (
-            <span key={h} className="text-[13px] uppercase tracking-wider text-[#635647] text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</span>
+            <span key={h} className="text-[13px] uppercase tracking-wider text-slate-700 text-center" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{h}</span>
           ))}
         </div>
         {rows.map((r, ri) => (
@@ -269,8 +269,8 @@ function NotificationsTab() {
             <div className="flex items-center gap-2.5">
               <div className="size-2 rounded-full" style={{ background: r.color }} />
               <div>
-                <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{r.label}</div>
-                <div className="text-[13px] text-[#635647]">{r.sublabel}</div>
+                <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{r.label}</div>
+                <div className="text-[13px] text-slate-700">{r.sublabel}</div>
               </div>
             </div>
             {(["email", "browser", "sms"] as const).map(ch => {
@@ -291,19 +291,19 @@ function NotificationsTab() {
       </div>
       {/* Quiet hours */}
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
-        <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Giờ im lặng (Quiet Hours)</h3>
+        <h3 className="text-[13px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Giờ im lặng (Quiet Hours)</h3>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Moon className="size-4 text-[#635647]" />
-            <span className="text-[13px] text-[#5a5040]">Từ</span>
+            <Moon className="size-4 text-slate-700" />
+            <span className="text-[13px] text-slate-700">Từ</span>
             <input type="time" defaultValue="22:00" className="border border-[#d1d5db] rounded-[6px] px-2 text-[13px]" style={{ height: 32 }} />
           </div>
           <div className="flex items-center gap-2">
-            <Sun className="size-4 text-[#635647]" />
-            <span className="text-[13px] text-[#5a5040]">đến</span>
+            <Sun className="size-4 text-slate-700" />
+            <span className="text-[13px] text-slate-700">đến</span>
             <input type="time" defaultValue="07:00" className="border border-[#d1d5db] rounded-[6px] px-2 text-[13px]" style={{ height: 32 }} />
           </div>
-          <span className="text-[13px] text-[#635647]">(trừ SLA khẩn cấp)</span>
+          <span className="text-[13px] text-slate-700">(trừ SLA khẩn cấp)</span>
         </div>
       </div>
     </div>
@@ -323,21 +323,21 @@ function DisplayTab() {
     <div className="space-y-5">
       {/* Language */}
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
-        <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Ngôn ngữ & Định dạng</h3>
+        <h3 className="text-[13px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Ngôn ngữ & Định dạng</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-[13px] text-[#5a5040] mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Ngôn ngữ giao diện</label>
+            <label className="block text-[13px] text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Ngôn ngữ giao diện</label>
             <select value={lang} onChange={e => setLang(e.target.value)}
-              className="w-full border border-[#d1d5db] rounded-[8px] px-3 text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE]"
+              className="w-full border border-[#d1d5db] rounded-[8px] px-3 text-[13px] text-slate-900 outline-none focus:border-[#1C5FBE]"
               style={{ height: 40, fontFamily: "var(--font-sans)" }}>
               <option value="vi">🇻🇳 Tiếng Việt</option>
               <option value="en">🇬🇧 English</option>
             </select>
           </div>
           <div>
-            <label className="block text-[13px] text-[#5a5040] mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Định dạng ngày tháng</label>
+            <label className="block text-[13px] text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Định dạng ngày tháng</label>
             <select value={dateFormat} onChange={e => setDateFormat(e.target.value)}
-              className="w-full border border-[#d1d5db] rounded-[8px] px-3 text-[13px] text-[#0b1426] outline-none focus:border-[#1C5FBE]"
+              className="w-full border border-[#d1d5db] rounded-[8px] px-3 text-[13px] text-slate-900 outline-none focus:border-[#1C5FBE]"
               style={{ height: 40, fontFamily: "var(--font-sans)" }}>
               <option value="dd/MM/yyyy">25/04/2026</option>
               <option value="yyyy-MM-dd">2026-04-25</option>
@@ -348,14 +348,14 @@ function DisplayTab() {
 
       {/* Density */}
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
-        <h3 className="text-[13px] text-[#0b1426] mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Mật độ hiển thị</h3>
+        <h3 className="text-[13px] text-slate-900 mb-3" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Mật độ hiển thị</h3>
         <div className="flex gap-3">
           {([["comfortable", "Thoải mái", "Nhiều khoảng trắng hơn, dễ đọc"], ["compact", "Gọn", "Hiển thị nhiều dữ liệu hơn trên màn hình"]] as const).map(([v, l, d]) => (
             <button key={v} onClick={() => setDensity(v)}
               className="flex-1 px-4 py-3 rounded-[10px] border text-left transition-all"
               style={{ borderColor: density === v ? "#1C5FBE" : "#e2e8f0", background: density === v ? "#f0f4ff" : "white" }}>
-              <div className="text-[13px] text-[#0b1426] mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: density === v ? 700 : 500 }}>{l}</div>
-              <div className="text-[13px] text-[#635647]">{d}</div>
+              <div className="text-[13px] text-slate-900 mb-0.5" style={{ fontFamily: "var(--font-sans)", fontWeight: density === v ? 700 : 500 }}>{l}</div>
+              <div className="text-[13px] text-slate-700">{d}</div>
               {density === v && <CheckCircle2 className="size-4 text-[#1C5FBE] mt-1.5" />}
             </button>
           ))}
@@ -366,8 +366,8 @@ function DisplayTab() {
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sidebar thu gọn mặc định</h3>
-            <p className="text-[13px] text-[#635647] mt-0.5">Chỉ hiển thị icon khi mở ứng dụng</p>
+            <h3 className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Sidebar thu gọn mặc định</h3>
+            <p className="text-[13px] text-slate-700 mt-0.5">Chỉ hiển thị icon khi mở ứng dụng</p>
           </div>
           <button onClick={() => setSidebarCollapsed(v => !v)}>
             {sidebarCollapsed
@@ -387,8 +387,8 @@ function DataTab({ user }: { user: LoginUser }) {
   return (
     <div className="space-y-5">
       <div className="rounded-[12px] border border-[#e2e8f0] p-5">
-        <h3 className="text-[13px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xuất dữ liệu cá nhân</h3>
-        <p className="text-[13px] text-[#5a5040] mb-4 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+        <h3 className="text-[13px] text-slate-900 mb-4" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Xuất dữ liệu cá nhân</h3>
+        <p className="text-[13px] text-slate-700 mb-4 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
           Theo Điều 11 NĐ 13/2023/NĐ-CP, bạn có quyền nhận một bản sao dữ liệu cá nhân của mình đang được xử l�� trong hệ thống VPTU Đồng Nai.
         </p>
         <div className="grid grid-cols-3 gap-3 mb-4">
@@ -398,9 +398,9 @@ function DataTab({ user }: { user: LoginUser }) {
             ["Lịch sử khen thưởng", "PDF", "Awards.pdf"],
           ].map(([label, fmt, file]) => (
             <div key={label} className="p-3 rounded-[8px] border border-[#e2e8f0] text-center" style={{ background: "#ffffff" }}>
-              <Download className="size-5 text-[#635647] mx-auto mb-1.5" />
-              <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{label}</div>
-              <div className="text-[13px] text-[#635647] mb-2">{fmt}</div>
+              <Download className="size-5 text-slate-700 mx-auto mb-1.5" />
+              <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{label}</div>
+              <div className="text-[13px] text-slate-700 mb-2">{fmt}</div>
               <button className="text-[13px] text-[#1C5FBE] hover:underline" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Tải về</button>
             </div>
           ))}
@@ -413,7 +413,7 @@ function DataTab({ user }: { user: LoginUser }) {
           <AlertTriangle className="size-5 text-[#c8102e]" />
           <h3 className="text-[13px] text-[#c8102e]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Vùng nguy hiểm</h3>
         </div>
-        <p className="text-[13px] text-[#5a5040] mb-4 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+        <p className="text-[13px] text-slate-700 mb-4 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
           Yêu cầu xóa tài khoản sẽ được gửi tới Quản trị viên để xét duyệt. Dữ liệu nghiệp vụ (hồ sơ, quyết định) sẽ được giữ lại theo quy định lưu trữ nhà nước (10 năm).
         </p>
         <button className="flex items-center gap-2 px-4 py-2.5 rounded-[8px] border border-[#fca5a5] text-[13px] text-[#c8102e] hover:bg-[#fee2e2] transition-colors"
@@ -450,8 +450,8 @@ export function CaiDatPage({ user }: { user: LoginUser }) {
             style={{ background: `linear-gradient(135deg,${user.avatarFrom},${user.avatarTo})`, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
             {user.initials}
           </div>
-          <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{user.name}</div>
-          <div className="text-[13px] text-[#635647]">{user.title}</div>
+          <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{user.name}</div>
+          <div className="text-[13px] text-slate-700">{user.title}</div>
         </div>
         {TABS.map(t => {
           const Icon = t.icon;
@@ -472,10 +472,10 @@ export function CaiDatPage({ user }: { user: LoginUser }) {
       <div className="flex-1 overflow-y-auto p-8">
         <div className="max-w-2xl">
           <div className="mb-6">
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               {TABS.find(t => t.id === activeTab)?.label}
             </h1>
-            <p className="text-[13px] text-[#635647] mt-0.5">Quản lý tài khoản và tuỳ chỉnh hệ thống VPTU Đồng Nai</p>
+            <p className="text-[13px] text-slate-700 mt-0.5">Quản lý tài khoản và tuỳ chỉnh hệ thống VPTU Đồng Nai</p>
           </div>
           {renderTab()}
         </div>

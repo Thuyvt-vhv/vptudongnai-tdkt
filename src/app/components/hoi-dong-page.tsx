@@ -197,11 +197,11 @@ function ScoreInput({
       style={{ borderColor: value > 0 ? criterion.color + "40" : "var(--color-line)", background:"#fff" }}>
       <div className="flex items-center justify-between mb-2">
         <div>
-          <div className="text-[13px] text-[#0b1426]"
+          <div className="text-[13px] text-slate-900"
             style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>{criterion.name}</div>
           <div className="flex items-center gap-1 mt-0.5">
-            <BookOpen className="size-2.5 text-[#635647]" />
-            <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <BookOpen className="size-2.5 text-slate-700" />
+            <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               {criterion.canCu}
             </span>
           </div>
@@ -229,7 +229,7 @@ function ScoreInput({
               background:"#fafafa",
             }}
           />
-          <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>/{criterion.maxScore}</span>
+          <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>/{criterion.maxScore}</span>
           <button
             disabled={disabled || value >= criterion.maxScore}
             onClick={() => onChange(Math.min(criterion.maxScore, value + 1))}
@@ -299,11 +299,11 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
                 style={{ color:sc.color, background:sc.bg, borderColor:sc.border, fontFamily: "var(--font-sans)", fontWeight:500 }}>
                 {sc.label}
               </span>
-              <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {s.code} · Phiên {s.phienSo}
               </span>
             </div>
-            <h3 className="text-[14px] text-[#0b1426] leading-snug"
+            <h3 className="text-[14px] text-slate-900 leading-snug"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               {s.campaignName}
             </h3>
@@ -319,9 +319,9 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
             return (
               <div key={st.label} className="rounded-[6px] p-2 border text-center"
                 style={{ borderColor:"var(--color-line)", background:"#ffffff" }}>
-                <Icon className="size-3.5 mx-auto mb-1 text-[#635647]" />
-                <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{st.v}</div>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{st.label}</div>
+                <Icon className="size-3.5 mx-auto mb-1 text-slate-700" />
+                <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{st.v}</div>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{st.label}</div>
               </div>
             );
           })}
@@ -329,7 +329,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
         {/* Scoring progress */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-[13px]">
-            <span className="text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Tiến độ chấm điểm</span>
+            <span className="text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Tiến độ chấm điểm</span>
             <span style={{ color:theme.primary, fontFamily: "var(--font-sans)", fontWeight:600 }}>{done}/{total}</span>
           </div>
           <div className="h-1.5 rounded-full bg-[#eef2f8] overflow-hidden">
@@ -337,7 +337,7 @@ function SessionCard({ s, onOpen }: { s: CouncilSession; onOpen: () => void }) {
           </div>
         </div>
         <div className="mt-3 flex items-center justify-between pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
-          <div className="flex items-center gap-1.5 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="flex items-center gap-1.5 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             <MapPin className="size-3" />{s.location.split("–")[0].trim()}
           </div>
           <span className="flex items-center gap-1 text-[13px]"
@@ -410,10 +410,10 @@ function ScoringTab({
         <Gavel className="size-7" style={{ color:theme.primary }} />
       </div>
       <div>
-        <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
+        <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
           Chọn hồ sơ để chấm điểm
         </h3>
-        <p className="text-[13px] text-[#635647] mt-1" style={{ fontFamily: "var(--font-sans)" }}>
+        <p className="text-[13px] text-slate-700 mt-1" style={{ fontFamily: "var(--font-sans)" }}>
           Nhấn vào hồ sơ ở cột bên trái để bắt đầu
         </p>
       </div>
@@ -437,17 +437,17 @@ function ScoringTab({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                  <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{nomination.code}</span>
+                  <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{nomination.code}</span>
                   <span className="text-[13px] px-1.5 py-0.5 rounded bg-[#fdf3d9] text-[#7d4a00] border border-[#f0dba0]"
                     style={{ fontFamily: "var(--font-sans)" }}>
                     <Star className="size-2.5 inline mr-0.5" style={{ fill:"#8a6400",color:"#8a6400" }} />
                     {nomination.hinhThuc}
                   </span>
                 </div>
-                <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
+                <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                   {nomination.tenDoiTuong}
                 </h3>
-                <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {nomination.chucVu ? `${nomination.chucVu} · ` : ""}{nomination.donVi}
                   {nomination.namCongTac ? ` · ${nomination.namCongTac} năm công tác` : ""}
                 </p>
@@ -456,10 +456,10 @@ function ScoringTab({
           </div>
           <div className="p-4 space-y-3">
             <div className="rounded-[6px] p-3 bg-[#ffffff]" style={{ border:"1px solid var(--color-line)" }}>
-              <div className="text-[13px] uppercase tracking-wide text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] uppercase tracking-wide text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 Tóm tắt thành tích
               </div>
-              <p className="text-[13px] text-[#0b1426] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
+              <p className="text-[13px] text-slate-900 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>
                 {nomination.tomTatThanhTich}
               </p>
             </div>
@@ -506,11 +506,11 @@ function ScoringTab({
               style={{ borderColor:"var(--color-line)", background:"var(--color-paper)" }}>
               <div className="flex items-center gap-2">
                 <Gavel className="size-4" style={{ color:theme.primary }} />
-                <span className="text-[13px] text-[#0b1426]"
+                <span className="text-[13px] text-slate-900"
                   style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
                   {alreadyScored ? "Điểm đã nộp" : "Phiếu chấm điểm"}
                 </span>
-                <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {currentMember.name}
                 </span>
               </div>
@@ -542,9 +542,9 @@ function ScoringTab({
                   background: "#ffffff",
                 }}>
                 <div>
-                  <div className="text-[13px] uppercase tracking-wide text-[#635647]"
+                  <div className="text-[13px] uppercase tracking-wide text-slate-700"
                     style={{ fontFamily: "var(--font-sans)" }}>Tổng điểm</div>
-                  <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                  <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                     Tối đa: {MAX_TOTAL} điểm
                   </div>
                 </div>
@@ -570,7 +570,7 @@ function ScoringTab({
               {/* Comment */}
               {!alreadyScored ? (
                 <div className="space-y-1.5">
-                  <label className="text-[13px] text-[#0b1426]"
+                  <label className="text-[13px] text-slate-900"
                     style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
                     Ý kiến nhận xét <span className="text-[#c8102e]">*</span>
                   </label>
@@ -582,8 +582,8 @@ function ScoringTab({
                 </div>
               ) : (
                 <div className="rounded-[6px] p-3 bg-[#ffffff] border" style={{ borderColor:"var(--color-line)" }}>
-                  <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Nhận xét đã nộp</div>
-                  <p className="text-[13px] text-[#0b1426] italic" style={{ fontFamily: "var(--font-sans)" }}>
+                  <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>Nhận xét đã nộp</div>
+                  <p className="text-[13px] text-slate-900 italic" style={{ fontFamily: "var(--font-sans)" }}>
                     "{existingScore?.comment}"
                   </p>
                 </div>
@@ -593,7 +593,7 @@ function ScoringTab({
                 <div className="flex items-center gap-3 pt-1">
                   <div className="flex-1">
                     {!scoreReady && (
-                      <div className="flex items-center gap-1.5 text-[13px] text-[#635647]"
+                      <div className="flex items-center gap-1.5 text-[13px] text-slate-700"
                         style={{ fontFamily: "var(--font-sans)" }}>
                         <AlertCircle className="size-3.5" />
                         {Object.keys(localScores).length < CRITERIA.length
@@ -613,7 +613,7 @@ function ScoringTab({
         {coi.level === "hard" && (
           <div className="rounded-[8px] p-4 bg-[#f4f7fb] border border-[#e2e8f0] text-center">
             <Lock className="size-8 mx-auto mb-2 text-[#e2e8f0]" />
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Bạn không thể chấm điểm hồ sơ này do xung đột lợi ích.<br/>
               Điểm sẽ được ghi nhận là "Vắng / Kiêng kỵ" trong biên bản.
             </p>
@@ -656,7 +656,7 @@ function ScoringTab({
                 }}>
                 <div className="flex items-center gap-2">
                   <Gavel className="size-4" style={{ color: theme.primary }} />
-                  <span className="text-[13px] text-[#0b1426]"
+                  <span className="text-[13px] text-slate-900"
                     style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>Biểu quyết</span>
                   {myCoi.level === "hard" && (
                     <span className="text-[12px] px-1.5 py-0.5 rounded border flex items-center gap-1"
@@ -732,7 +732,7 @@ function ScoringTab({
               {/* My vote buttons */}
               {!finalized && myCoi.level !== "hard" && (
                 <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor:"var(--color-line)" }}>
-                  <div className="text-[12px] text-[#635647] mb-2"
+                  <div className="text-[12px] text-slate-700 mb-2"
                     style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
                     Phiếu của bạn{myVote ? " — click lại để thay đổi" : ""}:
                   </div>
@@ -778,7 +778,7 @@ function ScoringTab({
                     value={chairNotes[nomination.id] ?? ""}
                     onChange={e => setChairNotes(p => ({ ...p, [nomination.id]: e.target.value }))} />
                   <div className="flex items-center gap-2">
-                    <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận:</span>
+                    <span className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận:</span>
                     {(["pass", "reject", "defer"] as VoteChoice[]).map(choice => {
                       const cfg = VOTE_CFG[choice];
                       const Icon = cfg.icon;
@@ -808,8 +808,8 @@ function ScoringTab({
               {finalized && dec!.chairNote && (
                 <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
                   style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
-                  <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
-                  <span className="text-[13px] text-[#635647] italic" style={{ fontFamily:"var(--font-sans)" }}>
+                  <Gavel className="size-3.5 text-slate-700 shrink-0 mt-0.5" />
+                  <span className="text-[13px] text-slate-700 italic" style={{ fontFamily:"var(--font-sans)" }}>
                     Kết luận Chủ tịch: {dec!.chairNote}
                   </span>
                 </div>
@@ -821,7 +821,7 @@ function ScoringTab({
 
       {/* RIGHT: All members' scores */}
       <div className="w-[280px] shrink-0 overflow-y-auto space-y-3">
-        <div className="text-[13px] text-[#635647] uppercase tracking-wide"
+        <div className="text-[13px] text-slate-700 uppercase tracking-wide"
           style={{ fontFamily: "var(--font-sans)" }}>
           Điểm các thành viên HĐ
         </div>
@@ -829,7 +829,7 @@ function ScoringTab({
         {/* Average box */}
         <div className="rounded-[8px] p-4 border-2 text-center"
           style={{ borderColor:theme.primary+"40", background:theme.tint }}>
-          <div className="text-[13px] text-[#635647] mb-1" style={{ fontFamily: "var(--font-sans)" }}>Điểm trung bình ({count} thành viên)</div>
+          <div className="text-[13px] text-slate-700 mb-1" style={{ fontFamily: "var(--font-sans)" }}>Điểm trung bình ({count} thành viên)</div>
           <div className="text-[36px]"
             style={{ fontFamily: "var(--font-sans)", fontWeight:700, color:scoreColor(avg/MAX_TOTAL), lineHeight:1 }}>
             {avg}
@@ -857,13 +857,13 @@ function ScoringTab({
                 <div className="flex items-center gap-2 mb-2">
                   <Avatar m={m} size={28} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-[13px] text-[#0b1426] truncate"
+                    <div className="text-[13px] text-slate-900 truncate"
                       style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
                       {m.name}
                       {isCurrentUser && <span className="text-[13px] ml-1 opacity-70">(bạn)</span>}
                       {m.isChair && <span className="text-[13px] ml-1 text-[#b45309]">Chủ tịch</span>}
                     </div>
-                    <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>
+                    <div className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>
                       {m.donVi}
                     </div>
                   </div>
@@ -879,7 +879,7 @@ function ScoringTab({
                       {total}
                     </div>
                   ) : (
-                    <span className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                       Chờ...
                     </span>
                   )}
@@ -898,7 +898,7 @@ function ScoringTab({
                   </div>
                 )}
                 {entry?.comment && (
-                  <p className="text-[13px] text-[#635647] mt-1.5 italic leading-relaxed line-clamp-2"
+                  <p className="text-[13px] text-slate-700 mt-1.5 italic leading-relaxed line-clamp-2"
                     style={{ fontFamily: "var(--font-sans)" }}>"{entry.comment}"</p>
                 )}
               </div>
@@ -938,7 +938,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
     <div className="space-y-4">
       {/* Selection */}
       <div>
-        <div className="text-[13px] text-[#635647] mb-2 flex items-center gap-1.5"
+        <div className="text-[13px] text-slate-700 mb-2 flex items-center gap-1.5"
           style={{ fontFamily: "var(--font-sans)" }}>
           <Columns className="size-3.5" />
           Chọn tối đa 3 hồ sơ để so sánh
@@ -964,7 +964,7 @@ function CompareTab({ session }: { session: CouncilSession }) {
       {compared.length < 2 ? (
         <div className="flex flex-col items-center gap-3 py-16 text-center">
           <Columns className="size-10 text-[#e2e8f0]" />
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Chọn ít nhất 2 hồ sơ để so sánh
           </p>
         </div>
@@ -975,13 +975,13 @@ function CompareTab({ session }: { session: CouncilSession }) {
             gridTemplateColumns:`160px repeat(${compared.length}, 1fr)`,
             borderColor:"var(--color-line)", background:"var(--color-paper)"
           }}>
-            <div className="px-4 py-3 text-[13px] text-[#635647] uppercase tracking-wide"
+            <div className="px-4 py-3 text-[13px] text-slate-700 uppercase tracking-wide"
               style={{ fontFamily: "var(--font-sans)" }}>Tiêu chí</div>
             {avgs.map(a => (
               <div key={a.nom.id} className="px-4 py-3 border-l" style={{ borderColor:"var(--color-line)" }}>
-                <div className="text-[13px] text-[#0b1426]"
+                <div className="text-[13px] text-slate-900"
                   style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>{a.nom.tenDoiTuong}</div>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   {a.nom.hinhThuc} · {a.nom.code}
                 </div>
               </div>
@@ -997,10 +997,10 @@ function CompareTab({ session }: { session: CouncilSession }) {
                 <div className="px-4 py-3 flex items-center gap-1.5">
                   <div className="size-2 rounded-full shrink-0" style={{ background:c.color }} />
                   <div>
-                    <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
+                    <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>
                       {c.shortName}
                     </div>
-                    <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                    <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                       /{c.maxScore}đ
                     </div>
                   </div>
@@ -1032,8 +1032,8 @@ function CompareTab({ session }: { session: CouncilSession }) {
             background:"var(--color-paper)"
           }}>
             <div className="px-4 py-4">
-              <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>TỔNG ĐIỂM</div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Trung bình HĐ</div>
+              <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>TỔNG ĐIỂM</div>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Trung bình HĐ</div>
             </div>
             {avgs.sort((a,b) => 0).map((a, rank) => {
               const isFirst = a.avg === Math.max(...avgs.map(x=>x.avg));
@@ -1168,7 +1168,7 @@ function ResultsTab({
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                    <span className="text-[14px] text-[#0b1426]"
+                    <span className="text-[14px] text-slate-900"
                       style={{ fontFamily:"var(--font-sans)", fontWeight:600 }}>{nom.tenDoiTuong}</span>
                     <span className="text-[12px] px-2 py-0.5 rounded-full border"
                       style={{ color:decBadge.color, background:decBadge.bg, borderColor:decBadge.border, fontFamily:"var(--font-sans)", fontWeight:500 }}>
@@ -1181,7 +1181,7 @@ function ResultsTab({
                       </span>
                     )}
                   </div>
-                  <div className="text-[13px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>
+                  <div className="text-[13px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>
                     {nom.hinhThuc} · {nom.donVi}
                     {coiMembers.length > 0 && ` · ${coiMembers.length} thành viên COI`}
                   </div>
@@ -1190,7 +1190,7 @@ function ResultsTab({
                 <div className="text-right shrink-0">
                   <div className="text-[24px] leading-tight"
                     style={{ fontFamily:"var(--font-sans)", fontWeight:700, color:scoreColor(avg/MAX_TOTAL) }}>{avg}</div>
-                  <div className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>/{MAX_TOTAL} đ</div>
+                  <div className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>/{MAX_TOTAL} đ</div>
                 </div>
               </div>
 
@@ -1264,7 +1264,7 @@ function ResultsTab({
               {/* ── My vote panel ── */}
               {!finalized && myCoi.level !== "hard" && (
                 <div className="px-4 pb-4 pt-3 border-t" style={{ borderColor:"var(--color-line)" }}>
-                  <div className="text-[12px] text-[#635647] mb-2" style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
+                  <div className="text-[12px] text-slate-700 mb-2" style={{ fontFamily:"var(--font-sans)", fontWeight:500 }}>
                     Phiếu của bạn{myVote ? " — click lại để thay đổi" : ""}:
                   </div>
                   <div className="flex items-center gap-2">
@@ -1310,7 +1310,7 @@ function ResultsTab({
                     value={chairNotes[nom.id] ?? ""}
                     onChange={e => setChairNotes(p => ({ ...p, [nom.id]: e.target.value }))} />
                   <div className="flex items-center gap-2">
-                    <span className="text-[12px] text-[#635647]" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận quyết định:</span>
+                    <span className="text-[12px] text-slate-700" style={{ fontFamily:"var(--font-sans)" }}>Xác nhận quyết định:</span>
                     {(["pass", "reject", "defer"] as VoteChoice[]).map(choice => {
                       const cfg = VOTE_CFG[choice];
                       const Icon = cfg.icon;
@@ -1340,8 +1340,8 @@ function ResultsTab({
               {finalized && dec!.chairNote && (
                 <div className="px-4 pb-3 pt-2.5 border-t flex items-start gap-2"
                   style={{ borderColor:"var(--color-line)", background:"#fafafa" }}>
-                  <Gavel className="size-3.5 text-[#635647] shrink-0 mt-0.5" />
-                  <span className="text-[13px] text-[#635647] italic"
+                  <Gavel className="size-3.5 text-slate-700 shrink-0 mt-0.5" />
+                  <span className="text-[13px] text-slate-700 italic"
                     style={{ fontFamily:"var(--font-sans)" }}>
                     Kết luận Chủ tịch: {dec!.chairNote}
                   </span>
@@ -1371,7 +1371,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FileText className="size-4" style={{ color:theme.primary }} />
-          <span className="text-[13px] text-[#0b1426]"
+          <span className="text-[13px] text-slate-900"
             style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
             Dự thảo Biên bản họp Hội đồng TĐKT
           </span>
@@ -1386,33 +1386,33 @@ function MinutesTab({ session }: { session: CouncilSession }) {
         <div className="px-8 py-6 space-y-5 bg-white" style={{ fontFamily: "var(--font-sans)" }}>
           {/* Header */}
           <div className="text-center space-y-1 border-b pb-5" style={{ borderColor:"var(--color-line)" }}>
-            <div className="text-[13px] uppercase tracking-widest text-[#635647]">
+            <div className="text-[13px] uppercase tracking-widest text-slate-700">
               ỦY BAN NHÂN DÂN TỈNH ĐỒNG NAI
             </div>
-            <div className="text-[13px] uppercase tracking-widest text-[#635647]">
+            <div className="text-[13px] uppercase tracking-widest text-slate-700">
               HỘI ĐỒNG THI ĐUA – KHEN THƯỞNG
             </div>
             <div className="h-px bg-[#e2e8f0] my-2" />
-            <h2 className="text-[18px] text-[#0b1426]"
+            <h2 className="text-[18px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
               BIÊN BẢN HỌP HỘI ĐỒNG XÉT DUYỆT
             </h2>
-            <p className="text-[14px] text-[#0b1426]">Phong trào: <strong>{session.campaignName}</strong></p>
-            <p className="text-[13px] text-[#635647]">
+            <p className="text-[14px] text-slate-900">Phong trào: <strong>{session.campaignName}</strong></p>
+            <p className="text-[13px] text-slate-700">
               Phiên họp số {session.phienSo} · {session.time} ngày {fmtDate(session.date)}
             </p>
-            <p className="text-[13px] text-[#635647]">{session.location}</p>
+            <p className="text-[13px] text-slate-700">{session.location}</p>
           </div>
 
           {/* Section 1: Thành phần */}
           <div>
-            <div className="text-[13px] text-[#0b1426] mb-2"
+            <div className="text-[13px] text-slate-900 mb-2"
               style={{ fontWeight:700 }}>I. THÀNH PHẦN THAM DỰ</div>
             <table className="w-full text-[13px] border-collapse">
               <thead>
                 <tr style={{ background:"var(--color-paper)" }}>
                   {["STT","Họ và tên","Chức danh trong HĐ","Đơn vị","Có mặt"].map(h => (
-                    <th key={h} className="text-left px-3 py-2 border text-[13px] text-[#635647] uppercase tracking-wide"
+                    <th key={h} className="text-left px-3 py-2 border text-[13px] text-slate-700 uppercase tracking-wide"
                       style={{ borderColor:"var(--color-line)" }}>{h}</th>
                   ))}
                 </tr>
@@ -1436,7 +1436,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
                 ))}
               </tbody>
             </table>
-            <p className="text-[13px] text-[#635647] mt-2">
+            <p className="text-[13px] text-slate-700 mt-2">
               Có mặt: <strong>{present.length}</strong> thành viên.
               Vắng mặt: <strong>{absent.length}</strong> ({absent.map(m=>m.name).join(", ") || "Không có"}).
             </p>
@@ -1444,14 +1444,14 @@ function MinutesTab({ session }: { session: CouncilSession }) {
 
           {/* Section 2: Nội dung xét duyệt */}
           <div>
-            <div className="text-[13px] text-[#0b1426] mb-3" style={{ fontWeight:700 }}>
+            <div className="text-[13px] text-slate-900 mb-3" style={{ fontWeight:700 }}>
               II. KẾT QUẢ CHẤM ĐIỂM VÀ BIỂU QUYẾT
             </div>
             <table className="w-full text-[13px] border-collapse">
               <thead>
                 <tr style={{ background:"var(--color-paper)" }}>
                   {["STT","Tên cá nhân/tập thể","Đơn vị","Hình thức KT","Điểm TB","Kết quả"].map(h => (
-                    <th key={h} className="text-left px-3 py-2 border text-[13px] text-[#635647] uppercase tracking-wide"
+                    <th key={h} className="text-left px-3 py-2 border text-[13px] text-slate-700 uppercase tracking-wide"
                       style={{ borderColor:"var(--color-line)" }}>{h}</th>
                   ))}
                 </tr>
@@ -1482,7 +1482,7 @@ function MinutesTab({ session }: { session: CouncilSession }) {
 
           {/* Section 3: Kết luận */}
           <div>
-            <div className="text-[13px] text-[#0b1426] mb-2" style={{ fontWeight:700 }}>
+            <div className="text-[13px] text-slate-900 mb-2" style={{ fontWeight:700 }}>
               III. KẾT LUẬN VÀ KIẾN NGHỊ
             </div>
             <p className="text-[13px] text-[#4a5568] leading-relaxed">
@@ -1496,16 +1496,16 @@ function MinutesTab({ session }: { session: CouncilSession }) {
           <div className="grid grid-cols-2 gap-8 pt-4 border-t" style={{ borderColor:"var(--color-line)" }}>
             <div className="text-center space-y-12">
               <div>
-                <div className="text-[13px] text-[#635647] uppercase tracking-wide">Thư ký Hội đồng</div>
-                <div className="text-[13px] text-[#0b1426] mt-8" style={{ fontWeight:600 }}>{secy?.name}</div>
-                <div className="text-[13px] text-[#635647]">{secy?.title}</div>
+                <div className="text-[13px] text-slate-700 uppercase tracking-wide">Thư ký Hội đồng</div>
+                <div className="text-[13px] text-slate-900 mt-8" style={{ fontWeight:600 }}>{secy?.name}</div>
+                <div className="text-[13px] text-slate-700">{secy?.title}</div>
               </div>
             </div>
             <div className="text-center space-y-12">
               <div>
-                <div className="text-[13px] text-[#635647] uppercase tracking-wide">Chủ tịch Hội đồng</div>
-                <div className="text-[13px] text-[#0b1426] mt-8" style={{ fontWeight:600 }}>{chair?.name}</div>
-                <div className="text-[13px] text-[#635647]">{chair?.title}</div>
+                <div className="text-[13px] text-slate-700 uppercase tracking-wide">Chủ tịch Hội đồng</div>
+                <div className="text-[13px] text-slate-900 mt-8" style={{ fontWeight:600 }}>{chair?.name}</div>
+                <div className="text-[13px] text-slate-700">{chair?.title}</div>
               </div>
             </div>
           </div>
@@ -1594,11 +1594,11 @@ function Workspace({ session: initSession, user, onBack }: {
         <div className="flex items-center gap-2">
           <Gavel className="size-4" style={{ color:theme.primary }} />
           <div>
-            <span className="text-[14px] text-[#0b1426]"
+            <span className="text-[14px] text-slate-900"
               style={{ fontFamily: "var(--font-sans)", fontWeight:600 }}>
               {session.campaignName}
             </span>
-            <span className="text-[13px] text-[#635647] ml-2" style={{ fontFamily: "var(--font-sans)" }}>
+            <span className="text-[13px] text-slate-700 ml-2" style={{ fontFamily: "var(--font-sans)" }}>
               · {session.code} · Phiên {session.phienSo} · {fmtDate(session.date)} {session.time}
             </span>
           </div>
@@ -1626,7 +1626,7 @@ function Workspace({ session: initSession, user, onBack }: {
           {/* Members */}
           <div className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[13px] uppercase tracking-wide text-[#635647]"
+              <span className="text-[13px] uppercase tracking-wide text-slate-700"
                 style={{ fontFamily: "var(--font-sans)" }}>
                 Thành viên HĐ ({session.members.filter(m=>m.present).length}/{session.members.length})
               </span>
@@ -1652,13 +1652,13 @@ function Workspace({ session: initSession, user, onBack }: {
                     }}>
                     <Avatar m={m} size={26} />
                     <div className="flex-1 min-w-0">
-                      <div className="text-[13px] text-[#0b1426] truncate"
+                      <div className="text-[13px] text-slate-900 truncate"
                         style={{ fontFamily: "var(--font-sans)", fontWeight:isCurrentUser?600:400 }}>
                         {m.name}
                         {isCurrentUser && <span className="text-[13px] opacity-60 ml-1">(bạn)</span>}
                         {m.isChair && <span className="text-[13px] text-[#b45309] ml-1">Chủ tịch</span>}
                       </div>
-                      <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>
+                      <div className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>
                         {m.donVi}
                       </div>
                     </div>
@@ -1669,7 +1669,7 @@ function Workspace({ session: initSession, user, onBack }: {
                       ) : scoredThisNom ? (
                         <CheckCircle2 className="size-3.5 shrink-0 text-[#0f7a3e]" />
                       ) : m.present ? (
-                        <Clock className="size-3.5 shrink-0 text-[#635647]" />
+                        <Clock className="size-3.5 shrink-0 text-slate-700" />
                       ) : null
                     )}
                   </div>
@@ -1681,7 +1681,7 @@ function Workspace({ session: initSession, user, onBack }: {
           {/* COI legend */}
           <div className="px-4 py-2">
             <div className="rounded-[6px] p-2 bg-[#ffffff] border" style={{ borderColor:"var(--color-line)" }}>
-              <div className="text-[13px] text-[#635647] uppercase tracking-wide mb-1.5"
+              <div className="text-[13px] text-slate-700 uppercase tracking-wide mb-1.5"
                 style={{ fontFamily: "var(--font-sans)" }}>Chú thích</div>
               {[
                 { icon:CheckCircle2, color:"#0f7a3e", label:"Đã chấm" },
@@ -1697,7 +1697,7 @@ function Workspace({ session: initSession, user, onBack }: {
                 );
               })}
               <div className="mt-1.5 pt-1.5 border-t" style={{ borderColor:"var(--color-line)" }}>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                   Căn cứ: Khoản 4 Điều 56 Luật TĐKT 2022
                 </div>
               </div>
@@ -1708,7 +1708,7 @@ function Workspace({ session: initSession, user, onBack }: {
 
           {/* Nomination queue */}
           <div className="px-4 pt-3 pb-1">
-            <span className="text-[13px] uppercase tracking-wide text-[#635647]"
+            <span className="text-[13px] uppercase tracking-wide text-slate-700"
               style={{ fontFamily: "var(--font-sans)" }}>
               Hồ sơ xét duyệt ({session.nominations.length})
             </span>
@@ -1738,8 +1738,8 @@ function Workspace({ session: initSession, user, onBack }: {
                       ? <ShieldAlert className="size-3 text-[#c8102e] shrink-0" />
                       : myDone
                       ? <CheckCircle2 className="size-3 text-[#0f7a3e] shrink-0" />
-                      : <Clock className="size-3 text-[#635647] shrink-0" />}
-                    <span className="text-[13px] text-[#0b1426] flex-1 truncate"
+                      : <Clock className="size-3 text-slate-700 shrink-0" />}
+                    <span className="text-[13px] text-slate-900 flex-1 truncate"
                       style={{ fontFamily:"var(--font-sans)", fontWeight:isSelected?600:500 }}>
                       {n.tenDoiTuong}
                     </span>
@@ -1751,7 +1751,7 @@ function Workspace({ session: initSession, user, onBack }: {
                     )}
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[13px] text-[#635647] truncate flex-1" style={{ fontFamily:"var(--font-sans)" }}>
+                    <span className="text-[13px] text-slate-700 truncate flex-1" style={{ fontFamily:"var(--font-sans)" }}>
                       {n.hinhThuc} · {n.code}
                     </span>
                     {voteDecCfg && (
@@ -1922,11 +1922,11 @@ function CreateSessionModal({ sessions, campaigns, onClose, onCreate }: {
             <Gavel className="size-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[14px] font-semibold text-[#0b1426]">Tạo phiên họp Hội đồng mới</p>
-            <p className="text-[13px] text-[#635647]">Phiên số {sessions.length + 1} · Điều 56 Luật TĐKT 2022</p>
+            <p className="text-[14px] font-semibold text-slate-900">Tạo phiên họp Hội đồng mới</p>
+            <p className="text-[13px] text-slate-700">Phiên số {sessions.length + 1} · Điều 56 Luật TĐKT 2022</p>
           </div>
           <button type="button" onClick={onClose} className="size-8 rounded-full flex items-center justify-center hover:bg-[#f1f5f9] transition-colors">
-            <X className="size-4 text-[#635647]" />
+            <X className="size-4 text-slate-700" />
           </button>
         </div>
 
@@ -1970,19 +1970,19 @@ function CreateSessionModal({ sessions, campaigns, onClose, onCreate }: {
                       style={{ borderColor: "#86efac", background: "#fff" }}>
                       <div className="flex items-center gap-1.5">
                         <FileText className="size-3.5 text-[#1C5FBE]" />
-                        <span className="text-[13px] text-[#0b1426]">
+                        <span className="text-[13px] text-slate-900">
                           <strong>{eligibleParticipants.length}</strong> hồ sơ đủ điều kiện
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <User className="size-3.5 text-[#7c3aed]" />
-                        <span className="text-[13px] text-[#0b1426]">
+                        <span className="text-[13px] text-slate-900">
                           <strong>{eligibleParticipants.filter(p => p.type === "ca_nhan").length}</strong> cá nhân
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Building2 className="size-3.5 text-[#b45309]" />
-                        <span className="text-[13px] text-[#0b1426]">
+                        <span className="text-[13px] text-slate-900">
                           <strong>{eligibleParticipants.filter(p => p.type === "tap_the").length}</strong> tập thể
                         </span>
                       </div>
@@ -2080,7 +2080,7 @@ function CreateSessionModal({ sessions, campaigns, onClose, onCreate }: {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t flex items-center justify-between shrink-0" style={{ borderColor: "var(--color-line)" }}>
-          <p className="text-[13px] text-[#635647]">
+          <p className="text-[13px] text-slate-700">
             {presentCount < quorum && <span className="text-[#c8102e] font-semibold">Chưa đủ túc số · </span>}
             Phiên số {sessions.length + 1}
           </p>
@@ -2127,7 +2127,7 @@ export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
               <div className="size-8 rounded-[6px] flex items-center justify-center" style={{ background:theme.tint }}>
                 <Gavel className="size-4" style={{ color:theme.primary }} />
               </div>
-              <h1 className="text-[18px] text-[#0b1426]"
+              <h1 className="text-[18px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight:700 }}>
                 Hội đồng Xét duyệt
               </h1>
@@ -2136,7 +2136,7 @@ export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
                 <ShieldCheck className="size-3" />COI realtime · Scoring engine
               </span>
             </div>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Chấm điểm theo tiêu chí, kiểm tra xung đột lợi ích tự động — Điều 56 Luật TĐKT 2022
             </p>
           </div>
@@ -2185,9 +2185,9 @@ export function HoiDongPage({ user, campaigns, sessions, onSessionsChange }: {
               <Plus className="size-5" style={{ color:theme.primary }} />
             </div>
             <div className="text-center">
-              <div className="text-[13px] text-[#0b1426]"
+              <div className="text-[13px] text-slate-900"
                 style={{ fontFamily: "var(--font-sans)", fontWeight:500 }}>Tạo phiên họp mới</div>
-              <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Theo kế hoạch hoặc đột xuất
               </div>
             </div>

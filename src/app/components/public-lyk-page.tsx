@@ -137,9 +137,9 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
           {state==="idle"||state==="sending" ? (
             <div className="space-y-4">
               <div>
-                <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Số điện thoại</label>
+                <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Số điện thoại</label>
                 <div className="flex gap-2">
-                  <div className="flex items-center gap-1.5 px-3 border border-[#d1d5db] rounded-[6px] text-[13px] text-[#5a5040]" style={{ background:"#f4f7fb",fontFamily: "var(--font-sans)" }}>
+                  <div className="flex items-center gap-1.5 px-3 border border-[#d1d5db] rounded-[6px] text-[13px] text-slate-700" style={{ background:"#f4f7fb",fontFamily: "var(--font-sans)" }}>
                     🇻🇳 +84
                   </div>
                   <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="9xx xxx xxx"
@@ -161,8 +161,8 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
             </div>
           ) : state==="sent"||state==="verifying"||state==="error" ? (
             <div className="space-y-4">
-              <p className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
-                Nhập mã 6 số đã gửi đến <strong className="text-[#0b1426]">{phone}</strong>
+              <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+                Nhập mã 6 số đã gửi đến <strong className="text-slate-900">{phone}</strong>
               </p>
               <div className="flex gap-2 justify-center">
                 {otp.map((v,i)=>(
@@ -177,7 +177,7 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
                 {state==="verifying"?<Loader2 className="size-4 animate-spin"/>:<CheckCircle2 className="size-4"/>}
                 {state==="verifying"?"Đang xác thực...":"Xác nhận OTP"}
               </button>
-              <div className="text-center text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <div className="text-center text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 {timer>0?`Gửi lại sau ${timer}s`:<button onClick={()=>{setState("idle");setOtp(["","","","","",""]);}} className="text-[#1C5FBE]">Gửi lại mã</button>}
               </div>
             </div>
@@ -187,7 +187,7 @@ function OTPModal({ onVerified, onClose }: { onVerified:(phone:string)=>void; on
               <p className="text-[14px] text-[#166534]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Xác thực thành công!</p>
             </div>
           )}
-          <button onClick={onClose} className="w-full mt-3 py-2 text-[13px] text-[#635647] hover:text-[#5a5040] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+          <button onClick={onClose} className="w-full mt-3 py-2 text-[13px] text-slate-700 hover:text-slate-700 transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
             Hủy bỏ
           </button>
         </div>
@@ -213,12 +213,12 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
   };
   return (
     <div className="rounded-[12px] border-2 border-[#1C5FBE] p-5" style={{ background:"#f8fbff" }}>
-      <h3 className="text-[14px] text-[#0b1426] mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>
+      <h3 className="text-[14px] text-slate-900 mb-4" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>
         Gửi ý kiến về hồ sơ {caseItem.maHoSo}
       </h3>
       {/* Loại ý kiến */}
       <div className="mb-4">
-        <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Loại ý kiến</label>
+        <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-2" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Loại ý kiến</label>
         <div className="flex gap-2">
           {(Object.entries(OPINION_CFG) as [OpinionType,typeof OPINION_CFG[OpinionType]][]).map(([k,cfg])=>{
             const Icon=cfg.icon; const a=loai===k;
@@ -233,20 +233,20 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
       </div>
       {/* Nội dung */}
       <div className="mb-4">
-        <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Nội dung ý kiến</label>
+        <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Nội dung ý kiến</label>
         <textarea value={content} onChange={e=>setContent(e.target.value)} rows={4}
           placeholder="Trình bày ý kiến của bạn về hồ sơ khen thưởng này một cách khách quan, trung thực..."
           className="w-full px-3 py-2.5 border border-[#d1d5db] rounded-[8px] text-[13px] outline-none focus:border-[#1C5FBE] resize-none"
           style={{ fontFamily: "var(--font-sans)" }}/>
         <div className="flex justify-between mt-1">
-          <span className="text-[13px] text-[#635647]">Tối thiểu 20 ký tự</span>
-          <span className="text-[13px] text-[#635647]">{content.length}/500</span>
+          <span className="text-[13px] text-slate-700">Tối thiểu 20 ký tự</span>
+          <span className="text-[13px] text-slate-700">{content.length}/500</span>
         </div>
       </div>
       {/* Đơn vị (nếu không ẩn danh) */}
       {!anon&&(
         <div className="mb-4">
-          <label className="block text-[13px] uppercase tracking-wider text-[#635647] mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Đơn vị công tác</label>
+          <label className="block text-[13px] uppercase tracking-wider text-slate-700 mb-1.5" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>Đơn vị công tác</label>
           <input value={donVi} onChange={e=>setDonVi(e.target.value)} placeholder="VD: Phòng Tổng hợp, VP Tỉnh ủy"
             className="w-full px-3 border border-[#d1d5db] rounded-[6px] text-[13px] outline-none" style={{ height:40,fontFamily: "var(--font-sans)" }}/>
         </div>
@@ -254,12 +254,12 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
       {/* Ẩn danh toggle */}
       <div className="flex items-center gap-3 mb-4 p-3 rounded-[8px]" style={{ background:"white",border:"1px solid #e2e8f0" }}>
         <button onClick={()=>setAnon(!anon)} className="flex items-center gap-2 flex-1 text-left">
-          {anon?<EyeOff className="size-4 text-[#5a5040]"/>:<Eye className="size-4 text-[#1C5FBE]"/>}
+          {anon?<EyeOff className="size-4 text-slate-700"/>:<Eye className="size-4 text-[#1C5FBE]"/>}
           <div>
-            <div className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>
+            <div className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:600 }}>
               {anon?"Gửi ẩn danh (số điện thoại sẽ được mã hóa)":"Gửi có tên đơn vị"}
             </div>
-            <div className="text-[13px] text-[#635647]">
+            <div className="text-[13px] text-slate-700">
               {anon?"Họ tên và số điện thoại sẽ không hiển thị công khai":"Đơn vị công tác sẽ được hiển thị công khai"}
             </div>
           </div>
@@ -274,7 +274,7 @@ function OpinionForm({ caseItem, phone, onSubmit, onCancel }:{ caseItem:PublicCa
           {sending?<Loader2 className="size-4 animate-spin"/>:<Send className="size-4"/>}
           {sending?"Đang gửi...":"Gửi ý kiến"}
         </button>
-        <button onClick={onCancel} className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>
+        <button onClick={onCancel} className="px-4 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
           Hủy
         </button>
       </div>
@@ -372,8 +372,8 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                         <code className="text-[13px] text-[#1C5FBE]" style={{ fontFamily:"JetBrains Mono, monospace",fontWeight:700 }}>{c.maHoSo}</code>
                         <span className="text-[13px] px-2 py-0.5 rounded-full border" style={{ background:sc.bg,color:sc.color,borderColor:sc.border,fontFamily: "var(--font-sans)",fontWeight:700 }}>{sc.label}</span>
                       </div>
-                      <h2 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{c.tenNguoi}</h2>
-                      <div className="flex items-center gap-2 text-[13px] text-[#635647] mt-0.5">
+                      <h2 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{c.tenNguoi}</h2>
+                      <div className="flex items-center gap-2 text-[13px] text-slate-700 mt-0.5">
                         <Building2 className="size-3.5"/><span>{c.donVi}</span>
                         <span>·</span>
                         <span>{c.chucVu}</span>
@@ -382,15 +382,15 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-[24px] text-[#8a6400]" style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>{c.diem}</div>
-                    <div className="text-[13px] text-[#635647]">điểm/100</div>
+                    <div className="text-[13px] text-slate-700">điểm/100</div>
                   </div>
                 </div>
                 <div className="mt-3 p-3 rounded-[8px]" style={{ background:"#f4f7fb" }}>
-                  <div className="text-[13px] text-[#5a5040] leading-relaxed">{c.tomTat}</div>
-                  <div className="flex items-center gap-3 mt-2 text-[13px] text-[#635647]">
-                    <span className="flex items-center gap-1"><Award className="size-3"/>Đề nghị: <strong className="text-[#0b1426]">{c.danhHieu}</strong></span>
+                  <div className="text-[13px] text-slate-700 leading-relaxed">{c.tomTat}</div>
+                  <div className="flex items-center gap-3 mt-2 text-[13px] text-slate-700">
+                    <span className="flex items-center gap-1"><Award className="size-3"/>Đề nghị: <strong className="text-slate-900">{c.danhHieu}</strong></span>
                     <span>·</span>
-                    <span className="flex items-center gap-1"><Calendar className="size-3"/>Hạn: <strong className="text-[#0b1426]">{c.deadLine}</strong></span>
+                    <span className="flex items-center gap-1"><Calendar className="size-3"/>Hạn: <strong className="text-slate-900">{c.deadLine}</strong></span>
                     <span>·</span>
                     <span>{c.namTD} năm TD liên tục</span>
                   </div>
@@ -406,7 +406,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                     <Icon className="size-3.5"/><strong>{v}</strong>
                   </div>
                 ))}
-                <span className="text-[13px] text-[#635647]">{total} ý kiến</span>
+                <span className="text-[13px] text-slate-700">{total} ý kiến</span>
               </div>
               {/* Opinions preview */}
               <div className="px-5 py-3 space-y-2">
@@ -420,11 +420,11 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-0.5">
                           <span className="text-[13px]" style={{ color:oc.color,fontFamily: "var(--font-sans)",fontWeight:700 }}>{oc.label}</span>
-                          {!op.anonymous&&<span className="text-[13px] text-[#635647]">· {op.donVi}</span>}
-                          {op.anonymous&&<span className="text-[13px] text-[#635647] italic">· Ẩn danh</span>}
+                          {!op.anonymous&&<span className="text-[13px] text-slate-700">· {op.donVi}</span>}
+                          {op.anonymous&&<span className="text-[13px] text-slate-700 italic">· Ẩn danh</span>}
                         </div>
-                        <p className="text-[13px] text-[#5a5040]">{op.noiDung}</p>
-                        <span className="text-[13px] text-[#6b5e47]">{op.thoiGian}</span>
+                        <p className="text-[13px] text-slate-700">{op.noiDung}</p>
+                        <span className="text-[13px] text-slate-600">{op.thoiGian}</span>
                       </div>
                     </div>
                   );
@@ -442,7 +442,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
                     <CheckCircle2 className="size-4"/>Đã gửi ý kiến thành công. Cảm ơn bạn!
                   </div>
                 ) : c.status==="da_ket_thuc" ? (
-                  <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>Thời hạn lấy ý kiến đã kết thúc.</div>
+                  <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>Thời hạn lấy ý kiến đã kết thúc.</div>
                 ) : isForm ? (
                   <OpinionForm caseItem={c} phone={phone||""} onSubmit={()=>handleSubmitted(c.id)} onCancel={()=>setFormCase(null)}/>
                 ) : (
@@ -460,7 +460,7 @@ export function PublicLYKPage({ onBack }:{ onBack:()=>void }) {
       {/* Footer */}
       <div className="max-w-4xl mx-auto px-6 pb-8">
         <div className="p-4 rounded-[10px] border border-[#e2e8f0] text-center" style={{ background:"white" }}>
-          <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+          <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
             Hệ thống VPTU Đồng Nai · Tỉnh ủy Đồng Nai · Thực hiện theo Điều 15 Thông tư 01/2024/TT-BNV<br/>
             Mọi thông tin cá nhân được bảo mật và chỉ dùng để xác thực. Không chia sẻ cho bên thứ ba.
           </p>

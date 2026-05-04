@@ -120,8 +120,8 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
               {card.ten.split(" ").slice(-1)[0][0]}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[13px] text-[#0b1426] truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{card.ten}</div>
-              <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>{card.donVi.split(" ").slice(0, 3).join(" ")}</div>
+              <div className="text-[13px] text-slate-900 truncate" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{card.ten}</div>
+              <div className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>{card.donVi.split(" ").slice(0, 3).join(" ")}</div>
             </div>
           </div>
           <GripVertical className="size-3.5 text-[#d1d5db] shrink-0 mt-1 cursor-grab" />
@@ -156,7 +156,7 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
 
           <div className="flex items-center gap-2">
             {card.comments > 0 && (
-              <div className="flex items-center gap-0.5 text-[13px] text-[#635647]">
+              <div className="flex items-center gap-0.5 text-[13px] text-slate-700">
                 <MessageSquare className="size-3" />{card.comments}
               </div>
             )}
@@ -169,7 +169,7 @@ function KCard({ card, onMove }: { card: KanbanCard; onMove: (id: string, col: C
 
       {/* Quick actions */}
       <div className="border-t border-[#f4f7fb] px-3 py-1.5 flex items-center gap-2">
-        <button className="flex items-center gap-1 text-[13px] text-[#635647] hover:text-[#1C5FBE] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
+        <button className="flex items-center gap-1 text-[13px] text-slate-700 hover:text-[#1C5FBE] transition-colors" style={{ fontFamily: "var(--font-sans)" }}>
           <Eye className="size-3" />Xem
         </button>
         <span className="text-[#d1d5db]">·</span>
@@ -246,7 +246,7 @@ function KColumn({
               </div>
               <div>
                 <div className="text-[13px]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700, color: col.color }}>{col.label}</div>
-                <div className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>{col.sublabel}</div>
+                <div className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{col.sublabel}</div>
               </div>
             </div>
             <div className="flex items-center gap-1.5">
@@ -261,7 +261,7 @@ function KColumn({
                 </span>
               )}
               <button onClick={() => setCollapsed(true)} className="size-5 rounded flex items-center justify-center hover:bg-white/60 transition-colors">
-                <Maximize2 className="size-3 text-[#635647]" />
+                <Maximize2 className="size-3 text-slate-700" />
               </button>
             </div>
           </>
@@ -285,7 +285,7 @@ function KColumn({
           {cards.length === 0 && (
             <div className="flex flex-col items-center justify-center py-10 gap-2 opacity-50">
               <ColIcon className="size-8" style={{ color: col.color }} />
-              <span className="text-[13px] text-center text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <span className="text-[13px] text-center text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Kéo hồ sơ vào đây
               </span>
             </div>
@@ -328,11 +328,11 @@ export function KanbanPage({ user }: { user: LoginUser }) {
         <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
           <div>
             <div className="flex items-center gap-2 mb-0.5">
-              <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bảng Kanban Hồ sơ</h1>
+              <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>Bảng Kanban Hồ sơ</h1>
               <span className="text-[13px] px-2 py-0.5 rounded-full text-white" style={{ background: "#1C5FBE", fontFamily: "var(--font-sans)", fontWeight: 700 }}>Live</span>
             </div>
-            <div className="flex items-center gap-4 text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
-              <span><span style={{ fontWeight: 700, color: "#0b1426" }}>{totalCards}</span> hồ sơ</span>
+            <div className="flex items-center gap-4 text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
+              <span><span style={{ fontWeight: 700, color: "#0f172a" }}>{totalCards}</span> hồ sơ</span>
               <span className="flex items-center gap-1"><AlertTriangle className="size-3.5 text-[#b45309]" /><span style={{ fontWeight: 700, color: "#b45309" }}>{urgentCards}</span> cần xử lý gấp</span>
               <span className="flex items-center gap-1"><CheckCheck className="size-3.5 text-[#166534]" /><span style={{ fontWeight: 700, color: "#166534" }}>{doneCards}</span> đã ban hành</span>
             </div>
@@ -356,14 +356,14 @@ export function KanbanPage({ user }: { user: LoginUser }) {
             </div>
 
             <select value={filterUnit} onChange={e => setFilterUnit(e.target.value)}
-              className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
+              className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-slate-900 bg-white outline-none focus:border-[#1C5FBE] transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               <option value="all">Tất cả đơn vị</option>
               {units.map(u => <option key={u} value={u}>{u}</option>)}
             </select>
 
             <button onClick={() => setCards(INITIAL_CARDS)} className="size-9 rounded-[8px] border border-[#e2e8f0] flex items-center justify-center hover:bg-[#f4f7fb] transition-colors" title="Làm mới">
-              <RefreshCw className="size-4 text-[#635647]" />
+              <RefreshCw className="size-4 text-slate-700" />
             </button>
           </div>
         </div>
@@ -384,15 +384,15 @@ export function KanbanPage({ user }: { user: LoginUser }) {
 
         {/* Footer hint */}
         <div className="px-6 py-2.5 border-t border-[#eef2f8] flex items-center gap-4 shrink-0" style={{ background: "#ffffff" }}>
-          <span className="flex items-center gap-1.5 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="flex items-center gap-1.5 text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             <GripVertical className="size-3.5" />Kéo thả để chuyển bước quy trình
           </span>
           <span className="text-[#d1d5db]">·</span>
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             Click <strong>Chuyển tiếp</strong> để nhanh chóng đẩy hồ sơ sang bước tiếp theo
           </span>
           <span className="text-[#d1d5db] ml-auto">·</span>
-          <span className="text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <span className="text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             Năm công tác: 2026 · Tổng {INITIAL_CARDS.length} hồ sơ
           </span>
         </div>

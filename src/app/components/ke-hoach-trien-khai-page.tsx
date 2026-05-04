@@ -1003,7 +1003,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
           </div>
           {/* Description (collapsed) */}
           {!open && (
-            <p className="text-[13px] text-[#635647] leading-snug line-clamp-1">
+            <p className="text-[13px] text-slate-700 leading-snug line-clamp-1">
               {feature.description}
             </p>
           )}
@@ -1012,7 +1012,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
             <SprintChip n={feature.sprint}/>
             <EffortChip e={feature.effort}/>
             {/* Sub-task progress */}
-            <span className="text-[13px] text-[#635647] flex items-center gap-1">
+            <span className="text-[13px] text-slate-700 flex items-center gap-1">
               <ListChecks className="size-3"/>
               {doneSubs}/{feature.subTasks.length} việc
             </span>
@@ -1028,7 +1028,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
 
         {/* Expand icon */}
         <div className="shrink-0 mt-0.5">
-          {open ? <ChevronUp className="size-4 text-[#635647]"/> : <ChevronDown className="size-4 text-[#635647]"/>}
+          {open ? <ChevronUp className="size-4 text-slate-700"/> : <ChevronDown className="size-4 text-slate-700"/>}
         </div>
       </button>
 
@@ -1037,7 +1037,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
         <div className="border-t border-[#f0ece5]">
           {/* Full description */}
           <div className="px-4 py-3" style={{ background:"#ffffff" }}>
-            <p className="text-[13px] text-[#5a5040] leading-relaxed">{feature.description}</p>
+            <p className="text-[13px] text-slate-700 leading-relaxed">{feature.description}</p>
           </div>
 
           {/* Tab bar */}
@@ -1124,7 +1124,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
                       {feature.businessRules.map((r,i)=>(
                         <li key={i} className="flex items-start gap-2">
                           <span className="text-[#b45309] mt-0.5 shrink-0">▸</span>
-                          <span className="text-[13px] text-[#5a5040] leading-snug">{r}</span>
+                          <span className="text-[13px] text-slate-700 leading-snug">{r}</span>
                         </li>
                       ))}
                     </ul>
@@ -1153,7 +1153,7 @@ function FeatureCard({ feature, defaultOpen=false, roleColor }:{
                 {feature.acceptanceCriteria.map((c,i)=>(
                   <li key={i} className="flex items-start gap-2">
                     <span className="text-[#166534] shrink-0 mt-0.5">✓</span>
-                    <span className="text-[13px] text-[#0b1426] leading-snug">{c}</span>
+                    <span className="text-[13px] text-slate-900 leading-snug">{c}</span>
                   </li>
                 ))}
               </ul>
@@ -1202,15 +1202,15 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
       <div className="px-4 pt-5 pb-4 border-b border-[#e2e8f0]">
         <div className="flex items-center gap-2 mb-0.5">
           <Layers className="size-4" style={{ color:"#c8102e" }}/>
-          <span className="text-[13px] uppercase tracking-widest text-[#635647]">
+          <span className="text-[13px] uppercase tracking-widest text-slate-700">
             VPTU Đồng Nai
           </span>
         </div>
-        <h2 className="text-[14px] text-[#0b1426]"
+        <h2 className="text-[14px] text-slate-900"
           style={{ fontFamily: "var(--font-sans)",fontWeight:700 }}>
           Lộ trình triển khai
         </h2>
-        <p className="text-[13px] text-[#635647] mt-0.5">Chi tiết theo vai trò · v1.0</p>
+        <p className="text-[13px] text-slate-700 mt-0.5">Chi tiết theo vai trò · v1.0</p>
       </div>
 
       <div className="p-3 space-y-2">
@@ -1245,7 +1245,7 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
                   <div className="text-[13px]" style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:m.color }}>
                     {m.label}
                   </div>
-                  <div className="text-[13px] text-[#635647] truncate">{m.labelVi}</div>
+                  <div className="text-[13px] text-slate-700 truncate">{m.labelVi}</div>
                 </div>
 
                 {/* P0 gap badge */}
@@ -1266,7 +1266,7 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
                   {p}%
                 </span>
               </div>
-              <div className="text-[13px] text-[#635647] mt-0.5">
+              <div className="text-[13px] text-slate-700 mt-0.5">
                 {st.done}/{st.total} features
               </div>
             </button>
@@ -1281,7 +1281,7 @@ function LeftPanel({ selected, onSelect }:{ selected:RoleId; onSelect:(r:RoleId)
           return (
             <div key={p} className="flex items-center gap-2">
               <span className="size-2 rounded-full" style={{ background:c.border }}/>
-              <span className="text-[13px] text-[#635647]"><strong>{p}</strong> {c.label}</span>
+              <span className="text-[13px] text-slate-700"><strong>{p}</strong> {c.label}</span>
             </div>
           );
         })}
@@ -1340,7 +1340,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
                   {meta.label}
                 </span>
               </div>
-              <p className="text-[13px] text-[#5a5040]">{meta.desc}</p>
+              <p className="text-[13px] text-slate-700">{meta.desc}</p>
             </div>
             {/* Role stats */}
             <div className="flex items-center gap-5 shrink-0">
@@ -1353,7 +1353,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
                 <div key={label} className="text-center">
                   <div className="text-[18px] leading-none"
                     style={{ fontFamily: "var(--font-sans)",fontWeight:700,color }}>{v}</div>
-                  <div className="text-[13px] mt-0.5 text-[#635647]">{label}</div>
+                  <div className="text-[13px] mt-0.5 text-slate-700">{label}</div>
                 </div>
               ))}
               {/* Overall progress */}
@@ -1423,7 +1423,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
                   style={{ fontFamily: "var(--font-sans)",fontWeight:700,color:"#0b1426" }}>
                   {currentMod.title}
                 </h3>
-                <p className="text-[13px] text-[#5a5040] mt-0.5">{currentMod.description}</p>
+                <p className="text-[13px] text-slate-700 mt-0.5">{currentMod.description}</p>
               </div>
               <div className="flex items-center gap-4 shrink-0">
                 <span className="text-[13px] px-3 py-1 rounded-full"
@@ -1439,7 +1439,7 @@ export function KeHoachTrienKhaiPage({ user }: { user: LoginUser }) {
                   <div className="h-1 w-16 rounded-full overflow-hidden mt-1" style={{ background:`${meta.color}25` }}>
                     <div className="h-full rounded-full" style={{ width:`${pct(mStat.done,mStat.total)}%`,background:meta.color }}/>
                   </div>
-                  <div className="text-[13px] mt-0.5 text-[#635647]">
+                  <div className="text-[13px] mt-0.5 text-slate-700">
                     {mStat.done}/{mStat.total} done
                   </div>
                 </div>

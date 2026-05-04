@@ -153,25 +153,25 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
         <div className="flex items-start justify-between gap-3 mb-1">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-              <span className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.actor}</span>
-              <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{ev.actorRole}</span>
+              <span className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>{ev.actor}</span>
+              <span className="text-[13px] px-2 py-0.5 rounded-full bg-[#eef2f8] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{ev.actorRole}</span>
               <div className="flex items-center gap-1 text-[13px]" style={{ background: cfg.bg, color: cfg.color, padding: "1px 8px", borderRadius: 999, fontFamily: "var(--font-sans)", fontWeight: 600 }}>
                 <Icon className="size-3" />{cfg.label}
               </div>
               {ev.important && <span className="size-2 rounded-full bg-[#c8102e] animate-pulse" />}
             </div>
-            <h3 className="text-[13px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ev.title}</h3>
+            <h3 className="text-[13px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 600 }}>{ev.title}</h3>
           </div>
-          <span className="text-[13px] text-[#6b5e47] shrink-0 mt-0.5" style={{ fontFamily: "JetBrains Mono,monospace" }}>{ev.timeLabel}</span>
+          <span className="text-[13px] text-slate-600 shrink-0 mt-0.5" style={{ fontFamily: "JetBrains Mono,monospace" }}>{ev.timeLabel}</span>
         </div>
 
         {/* Body */}
         <div className="rounded-[10px] p-3.5 mb-3"
           style={{ background: ev.important ? "#fff9f9" : "#ffffff", border: `1px solid ${ev.important ? "#fca5a5" : "#e2e8f0"}` }}>
-          <p className="text-[13px] text-[#5a5040] leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{ev.body}</p>
+          <p className="text-[13px] text-slate-700 leading-relaxed" style={{ fontFamily: "var(--font-sans)" }}>{ev.body}</p>
           {ev.tag && (
             <div className="flex items-center gap-2 mt-2">
-              {ev.donVi && <span className="flex items-center gap-1 text-[13px] text-[#635647]"><Building2 className="size-3"/>{ev.donVi}</span>}
+              {ev.donVi && <span className="flex items-center gap-1 text-[13px] text-slate-700"><Building2 className="size-3"/>{ev.donVi}</span>}
               <code className="text-[13px] px-2 py-0.5 rounded"
                 style={{ background: `${ev.tagColor}15`, color: ev.tagColor, fontFamily: "JetBrains Mono,monospace", fontWeight: 700 }}>
                 {ev.tag}
@@ -193,16 +193,16 @@ function EventCard({ ev, onReact }: { ev: ActivityEvent; onReact: (id: string, e
                   fontFamily: "JetBrains Mono,monospace",
                 }}>
                 {r.emoji}
-                <span className="text-[13px] text-[#5a5040]" style={{ fontFamily: "var(--font-sans)" }}>{r.count}</span>
+                <span className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>{r.count}</span>
               </button>
             ))}
-            <button className="flex items-center gap-1 px-2 py-1 rounded-full text-[13px] text-[#635647] hover:text-[#1C5FBE] hover:bg-[#f0f4ff] transition-all"
+            <button className="flex items-center gap-1 px-2 py-1 rounded-full text-[13px] text-slate-700 hover:text-[#1C5FBE] hover:bg-[#f0f4ff] transition-all"
               style={{ border: "1px solid #e2e8f0" }}>
               + Thêm
             </button>
           </div>
           {/* Comment */}
-          <button className="flex items-center gap-1 text-[13px] text-[#635647] hover:text-[#1C5FBE] transition-colors ml-2">
+          <button className="flex items-center gap-1 text-[13px] text-slate-700 hover:text-[#1C5FBE] transition-colors ml-2">
             <MessageSquare className="size-3.5" />
             {ev.comments > 0 ? `${ev.comments} bình luận` : "Bình luận"}
           </button>
@@ -291,7 +291,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
       <div className="px-6 py-5 border-b border-[#e2e8f0] flex items-center justify-between shrink-0" style={{ background: "white" }}>
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-[18px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h1 className="text-[18px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Dòng thời gian Hoạt động
             </h1>
             <button onClick={() => setIsLive(v => !v)}
@@ -306,8 +306,8 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
               {isLive ? "Live" : "Tạm dừng"}
             </button>
           </div>
-          <div className="flex items-center gap-4 text-[13px] text-[#635647]">
-            <span><span style={{ fontWeight: 700, color: "#0b1426" }}>{todayCount}</span> hoạt động hôm nay</span>
+          <div className="flex items-center gap-4 text-[13px] text-slate-700">
+            <span><span style={{ fontWeight: 700, color: "#0f172a" }}>{todayCount}</span> hoạt động hôm nay</span>
             <span><span style={{ fontWeight: 700, color: "#c8102e" }}>{urgentCount}</span> khẩn cấp</span>
           </div>
         </div>
@@ -326,7 +326,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           <div className="flex items-center gap-1 p-1 rounded-[8px] border border-[#e2e8f0]" style={{ background: "#ffffff" }}>
             <button onClick={() => setFilterKind("all")}
               className="px-2.5 py-1.5 rounded-[6px] text-[13px] transition-all"
-              style={{ background: filterKind === "all" ? "white" : "transparent", color: "#0b1426", fontFamily: "var(--font-sans)", fontWeight: filterKind === "all" ? 700 : 400 }}>
+              style={{ background: filterKind === "all" ? "white" : "transparent", color: "#0f172a", fontFamily: "var(--font-sans)", fontWeight: filterKind === "all" ? 700 : 400 }}>
               Tất cả
             </button>
             {(Object.keys(KIND_CFG) as EventKind[]).slice(0, 5).map(k => {
@@ -347,13 +347,13 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
           </div>
 
           <select value={filterUnit} onChange={e => setFilterUnit(e.target.value)}
-            className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-[#0b1426] bg-white outline-none focus:border-[#1C5FBE] transition-colors"
+            className="border border-[#e2e8f0] rounded-[8px] px-3 py-2 text-[13px] text-slate-900 bg-white outline-none focus:border-[#1C5FBE] transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <option value="all">Tất cả đơn vị</option>
             {units.map(u => <option key={u} value={u}>{u}</option>)}
           </select>
 
-          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+          <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-white transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}>
             <Download className="size-4" />Xuất
           </button>
@@ -367,7 +367,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
             {/* Date divider */}
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 bg-[#e2e8f0]" />
-              <span className="text-[13px] uppercase tracking-widest text-[#6b5e47] px-3 py-1.5 rounded-full"
+              <span className="text-[13px] uppercase tracking-widest text-slate-600 px-3 py-1.5 rounded-full"
                 style={{ background: "#ffffff", border: "1px solid #e2e8f0", fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                 {group.label}
               </span>
@@ -386,10 +386,10 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
         {filteredEvents.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <Activity className="size-16 text-[#d1d5db]" />
-            <h3 className="text-[14px] text-[#0b1426]" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
+            <h3 className="text-[14px] text-slate-900" style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
               Không có hoạt động
             </h3>
-            <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+            <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
               Thử thay đổi bộ lọc để xem thêm sự kiện.
             </p>
           </div>
@@ -398,7 +398,7 @@ export function ActivityFeedPage({ user }: { user: LoginUser }) {
         {/* Load more */}
         {filteredEvents.length > 0 && (
           <div className="text-center py-4">
-            <button className="px-5 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-[#5a5040] hover:bg-white transition-colors"
+            <button className="px-5 py-2.5 rounded-[8px] border border-[#e2e8f0] text-[13px] text-slate-700 hover:bg-white transition-colors"
               style={{ fontFamily: "var(--font-sans)" }}>
               Tải thêm hoạt động cũ hơn
             </button>

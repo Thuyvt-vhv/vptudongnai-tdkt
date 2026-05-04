@@ -209,22 +209,22 @@ export function CommandPalette({
       >
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#e2e8f0]">
-          <Search className="size-5 text-[#635647] shrink-0" />
+          <Search className="size-5 text-slate-700 shrink-0" />
           <input
             ref={inputRef}
             value={query}
             onChange={e => { setQuery(e.target.value); setCursor(0); }}
             placeholder="Tìm module, hồ sơ, cán bộ, quyết định���"
-            className="flex-1 text-[14px] text-[#0b1426] outline-none placeholder:text-[#6b5e47] bg-transparent"
+            className="flex-1 text-[14px] text-slate-900 outline-none placeholder:text-slate-600 bg-transparent"
             style={{ fontFamily: "var(--font-sans)" }}
           />
           <div className="flex items-center gap-1 shrink-0">
             {query && (
               <button onClick={() => setQuery("")} className="size-6 rounded flex items-center justify-center hover:bg-[#eef2f8]">
-                <X className="size-3.5 text-[#635647]" />
+                <X className="size-3.5 text-slate-700" />
               </button>
             )}
-            <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-[#e2e8f0] text-[13px] text-[#635647]"
+            <kbd className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-[#e2e8f0] text-[13px] text-slate-700"
               style={{ fontFamily: "JetBrains Mono, monospace", background: "#ffffff" }}>
               ESC
             </kbd>
@@ -235,8 +235,8 @@ export function CommandPalette({
         <div ref={listRef} className="max-h-[440px] overflow-y-auto p-2">
           {flat.length === 0 ? (
             <div className="py-12 flex flex-col items-center gap-2">
-              <Search className="size-8 text-[#d1ccc0]" />
-              <p className="text-[13px] text-[#635647]" style={{ fontFamily: "var(--font-sans)" }}>
+              <Search className="size-8 text-slate-400" />
+              <p className="text-[13px] text-slate-700" style={{ fontFamily: "var(--font-sans)" }}>
                 Không tìm thấy "{query}"
               </p>
               <button onClick={() => { onNavigate("Trợ lý AI"); onClose(); }}
@@ -253,7 +253,7 @@ export function CommandPalette({
                 <div key={type} className="mb-1">
                   {/* Group header */}
                   <div className="px-2 py-1.5 flex items-center gap-2">
-                    <span className="text-[13px] uppercase tracking-widest text-[#6b5e47]"
+                    <span className="text-[13px] uppercase tracking-widest text-slate-600"
                       style={{ fontFamily: "var(--font-sans)", fontWeight: 700 }}>
                       {TYPE_LABEL[type]}
                     </span>
@@ -278,12 +278,12 @@ export function CommandPalette({
                           <Icon className="size-4" style={{ color: item.color }} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-[13px] text-[#0b1426] truncate"
+                          <div className="text-[13px] text-slate-900 truncate"
                             style={{ fontFamily: "var(--font-sans)", fontWeight: isActive ? 600 : 500 }}>
                             {item.label}
                           </div>
                           {item.sublabel && (
-                            <div className="text-[13px] text-[#635647] truncate" style={{ fontFamily: "var(--font-sans)" }}>
+                            <div className="text-[13px] text-slate-700 truncate" style={{ fontFamily: "var(--font-sans)" }}>
                               {item.sublabel}
                             </div>
                           )}
@@ -300,7 +300,7 @@ export function CommandPalette({
 
         {/* Footer */}
         <div className="px-4 py-2.5 border-t border-[#eef2f8] flex items-center gap-4" style={{ background: "#ffffff" }}>
-          <div className="flex items-center gap-3 text-[13px] text-[#6b5e47]" style={{ fontFamily: "var(--font-sans)" }}>
+          <div className="flex items-center gap-3 text-[13px] text-slate-600" style={{ fontFamily: "var(--font-sans)" }}>
             <span className="flex items-center gap-1">
               <kbd className="px-1 py-0.5 rounded border border-[#e2e8f0] bg-white" style={{ fontFamily: "JetBrains Mono, monospace" }}>↑↓</kbd>
               Điều hướng
@@ -314,7 +314,7 @@ export function CommandPalette({
               Đóng
             </span>
           </div>
-          <div className="ml-auto flex items-center gap-1 text-[13px] text-[#6b5e47]">
+          <div className="ml-auto flex items-center gap-1 text-[13px] text-slate-600">
             <Command className="size-3" />
             <span style={{ fontFamily: "var(--font-sans)" }}>K để mở bất kỳ lúc nào</span>
           </div>
